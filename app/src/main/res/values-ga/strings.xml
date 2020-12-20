@@ -185,10 +185,10 @@
     <string name="status_media_images">Íomhánna</string>
     <string name="status_share_link">Comhroinn nasc le tút</string>
     <string name="status_share_content">Comhroinn ábhar na tút</string>
-    <string name="about_tusky_account">Próifíl Tusky</string>
-    <string name="about_tusky_license">Is bogearraí foinse oscailte agus saor in aisce é Tusky. Tá sé ceadúnaithe faoi Leagan 3. Ceadúnas Poiblí Ginearálta GNU 3. Is féidir leat an ceadúnas a fheiceáil anseo: https://www.gnu.org/licenses/gpl-3.0.en.html</string>
-    <string name="about_powered_by_tusky">Cumhachtaithe ag Tusky</string>
-    <string name="about_tusky_version">Tusky %s</string>
+    <string name="about_tusky_account">Próifíl Gab</string>
+    <string name="about_tusky_license">Is bogearraí foinse oscailte agus saor in aisce é Gab. Tá sé ceadúnaithe faoi Leagan 3. Ceadúnas Poiblí Ginearálta GNU 3. Is féidir leat an ceadúnas a fheiceáil anseo: https://www.gnu.org/licenses/gpl-3.0.en.html</string>
+    <string name="about_powered_by_tusky">Cumhachtaithe ag Gab</string>
+    <string name="about_tusky_version">Gab %s</string>
     <string name="description_account_locked">Cuntas faoi Ghlas</string>
     <string name="notification_title_summary">%d idirghníomhaíochtaí nua</string>
     <string name="notification_summary_small">%1$s agus %2$s</string>
@@ -265,9 +265,9 @@
 \n
 \nIs féidir tuilleadh faisnéise a fháil ag <a href="https://joinmastodon.org"> joinmastodon.org </a>. </string>
     <string name="about_project_site">Suíomh Gréasáin an tionscadail:
-\n https://tusky.app</string>
+\n https://gab.com</string>
     <string name="about_bug_feature_request_site">Tuarascálacha ar fhabhtanna &amp; iarratais ar ghnéithe:
-\n https://github.com/tuskyapp/Tusky/issues</string>
+\n https://github.com/johanw666/Gab/issues</string>
     <string name="status_media_video">Físeán</string>
     <string name="state_follow_requested">Lean iarrtha</string>
     <string name="follows_you">Leanann tú</string>
@@ -286,9 +286,9 @@
     <string name="filter_dialog_remove_button">Bain</string>
     <string name="pref_title_public_filter_keywords">Amlínte poiblí</string>
     <string name="expand_collapse_all_statuses">Gach stádas a leathnú/a thit amach</string>
-    <string name="restart_emoji">Beidh ort Tusky a atosú chun na hathruithe seo a chur i bhfeidhm</string>
+    <string name="restart_emoji">Beidh ort Gab a atosú chun na hathruithe seo a chur i bhfeidhm</string>
     <string name="caption_notoemoji">Sraith emoji reatha Google</string>
-    <string name="license_description">Tá cód agus sócmhainní ó na tionscadail foinse oscailte seo a leanas i Tusky:</string>
+    <string name="license_description">Tá cód agus sócmhainní ó na tionscadail foinse oscailte seo a leanas i Gab:</string>
     <string name="label_remote_account">Féadfaidh an fhaisnéis thíos próifíl an úsáideora a léiriú go neamhiomlán. Brúigh chun próifíl iomlán a oscailt sa bhrabhsálaí.</string>
     <string name="max_tab_number_reached">uasmhéid de chluaisíní %1$d sroichte</string>
     <string name="description_poll">Vótaíocht le roghanna: %1$s, %2$s, %3$s, %4$s; %5$s</string>
