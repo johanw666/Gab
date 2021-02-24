@@ -226,9 +226,9 @@
          * the url can be changed to link to the localized version of the license.
     -->
     <string name="about_project_site">موقع المشروع :\n
-                   https://tusky.app</string>
+                   https://gab.app</string>
     <string name="about_bug_feature_request_site">تقارير الأخطاء و طلبات التحسينات على  :\n
-                   https://github.com/tuskyapp/Tusky/issues</string>
+                   https://github.com/johanw666/Gab/issues</string>
     <string name="about_tusky_account">الملف الشخصي لتوسكي</string>
     <string name="status_share_content">شارك محتوى التبويق</string>
     <string name="status_share_link">شارك الرابط إلى التبويق</string>
@@ -463,7 +463,7 @@
     <string name="title_bookmarks">الفواصل المرجعية</string>
     <string name="action_bookmark">أضفه إلى الفواصل المرجعية</string>
     <string name="action_view_bookmarks">الفواصل المرجعية</string>
-    <string name="about_powered_by_tusky">مدعوم بِـ Tusky</string>
+    <string name="about_powered_by_tusky">مدعوم بِـ Gab</string>
     <string name="description_status_bookmarked">أضيف إلى الفواصل المرجعية</string>
     <string name="select_list_title">اختر قائمة</string>
     <string name="list">القائمة</string>

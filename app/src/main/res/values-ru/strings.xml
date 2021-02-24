@@ -223,18 +223,18 @@
     <string name="notification_title_summary">Новых событий: %d</string>
     <string name="description_account_locked">Закрытый аккаунт</string>
     <string name="about_title_activity">О приложении</string>
-    <string name="about_tusky_version">Tusky %s</string>
-    <string name="about_tusky_license">Tusky – это бесплатное приложение с открытым исходным кодом.
+    <string name="about_tusky_version">Gab %s</string>
+    <string name="about_tusky_license">Gab – это бесплатное приложение с открытым исходным кодом.
         Выпускается по лицензии GNU General Public License Version 3.
         Вы можете прочитать текст лицензии по ссылке: https://www.gnu.org/licenses/gpl-3.0.ru.html</string>
     <!-- note to translators: the url can be changed to link to the localized version of the license -->
     <string name="about_project_site">
            Веб-сайт проекта:\n
-           https://tusky.app</string>
+           https://gab.app</string>
     <string name="about_bug_feature_request_site">
             Отчеты об ошибках и пожелания:\n
-            https://github.com/tuskyapp/Tusky/issues</string>
-    <string name="about_tusky_account">Профиль Tusky</string>
+            https://github.com/johanw666/Gab/issues</string>
+    <string name="about_tusky_account">Профиль Gab</string>
     <string name="status_share_content">Поделиться содержанием поста</string>
     <string name="status_share_link">Поделиться ссылкой на пост</string>
     <string name="status_media_images">Изображения</string>
@@ -326,7 +326,7 @@
     <string name="expand_collapse_all_statuses">Раскрыть/свернуть все статусы</string>
     <string name="action_open_toot">Перейти к статусу</string>
     <string name="restart_required">Необходимо перезапустить приложение</string>
-    <string name="restart_emoji">Вам нужно перезапустить Tusky для применения изменений</string>
+    <string name="restart_emoji">Вам нужно перезапустить Gab для применения изменений</string>
     <string name="later">Не сейчас</string>
     <string name="restart">Перезапустить</string>
     <string name="caption_systememoji">Набор эмодзи по умолчанию</string>
@@ -337,7 +337,7 @@
     <string name="account_moved_description">%1$s переехал(а) на:</string>
     <string name="reblog_private">Продвинуть для исходной аудитории</string>
     <string name="unreblog_private">Убрать продвижение</string>
-    <string name="license_description">Tusky содержит код и элементы из следующих приложений с открытым исходным кодом:</string>
+    <string name="license_description">Gab содержит код и элементы из следующих приложений с открытым исходным кодом:</string>
     <string name="license_apache_2">Используется лицензия Apache License (копия ниже)</string>
     <string name="license_cc_by_4">CC-BY 4.0</string>
     <string name="license_cc_by_sa_4">CC-BY-SA 4.0</string>
@@ -463,7 +463,7 @@
     <string name="title_bookmarks">Закладки</string>
     <string name="action_bookmark">Добавить в закладки</string>
     <string name="action_view_bookmarks">Закладки</string>
-    <string name="about_powered_by_tusky">Под управлением Tusky</string>
+    <string name="about_powered_by_tusky">Под управлением Gab</string>
     <string name="description_status_bookmarked">Добавлено в закладки</string>
     <string name="select_list_title">Выбрать список</string>
     <string name="list">Список</string>

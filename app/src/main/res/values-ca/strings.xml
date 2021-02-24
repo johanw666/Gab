@@ -156,20 +156,20 @@
     <string name="notification_title_summary">%d interaccions noves</string>
     <string name="description_account_locked">Compte blocat</string>
     <string name="about_title_activity">Quant a</string>
-    <string name="about_tusky_version">Tusky %s</string>
-    <string name="about_tusky_license">Tusky és programari gratuït, lliure i de codi obert.
+    <string name="about_tusky_version">Gab %s</string>
+    <string name="about_tusky_license">Gab és programari gratuït, lliure i de codi obert.
         Està llicenciat en els termes de la Llicència Pública General GNU versió 3.
         Podeu trobar les llicència aquí: https://www.gnu.org/licenses/gpl-3.0.ca.html</string>
     <!-- note to translators: the url can be changed to link to the localized version of the license -->
     <string name="about_project_site">
         Lloc web del projecte:\n
-        https://tusky.app
+        https://gab.app
     </string>
     <string name="about_bug_feature_request_site">
         Informes d\'errors i peticions de funcionalitats:\n
-        https://github.com/tuskyapp/Tusky/issues
+        https://github.com/johanw666/Gab/issues
     </string>
-    <string name="about_tusky_account">Perfil del Tusky</string>
+    <string name="about_tusky_account">Perfil del Gab</string>
     <string name="status_share_content">Comparteix el contingut del toot</string>
     <string name="status_share_link">Comparteix l\'enllaç al toot</string>
     <string name="status_media_images">Imatges</string>
@@ -319,7 +319,7 @@
     <string name="account_moved_description">%1$s s\'ha trasllat a:</string>
     <string name="reblog_private">Tornar a impulsar</string>
     <string name="unreblog_private">No impulsar</string>
-    <string name="license_description">Tusky conté codi i recursos dels següents projectes:</string>
+    <string name="license_description">Gab conté codi i recursos dels següents projectes:</string>
     <string name="license_apache_2">Sota llicencia Apache (text a sota)</string>
     <string name="license_cc_by_4">CC-BY 4.0</string>
     <string name="license_cc_by_sa_4">CC-BY-SA 4.0</string>
@@ -420,7 +420,7 @@
     <string name="action_access_scheduled_toot">Toots programats</string>
     <string name="action_schedule_toot">Programar el toot</string>
     <string name="action_reset_schedule">Reiniciar</string>
-    <string name="about_powered_by_tusky">Desenvolupat per Tusky</string>
+    <string name="about_powered_by_tusky">Desenvolupat per Gab</string>
     <string name="description_status_bookmarked">S\'ha afegit a les adreces d\'interès</string>
     <string name="select_list_title">Seleccionar la llista</string>
     <string name="list">Llista</string>
