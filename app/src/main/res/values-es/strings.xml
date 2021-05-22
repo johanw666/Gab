@@ -208,8 +208,8 @@
     </plurals>
     <string name="description_account_locked">Cuenta protegida</string>
     <string name="about_title_activity">Acerca de</string>
-    <string name="about_tusky_version">Tusky %s</string>
-    <string name="about_tusky_license">Tusky es un software libre y de código abierto.
+    <string name="about_tusky_version">Gab %s</string>
+    <string name="about_tusky_license">Gab es un software libre y de código abierto.
         Está licenciado bajo la licencia \"GNU General Public License Version 3\".
         Puedes leer sobre la misma en: https://www.gnu.org/licenses/gpl-3.0.en.html</string>
     <!-- note to translators:
@@ -219,12 +219,12 @@
          * the url can be changed to link to the localized version of the license.
     -->
     <string name="about_project_site">        Sitio del proyecto:\n
-        https://tusky.app
+        https://gab.app
     </string>
     <string name="about_bug_feature_request_site">        Reporte de errores y peticiones de características:\n
-        https://github.com/tuskyapp/Tusky/issues
+        https://github.com/johanw666/Gab/issues
     </string>
-    <string name="about_tusky_account">Perfil de Tusky</string>
+    <string name="about_tusky_account">Perfil de Gab</string>
     <string name="status_share_content">Compartir contenido</string>
     <string name="status_share_link">Compartir enlace</string>
     <string name="status_media_images">Imágenes</string>
@@ -287,7 +287,7 @@
     <string name="account_moved_description">%1$s se trasladó a:</string>
     <string name="reblog_private">Volver a compartir</string>
     <string name="unreblog_private">Dejar de compartir</string>
-    <string name="license_description">Tusky contiene código y recursos de los siguientes proyectos:</string>
+    <string name="license_description">Gab contiene código y recursos de los siguientes proyectos:</string>
     <string name="license_apache_2">Licenciado bajo Apache License (texto bajo la lista)</string>
     <string name="license_cc_by_4">CC BY 4.0</string>
     <string name="license_cc_by_sa_4">CC-BY-SA 4.0</string>
@@ -443,7 +443,7 @@
     <string name="action_schedule_toot">Programar estado</string>
     <string name="action_reset_schedule">Reiniciar</string>
     <string name="post_lookup_error_format">Error al buscar el post %s</string>
-    <string name="about_powered_by_tusky">Potenciado por Tusky</string>
+    <string name="about_powered_by_tusky">Potenciado por Gab</string>
     <string name="title_bookmarks">Marcadores</string>
     <string name="action_bookmark">Marcador</string>
     <string name="action_view_bookmarks">Marcadores</string>
@@ -507,7 +507,7 @@
     <string name="draft_deleted">Borrador eliminado</string>
     <string name="drafts_failed_loading_reply">Error al cargar la información de respuesta</string>
     <string name="old_drafts">Borradores antiguos</string>
-    <string name="new_drafts_warning">La función de borrador en Tusky se ha rediseñado por completo para que sea más rápida, más fácil de usar y con menos errores.
+    <string name="new_drafts_warning">La función de borrador en Gab se ha rediseñado por completo para que sea más rápida, más fácil de usar y con menos errores.
 \nAún puede acceder a sus borradores antiguos a través de un botón en la pantalla de borradores nuevos, ¡pero se eliminarán en una actualización futura!</string>
     <string name="drafts_toot_failed_to_send">¡Este toot no se pudo enviar!</string>
     <string name="dialog_delete_list_warning">¿Realmente quieres eliminar la lista %s\?</string>

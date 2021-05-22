@@ -14,8 +14,8 @@
     <string name="error_video_upload_size">影片大小限制 40MB。</string>
     <string name="error_media_upload_type">無法上傳此類型的檔案。</string>
     <string name="error_media_upload_opening">此檔案無法開啟。</string>
-    <string name="error_media_upload_permission">需要授予 Tusky 讀取媒體檔案的權限。</string>
-    <string name="error_media_download_permission">需要授予 Tusky 寫入儲存空間的權限。</string>
+    <string name="error_media_upload_permission">需要授予 Gab 讀取媒體檔案的權限。</string>
+    <string name="error_media_download_permission">需要授予 Gab 寫入儲存空間的權限。</string>
     <string name="error_media_upload_image_or_video">無法在嘟文中同時插入影片和圖片。</string>
     <string name="error_media_upload_sending">媒體檔案上傳失敗。</string>
     <string name="error_sender_account_gone">嘟文發送時出錯。</string>
@@ -227,8 +227,8 @@
         <item quantity="other">%d 個新互動</item>
     </plurals>
     <string name="description_account_locked">鎖嘟用戶</string>
-    <string name="about_title_activity">關於 Tusky</string>
-    <string name="about_tusky_license">Tusky 是基於 GNU General Public License Version 3 許可證開源的自由軟體完整的許可證協議：https://www.gnu.org/licenses/gpl-3.0.en.html</string>
+    <string name="about_title_activity">關於 Gab</string>
+    <string name="about_tusky_license">Gab 是基於 GNU General Public License Version 3 許可證開源的自由軟體完整的許可證協議：https://www.gnu.org/licenses/gpl-3.0.en.html</string>
     <!-- note to translators:
          * you should think of “free” as in “free speech,” not as in “free beer”.
            We sometimes call it “libre software,” borrowing the French or Spanish word for “free” as in freedom,
@@ -237,13 +237,13 @@
     -->
     <string name="about_project_site">
         專案網站：\n
-        https://tusky.app
+        https://gab.app
     </string>
     <string name="about_bug_feature_request_site">
         問題回報：\n
-        https://github.com/tuskyapp/Tusky/issues
+        https://github.com/johanw666/Gab/issues
     </string>
-    <string name="about_tusky_account">Tusky 官方帳號</string>
+    <string name="about_tusky_account">Gab 官方帳號</string>
     <string name="status_share_content">分享嘟文內容</string>
     <string name="status_share_link">分享嘟文連結</string>
     <string name="status_media_images">照片</string>
@@ -312,7 +312,7 @@
     <string name="expand_collapse_all_statuses">展開/摺疊所有嘟文</string>
     <string name="action_open_toot">開啟嘟文</string>
     <string name="restart_required">需要重啟應用程式</string>
-    <string name="restart_emoji">你需要重啟 Tusky 才能生效</string>
+    <string name="restart_emoji">你需要重啟 Gab 才能生效</string>
     <string name="later">稍後</string>
     <string name="restart">立即重啟</string>
     <string name="caption_systememoji">系統預設的表情符號包</string>
@@ -324,7 +324,7 @@
     <string name="account_moved_description">%1$s 已遷移到：</string>
     <string name="reblog_private">轉嘟（可見者不變）</string>
     <string name="unreblog_private">取消轉嘟</string>
-    <string name="license_description">Tusky 使用了以下開源專案的原始碼：</string>
+    <string name="license_description">Gab 使用了以下開源專案的原始碼：</string>
     <string name="license_apache_2">以 Apache License 授權（詳見下方）</string>
     <string name="license_cc_by_4">CC-BY 4.0</string>
     <string name="license_cc_by_sa_4">CC-BY-SA 4.0</string>
@@ -417,7 +417,7 @@
     <string name="mute_domain_warning">你確定要封鎖 %s 域名嗎？您將不會在任何聯邦時間軸或通知中看到該域名中的內容，且來自該域名的關注者將被移除。</string>
     <string name="mute_domain_warning_dialog_ok">隱藏整個域名</string>
     <string name="pref_title_animate_gif_avatars">GIF 動畫大頭貼</string>
-    <string name="about_tusky_version">Tusky %s</string>
+    <string name="about_tusky_version">Gab %s</string>
     <string name="filter_dialog_whole_word">整個單詞</string>
     <string name="filter_dialog_whole_word_description">如果關鍵字或短語僅為字母或數字，則只有在匹配整個單詞時才會應用</string>
     <string name="caption_notoemoji">Google 正在使用的 Emoji 符號集</string>
@@ -440,7 +440,7 @@
     <string name="action_edit">編輯</string>
     <string name="title_bookmarks">書籤</string>
     <string name="error_audio_upload_size">音檔必需小於40MB。</string>
-    <string name="new_drafts_warning">Tusky 的草稿功能已重新設計，更快、更好用、更少問題。
+    <string name="new_drafts_warning">Gab 的草稿功能已重新設計，更快、更好用、更少問題。
 \n 你還是可以在草稿頁面中查看你的先前的舊草稿，但它們在未來的某次更新中將會被移除！</string>
     <string name="wellbeing_hide_stats_profile">隱藏個人頁面中的狀態數量資訊</string>
     <string name="wellbeing_hide_stats_posts">隱藏貼文上的狀態數量資訊</string>
@@ -515,7 +515,7 @@
     <string name="description_status_bookmarked">被加入書籤</string>
     <string name="action_view_bookmarks">我的書籤</string>
     <string name="action_bookmark">書籤</string>
-    <string name="about_powered_by_tusky">由 Tusky 提供</string>
+    <string name="about_powered_by_tusky">由 Gab 提供</string>
     <string name="post_lookup_error_format">尋找嘟文時發生錯誤 %s</string>
     <string name="action_reset_schedule">重設</string>
     <string name="action_schedule_toot">排程嘟文</string>

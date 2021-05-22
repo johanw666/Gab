@@ -211,8 +211,8 @@
     </plurals>
     <string name="description_account_locked">非公開アカウント</string>
     <string name="about_title_activity">このアプリについて</string>
-    <string name="about_tusky_version">Tusky %s</string>
-    <string name="about_tusky_license">Tuskyは無料のオープンソースソフトウェアです。<!--
+    <string name="about_tusky_version">Gab %s</string>
+    <string name="about_tusky_license">Gabは無料のオープンソースソフトウェアです。<!--
      -->GNU General Public License Version 3 の下で使用許諾されています。<!--
      -->ライセンスはここからご覧いただけます： https://www.gnu.org/licenses/gpl-3.0.ja.html</string>
     <!-- note to translators:
@@ -222,12 +222,12 @@
          * the url can be changed to link to the localized version of the license.
     -->
     <string name="about_project_site">        プロジェクトのWebサイト（英語）：\n
-        https://tusky.app
+        https://gab.app
     </string>
     <string name="about_bug_feature_request_site">        バグ報告 &amp; 機能リクエスト（英語）：\n
-        https://github.com/tuskyapp/Tusky/issues
+        https://github.com/johanw666/Gab/issues
     </string>
-    <string name="about_tusky_account">Tusky公式アカウント</string>
+    <string name="about_tusky_account">Gab公式アカウント</string>
     <string name="status_share_content">トゥートの内容を共有</string>
     <string name="status_share_link">トゥートへのリンクを共有</string>
     <string name="status_media_images">画像</string>
@@ -283,7 +283,7 @@
     <string name="expand_collapse_all_statuses">全て開く/閉じる</string>
     <string name="action_open_toot">トゥートを開く</string>
     <string name="restart_required">アプリの再起動が必要です</string>
-    <string name="restart_emoji">これらの変更を適用するには、Tuskyの再起動が必要になります</string>
+    <string name="restart_emoji">これらの変更を適用するには、Gabの再起動が必要になります</string>
     <string name="later">後で</string>
     <string name="restart">再起動</string>
     <string name="caption_systememoji">あなたのデバイスのデフォルト絵文字セットです</string>
@@ -294,7 +294,7 @@
     <string name="account_moved_description">%1$s は引っ越しました:</string>
     <string name="reblog_private">ブースト</string>
     <string name="unreblog_private">ブーストを解除</string>
-    <string name="license_description">Tuskyは、以下のオープンソース プロジェクトからのコードとアセットを含んでいます:</string>
+    <string name="license_description">Gabは、以下のオープンソース プロジェクトからのコードとアセットを含んでいます:</string>
     <string name="license_apache_2">Apache Licenseの下にライセンスされています（下記をコピー）</string>
     <string name="license_cc_by_4">CC-BY 4.0</string>
     <string name="license_cc_by_sa_4">CC-BY-SA 4.0</string>

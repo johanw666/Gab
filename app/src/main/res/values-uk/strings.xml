@@ -266,7 +266,7 @@
     <string name="profile_badge_bot_text">Бот</string>
     <string name="restart">Перезапустити</string>
     <string name="later">Пізніше</string>
-    <string name="restart_emoji">Вам потрібно буде перезапустити Tusky, щоб застосувати ці зміни</string>
+    <string name="restart_emoji">Вам потрібно буде перезапустити Gab, щоб застосувати ці зміни</string>
     <string name="restart_required">Необхідно перезапустити застосунок</string>
     <string name="action_open_toot">Відкрити дмух</string>
     <string name="expand_collapse_all_statuses">Розгорнути/згорнути всі статуси</string>
@@ -322,14 +322,14 @@
     <string name="status_media_images">Зображення</string>
     <string name="status_share_link">Поділитися посиланням на дмух</string>
     <string name="status_share_content">Поділитися вмістом дмуху</string>
-    <string name="about_tusky_account">Профіль Tusky</string>
+    <string name="about_tusky_account">Профіль Gab</string>
     <string name="about_bug_feature_request_site">Звіти про вади та запити функцій:
-\n https://github.com/tuskyapp/Tusky/issues</string>
+\n https://github.com/johanw666/Gab/issues</string>
     <string name="about_project_site">Вебсайт проєкту:
-\n https://tusky.app</string>
-    <string name="about_tusky_license">Tusky — вільне та відкрите програмне забезпечення. Ліцензовано загальною громадською ліцензією GNU версії 3, ви можете переглянути ліцензію тут: https://www.gnu.org/licenses/gpl-3.0.en.html</string>
-    <string name="about_powered_by_tusky">Створено Tusky</string>
-    <string name="about_tusky_version">Tusky %s</string>
+\n https://gab.app</string>
+    <string name="about_tusky_license">Gab — вільне та відкрите програмне забезпечення. Ліцензовано загальною громадською ліцензією GNU версії 3, ви можете переглянути ліцензію тут: https://www.gnu.org/licenses/gpl-3.0.en.html</string>
+    <string name="about_powered_by_tusky">Створено Gab</string>
+    <string name="about_tusky_version">Gab %s</string>
     <string name="description_account_locked">Заблокований обліковий запис</string>
     <plurals name="notification_title_summary">
         <item quantity="one">%d нова взаємодія</item>
@@ -459,7 +459,7 @@
     <string name="draft_deleted">Чернетку видалено</string>
     <string name="drafts_failed_loading_reply">Не вдалося завантажити дані відповіді</string>
     <string name="old_drafts">Старі чернетки</string>
-    <string name="new_drafts_warning">Функція чернетки в Tusky була повністю перероблена, щоб бути швидшою, зручнішою для користувачів і з меншою кількістю вад.
+    <string name="new_drafts_warning">Функція чернетки в Gab була повністю перероблена, щоб бути швидшою, зручнішою для користувачів і з меншою кількістю вад.
 \n Ви все ще можете отримати доступ до своїх старих чернеток за допомогою кнопки на екрані нових чернеток, але вони будуть вилучені в майбутньому оновленні!</string>
     <string name="drafts_toot_failed_to_send">Не вдалося надіслати цей дмух!</string>
     <string name="dialog_delete_list_warning">Ви дійсно хочете видалити список %s\?</string>
@@ -525,7 +525,7 @@
     <string name="profile_metadata_add">додати дані</string>
     <string name="profile_metadata_label">Метадані профілю</string>
     <string name="license_apache_2">Ліцензовано ліцензією Apache (копія знизу)</string>
-    <string name="license_description">Tusky містить код та засоби з таких проєктів з відкритим кодом:</string>
+    <string name="license_description">Gab містить код та засоби з таких проєктів з відкритим кодом:</string>
     <string name="unreblog_private">Відкликати просування</string>
     <string name="reblog_private">Просунути початковій аудиторії</string>
     <string name="account_moved_description">%1$s переміщено до:</string>
