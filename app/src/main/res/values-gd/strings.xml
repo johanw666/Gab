@@ -59,7 +59,7 @@
     <string name="draft_deleted">Chaidh an dreach a sguabadh às</string>
     <string name="drafts_failed_loading_reply">Cha deach leinn fiosrachadh na freagairte a luchdadh</string>
     <string name="old_drafts">Seann-dreachdan</string>
-    <string name="new_drafts_warning">Chaidh dealbhadh gu tur ùr a chur air gleus nan dreachdan aig Tusky ach am biodh e nas luaithe, nas fhasa cleachdadh is nas lugha de bhugaichean ann.
+    <string name="new_drafts_warning">Chaidh dealbhadh gu tur ùr a chur air gleus nan dreachdan aig Gab ach am biodh e nas luaithe, nas fhasa cleachdadh is nas lugha de bhugaichean ann.
 \n Gheibh thu grèim air na seann-dreachdan agad fhathast le putan air sgrìn ùr nan dreachdan ach thèid an toirt air falbh le ùrachadh ri teachd!</string>
     <string name="drafts_toot_failed_to_send">Cha b’ urrainn dhuinn am post a chur!</string>
     <string name="status_media_attachments">Ceanglachain</string>
@@ -222,7 +222,7 @@
     <string name="license_cc_by_sa_4">CC-BY-SA 4.0</string>
     <string name="license_cc_by_4">CC-BY 4.0</string>
     <string name="license_apache_2">Fo cheadachas Apache License (chì thu lethbhreac dheth gu h-ìosal)</string>
-    <string name="license_description">Tha còs is maoin o na pròiseactan open source seo am broinn Tusky:</string>
+    <string name="license_description">Tha còs is maoin o na pròiseactan open source seo am broinn Gab:</string>
     <string name="unreblog_private">Na brosnaich tuilleadh</string>
     <string name="reblog_private">Brosnaich dhan èisteachd tùsail</string>
     <string name="account_moved_description">Chaidh %1$s a ghluasad gu:</string>
@@ -234,7 +234,7 @@
     <string name="caption_systememoji">Seata tùsail nan Emojis air an uidheam agad</string>
     <string name="restart">Ath-thòisich</string>
     <string name="later">Uaireigin eile</string>
-    <string name="restart_emoji">Feumaidh tu Tusky ath-thòiseachadh gus na roghainnean seo a chur an sàs</string>
+    <string name="restart_emoji">Feumaidh tu Gab ath-thòiseachadh gus na roghainnean seo a chur an sàs</string>
     <string name="restart_required">Feumaidh tu an aplacaid ath-thòiseachadh</string>
     <string name="action_open_toot">Fosgail am post</string>
     <string name="expand_collapse_all_statuses">Leudaich/Co-theannaich gach staid</string>
@@ -276,7 +276,7 @@
     <string name="pref_title_alway_open_spoiler">Leudaich postaichean ris a bheil rabhadh susbainte an-còmhnaidh</string>
     <string name="status_share_link">Co-roinn ceangal dhan phost</string>
     <string name="status_share_content">Co-roinn susbaint a’ phuist</string>
-    <string name="about_tusky_license">’S e bathar-bog saor le bun-tùs fosgailte a th’ ann an Tusky. Tha e fo cheadachas GNU General Public License tionndadh 3. Chì thu an ceadachas an-seo: https://www.gnu.org/licenses/gpl-3.0.en.html</string>
+    <string name="about_tusky_license">’S e bathar-bog saor le bun-tùs fosgailte a th’ ann an Gab. Tha e fo cheadachas GNU General Public License tionndadh 3. Chì thu an ceadachas an-seo: https://www.gnu.org/licenses/gpl-3.0.en.html</string>
     <string name="notification_favourite_description">Brathan nuair a thèid post agad a chomharrachadh ’na annsachd</string>
     <string name="notification_boost_description">Brathan nuair a thèid post agad brosnachadh</string>
     <string name="dialog_redraft_toot_warning">A bheil thu airson am post seo a sguabadh às is dreachd ùr a dhèanamh air\?</string>
@@ -329,13 +329,13 @@
     <string name="state_follow_requested">Iarrar leantainn orm</string>
     <string name="status_media_video">Videothan</string>
     <string name="status_media_images">Dealbhan</string>
-    <string name="about_tusky_account">Pròifil Tusky</string>
+    <string name="about_tusky_account">Pròifil Gab</string>
     <string name="about_bug_feature_request_site">Aithrisean air bugaichean ⁊ iarrtasan air gleusan:
-\n https://github.com/tuskyapp/Tusky/issues</string>
+\n https://github.com/johanw666/Gab/issues</string>
     <string name="about_project_site">Làrach-lìn a’ phròiseict:
-\n https://tusky.app</string>
-    <string name="about_powered_by_tusky">Le cumhachd Tusky</string>
-    <string name="about_tusky_version">Tusky %s</string>
+\n https://gab.app</string>
+    <string name="about_powered_by_tusky">Le cumhachd Gab</string>
+    <string name="about_tusky_version">Gab %s</string>
     <string name="description_account_locked">Cunntas glaiste</string>
     <plurals name="notification_title_summary">
         <item quantity="one">%d eadar-ghabhail ùr</item>

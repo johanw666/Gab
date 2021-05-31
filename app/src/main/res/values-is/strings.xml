@@ -248,14 +248,14 @@
         <item quantity="other">%d nýjar aðgerðir</item>
     </plurals>
     <string name="description_account_locked">Læstur notandaaðgangur</string>
-    <string name="about_tusky_version">Tusky %s</string>
-    <string name="about_powered_by_tusky">Keyrir á Tusky</string>
-    <string name="about_tusky_license">Tusky er frjáls hugbúnaður með opinn grunnkóða. Hann er gefinn út með GNU General Public notkunarleyfi, útgáfu 3. Þú getur skoðað notkunarleyfið hér: https://www.gnu.org/licenses/gpl-3.0.en.html</string>
+    <string name="about_tusky_version">Gab %s</string>
+    <string name="about_powered_by_tusky">Keyrir á Gab</string>
+    <string name="about_tusky_license">Gab er frjáls hugbúnaður með opinn grunnkóða. Hann er gefinn út með GNU General Public notkunarleyfi, útgáfu 3. Þú getur skoðað notkunarleyfið hér: https://www.gnu.org/licenses/gpl-3.0.en.html</string>
     <string name="about_project_site">Vefsvæði verkefnisins:
-\n https://tusky.app</string>
+\n https://gab.app</string>
     <string name="about_bug_feature_request_site">Villutilkynningar og beiðnir um nýja eiginleika:
-\n https://github.com/tuskyapp/Tusky/issues</string>
-    <string name="about_tusky_account">Notandasnið Tusky</string>
+\n https://github.com/johanw666/Gab/issues</string>
+    <string name="about_tusky_account">Notandasnið Gab</string>
     <string name="status_share_content">Deila efni úr tísti</string>
     <string name="status_share_link">Deila tengli á tíst</string>
     <string name="status_media_images">Myndir</string>
@@ -325,7 +325,7 @@
     <string name="expand_collapse_all_statuses">Þenja út / Fella saman allar stöðufærslur</string>
     <string name="action_open_toot">Opna tíst</string>
     <string name="restart_required">Endurræsing forrits er nauðsynleg</string>
-    <string name="restart_emoji">Það þarf að endurræsa Tusky til að breytingarnar taki gildi</string>
+    <string name="restart_emoji">Það þarf að endurræsa Gab til að breytingarnar taki gildi</string>
     <string name="later">Seinna</string>
     <string name="restart">Endurræsa</string>
     <string name="caption_systememoji">Sjálfgefið táknmyndasett á tækinu þnu</string>
@@ -337,7 +337,7 @@
     <string name="account_moved_description">%1$s hefur verið flutt á:</string>
     <string name="reblog_private">Endurbirta til upphaflegra lesenda</string>
     <string name="unreblog_private">Taka úr endurbirtingu</string>
-    <string name="license_description">Tusky inniheldur kóða og gögn frá eftirfarandi verkefnum með opinn grunnkóða:</string>
+    <string name="license_description">Gab inniheldur kóða og gögn frá eftirfarandi verkefnum með opinn grunnkóða:</string>
     <string name="license_apache_2">Notkunarleyfi er samkvæmt Apache hugbúnaðarleyfinu (afrit fyrir neðan)</string>
     <string name="license_cc_by_4">CC-BY 4.0</string>
     <string name="license_cc_by_sa_4">CC-BY-SA 4.0</string>
@@ -475,7 +475,7 @@
     <string name="action_unmute_desc">Afþagga %s</string>
     <string name="notification_follow_request_format">%s bað um að fylgjast með þér</string>
     <string name="title_announcements">Tilkynningar</string>
-    <string name="new_drafts_warning">Gerð draga í Tusky hefur verið endurhönnuð til að verða fljótlegri, notendavænni og gallalaus.
+    <string name="new_drafts_warning">Gerð draga í Gab hefur verið endurhönnuð til að verða fljótlegri, notendavænni og gallalaus.
 \n Þú getur áfram nýtt eldri drög í gegnum sérstakan hnapp í glugganum fyrir drög, en sá eiginleiki verður fjarlægður í framtíðaruppfærslu!</string>
     <string name="wellbeing_mode_notice">Sumar upplýsingar sem gætu haft áhrif á andlega vellíðan þína verða faldar. Þetta hefur áhrif á:
 \n

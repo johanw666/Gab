@@ -103,7 +103,7 @@
     <string name="license_cc_by_sa_4">CC-BY-SA 4.0</string>
     <string name="license_cc_by_4">CC-BY 4.0</string>
     <string name="license_apache_2">Лицензиран под лиценза Apache (копие по-долу)</string>
-    <string name="license_description">Tusky съдържа код и активи от следните проекти с отворен код:</string>
+    <string name="license_description">Gab съдържа код и активи от следните проекти с отворен код:</string>
     <string name="unreblog_private">Отсподеляне</string>
     <string name="reblog_private">Споделяне с оригиналната аудитория</string>
     <string name="account_moved_description">%1$s се премести в:</string>
@@ -116,7 +116,7 @@
     <string name="caption_systememoji">Емоджи комплектът по подразбиране в устройство ви</string>
     <string name="restart">Рестартиране</string>
     <string name="later">По-късно</string>
-    <string name="restart_emoji">Ще трябва да рестартирате Tusky, за да приложите тези промени</string>
+    <string name="restart_emoji">Ще трябва да рестартирате Gab, за да приложите тези промени</string>
     <string name="restart_required">Изисква се рестартиране на приложението</string>
     <string name="action_open_toot">Отваряне на публикация</string>
     <string name="expand_collapse_all_statuses">Разгъване/свиване на всички състояния</string>
@@ -189,14 +189,14 @@
     <string name="status_media_images">Изображения</string>
     <string name="status_share_link">Споделяне на връзка към публикация</string>
     <string name="status_share_content">Споделяне на съдържание на публикация</string>
-    <string name="about_tusky_account">Профилът на Tusky</string>
+    <string name="about_tusky_account">Профилът на Gab</string>
     <string name="about_bug_feature_request_site">Доклади за грешки и заявки за функции:
-\n https://github.com/tuskyapp/Tusky/issues</string>
+\n https://github.com/johanw666/Gab/issues</string>
     <string name="about_project_site">Уебсайт на проекта:
-\n https://tusky.app</string>
-    <string name="about_tusky_license">Tusky е свободен софтуер с отворен код. Той е лицензиран под Общият публичен лиценз на GNU Версия 3. Можете да видите лиценза тук: https://www.gnu.org/licenses/gpl-3.0.en.html</string>
-    <string name="about_powered_by_tusky">Осъществено от Tusky</string>
-    <string name="about_tusky_version">Tusky %s</string>
+\n https://gab.app</string>
+    <string name="about_tusky_license">Gab е свободен софтуер с отворен код. Той е лицензиран под Общият публичен лиценз на GNU Версия 3. Можете да видите лиценза тук: https://www.gnu.org/licenses/gpl-3.0.en.html</string>
+    <string name="about_powered_by_tusky">Осъществено от Gab</string>
+    <string name="about_tusky_version">Gab %s</string>
     <string name="about_title_activity">Относно</string>
     <string name="description_account_locked">Заключен акаунт</string>
     <plurals name="notification_title_summary">
@@ -443,7 +443,7 @@
     <string name="draft_deleted">Черновата е изтрита</string>
     <string name="drafts_failed_loading_reply">Неуспешно зареждане на информация за отговор</string>
     <string name="old_drafts">Стари чернови</string>
-    <string name="new_drafts_warning">Функцията за чернови в Tusky е напълно преработена, за да бъде по-бърза, по-лесна за ползване и по-малко бъгава.
+    <string name="new_drafts_warning">Функцията за чернови в Gab е напълно преработена, за да бъде по-бърза, по-лесна за ползване и по-малко бъгава.
 \n Все още можете да осъществите достъп до старите си чернови чрез бутон на екрана за нови чернови, но те ще бъдат премахнати при бъдеща актуализация!</string>
     <string name="drafts_toot_failed_to_send">Тази публикация не успя да се изпрати!</string>
     <string name="dialog_delete_list_warning">Наистина ли искате да изтриете списъка %s\?</string>
