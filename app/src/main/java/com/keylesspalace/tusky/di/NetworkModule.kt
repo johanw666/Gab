@@ -78,7 +78,7 @@ class NetworkModule {
                 val requestWithUserAgent = chain.request().newBuilder()
                     .header(
                         "User-Agent",
-                        "Tusky/${BuildConfig.VERSION_NAME} Android/${Build.VERSION.RELEASE} OkHttp/${OkHttp.VERSION}"
+                        "Gab/${BuildConfig.VERSION_NAME} Android/${Build.VERSION.RELEASE} OkHttp/${OkHttp.VERSION}" // JW: change user agent name
                     )
                     .build()
                 chain.proceed(requestWithUserAgent)

@@ -323,9 +323,9 @@
     <string name="description_account_locked">Locked Account</string>
 
     <string name="about_title_activity">About</string>
-    <string name="about_tusky_version">Tusky %s</string>
-    <string name="about_powered_by_tusky">Powered by Tusky</string>
-    <string name="about_tusky_license">Tusky is free and open-source software.
+    <string name="about_tusky_version">Gab %s</string>
+    <string name="about_powered_by_tusky">Powered by Gab</string>
+    <string name="about_tusky_license">Gab is free and open-source software.
         It is licensed under the GNU General Public License Version 3.
         You can view the license here: https://www.gnu.org/licenses/gpl-3.0.en.html</string>
     <!-- note to translators:
@@ -336,13 +336,13 @@
     -->
     <string name="about_project_site">
         Project website:\n
-        https://tusky.app
+        https://gab.com
     </string>
     <string name="about_bug_feature_request_site">
         Bug reports &amp; feature requests:\n
-        https://github.com/tuskyapp/Tusky/issues
+        https://github.com/johanw666/Gab/issues
     </string>
-    <string name="about_tusky_account">Tusky\'s Profile</string>
+    <string name="about_tusky_account">Gab\'s Profile</string>
 
     <string name="post_share_content">Share content of post</string>
     <string name="post_share_link">Share link to post</string>
@@ -426,7 +426,7 @@
     <string name="expand_collapse_all_posts">Expand/Collapse all posts</string>
     <string name="action_open_post">Open post</string>
     <string name="restart_required">App restart required</string>
-    <string name="restart_emoji">You\'ll need to restart Tusky in order to apply these changes</string>
+    <string name="restart_emoji">You\'ll need to restart Gab in order to apply these changes</string>
     <string name="later">Later</string>
     <string name="restart">Restart</string>
     <string name="caption_systememoji">Your device\'s default emoji set</string>
@@ -442,7 +442,7 @@
     <string name="reblog_private">Boost to original audience</string>
     <string name="unreblog_private">Unboost</string>
 
-    <string name="license_description">Tusky contains code and assets from the following open source projects:</string>
+    <string name="license_description">Gab contains code and assets from the following open source projects:</string>
     <string name="license_apache_2">Licensed under the Apache License (copy below)</string>
     <string name="license_cc_by_4">CC-BY 4.0</string>
     <string name="license_cc_by_sa_4">CC-BY-SA 4.0</string>
@@ -652,8 +652,8 @@
     <string name="saving_draft">Saving draft…</string>
 
     <string name="tips_push_notification_migration">Re-login all accounts to enable push notification support.</string>
-    <string name="dialog_push_notification_migration">In order to use push notifications via UnifiedPush, Tusky needs permission to subscribe to notifications on your Mastodon server. This requires a re-login to change the OAuth scopes granted to Tusky. Using the re-login option here or in Account Preferences will preserve all of your local drafts and cache.</string>
-    <string name="dialog_push_notification_migration_other_accounts">You have re-logged into your current account to grant push subscription permission to Tusky. However, you still have other accounts that have not been migrated this way. Switch to them and re-login one by one in order to enable UnifiedPush notifications support.</string>
+    <string name="dialog_push_notification_migration">In order to use push notifications via UnifiedPush, Gab needs permission to subscribe to notifications on your Mastodon server. This requires a re-login to change the OAuth scopes granted to Gab. Using the re-login option here or in Account Preferences will preserve all of your local drafts and cache.</string>
+    <string name="dialog_push_notification_migration_other_accounts">You have re-logged into your current account to grant push subscription permission to Gab. However, you still have other accounts that have not been migrated this way. Switch to them and re-login one by one in order to enable UnifiedPush notifications support.</string>
 
 
 </resources>
