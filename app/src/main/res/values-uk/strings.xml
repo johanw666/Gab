@@ -36,7 +36,7 @@
     <string name="action_logout">Вийти</string>
     <string name="title_drafts">Чернетки</string>
     <string name="title_favourites">Вподобане</string>
-    <string name="action_login">Увійти з Tusky</string>
+    <string name="action_login">Увійти з Gab</string>
     <string name="login_connection">Зʼєднання…</string>
     <string name="search_no_results">Немає результатів</string>
     <string name="hint_search">Пошук…</string>
@@ -266,7 +266,7 @@
     <string name="profile_badge_bot_text">Бот</string>
     <string name="restart">Перезапустити</string>
     <string name="later">Пізніше</string>
-    <string name="restart_emoji">Вам потрібно буде перезапустити Tusky, щоб застосувати ці зміни</string>
+    <string name="restart_emoji">Вам потрібно буде перезапустити Gab, щоб застосувати ці зміни</string>
     <string name="restart_required">Необхідно перезапустити застосунок</string>
     <string name="action_open_post">Відкрити допис</string>
     <string name="expand_collapse_all_posts">Розгорнути/згорнути всі дописи</string>
@@ -321,14 +321,14 @@
     <string name="post_media_images">Зображення</string>
     <string name="post_share_link">Поділитися посиланням на допис</string>
     <string name="post_share_content">Поділитися вмістом допису</string>
-    <string name="about_tusky_account">Профіль Tusky</string>
+    <string name="about_tusky_account">Профіль Gab</string>
     <string name="about_bug_feature_request_site">Звіти про вади та запити функцій:
-\n https://github.com/tuskyapp/Tusky/issues</string>
+\n https://github.com/johanw666/Gab/issues</string>
     <string name="about_project_site">Вебсайт проєкту:
-\n https://tusky.app</string>
-    <string name="about_tusky_license">Tusky — вільне та відкрите програмне забезпечення. Ліцензовано загальною громадською ліцензією GNU версії 3, ви можете переглянути ліцензію тут: https://www.gnu.org/licenses/gpl-3.0.en.html</string>
-    <string name="about_powered_by_tusky">Створено Tusky</string>
-    <string name="about_tusky_version">Tusky %s</string>
+\n https://gab.com</string>
+    <string name="about_tusky_license">Gab — вільне та відкрите програмне забезпечення. Ліцензовано загальною громадською ліцензією GNU версії 3, ви можете переглянути ліцензію тут: https://www.gnu.org/licenses/gpl-3.0.en.html</string>
+    <string name="about_powered_by_tusky">Створено Gab</string>
+    <string name="about_tusky_version">Gab %s</string>
     <string name="description_account_locked">Заблокований обліковий запис</string>
     <plurals name="notification_title_summary">
         <item quantity="one">%d нова взаємодія</item>
@@ -521,7 +521,7 @@
     <string name="profile_metadata_add">додати дані</string>
     <string name="profile_metadata_label">Метадані профілю</string>
     <string name="license_apache_2">Ліцензовано ліцензією Apache (копія знизу)</string>
-    <string name="license_description">Tusky містить код та засоби з таких проєктів з відкритим кодом:</string>
+    <string name="license_description">Gab містить код та засоби з таких проєктів з відкритим кодом:</string>
     <string name="unreblog_private">Скасувати поширення</string>
     <string name="reblog_private">Поширити початковій аудиторії</string>
     <string name="account_moved_description">%1$s переміщено до:</string>
@@ -555,8 +555,8 @@
     <string name="action_details">Подробиці</string>
     <string name="title_migration_relogin">Увійдіть повторно, щоб отримувати push-сповіщення</string>
     <string name="tips_push_notification_migration">Увійдіть повторно до всіх облікових записів, щоб увімкнути підтримку push-сповіщень.</string>
-    <string name="dialog_push_notification_migration">Щоб використовувати push-сповіщення через UnifiedPush, Tusky потребує дозволу стежити за сповіщеннями на вашому сервері Mastodon. Це вимагає повторного входу, щоб змінити області OAuth, надані Tusky. Використання параметра повторного входу тут або в налаштуваннях облікового запису збереже всі ваші локальні чернетки та кеш.</string>
-    <string name="dialog_push_notification_migration_other_accounts">Ви повторно увійшли до свого поточного облікового запису, щоб надати дозвіл на стеження Tusky. Однак у вас все ще є інші облікові записи, які не мігрували таким чином. Перейдіть до них і повторно увійдіть до них по одному, щоб забезпечити підтримку UnifiedPush сповіщень.</string>
+    <string name="dialog_push_notification_migration">Щоб використовувати push-сповіщення через UnifiedPush, Gab потребує дозволу стежити за сповіщеннями на вашому сервері Mastodon. Це вимагає повторного входу, щоб змінити області OAuth, надані Gab. Використання параметра повторного входу тут або в налаштуваннях облікового запису збереже всі ваші локальні чернетки та кеш.</string>
+    <string name="dialog_push_notification_migration_other_accounts">Ви повторно увійшли до свого поточного облікового запису, щоб надати дозвіл на стеження Gab. Однак у вас все ще є інші облікові записи, які не мігрували таким чином. Перейдіть до них і повторно увійдіть до них по одному, щоб забезпечити підтримку UnifiedPush сповіщень.</string>
     <string name="account_date_joined">Приєднується %1$s</string>
     <string name="action_edit_image">Редагувати зображення</string>
     <string name="status_count_one_plus">1+</string>

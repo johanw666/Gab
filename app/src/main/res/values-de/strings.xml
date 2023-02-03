@@ -61,7 +61,7 @@
     <string name="action_unfavourite">Favorisierung entfernen</string>
     <string name="action_more">Mehr</string>
     <string name="action_compose">Beitrag erstellen</string>
-    <string name="action_login">Mit Tusky anmelden</string>
+    <string name="action_login">Mit Gab anmelden</string>
     <string name="action_logout">Ausloggen</string>
     <string name="action_logout_confirm">Bist du sicher, dass du dich vom Konto %1$s abmelden möchtest\?</string>
     <string name="action_follow">Folgen</string>
@@ -223,7 +223,7 @@
     </plurals>
     <string name="description_account_locked">Gesperrtes Profil</string>
     <string name="about_title_activity">Über</string>
-    <string name="about_tusky_license">Tusky ist freie und quelloffene Software. Es ist lizenziert unter der GNU General Public License Version 3. Du kannst dir die Lizenz hier anschauen: https://www.gnu.org/licenses/gpl-3.0.de.html</string>
+    <string name="about_tusky_license">Gab ist freie und quelloffene Software. Es ist lizenziert unter der GNU General Public License Version 3. Du kannst dir die Lizenz hier anschauen: https://www.gnu.org/licenses/gpl-3.0.de.html</string>
     <!-- note to translators:
          * you should think of “free” as in “free speech,” not as in “free beer”.
            We sometimes call it “libre software,” borrowing the French or Spanish word for “free” as in freedom,
@@ -231,11 +231,11 @@
          * the url can be changed to link to the localized version of the license.
     -->
     <string name="about_project_site">Website des Projekts: 
-\n https://tusky.app</string>
+\n https://gab.com</string>
     <string name="about_bug_feature_request_site">        Fehlermeldungen &amp; Verbesserungsvorschläge:\n
-        https://github.com/tuskyapp/Tusky/issues
+        https://github.com/johanw666/Gab/issues
     </string>
-    <string name="about_tusky_account">Tuskys Profil</string>
+    <string name="about_tusky_account">Gabs Profil</string>
     <string name="post_share_content">Inhalt teilen</string>
     <string name="post_share_link">Link teilen</string>
     <string name="post_media_images">Bilder</string>
@@ -288,7 +288,7 @@
     <string name="expand_collapse_all_posts">Alle Beiträge aus-/einklappen</string>
     <string name="action_open_post">Beitrag öffnen</string>
     <string name="restart_required">App-Neustart erforderlich</string>
-    <string name="restart_emoji">Du musst Tusky neustarten um die Änderungen anzuwenden</string>
+    <string name="restart_emoji">Du musst Gab neustarten um die Änderungen anzuwenden</string>
     <string name="later">Später</string>
     <string name="restart">Neustarten</string>
     <string name="caption_systememoji">Die Standard-Emojis deines Geräts</string>
@@ -300,7 +300,7 @@
     <string name="account_moved_description">%1$s ist umgezogen auf:</string>
     <string name="reblog_private">An ursprüngliches Publikum teilen</string>
     <string name="unreblog_private">nicht mehr teilen</string>
-    <string name="license_description">Tusky enthält Code und Inhalte von den folgenden Open-Source-Projekten:</string>
+    <string name="license_description">Gab enthält Code und Inhalte von den folgenden Open-Source-Projekten:</string>
     <string name="license_apache_2">Lizenziert unter der Apache-Lizenz (s. u.)</string>
     <string name="license_cc_by_4">CC-BY 4.0</string>
     <string name="license_cc_by_sa_4">CC-BY-SA 4.0</string>
@@ -431,7 +431,7 @@
     <string name="title_bookmarks">Lesezeichen</string>
     <string name="action_bookmark">Lesezeichen</string>
     <string name="action_view_bookmarks">Lesezeichen</string>
-    <string name="about_powered_by_tusky">Angetrieben durch Tusky</string>
+    <string name="about_powered_by_tusky">Angetrieben durch Gab</string>
     <string name="description_post_bookmarked">Als Lesezeichen gespeichert</string>
     <string name="select_list_title">Liste auswählen</string>
     <string name="list">Liste</string>
@@ -538,8 +538,8 @@
     <string name="notification_update_name">Beitragsbearbeitungen</string>
     <string name="title_migration_relogin">Neuanmeldung für Push-Benachrichtigungen</string>
     <string name="action_dismiss">Ablehnen</string>
-    <string name="dialog_push_notification_migration_other_accounts">Du hast dich erneut in dein aktuelles Konto eingeloggt, um Tusky die Genehmigung für Push-Abonnements zu erteilen. Du hast jedoch noch andere Konten, die nicht auf diese Weise migriert wurden. Wechsel zu diesen Konten und melde dich nacheinander neu an, um die Unterstützung für UnifiedPush-Benachrichtigungen zu aktivieren.</string>
-    <string name="dialog_push_notification_migration">Um Push-Benachrichtigungen über UnifiedPush verwenden zu können, benötigt Tusky die Erlaubnis, Benachrichtigungen auf Ihrem Mastodon-Server zu abonnieren. Dies erfordert eine erneute Anmeldung, um die Tusky gewährten OAuth-Bereiche zu ändern. Wenn du die Option zum erneuten Einloggen hier oder in den Kontoeinstellungen verwendest, bleiben alle deine lokalen Entwürfe und der Cache erhalten.</string>
+    <string name="dialog_push_notification_migration_other_accounts">Du hast dich erneut in dein aktuelles Konto eingeloggt, um Gab die Genehmigung für Push-Abonnements zu erteilen. Du hast jedoch noch andere Konten, die nicht auf diese Weise migriert wurden. Wechsel zu diesen Konten und melde dich nacheinander neu an, um die Unterstützung für UnifiedPush-Benachrichtigungen zu aktivieren.</string>
+    <string name="dialog_push_notification_migration">Um Push-Benachrichtigungen über UnifiedPush verwenden zu können, benötigt Gab die Erlaubnis, Benachrichtigungen auf Ihrem Mastodon-Server zu abonnieren. Dies erfordert eine erneute Anmeldung, um die Gab gewährten OAuth-Bereiche zu ändern. Wenn du die Option zum erneuten Einloggen hier oder in den Kontoeinstellungen verwendest, bleiben alle deine lokalen Entwürfe und der Cache erhalten.</string>
     <string name="tips_push_notification_migration">Melde alle Konten neu an, um die Unterstützung für Push-Benachrichtigungen zu aktivieren.</string>
     <string name="account_date_joined">%1$s beigetreten</string>
     <string name="status_count_one_plus">1+</string>

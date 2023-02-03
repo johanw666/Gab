@@ -58,7 +58,7 @@
     <string name="action_favourite">Favorito</string>
     <string name="action_more">Más</string>
     <string name="action_compose">Redactar</string>
-    <string name="action_login">Iniciar sesión con Tusky</string>
+    <string name="action_login">Iniciar sesión con Gab</string>
     <string name="action_logout">Cerrar sesión</string>
     <string name="action_logout_confirm">¿Seguro que quiere cerrar la sesión de %1$s?</string>
     <string name="action_follow">Seguir</string>
@@ -208,8 +208,8 @@
     </plurals>
     <string name="description_account_locked">Cuenta protegida</string>
     <string name="about_title_activity">Acerca de</string>
-    <string name="about_tusky_version">Tusky %s</string>
-    <string name="about_tusky_license">Tusky es un software libre y de código abierto.
+    <string name="about_tusky_version">Gab %s</string>
+    <string name="about_tusky_license">Gab es un software libre y de código abierto.
         Está licenciado bajo la licencia \"GNU General Public License Version 3\".
         Puedes leer sobre la misma en: https://www.gnu.org/licenses/gpl-3.0.en.html</string>
     <!-- note to translators:
@@ -219,12 +219,12 @@
          * the url can be changed to link to the localized version of the license.
     -->
     <string name="about_project_site">        Sitio del proyecto:\n
-        https://tusky.app
+        https://gab.com
     </string>
     <string name="about_bug_feature_request_site">        Reporte de errores y peticiones de características:\n
-        https://github.com/tuskyapp/Tusky/issues
+        https://github.com/johanw666/Gab/issues
     </string>
-    <string name="about_tusky_account">Perfil de Tusky</string>
+    <string name="about_tusky_account">Perfil de Gab</string>
     <string name="post_share_content">Compartir contenido</string>
     <string name="post_share_link">Compartir enlace</string>
     <string name="post_media_images">Imágenes</string>
@@ -291,7 +291,7 @@
     <string name="account_moved_description">%1$s se trasladó a:</string>
     <string name="reblog_private">Volver a compartir</string>
     <string name="unreblog_private">Dejar de compartir</string>
-    <string name="license_description">Tusky contiene código y recursos de los siguientes proyectos:</string>
+    <string name="license_description">Gab contiene código y recursos de los siguientes proyectos:</string>
     <string name="license_apache_2">Licenciado bajo Apache License (texto bajo la lista)</string>
     <string name="license_cc_by_4">CC BY 4.0</string>
     <string name="license_cc_by_sa_4">CC-BY-SA 4.0</string>
@@ -456,7 +456,7 @@
     <string name="action_schedule_post">Programar estado</string>
     <string name="action_reset_schedule">Reiniciar</string>
     <string name="post_lookup_error_format">Error al buscar el post %s</string>
-    <string name="about_powered_by_tusky">Potenciado por Tusky</string>
+    <string name="about_powered_by_tusky">Potenciado por Gab</string>
     <string name="title_bookmarks">Marcadores</string>
     <string name="action_bookmark">Marcador</string>
     <string name="action_view_bookmarks">Marcadores</string>
@@ -559,7 +559,7 @@
     <string name="duration_14_days">14 días</string>
     <string name="duration_365_days">365 días</string>
     <string name="tips_push_notification_migration">Inicia sesión de nuevo en todas las cuentas para activar las notificaciones push.</string>
-    <string name="dialog_push_notification_migration">Para poder usar las notificaciones push con UnifiedPush, Tusky necesita permiso para suscribirse a las notificaciones de tu servidor de Mastodon. Es necesario volver a acceder para cambiar los parámetros OAuth concedidos a Tusky. Usar aquí, o en las Preferencias de la Cuenta, la opción de volver a acceder conservarás los borradores y la caché.</string>
+    <string name="dialog_push_notification_migration">Para poder usar las notificaciones push con UnifiedPush, Gab necesita permiso para suscribirse a las notificaciones de tu servidor de Mastodon. Es necesario volver a acceder para cambiar los parámetros OAuth concedidos a Gab. Usar aquí, o en las Preferencias de la Cuenta, la opción de volver a acceder conservarás los borradores y la caché.</string>
     <string name="failed_to_pin">Fallo al fijar</string>
     <string name="failed_to_unpin">Fallo al quitarlo</string>
     <string name="pref_show_self_username_disambiguate">Cuando se utilizan varias cuentas</string>
@@ -579,7 +579,7 @@
     <string name="duration_no_change">(Sin cambios)</string>
     <string name="tusky_compose_post_quicksetting_label">Escribir publicación</string>
     <string name="saving_draft">Guardando borrador…</string>
-    <string name="dialog_push_notification_migration_other_accounts">Has vuelto a iniciar sesión en esta cuenta para dar permiso de notificaciones push a Tusky. Sin embargo, aún hay otras cuentas que no tienen este permiso. Cambia a estas cuentas y vuelve a iniciar sesión, una a una, para activar el soporte de notificaciones de UnifiedPush.</string>
+    <string name="dialog_push_notification_migration_other_accounts">Has vuelto a iniciar sesión en esta cuenta para dar permiso de notificaciones push a Gab. Sin embargo, aún hay otras cuentas que no tienen este permiso. Cambia a estas cuentas y vuelve a iniciar sesión, una a una, para activar el soporte de notificaciones de UnifiedPush.</string>
     <string name="instance_rule_info">Al iniciar sesión aceptas las normas de %s.</string>
     <string name="instance_rule_title">Normas de %s</string>
     <string name="notification_sign_up_name">Creación de cuentas</string>
