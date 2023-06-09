@@ -46,7 +46,7 @@
     <string name="action_favourite">Preferit</string>
     <string name="action_more">Més</string>
     <string name="action_compose">Escriure</string>
-    <string name="action_login">Inicia sessió amb Tusky</string>
+    <string name="action_login">Inicia sessió amb Gab</string>
     <string name="action_logout">Tanca sessió</string>
     <string name="action_follow">Segueix</string>
     <string name="action_unfollow">Deixa de seguir</string>
@@ -158,20 +158,20 @@
     </plurals>
     <string name="description_account_locked">Compte blocat</string>
     <string name="about_title_activity">Quant a</string>
-    <string name="about_tusky_version">Tusky %s</string>
-    <string name="about_tusky_license">Tusky és programari gratuït, lliure i de codi obert.
+    <string name="about_tusky_version">Gab %s</string>
+    <string name="about_tusky_license">Gab és programari gratuït, lliure i de codi obert.
         Està llicenciat en els termes de la Llicència Pública General GNU versió 3.
         Podeu trobar les llicència aquí: https://www.gnu.org/licenses/gpl-3.0.ca.html</string>
     <!-- note to translators: the url can be changed to link to the localized version of the license -->
     <string name="about_project_site">
         Lloc web del projecte:\n
-        https://tusky.app
+        https://gab.com
     </string>
     <string name="about_bug_feature_request_site">
         Informes d\'errors i peticions de funcionalitats:\n
-        https://github.com/tuskyapp/Tusky/issues
+        https://github.com/johanw666/Gab/issues
     </string>
-    <string name="about_tusky_account">Perfil del Tusky</string>
+    <string name="about_tusky_account">Perfil del Gab</string>
     <string name="post_share_content">Comparteix el contingut de la publicació</string>
     <string name="post_share_link">Comparteix l\'enllaç a la publicació</string>
     <string name="post_media_images">Imatges</string>
@@ -321,7 +321,7 @@
     <string name="account_moved_description">%1$s s\'ha trasllat a:</string>
     <string name="reblog_private">Tornar a impulsar</string>
     <string name="unreblog_private">No impulsar</string>
-    <string name="license_description">Tusky conté codi i recursos dels següents projectes:</string>
+    <string name="license_description">Gab conté codi i recursos dels següents projectes:</string>
     <string name="license_apache_2">Sota llicencia Apache (text a sota)</string>
     <string name="license_cc_by_4">CC-BY 4.0</string>
     <string name="license_cc_by_sa_4">CC-BY-SA 4.0</string>
@@ -425,7 +425,7 @@
     <string name="action_access_scheduled_posts">Publicacions programades</string>
     <string name="action_schedule_post">Programa la publicació</string>
     <string name="action_reset_schedule">Reiniciar</string>
-    <string name="about_powered_by_tusky">Desenvolupat per Tusky</string>
+    <string name="about_powered_by_tusky">Desenvolupat per Gab</string>
     <string name="description_post_bookmarked">S\'ha afegit a les adreces d\'interès</string>
     <string name="select_list_title">Seleccionar la llista</string>
     <string name="list">Llista</string>
@@ -571,7 +571,7 @@
     <string name="title_migration_relogin">Torneu a iniciar sessió per rebre notificacions push</string>
     <string name="a11y_label_loading_thread">S\'està carregant el fil</string>
     <string name="compose_save_draft_loses_media">Guardar l\'esborrany\? (Els fitxers adjunts es tornaran a penjar quan recupereu l\'esborrany.)</string>
-    <string name="dialog_push_notification_migration_other_accounts">Heu tornat a iniciar sessió al vostre compte actual per concedir permís de subscripció push a Tusky. Tanmateix, encara teniu altres comptes que no s\'han migrat d\'aquesta manera. Canvieu-los i torneu a iniciar sessió un per un per activar el suport de notificacions UnifiedPush.</string>
+    <string name="dialog_push_notification_migration_other_accounts">Heu tornat a iniciar sessió al vostre compte actual per concedir permís de subscripció push a Gab. Tanmateix, encara teniu altres comptes que no s\'han migrat d\'aquesta manera. Canvieu-los i torneu a iniciar sessió un per un per activar el suport de notificacions UnifiedPush.</string>
     <string name="instance_rule_info">En iniciar sessió, accepteu les regles de %s.</string>
     <string name="action_edit_image">Edita la imatge</string>
     <string name="failed_to_pin">No s\'ha pogut fixar</string>
@@ -614,7 +614,7 @@
 \n Les notificacions push no es veuran afectades, però podeu revisar les vostres preferències de notificació manualment.</string>
     <string name="account_date_joined">S\'ha unit el %1$s</string>
     <string name="saving_draft">Desant l\'esborrany…</string>
-    <string name="dialog_push_notification_migration">Per utilitzar les notificacions push mitjançant UnifiedPush, Tusky necessita permís per subscriure\'s a les notificacions al vostre servidor Mastodon. Això requereix un nou inici de sessió per canviar els àmbits d\'OAuth concedits a Tusky. Si feu servir l\'opció de tornar a iniciar sessió aquí o a les preferències del compte, es conservaran tots els esborranys locals i la memòria cau.</string>
+    <string name="dialog_push_notification_migration">Per utilitzar les notificacions push mitjançant UnifiedPush, Gab necessita permís per subscriure\'s a les notificacions al vostre servidor Mastodon. Això requereix un nou inici de sessió per canviar els àmbits d\'OAuth concedits a Gab. Si feu servir l\'opció de tornar a iniciar sessió aquí o a les preferències del compte, es conservaran tots els esborranys locals i la memòria cau.</string>
     <string name="tips_push_notification_migration">Torneu a iniciar sessió a tots els comptes per activar el suport de notificacions push.</string>
     <string name="description_post_edited">Editat</string>
     <string name="status_edit_info">%1$s ha editat %2$s</string>

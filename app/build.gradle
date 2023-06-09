@@ -10,15 +10,15 @@ apply from: 'getGitSha.gradle'
 final def gitSha = ext.getGitSha()
 
 // The app name
-final def APP_NAME = "Tusky"
+final def APP_NAME = "Gab" // JW
 // The application id. Must be unique, e.g. based on your domain
-final def APP_ID = "com.keylesspalace.tusky"
+final def APP_ID = "com.gabai.gabby" // JW
 // url of a custom app logo. Recommended size at least 600x600. Keep empty to use the Tusky elephant friend.
 final def CUSTOM_LOGO_URL = ""
 // e.g. mastodon.social. Keep empty to not suggest any instance on the signup screen
-final def CUSTOM_INSTANCE = ""
+final def CUSTOM_INSTANCE = "gab.com" // JW
 // link to your support account. Will be linked on the about page when not empty.
-final def SUPPORT_ACCOUNT_URL = "https://mastodon.social/@Tusky"
+final def SUPPORT_ACCOUNT_URL = "" // JW
 
 android {
     compileSdk 33
@@ -29,7 +29,7 @@ android {
         minSdk 23
         targetSdk 33
         versionCode 110
-        versionName "22.0"
+        versionName "22.0.0-JW"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
 
@@ -38,6 +38,20 @@ android {
         buildConfigField("String", "CUSTOM_LOGO_URL", "\"$CUSTOM_LOGO_URL\"")
         buildConfigField("String", "CUSTOM_INSTANCE", "\"$CUSTOM_INSTANCE\"")
         buildConfigField("String", "SUPPORT_ACCOUNT_URL", "\"$SUPPORT_ACCOUNT_URL\"")
+
+        // JW: add abifilters
+        ndk {
+            abiFilters 'armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64'
+        }
+
+        splits {
+            abi {
+                enable true
+                reset()
+                include 'armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64'
+                universalApk true
+            }
+        }
     }
     buildTypes {
         release {
@@ -53,7 +67,7 @@ android {
         green {
             resValue "string", "app_name", APP_NAME + " Test"
             applicationIdSuffix ".test"
-            versionNameSuffix "-" + gitSha
+            versionNameSuffix // "-" + gitSha // JW
         }
     }
 
@@ -105,10 +119,12 @@ android {
         sourceCompatibility JavaVersion.VERSION_11
         targetCompatibility JavaVersion.VERSION_11
     }
-    applicationVariants.configureEach { variant ->
-        variant.outputs.configureEach {
-            outputFileName = "Tusky_${variant.versionName}_${variant.versionCode}_${gitSha}_" +
-                "${variant.flavorName}_${buildType.name}.apk"
+
+    // JW: completely rewrote output naming
+    android.applicationVariants.all { variant ->
+        variant.outputs.all { output ->
+            def abiName = output.getFilter("ABI") ?: 'universal'
+            outputFileName = outputFileName = "Gab-${variant.versionName}-" + "${variant.flavorName}-${buildType.name}-${abiName}.apk"
         }
     }
 }
