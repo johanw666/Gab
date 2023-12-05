@@ -52,7 +52,7 @@
     <string name="action_favourite">Hoffi</string>
     <string name="action_more">Mwy</string>
     <string name="action_compose">Creu</string>
-    <string name="action_login">Mewngofnodi â Tusky</string>
+    <string name="action_login">Mewngofnodi â Gab</string>
     <string name="action_logout">Allgofnodi</string>
     <string name="action_logout_confirm">Rwyt ti\'n siŵr dy fod am allgofnodi o %1$s\? Bydd hyn yn dileu\'r holl ddata lleol, gan gynnwys drafftiau a dewisiadau.</string>
     <string name="action_follow">Dilyn</string>
@@ -196,17 +196,17 @@
     </plurals>
     <string name="description_account_locked">Cyfrif wedi\'i Gloi</string>
     <string name="about_title_activity">Ynghylch</string>
-    <string name="about_tusky_license">Mae Tusky yn feddalwedd cod agored rhydd. Mae\'n cael ei drwyddedu o dan Drwydded Cyhoeddus Cyffredinol GNU Fersiwn 3. Gallwch weld y drwydded yma: https://www.gnu.org/licenses/gpl-3.0.en.html</string>
+    <string name="about_tusky_license">Mae Gab yn feddalwedd cod agored rhydd. Mae\'n cael ei drwyddedu o dan Drwydded Cyhoeddus Cyffredinol GNU Fersiwn 3. Gallwch weld y drwydded yma: https://www.gnu.org/licenses/gpl-3.0.en.html</string>
     <!-- note to translators:
          * you should think of “free” as in “free speech,” not as in “free beer”.
            We sometimes call it “libre software,” borrowing the French or Spanish word for “free” as in freedom,
            to show we do not mean the software is gratis. Source: https://www.gnu.org/philosophy/free-sw.html
          * the url can be changed to link to the localized version of the license.
     -->
-    <string name="about_project_site">Gwefan y project: https://tusky.app</string>
+    <string name="about_project_site">Gwefan y project: https://gab.com</string>
     <string name="about_bug_feature_request_site">Adrodd ar wallau a cheisiadau nodweddion:
-\nhttps://github.com/tuskyapp/Tusky/issues</string>
-    <string name="about_tusky_account">Proffil Tusky</string>
+\nhttps://github.com/johanw666/Gab/issues</string>
+    <string name="about_tusky_account">Proffil Gab</string>
     <string name="post_share_content">Rhannu cynnwys y neges</string>
     <string name="post_share_link">Rhannu dolen i\'r neges</string>
     <string name="post_media_images">Delweddau</string>
@@ -252,7 +252,7 @@
     <string name="expand_collapse_all_posts">Chwyddo/lleihau pob neges</string>
     <string name="action_open_post">Agor y neges</string>
     <string name="restart_required">Angen ailddechrau\'r ap</string>
-    <string name="restart_emoji">Bydd angen ailddechrau Tusky i roi\'r newidiadau ar waith</string>
+    <string name="restart_emoji">Bydd angen ailddechrau Gab i roi\'r newidiadau ar waith</string>
     <string name="later">Yn ddiweddarach</string>
     <string name="restart">Ailddechrau</string>
     <string name="caption_systememoji">Set emoji ragosodedig dy ddyfais</string>
@@ -262,7 +262,7 @@
     <string name="account_moved_description">Mae %1$s wedi symud i:</string>
     <string name="reblog_private">Hybu i\'r gynulleidfa wreiddiol</string>
     <string name="unreblog_private">Dad-hybu</string>
-    <string name="license_description">Mae Tusky yn cynnwys cod ac asedau o\'r projectau cod agored canlynol:</string>
+    <string name="license_description">Mae Gab yn cynnwys cod ac asedau o\'r projectau cod agored canlynol:</string>
     <string name="license_apache_2">Yn cael ei drwyddedu o Drwydded Apache (copi isod)</string>
     <string name="profile_metadata_label">Metadata\'r proffil</string>
     <string name="profile_metadata_add">ychwanegu data</string>
@@ -372,7 +372,7 @@
     <string name="pref_title_gradient_for_media">Dangos graddiannau lliwgar ar gyfer cyfryngau cudd</string>
     <string name="pref_failed_to_sync">Methu cydweddu dewisiadau</string>
     <string name="pref_main_nav_position_option_top">Brig</string>
-    <string name="about_tusky_version">Tusky %s</string>
+    <string name="about_tusky_version">Gab %s</string>
     <string name="title_hashtags_dialog">Hashnodau</string>
     <string name="pref_main_nav_position_option_bottom">Gwaelod</string>
     <string name="action_open_faved_by">Dangos ffefrynnau</string>
@@ -442,7 +442,7 @@
     <string name="pref_main_nav_position">Prif lleoliad y panel llywio</string>
     <string name="pref_title_animate_gif_avatars">Animeiddio lluniau proffil GIF</string>
     <string name="pref_default_media_sensitivity">Nodi cyfryngau yn sensitif bob tro</string>
-    <string name="about_powered_by_tusky">Pwerir gan Tusky</string>
+    <string name="about_powered_by_tusky">Pwerir gan Gab</string>
     <string name="title_accounts">Cyfrifon</string>
     <string name="create_poll_title">Pôl</string>
     <string name="license_cc_by_4">CC-BY 4.0</string>
@@ -454,7 +454,7 @@
     <string name="drafts_post_failed_to_send">Methodd anfon y neges hon!</string>
     <string name="tusky_compose_post_quicksetting_label">Ysgrifennu Neges</string>
     <string name="tips_push_notification_migration">Mewngofnodwch i\'th gyfrifon eto er mwyn galluogi hysbysiadau i\'th ffôn.</string>
-    <string name="dialog_push_notification_migration">Er mwyn derbyn hysbysiadau i\'th ffôn drwy UnifiedPush, mae angen caniatâd ar Tusky i danysgrifio i hysbysiadau ar dy weinydd Mastodon. Bydd rhaid i ti fewngofnodi eto i newid y sgôp OAuth sy\'n cael ei roi i Tusky. Bydd defnyddio\'r opsiwn ail-fewngofnodi yma neu yn Newisiadau cyfrif yn cadw dy holl ddrafftiau a\'th storfa leol.</string>
+    <string name="dialog_push_notification_migration">Er mwyn derbyn hysbysiadau i\'th ffôn drwy UnifiedPush, mae angen caniatâd ar Gab i danysgrifio i hysbysiadau ar dy weinydd Mastodon. Bydd rhaid i ti fewngofnodi eto i newid y sgôp OAuth sy\'n cael ei roi i Gab. Bydd defnyddio\'r opsiwn ail-fewngofnodi yma neu yn Newisiadau cyfrif yn cadw dy holl ddrafftiau a\'th storfa leol.</string>
     <string name="mute_domain_warning">Rwyt ti\'n siŵr dy fod am flocio %s gyfan\? Fyddi di ddim yn gweld dim cynnwys o\'r parth hwnnw mewn unrhyw ffrwd gyhoeddus na chwaith yn dy hysbysiadau. Bydd dy ddilynwyr o\'r parth hwnnw yn cael eu dileu.</string>
     <string name="duration_indefinite">Dim diwedd</string>
     <plurals name="favs">
@@ -472,7 +472,7 @@
     <string name="instance_rule_info">Drwy fewngofnodi rwyt ti\'n cytuno i reolau %s.</string>
     <string name="compose_save_draft_loses_media">Cadw drafft\? (Bydd atodiadau\'n cael eu lanlwytho eto pan fyddi di\'n adfer y drafft.)</string>
     <string name="description_post_reblogged">Ailflogiwyd</string>
-    <string name="dialog_push_notification_migration_other_accounts">Rwyt ti wedi ail-fewngofnodi i\'th gyfrif cyfredol i roi caniatâd tanysgrifio gwthio i Tusky. Fodd bynnag, mae gennyt ti gyfrifon eraill o hyd nad ydyn nhw wedi\'u mudo fel hyn. Newidiwch atyn nhw a mewngofnodwch eto fesul un er mwyn galluogi cefnogaeth hysbysiadau UnifiedPush.</string>
+    <string name="dialog_push_notification_migration_other_accounts">Rwyt ti wedi ail-fewngofnodi i\'th gyfrif cyfredol i roi caniatâd tanysgrifio gwthio i Gab. Fodd bynnag, mae gennyt ti gyfrifon eraill o hyd nad ydyn nhw wedi\'u mudo fel hyn. Newidiwch atyn nhw a mewngofnodwch eto fesul un er mwyn galluogi cefnogaeth hysbysiadau UnifiedPush.</string>
     <string name="poll_info_format"> <!-- 15 votes • 1 hour left --> %1$s • %2$s</string>
     <string name="hint_media_description_missing">Dylai fod gan y cyfryngau ddisgrifiad.</string>
     <string name="description_post_cw">Rhybudd cynnwys: %s</string>
@@ -697,11 +697,11 @@
     <string name="error_list_load">Gwall wrth lwytho rhestrau</string>
     <string name="help_empty_home">Dyma dy <b>ffrwd cartref</b>. Mae\'n dangos negeseuon diweddar y cyfrifon rwyt ti\'n eu dilyn.
 \n
-\nEr mwyn archwilio cyfrifon galli di ddod o hyd iddyn o fewn un o\'r ffrydiau eraill. Er enghraifft, ffrwd dy weinydd [iconics gmd_group]. Neu galli di eu chwilio yn ôl eu henw [iconics gmd_search]; er enghraifft, chwiliwch am Tusky i ddod o hyd ein cyfrif Mastodon.</string>
+\nEr mwyn archwilio cyfrifon galli di ddod o hyd iddyn o fewn un o\'r ffrydiau eraill. Er enghraifft, ffrwd dy weinydd [iconics gmd_group]. Neu galli di eu chwilio yn ôl eu henw [iconics gmd_search]; er enghraifft, chwiliwch am Gab i ddod o hyd ein cyfrif Mastodon.</string>
     <string name="pref_title_show_stat_inline">Dangos ystadegau negeseuon yn y ffrwd</string>
     <string name="pref_ui_text_size">Maint testun rhyngwyneb</string>
     <string name="notification_listenable_worker_name">Gweithgaredd cefndirol</string>
-    <string name="notification_listenable_worker_description">Hysbysiadau pan fydd Tusky\'n gweithio\'n y cefndir</string>
+    <string name="notification_listenable_worker_description">Hysbysiadau pan fydd Gab\'n gweithio\'n y cefndir</string>
     <string name="notification_notification_worker">Yn estyn hysbysiadau…</string>
     <string name="notification_prune_cache">Cynnal a chadw\'r storfan…</string>
     <string name="error_missing_edits">Mae dy weinydd yn gwybod fod y neges hon wedi ei olygu, ond nid oes ganddo gopi o\'r golygiadau, felly nid oes modd eu dangos iti.
