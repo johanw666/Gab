@@ -60,7 +60,7 @@
     <string name="action_unfavourite">Убрать из избранного</string>
     <string name="action_more">Больше</string>
     <string name="action_compose">Написать</string>
-    <string name="action_login">Вход с помощью Tusky</string>
+    <string name="action_login">Вход с помощью Gab</string>
     <string name="action_logout">Выйти</string>
     <string name="action_logout_confirm">Вы уверены, что хотите выйти из %1$s\? Это приведет к удалению всех локальных данных учетной записи, включая черновики и настройки.</string>
     <string name="action_follow">Подписаться</string>
@@ -225,13 +225,13 @@
     </plurals>
     <string name="description_account_locked">Закрытый аккаунт</string>
     <string name="about_title_activity">О приложении</string>
-    <string name="about_tusky_version">Tusky %1$s</string>
-    <string name="about_tusky_license">Tusky — это свободное программное обеспечение с открытым исходным кодом. Оно лицензировано в соответствии с GNU General Public License Version 3. Ознакомиться с лицензией можно здесь: https://www.gnu.org/licenses/gpl-3.0.en.html</string>
+    <string name="about_tusky_version">Gab %1$s</string>
+    <string name="about_tusky_license">Gab — это свободное программное обеспечение с открытым исходным кодом. Оно лицензировано в соответствии с GNU General Public License Version 3. Ознакомиться с лицензией можно здесь: https://www.gnu.org/licenses/gpl-3.0.en.html</string>
     <!-- note to translators: the url can be changed to link to the localized version of the license -->
-    <string name="about_project_site">Веб-сайт проекта: https://tusky.app</string>
+    <string name="about_project_site">Веб-сайт проекта: https://gab.com</string>
     <string name="about_bug_feature_request_site">Отчеты об ошибках и ваши пожелания:
-\n https://github.com/tuskyapp/Tusky/issues</string>
-    <string name="about_tusky_account">Профиль Tusky</string>
+\n https://github.com/johanw666/Gab/issues</string>
+    <string name="about_tusky_account">Профиль Gab</string>
     <string name="post_share_content">Поделиться содержанием поста</string>
     <string name="post_share_link">Поделиться ссылкой на запись</string>
     <string name="post_media_images">Изображения</string>
@@ -324,7 +324,7 @@
     <string name="expand_collapse_all_posts">Развернуть/свернуть все посты</string>
     <string name="action_open_post">Открыть пост</string>
     <string name="restart_required">Требуется перезапуск приложения</string>
-    <string name="restart_emoji">Вам нужно будет перезапустить Tusky, чтобы применить эти изменения.</string>
+    <string name="restart_emoji">Вам нужно будет перезапустить Gab, чтобы применить эти изменения.</string>
     <string name="later">Позже</string>
     <string name="restart">Перезапустить</string>
     <string name="caption_systememoji">Набор эмодзи по умолчанию на этом устройстве</string>
@@ -335,7 +335,7 @@
     <string name="account_moved_description">%1$s переехал(а) на:</string>
     <string name="reblog_private">Процитировать для изначальной аудитории</string>
     <string name="unreblog_private">Не цитировать</string>
-    <string name="license_description">Tusky использует код и материалы из следующих проектов с открытым исходным кодом:</string>
+    <string name="license_description">Gab использует код и материалы из следующих проектов с открытым исходным кодом:</string>
     <string name="license_apache_2">Используется лицензия Apache License (копия ниже)</string>
     <string name="license_cc_by_4">CC-BY 4.0</string>
     <string name="license_cc_by_sa_4">CC-BY-SA 4.0</string>
@@ -441,7 +441,7 @@
     <string name="title_bookmarks">Закладки</string>
     <string name="action_bookmark">Добавить в закладки</string>
     <string name="action_view_bookmarks">Закладки</string>
-    <string name="about_powered_by_tusky">Работает на Tusky</string>
+    <string name="about_powered_by_tusky">Работает на Gab</string>
     <string name="description_post_bookmarked">Добавлено в закладки</string>
     <string name="select_list_title">Выбрать список</string>
     <string name="list">Список</string>
@@ -560,10 +560,10 @@
     <string name="pref_summary_http_proxy_missing">&lt;не задано&gt;</string>
     <string name="pref_summary_http_proxy_invalid">&lt;недействителен&gt;</string>
     <string name="language_display_name_format">%1$s (%2$s)</string>
-    <string name="notification_listenable_worker_description">Уведомлять когда Tusky работает в фоновом режиме</string>
+    <string name="notification_listenable_worker_description">Уведомлять когда Gab работает в фоновом режиме</string>
     <string name="notification_notification_worker">Получаю уведомления…</string>
     <string name="notification_listenable_worker_name">Фоновая деятельность</string>
-    <string name="dialog_push_notification_migration_other_accounts">Вы повторно вошли в свою текущую учетную запись, чтобы дать разрешение Tusky на рассылку push-уведомлений. Однако у вас все еще есть другие учетные записи, которые не были перенесены подобным образом. Переключитесь на них и заново войдите по очереди, чтобы включить поддержку UnifiedPush-уведомлений.</string>
+    <string name="dialog_push_notification_migration_other_accounts">Вы повторно вошли в свою текущую учетную запись, чтобы дать разрешение Gab на рассылку push-уведомлений. Однако у вас все еще есть другие учетные записи, которые не были перенесены подобным образом. Переключитесь на них и заново войдите по очереди, чтобы включить поддержку UnifiedPush-уведомлений.</string>
     <string name="total_accounts">Всего аккаунтов</string>
     <string name="description_post_language">Язык записи</string>
     <string name="pref_default_post_language">Язык постов по умолчанию</string>
@@ -669,10 +669,10 @@
     <string name="unfollowing_hashtag_success_format">Больше не следите за хэштегом #%1$s</string>
     <string name="report_category_violation">Нарушение правил</string>
     <string name="action_set_focus">Установите фокус</string>
-    <string name="dialog_push_notification_migration">Чтобы использовать push-уведомления через UnifiedPush Tusky нужно разрешение на отслеживание уведомлений на вашем сервере Mastodon. Это требует повторного входа в систему для изменения ключей OAuth предоставленных Tusky. Использование опции повторного входа здесь или в настройках аккаунта сохранит все ваши локальные черновики и кэш.</string>
+    <string name="dialog_push_notification_migration">Чтобы использовать push-уведомления через UnifiedPush Gab нужно разрешение на отслеживание уведомлений на вашем сервере Mastodon. Это требует повторного входа в систему для изменения ключей OAuth предоставленных Gab. Использование опции повторного входа здесь или в настройках аккаунта сохранит все ваши локальные черновики и кэш.</string>
     <string name="help_empty_home">Это ваша <b>основная хронология</b>. Здесь отображаются последние сообщения от аккаунтов на которые вы подписаны.
 \n
-\nЧтобы исследовать учетные записи, вы можете открыть их одной из других вкладок. Например, в местной ленте вашего экземпляра [iconics gmd_group]. Либо вы можете поискать их по имени [iconics gmd_search]; например, по имени Tusky вы найдете наш аккаунт Mastodon.</string>
+\nЧтобы исследовать учетные записи, вы можете открыть их одной из других вкладок. Например, в местной ленте вашего экземпляра [iconics gmd_group]. Либо вы можете поискать их по имени [iconics gmd_search]; например, по имени Gab вы найдете наш аккаунт Mastodon.</string>
     <string name="help_empty_conversations">Здесь находятся ваши <b>личные сообщения</b>; иногда их называют беседами или прямыми сообщениями (ПС).
 \n
 \nЛичные сообщения создаются путем установки видимости [iconics gmd_public] сообщения на [iconics gmd_mail] <i>Прямые</i> и упоминания одного или нескольких пользователей в тексте.
