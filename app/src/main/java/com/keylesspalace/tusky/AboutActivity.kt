@@ -83,6 +83,11 @@ class AboutActivity : BottomSheetActivity() {
             viewUrl(BuildConfig.SUPPORT_ACCOUNT_URL)
         }
 
+        // JW: added
+        if (BuildConfig.SUPPORT_ACCOUNT_URL.isBlank()) {
+            binding.tuskyProfileButton.hide()
+        }
+
         binding.aboutLicensesButton.setOnClickListener {
             startActivityWithSlideInAnimation(Intent(this, LicenseActivity::class.java))
         }
