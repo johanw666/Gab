@@ -52,7 +52,7 @@
     <string name="action_follow">Seguir</string>
     <string name="action_logout_confirm">Tes a certeza de querer pechar a sesión %1$s\? Isto eliminará todos os datos locais da conta, incluíndo borradores e preferencias.</string>
     <string name="action_logout">Pechar sesión</string>
-    <string name="action_login">Acceder con Tusky</string>
+    <string name="action_login">Acceder con Gab</string>
     <string name="action_compose">Redactar</string>
     <string name="action_more">Máis</string>
     <string name="action_unfavourite">Retirar favorito</string>
@@ -217,7 +217,7 @@
     <string name="license_cc_by_sa_4">CC-BY-SA 4.0</string>
     <string name="license_cc_by_4">CC-BY 4.0</string>
     <string name="license_apache_2">Con licenza Apache License (ver abaixo)</string>
-    <string name="license_description">Tusky ten código e ferramentas dos seguintes proxectos de código aberto:</string>
+    <string name="license_description">Gab ten código e ferramentas dos seguintes proxectos de código aberto:</string>
     <string name="unreblog_private">Retirar promoción</string>
     <string name="reblog_private">Promover para a audiencia orixinal</string>
     <string name="account_moved_description">%1$s migrou a:</string>
@@ -226,16 +226,16 @@
     <string name="caption_notoemoji">Conxunto actual de emojis de Google</string>
     <string name="caption_twemoji">Conxunto de emojis estándar en Mastodon</string>
     <string name="caption_blobmoji">Os emojis Blob coñecidos de Android 4.4-7.1</string>
-    <string name="caption_systememoji">O conxunto de emojis predeterminados do sistema</string>
+    <string name="caption_systememoji">O conxunto de emojis por defecto no sistema</string>
     <string name="restart">Reiniciar</string>
     <string name="later">Máis tarde</string>
-    <string name="restart_emoji">Deberás reiniciar Tusky para aplicar os cambios</string>
+    <string name="restart_emoji">Deberás reiniciar Gab para aplicar os cambios</string>
     <string name="restart_required">Require reiniciar app</string>
     <string name="action_open_post">Abrir publicación</string>
     <string name="expand_collapse_all_posts">Expandir/Contraer todas as publicacións</string>
     <string name="performing_lookup_title">Facendo a busca…</string>
     <string name="download_fonts">Deberás descargar primeiro estes conxuntos de emojis</string>
-    <string name="system_default">Predeterminado do sistema</string>
+    <string name="system_default">Por defecto no sistema</string>
     <string name="emoji_style">Estilo dos emoji</string>
     <string name="error_no_custom_emojis">A túa instancia %1$s non ten emojis personalizados</string>
     <string name="action_compose_shortcut">Redactar</string>
@@ -287,9 +287,9 @@
     <string name="abbreviated_hours_ago">%1$dh</string>
     <string name="abbreviated_days_ago">%1$dd</string>
     <string name="abbreviated_years_ago">%1$da</string>
-    <string name="abbreviated_in_seconds">en %1$ds</string>
-    <string name="abbreviated_in_hours">en %1$dh</string>
-    <string name="abbreviated_in_minutes">en %1$dm</string>
+    <string name="abbreviated_in_seconds">fai %1$ds</string>
+    <string name="abbreviated_in_hours">fai %1$dh</string>
+    <string name="abbreviated_in_minutes">fai %1$dm</string>
     <string name="abbreviated_in_days">en %1$dd</string>
     <string name="abbreviated_in_years">en %1$da</string>
     <string name="state_follow_requested">Seguimento solicitado</string>
@@ -299,13 +299,13 @@
     <string name="post_media_images">Imaxes</string>
     <string name="post_share_link">ligazón á publicación</string>
     <string name="post_share_content">contido da publicación</string>
-    <string name="about_tusky_account">Perfil de Tusky</string>
+    <string name="about_tusky_account">Perfil de Gab</string>
     <string name="about_bug_feature_request_site">Informar de fallos e solicitar funcións:
-\nhttps://github.com/tuskyapp/Tusky/issues</string>
-    <string name="about_project_site">Web do proxecto: https://tusky.app</string>
-    <string name="about_tusky_license">Tusky é software libre e de código aberto. Está baixo a licenza GNU General Public License Version 3. Podes ver a licenza aquí: https://www.gnu.org/licenses/gpl-3.0.en.html</string>
-    <string name="about_powered_by_tusky">Desenvolta por Tusky</string>
-    <string name="about_tusky_version">Tusky %1$s</string>
+\nttps://github.com/johanw666/Gab/issues</string>
+    <string name="about_project_site">Web do proxecto: https://gab.com</string>
+    <string name="about_tusky_license">Gab é software libre e de código aberto. Está baixo a licenza GNU General Public License Version 3. Podes ver a licenza aquí: https://www.gnu.org/licenses/gpl-3.0.en.html</string>
+    <string name="about_powered_by_tusky">Desenvolta por Gab</string>
+    <string name="about_tusky_version">Gab %1$s</string>
     <string name="about_title_activity">Acerca de</string>
     <string name="description_account_locked">Conta bloqueada</string>
     <plurals name="notification_title_summary">
@@ -511,8 +511,8 @@
     <string name="tips_push_notification_migration">Volve acceder con tódalas contas para activar as notificacións push.</string>
     <string name="title_login">Acceder</string>
     <string name="notification_update_description">Notificacións cando son editadas publicacións coas que interactuaches</string>
-    <string name="dialog_push_notification_migration">Para poder usar as notificacións push vía UnifiedPush, Tusky require o permiso para subscribirse ás notificacións do teu servidor Mastodon. É necesario volver acceder para cambiar os ámbitos OAuth concedidos a Tusky. Usando aquí, ou nas preferencias da Conta, a opción de volver a acceder conservarás os borradores locais e caché.</string>
-    <string name="dialog_push_notification_migration_other_accounts">Volveches a acceder para obter as notificacións push en Tusky. Aínda así tes algunha outra conta que non foi migrada a este modo. Cambia a esas contas e volve conectar unha a unha para activar o soporte para notificacións de UnifiedPush.</string>
+    <string name="dialog_push_notification_migration">Para poder usar as notificacións push vía UnifiedPush, Gab require o permiso para subscribirse ás notificacións do teu servidor Mastodon. É necesario volver acceder para cambiar os ámbitos OAuth concedidos a Gab. Usando aquí, ou nas preferencias da Conta, a opción de volver a acceder conservarás os borradores locais e caché.</string>
+    <string name="dialog_push_notification_migration_other_accounts">Volveches a acceder para obter as notificacións push en Gab. Aínda así tes algunha outra conta que non foi migrada a este modo. Cambia a esas contas e volve conectar unha a unha para activar o soporte para notificacións de UnifiedPush.</string>
     <string name="title_migration_relogin">Volve a acceder para ter notificacións push</string>
     <string name="notification_update_format">%1$s editou a publicación</string>
     <string name="action_dismiss">Desbotar</string>
@@ -523,7 +523,7 @@
     <string name="action_edit_image">Editar imaxe</string>
     <string name="error_loading_account_details">Fallou a carga dos detalles da conta</string>
     <string name="error_image_edit_failed">A imaxe non puido ser editada.</string>
-    <string name="set_focus_description">Toca ou arrastra o círculo para escoller onde centrar a imaxe e sexa máis visible nas miniaturas.</string>
+    <string name="set_focus_description">Toca ou arrastra o círculo para elexir onde centrar a imaxe e sexa máis visible nas miniaturas.</string>
     <string name="duration_no_change">(Sen cambio)</string>
     <string name="filter_expiration_format">%1$s (%2$s)</string>
     <string name="error_multimedia_size_limit">Os ficheiros de vídeo e audio non poden superar os %1$s MB.</string>
@@ -546,7 +546,7 @@
     <string name="report_category_spam">Spam</string>
     <string name="action_add_or_remove_from_list">Engadir ou retirar da lista</string>
     <string name="failed_to_add_to_list">Fallou a adición da conta á lista</string>
-    <string name="failed_to_remove_from_list">Fallou a retirada da conta da lista</string>
+    <string name="failed_to_remove_from_list">Produciuse un fallo ao retirar a conta da lista</string>
     <string name="action_unfollow_hashtag_format">Non seguir #%1$s\?</string>
     <string name="pref_default_post_language">Idioma de publicación (sincr. co servidor)</string>
     <string name="notification_report_name">Denuncias</string>
@@ -609,7 +609,7 @@
     <string name="dialog_follow_hashtag_hint">#cancelo</string>
     <string name="help_empty_home">Esta é a túa <b>cronoloxía de inicio</b>. Mostra as publicacións recentes das contas que segues.
 \n
-\nPara atopar contas podes mirar nalgunha das outras cronoloxías. Por exemplo, na cronoloxía local da túa instancia [iconics gmd_group]. Ou buscalas polo seu nome [iconics gmd_search]; por exemplo busca Tusky para atopar a nosa conta en Mastodon.</string>
+\nPara atopar contas podes mirar nalgunha das outras cronoloxías. Por exemplo, na cronoloxía local da túa instancia [iconics gmd_group]. Ou buscalas polo seu nome [iconics gmd_search]; por exemplo busca Gab para atopar a nosa conta en Mastodon.</string>
     <string name="post_media_image">Imaxe</string>
     <string name="hint_filter_title">O meu filtro</string>
     <string name="action_refresh">Actualizar</string>
@@ -635,13 +635,13 @@
     <string name="filter_description_hide">Agochar completamente</string>
     <string name="label_filter_action">Acción do filtro</string>
     <string name="label_filter_context">Ámbitos para o filtro</string>
-    <string name="label_filter_keywords">Palabras clave a filtrar</string>
+    <string name="label_filter_keywords">Palabras chave ou frases a filtrar</string>
     <string name="action_add">Engadir</string>
     <string name="filter_keyword_display_format">%1$s (palabra completa)</string>
     <string name="filter_description_format">%1$s: %2$s</string>
     <string name="pref_title_show_stat_inline">Mostrar estatísticas da publicación na cronoloxía</string>
-    <string name="filter_keyword_addition_title">Engadir palabra clave</string>
-    <string name="filter_edit_keyword_title">Editar palabra clave</string>
+    <string name="filter_keyword_addition_title">Engadir palabra</string>
+    <string name="filter_edit_keyword_title">Editar palabra</string>
     <string name="select_list_manage">Xestionar listas</string>
     <string name="error_missing_edits">O teu servidor sabe que a publicación foi editada, pero non ten unha copia das edición, polo que non pode mostrarchas.
 \n
@@ -650,7 +650,7 @@
     <string name="compose_delete_draft">Eliminar borrador\?</string>
     <string name="pref_ui_text_size">Tamaño da letra</string>
     <string name="notification_listenable_worker_name">Actividade en segundo plano</string>
-    <string name="notification_listenable_worker_description">Notificacións cando Tusky está a funcionar en segundo plano</string>
+    <string name="notification_listenable_worker_description">Notificacións cando Gab está a funcionar en segundo plano</string>
     <string name="notification_notification_worker">Obtendo as notificacións…</string>
     <string name="notification_prune_cache">Mantemento da caché…</string>
     <string name="error_media_upload_sending_fmt">Produciuse un fallo no envío: %1$s</string>
@@ -678,11 +678,11 @@
     <string name="following_hashtag_success_format">Agora segues o cancelo #%1$s</string>
     <string name="unfollowing_hashtag_success_format">Xa non segues o cancelo #%1$s</string>
     <string name="dialog_save_profile_changes_message">Queres gardar os cambios no teu perfil\?</string>
-    <string name="help_empty_lists">Esta é a <b>vista de listas</b>. Podes definir varias listas privadas e engadir contas a elas. \u0020
+    <string name="help_empty_lists">Esta é a <b>vista de listas</b>. Podes definir varias listas privadas e engadir contas a elas. 
 \n
-\n \u0020TEN EN CONTA que só podes engadir contas que estás a seguir. \u0020
+\n \u0020TEN EN CONTA que só podes engadir contas que estás a seguir. 
 \n
-\n \u0020Estas listas pódense usar como pestanas configurando as Pestanas nas Preferencias da conta [iconics gmd_account_circle] [iconics gmd_navigate_next]. \u0020</string>
+\n \u0020Estas listas pódense usar como pestanas configurando as Pestanas nas Preferencias da Conta [iconics gmd_account_circle] [iconics gmd_navigate_next]. \u0020</string>
     <string name="error_blocking_domain">Non se acalou a %1$s: %2$s</string>
     <string name="error_unblocking_domain">Non se reactivou a %1$s: %2$s</string>
     <string name="label_image">Imaxe</string>
@@ -696,7 +696,7 @@
     <string name="pref_title_show_self_boosts">Mostrar autopromocións</string>
     <string name="pref_title_per_timeline_preferences">Preferencias nas cronoloxías</string>
     <string name="pref_title_show_notifications_filter">Mostrar Filtro das notificacións</string>
-    <string name="reply_sending">Enviando…</string>
+    <string name="reply_sending">A enviar…</string>
     <string name="reply_sending_long">Enviouse a resposta.</string>
     <string name="action_translate">Traducir</string>
     <string name="action_show_original">Mostrar orixinal</string>
@@ -712,8 +712,8 @@
     <string name="url_copied">URL copiado</string>
     <string name="error_deleting_filter">Produciuse un erro ao eliminar o filtro «%1$s»</string>
     <string name="error_saving_filter">Produciuse un erro ao gardar o filtro «%1$s»</string>
-    <string name="confirmation_hashtag_copied">«#%1$s» copiado</string>
+    <string name="confirmation_hashtag_copied">\'#%1$s\' copiado</string>
     <string name="pref_default_reply_privacy_explanation">O nivel de privacidade preseleccionado dependerá da publicación á que respondas.</string>
-    <string name="pref_match_default_post_privacy">Seguir a privacidade predeterminada da publicación</string>
+    <string name="pref_match_default_post_privacy">Seguir a privacidade por defecto da publicación</string>
     <string name="post_privacy_direct">Directa</string>
 </resources>
