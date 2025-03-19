@@ -60,7 +60,7 @@
     <string name="action_unfavourite">Rimuovi preferito</string>
     <string name="action_more">Di più</string>
     <string name="action_compose">Componi</string>
-    <string name="action_login">Accedi con Tusky</string>
+    <string name="action_login">Accedi con Gab</string>
     <string name="action_logout">Disconnettiti</string>
     <string name="action_logout_confirm">Sei sicuro di volerti disconnettere dall\'account %1$s\? Questo cancellerà tutti i dati locali dell\'account, incluse bozze e preferenze.</string>
     <string name="action_follow">Segui</string>
@@ -214,8 +214,8 @@
     </plurals>
     <string name="description_account_locked">Account bloccato</string>
     <string name="about_title_activity">A proposito</string>
-    <string name="about_tusky_version">Tusky %1$s</string>
-    <string name="about_tusky_license">Tusky è un programma libero ed open source.
+    <string name="about_tusky_version">Gab %1$s</string>
+    <string name="about_tusky_license">Gab è un programma libero ed open source.
 		È distribuito con licenza GNU General Public License Version 3.
 		Puoi leggere la licenza qui: https://www.gnu.org/licenses/gpl-3.0.en.html</string>
     <!-- note to translators:
@@ -224,10 +224,10 @@
            to show we do not mean the software is gratis. Source: https://www.gnu.org/philosophy/free-sw.html
          * the url can be changed to link to the localized version of the license.
     -->
-    <string name="about_project_site">Sito web del progetto: https://tusky.app</string>
+    <string name="about_project_site">Sito web del progetto: https://gab.com</string>
     <string name="about_bug_feature_request_site">Segnala problemi e richiedi funzionalità:
-\nhttps://github.com/tuskyapp/Tusky/issues</string>
-    <string name="about_tusky_account">Profilo di Tusky</string>
+\nhttps://github.com/johanw666/Gab/issues</string>
+    <string name="about_tusky_account">Profilo di Gab</string>
     <string name="post_share_content">Condividi contenuto del post</string>
     <string name="post_share_link">Condividi collegamento al post</string>
     <string name="post_media_images">Immagini</string>
@@ -294,7 +294,7 @@
     <string name="expand_collapse_all_posts">Espandi/riduci tutti i post</string>
     <string name="action_open_post">Apri post</string>
     <string name="restart_required">Riavvio dell\'app richiesto</string>
-    <string name="restart_emoji">Devi riavviare Tusky per applicare queste modifiche</string>
+    <string name="restart_emoji">Devi riavviare Gab per applicare queste modifiche</string>
     <string name="later">Più tardi</string>
     <string name="restart">Riavvia</string>
     <string name="caption_systememoji">Le emoji predefinite del tuo dispositivo</string>
@@ -305,7 +305,7 @@
     <string name="account_moved_description">%1$s si è spostato su:</string>
     <string name="reblog_private">Condividi con la visibilità originale</string>
     <string name="unreblog_private">Annulla condivisione</string>
-    <string name="license_description">Tusky contiene codice e risorse dai seguenti progetti open source:</string>
+    <string name="license_description">Gab contiene codice e risorse dai seguenti progetti open source:</string>
     <string name="license_apache_2">Licenziata sotto la Licenza Apache (copia sotto)</string>
     <string name="license_cc_by_4">CC-BY 4.0</string>
     <string name="license_cc_by_sa_4">CC-BY-SA 4.0</string>
@@ -381,7 +381,7 @@
     <string name="action_edit">Modifica</string>
     <string name="action_view_bookmarks">Segnalibri</string>
     <string name="action_add_poll">Aggiungi sondaggio</string>
-    <string name="about_powered_by_tusky">Fatto usando Tusky</string>
+    <string name="about_powered_by_tusky">Fatto usando Gab</string>
     <string name="pref_title_alway_open_spoiler">Espandi sempre i post segnalati come contenuto sensibile</string>
     <string name="description_post_bookmarked">Messo nei segnalibri</string>
     <string name="description_poll">Sondaggio con scelte: %1$s, %2$s, %3$s, %4$s; %5$s</string>
@@ -622,7 +622,7 @@
     <string name="title_public_trending_hashtags">Hashtag di tendenza</string>
     <string name="help_empty_home">Questa è la tua <b>Timeline principale</b>. Mostra i post più recenti degli account che segui.
 \n
-\nPer esplorare gli account puoi scoprirli in una delle altre timeline. Per esempio la timeline locale della tua istanza [iconica gmd_group]. O puoi cercarli per fine [iconica gmd_search]; per esempio cerca \"Tusky\" per trovare il nostro account Mastodon.</string>
+\nPer esplorare gli account puoi scoprirli in una delle altre timeline. Per esempio la timeline locale della tua istanza [iconica gmd_group]. O puoi cercarli per fine [iconica gmd_search]; per esempio cerca \"Gab\" per trovare il nostro account Mastodon.</string>
     <string name="notification_unknown_name">Sconosciuto</string>
     <string name="post_media_image">Immagine</string>
     <string name="label_filter_title">Titolo</string>
@@ -662,7 +662,7 @@
 \nQuesto è il <a href="https://github.com/mastodon/mastodon/issues/25398">problema Mastodon #25398</a>.</string>
     <string name="pref_ui_text_size">Dimensione testo dell\'UI</string>
     <string name="notification_listenable_worker_name">Attività in secondo piano</string>
-    <string name="notification_listenable_worker_description">Notifiche mentre Tusky è attivo in secondo piano</string>
+    <string name="notification_listenable_worker_description">Notifiche mentre Gab è attivo in secondo piano</string>
     <string name="notification_notification_worker">Recupero notifiche…</string>
     <string name="notification_prune_cache">Manutenzione cache…</string>
     <string name="about_device_info_title">Il tuo dispositivo</string>
@@ -769,7 +769,7 @@
     <string name="notification_channel_admin_description">Notifiche amministratore, come nuove segnalazioni o iscrizioni</string>
     <string name="relationship_severance_event_title">Connessione persa</string>
     <string name="relationship_severance_event_user_domain_block">Hai bloccato %1$s, rimuovendo %2$s dai tuoi follower e %3$s che segui.</string>
-    <string name="unknown_notification_type_explanation">Tusky non riconosce questo tipo di notifica e non te la può mostrare. L\'interfaccia web potrebbe essere in grado di farlo. Per favore informa gli sviluppatori di Tusky così che possano aggiungerne il supporto!</string>
+    <string name="unknown_notification_type_explanation">Gab non riconosce questo tipo di notifica e non te la può mostrare. L\'interfaccia web potrebbe essere in grado di farlo. Per favore informa gli sviluppatori di Gab così che possano aggiungerne il supporto!</string>
     <string name="moderation_warning_action_mark_statuses_as_sensitive">Alcuni tuoi post sono stati indicati come sensibili.</string>
     <string name="relationship_severance_event_account_suspension">Un amministratore di %1$s ha sospeso %2$s, il che significa che non riceverai più i loro aggiornamenti e non potrai interagire con loro.</string>
     <string name="relationship_severance_event_domain_block">Un amministratore di %1$s ha bloccato %2$s, includendo %3$s dei tuoi follower e %4$s che segui tu.</string>

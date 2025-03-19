@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="tusky_website" translatable="false">https://tusky.app</string>
+    <string name="tusky_website" translatable="false">https://github.com/johanw666/Gab</string> <!-- JW: changed -->
     <string name="about_app_version">%1$s %2$s</string>
 
     <string name="oauth_scheme" translatable="false">oauth2redirect</string>
-    <string name="preferences_file_key" translatable="false">com.keylesspalace.tusky.PREFERENCES</string>
+    <string name="preferences_file_key" translatable="false">com.gabai.gabby.PREFERENCES</string> <!-- JW: changed -->
 
     <string name="at_symbol" translatable="false">\@</string>
     <string name="hash_symbol" translatable="false">#</string>
@@ -167,14 +167,11 @@
         %1$s; %2$s; %3$s, %15$s, %4$s, %6$s; %7$s, %5$s, %16$s, %8$s, %9$s, %10$s, %11$s; %12$s, %13$s, %14$s
     </string>
 
-    <string-array name="rick_roll_domains" translatable="false">
-        <item>gab.com</item>
-        <item>gab.ai</item>
-        <item>spinster.xyz</item>
-        <item>truthsocial.com</item>
+    <string-array name="rick_roll_domains" translatable="false">  
+        <!-- JW: we do not censor -->
     </string-array>
 
-    <string name="rick_roll_url">https://www.youtube.com/watch?v=dQw4w9WgXcQ</string>
+    <string name="rick_roll_url">https://gab.com/</string> <!-- JW: change domain :-) -->
 
 
     <string-array name="poll_duration_names">
