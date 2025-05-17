@@ -58,7 +58,7 @@
     <string name="action_favourite">Favorito</string>
     <string name="action_more">Más</string>
     <string name="action_compose">Redactar</string>
-    <string name="action_login">Iniciar sesión con Tusky</string>
+    <string name="action_login">Iniciar sesión con Gab</string>
     <string name="action_logout">Cerrar sesión</string>
     <string name="action_logout_confirm">¿Seguro que quiere cerrar la sesión de %1$s? Se borrarán todos los datos almacenados localmente, borradores y preferencias incluidos.</string>
     <string name="action_follow">Seguir</string>
@@ -199,18 +199,18 @@
     </plurals>
     <string name="description_account_locked">Cuenta protegida</string>
     <string name="about_title_activity">Acerca de</string>
-    <string name="about_tusky_version">Tusky %1$s</string>
-    <string name="about_tusky_license">Tusky es un software libre y de código abierto. Está licenciado bajo la licencia \"GNU General Public License Version 3\". Puedes leer sobre la misma en: https://www.gnu.org/licenses/gpl-3.0.en.html</string>
+    <string name="about_tusky_version">Gab %1$s</string>
+    <string name="about_tusky_license">Gab es un software libre y de código abierto. Está licenciado bajo la licencia \"GNU General Public License Version 3\". Puedes leer sobre la misma en: https://www.gnu.org/licenses/gpl-3.0.en.html</string>
     <!-- note to translators:
          * you should think of “free” as in “free speech,” not as in “free beer”.
            We sometimes call it “libre software,” borrowing the French or Spanish word for “free” as in freedom,
            to show we do not mean the software is gratis. Source: https://www.gnu.org/philosophy/free-sw.html
          * the url can be changed to link to the localized version of the license.
     -->
-    <string name="about_project_site">Web del proyecto: https://tusky.app</string>
+    <string name="about_project_site">Web del proyecto: https://gab.com</string>
     <string name="about_bug_feature_request_site">Reporte de errores y peticiones de características:
-\nhttps://github.com/tuskyapp/Tusky/issues</string>
-    <string name="about_tusky_account">Perfil de Tusky</string>
+\nhttps://github.com/johanw666/Gab/issues</string>
+    <string name="about_tusky_account">Perfil de Gab</string>
     <string name="post_share_content">Compartir contenido</string>
     <string name="post_share_link">Compartir enlace</string>
     <string name="post_media_images">Imágenes</string>
@@ -273,7 +273,7 @@
     <string name="account_moved_description">%1$s se trasladó a:</string>
     <string name="reblog_private">Volver a compartir</string>
     <string name="unreblog_private">Dejar de compartir</string>
-    <string name="license_description">Tusky contiene código y recursos de los siguientes proyectos:</string>
+    <string name="license_description">Gab contiene código y recursos de los siguientes proyectos:</string>
     <string name="license_apache_2">Licenciado bajo Apache License (texto bajo la lista)</string>
     <string name="license_cc_by_4">CC-BY 4.0</string>
     <string name="license_cc_by_sa_4">CC-BY-SA 4.0</string>
@@ -430,7 +430,7 @@
     <string name="action_schedule_post">Programar estado</string>
     <string name="action_reset_schedule">Reiniciar</string>
     <string name="post_lookup_error_format">Error al buscar el post %1$s</string>
-    <string name="about_powered_by_tusky">Potenciado por Tusky</string>
+    <string name="about_powered_by_tusky">Potenciado por Gab</string>
     <string name="title_bookmarks">Marcadores</string>
     <string name="action_bookmark">Marcador</string>
     <string name="action_view_bookmarks">Marcadores</string>
@@ -624,7 +624,7 @@
     <string name="socket_timeout_exception">Contactar con tu servidor ha tardado demasiado tiempo</string>
     <string name="help_empty_home">Esta es tu <b> cronología de inicio</b>. Muestra las publicaciones recientes de las cuentas que sigues. 
 \n 
-\nPara encontrar cuentas, puedes mirar en alguna de las otras cronologías. Por ejemplo, la cronología local de tu instancia {{group}}. O puedes buscarlas por nombre {{search}}; por ejemplo, busca Tusky para encontrar nuestra cuenta de Mastodon.</string>
+\nPara encontrar cuentas, puedes mirar en alguna de las otras cronologías. Por ejemplo, la cronología local de tu instancia {{group}}. O puedes buscarlas por nombre {{search}}; por ejemplo, busca Gab para encontrar nuestra cuenta de Mastodon.</string>
     <string name="ui_error_bookmark">Fallo al añadir a marcadores: %1$s</string>
     <string name="select_list_manage">Gestionar listas</string>
     <string name="ui_error_favourite">Fallo al favoritear publicación: %1$s</string>
@@ -681,7 +681,7 @@
     <string name="unfollowing_hashtag_success_format">Dejaste de seguir la etiqueta #%1$s</string>
     <string name="pref_title_confirm_follows">Mostrar confirmación antes de seguir</string>
     <string name="report_category_legal">Legal</string>
-    <string name="notification_listenable_worker_description">Notificaciones cuando Tusky está funcionando en segundo plano</string>
+    <string name="notification_listenable_worker_description">Notificaciones cuando Gab está funcionando en segundo plano</string>
     <string name="error_blocking_domain">Fallo al silenciar %1$s: %2$s</string>
     <string name="pref_title_show_self_boosts_description">Alguien impulsó su propio mensaje</string>
     <string name="error_deleting_filter">Error al borrar el filtro \'%1$s\'</string>
@@ -710,7 +710,7 @@
 \n \u0020
 \nPor ejemplo puedes empezar desde el perfil de otro usuario, pulsar el botón de crear [iconics gmd_edit] y cambiar la visibilidad.</string>
     <string name="about_copied">Se copió la información de versión y dispositivo</string>
-    <string name="unknown_notification_type_explanation">Tusky no ha reconocido este tipo de notificación y no pudo mostrartela. La interfaz web de tu servidor quizás pueda. ¡Por favor informa a los desarrolladores de Tusky para que añadir soporte de la misma!</string>
+    <string name="unknown_notification_type_explanation">Gab no ha reconocido este tipo de notificación y no pudo mostrartela. La interfaz web de tu servidor quizás pueda. ¡Por favor informa a los desarrolladores de Gab para que añadir soporte de la misma!</string>
     <string name="notification_moderation_warning_name">Alertas de moderación</string>
     <string name="notification_unknown_description">Tipo de notificación desconocida</string>
     <string name="dialog_delete_filter_text">¿Borrar filtro \'%1$s\'?</string>

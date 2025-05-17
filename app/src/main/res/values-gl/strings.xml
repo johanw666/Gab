@@ -52,7 +52,7 @@
     <string name="action_follow">Seguir</string>
     <string name="action_logout_confirm">Tes a certeza de querer pechar a sesión %1$s? Isto eliminará todos os datos locais da conta, incluíndo borradores e preferencias.</string>
     <string name="action_logout">Pechar sesión</string>
-    <string name="action_login">Acceder con Tusky</string>
+    <string name="action_login">Acceder con Gab</string>
     <string name="action_compose">Redactar</string>
     <string name="action_more">Máis</string>
     <string name="action_unfavourite">Retirar favorito</string>
@@ -217,7 +217,7 @@
     <string name="license_cc_by_sa_4">CC-BY-SA 4.0</string>
     <string name="license_cc_by_4">CC-BY 4.0</string>
     <string name="license_apache_2">Con licenza Apache License (ver abaixo)</string>
-    <string name="license_description">Tusky ten código e ferramentas dos seguintes proxectos de código aberto:</string>
+    <string name="license_description">Gab ten código e ferramentas dos seguintes proxectos de código aberto:</string>
     <string name="unreblog_private">Retirar promoción</string>
     <string name="reblog_private">Promover para a audiencia orixinal</string>
     <string name="account_moved_description">%1$s migrou a:</string>
@@ -229,7 +229,7 @@
     <string name="caption_systememoji">O conxunto de emojis predeterminados do sistema</string>
     <string name="restart">Reiniciar</string>
     <string name="later">Máis tarde</string>
-    <string name="restart_emoji">Deberás reiniciar Tusky para aplicar os cambios</string>
+    <string name="restart_emoji">Deberás reiniciar Gab para aplicar os cambios</string>
     <string name="restart_required">Require reiniciar app</string>
     <string name="action_open_post">Abrir publicación</string>
     <string name="expand_collapse_all_posts">Expandir/Contraer todas as publicacións</string>
@@ -299,13 +299,13 @@
     <string name="post_media_images">Imaxes</string>
     <string name="post_share_link">ligazón á publicación</string>
     <string name="post_share_content">contido da publicación</string>
-    <string name="about_tusky_account">Perfil de Tusky</string>
+    <string name="about_tusky_account">Perfil de Gab</string>
     <string name="about_bug_feature_request_site">Informar de fallos e solicitar funcións:
-\nhttps://github.com/tuskyapp/Tusky/issues</string>
-    <string name="about_project_site">Web do proxecto: https://tusky.app</string>
-    <string name="about_tusky_license">Tusky é software libre e de código aberto. Está baixo a licenza GNU General Public License Version 3. Podes ver a licenza aquí: https://www.gnu.org/licenses/gpl-3.0.en.html</string>
-    <string name="about_powered_by_tusky">Desenvolta por Tusky</string>
-    <string name="about_tusky_version">Tusky %1$s</string>
+\nhttps://github.com/johanw666/Gab/issues</string>
+    <string name="about_project_site">Web do proxecto: https://gab.com</string>
+    <string name="about_tusky_license">Gab é software libre e de código aberto. Está baixo a licenza GNU General Public License Version 3. Podes ver a licenza aquí: https://www.gnu.org/licenses/gpl-3.0.en.html</string>
+    <string name="about_powered_by_tusky">Desenvolta por Gab</string>
+    <string name="about_tusky_version">Gab %1$s</string>
     <string name="about_title_activity">Sobre</string>
     <string name="description_account_locked">Conta bloqueada</string>
     <plurals name="notification_title_summary">
@@ -596,7 +596,7 @@
     <string name="dialog_follow_hashtag_title">Seguir cancelo</string>
     <string name="help_empty_home">Esta é a túa <b>cronoloxía de inicio</b>. Mostra as publicacións recentes das contas que segues.
 \n
-\nPara atopar contas podes mirar nalgunha das outras cronoloxías. Por exemplo, na cronoloxía local da túa instancia {{group}}. Ou buscalas polo seu nome {{search}}; por exemplo busca «Tusky» para atopar a nosa conta en Mastodon.</string>
+\nPara atopar contas podes mirar nalgunha das outras cronoloxías. Por exemplo, na cronoloxía local da túa instancia {{group}}. Ou buscalas polo seu nome {{search}}; por exemplo busca «Gab» para atopar a nosa conta en Mastodon.</string>
     <string name="post_media_image">Imaxe</string>
     <string name="hint_filter_title">O meu filtro</string>
     <string name="action_refresh">Actualizar</string>
@@ -637,7 +637,7 @@
     <string name="compose_delete_draft">Eliminar borrador?</string>
     <string name="pref_ui_text_size">Tamaño da letra</string>
     <string name="notification_listenable_worker_name">Actividade en segundo plano</string>
-    <string name="notification_listenable_worker_description">Notificacións cando Tusky está a funcionar en segundo plano</string>
+    <string name="notification_listenable_worker_description">Notificacións cando Gab está a funcionar en segundo plano</string>
     <string name="notification_notification_worker">Obtendo as notificacións…</string>
     <string name="notification_prune_cache">Mantemento da caché…</string>
     <string name="error_media_upload_sending_fmt">Produciuse un fallo no envío: %1$s</string>
@@ -737,7 +737,7 @@
     <string name="preview_card_by_author">Por %1$s</string>
     <string name="preview_card_more_by_author">Máis de %1$s</string>
     <string name="follow_hashtag_success">Segues o cancelo %1$s</string>
-    <string name="unknown_notification_type_explanation">Tusky non recoñece este tipo de notificación e non pode mostrala. Deberías poder vela na interface web da túa instancia. Informa ao equipo de desenvolvemento de Tusky para que poidan engadir esta notificación!</string>
+    <string name="unknown_notification_type_explanation">Gab non recoñece este tipo de notificación e non pode mostrala. Deberías poder vela na interface web da túa instancia. Informa ao equipo de desenvolvemento de Gab para que poidan engadir esta notificación!</string>
     <string name="relationship_severance_event_account_suspension">A administración de %1$s suspendeu a %2$s, polo que non recibirás actualizacións nin poderás interactuar con esa conta.</string>
     <string name="moderation_warning_action_mark_statuses_as_sensitive">Algunha das túas publicacións marcouse como sensible.</string>
     <string name="relationship_severance_event_domain_block">A administración de %1$s bloqueou a %2$s, que inclúe %3$s das túas seguidoras e %4$s seguimentos.</string>

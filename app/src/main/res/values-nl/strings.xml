@@ -60,7 +60,7 @@
     <string name="action_unfavourite">Favoriet verwijderen</string>
     <string name="action_more">Meer</string>
     <string name="action_compose">Bericht schrijven</string>
-    <string name="action_login">Aanmelden met Tusky</string>
+    <string name="action_login">Aanmelden met Gab</string>
     <string name="action_logout">Uitloggen</string>
     <string name="action_logout_confirm">Weet je zeker dat je %1$s wil afmelden? Dit verwijdert alle lokale gegevens van het account, inclusief conceptberichten en voorkeuren.</string>
     <string name="action_follow">Volgen</string>
@@ -212,18 +212,18 @@
     </plurals>
     <string name="description_account_locked">Besloten account</string>
     <string name="about_title_activity">Over</string>
-    <string name="about_tusky_version">Tusky %1$s</string>
-    <string name="about_tusky_license">Tusky is vrije opensource software. De licentie valt onder de GNU Algemene Publieke Licentie versie 3. Je kunt de licentie hier bekijken: https://www.gnu.org/licenses/gpl-3.0.nl.html</string>
+    <string name="about_tusky_version">Gab %1$s</string>
+    <string name="about_tusky_license">Gab is vrije opensource software. De licentie valt onder de GNU Algemene Publieke Licentie versie 3. Je kunt de licentie hier bekijken: https://www.gnu.org/licenses/gpl-3.0.nl.html</string>
     <!-- note to translators:
          * you should think of “free” as in “free speech,” not as in “free beer”.
            We sometimes call it “libre software,” borrowing the French or Spanish word for “free” as in freedom,
            to show we do not mean the software is gratis. Source: https://www.gnu.org/philosophy/free-sw.html
          * the url can be changed to link to the localized version of the license.
     -->
-    <string name="about_project_site">Projectwebsite: https://tusky.app</string>
+    <string name="about_project_site">Projectwebsite: https://gab.com</string>
     <string name="about_bug_feature_request_site">Fouten melden &amp; nieuwe functies aanvragen:
-\nhttps://github.com/tuskyapp/Tusky/issues</string>
-    <string name="about_tusky_account">Tusky\'s profiel</string>
+\nhttps://github.com/johanw666/Gab/issues</string>
+    <string name="about_tusky_account">Gab\'s profiel</string>
     <string name="post_share_content">Inhoud van bericht delen</string>
     <string name="post_share_link">Link naar het bericht delen</string>
     <string name="post_media_images">Afbeeldingen</string>
@@ -273,7 +273,7 @@
     <string name="expand_collapse_all_posts">Alle berichten in- of uitklappen</string>
     <string name="action_open_post">Bericht openen</string>
     <string name="restart_required">App opnieuw opstarten vereist</string>
-    <string name="restart_emoji">Je moet Tusky opnieuw opstarten om deze veranderingen te kunnen doorvoeren</string>
+    <string name="restart_emoji">Je moet Gab opnieuw opstarten om deze veranderingen te kunnen doorvoeren</string>
     <string name="later">Later</string>
     <string name="restart">Opnieuw opstarten</string>
     <string name="caption_systememoji">Standaard emojiset van jouw apparaat</string>
@@ -284,7 +284,7 @@
     <string name="account_moved_description">%1$s is verhuisd naar:</string>
     <string name="reblog_private">Boost naar oorspronkelijke ontvangers</string>
     <string name="unreblog_private">Niet meer boosten</string>
-    <string name="license_description">Tusky bevat broncode en onderdelen van de volgende opensourceprojecten:</string>
+    <string name="license_description">Gab bevat broncode en onderdelen van de volgende opensourceprojecten:</string>
     <string name="license_apache_2">Gelicenseerd onder de Apache-licentie (kopie hieronder)</string>
     <string name="license_cc_by_4">CC-BY 4.0</string>
     <string name="license_cc_by_sa_4">CC-BY-SA 4.0</string>
@@ -418,7 +418,7 @@
     <string name="action_access_scheduled_posts">Ingeplande berichten</string>
     <string name="action_schedule_post">Bericht inplannen</string>
     <string name="action_reset_schedule">Opnieuw beginnen</string>
-    <string name="about_powered_by_tusky">Mogelijk gemaakt door Tusky</string>
+    <string name="about_powered_by_tusky">Mogelijk gemaakt door Gab</string>
     <string name="pref_title_alway_open_spoiler">Berichten met inhoudswaarschuwingen altijd uitklappen</string>
     <string name="description_post_bookmarked">Toegevoegd aan bladwijzers</string>
     <string name="select_list_title">Lijst kiezen</string>
@@ -625,7 +625,7 @@
     <string name="compose_delete_draft">Concept verwijderen?</string>
     <string name="notification_notification_worker">Meldingen ophalen…</string>
     <string name="notification_listenable_worker_name">Achtergrondactiviteit</string>
-    <string name="notification_listenable_worker_description">Meldingen als Tusky op de achtergrond bezig is</string>
+    <string name="notification_listenable_worker_description">Meldingen als Gab op de achtergrond bezig is</string>
     <string name="about_device_info">%1$s %2$s
 \nAndroid versie: %3$s
 \nSDK versie: %4$d</string>
@@ -652,7 +652,7 @@
     <string name="notification_policies_filter_not_following_description">Inclusief accounts die jou korter dan 3 dagen volgen</string>
     <string name="help_empty_home">Dit is je <b> hoofdtijdlijn</b>. Hier zie je de berichten van de mensen die jij volgt. \u0020 
 \n 
-\nOm andere accounts te ontdekken, kan je andere tijdlijnen bekijken, bijvoorbeeld je lokale tijdlijn van jouw server {{group}}. Of je kan zoeken op naam {{search}}, bijvoorbeeld typ \"tusky\" in het zoekveld om onze Mastodonaccount te vinden.</string>
+\nOm andere accounts te ontdekken, kan je andere tijdlijnen bekijken, bijvoorbeeld je lokale tijdlijn van jouw server {{group}}. Of je kan zoeken op naam {{search}}, bijvoorbeeld typ \"Gab\" in het zoekveld om onze Mastodonaccount te vinden.</string>
     <string name="unknown_notification_filter_unsolicited_private_mentions_description">Gefilterd, tenzij het een reactie is op je eigen vermelding, of als je het account volgt</string>
     <string name="help_empty_conversations">Dit zijn je <b>privé berichten</b>, ook wel conversaties of direct messages genoemd (DM). \u0020
 \n \u0020
