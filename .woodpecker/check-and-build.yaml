@@ -1,0 +1,49 @@
+when:
+  - event: [pull_request, manual]
+
+steps:
+  # https://github.com/woodpecker-ci/woodpecker/issues/5181
+  - name: fix permissions
+    # using this image specifically because it runs as root, like the clone step also does
+    image: woodpeckerci/plugin-git
+    commands:
+      - chmod -R 777 .
+
+  - name: Licensee
+    image: cimg/android:2025.04.1
+    commands:
+      # I don't love recopying the gradle properties before each step
+      # but if I share the gradle home directory between steps,
+      # the `Regular lint` step fails
+      - mkdir -p ~/.gradle
+      - cp .woodpecker/ci-gradle.properties ~/.gradle/gradle.properties
+      - gradle licensee
+
+  - name: ktlint
+    image: cimg/android:2025.04.1
+    commands:
+      - mkdir -p ~/.gradle
+      - cp .woodpecker/ci-gradle.properties ~/.gradle/gradle.properties
+      - gradle clean ktlintCheck
+
+  - name: Regular lint
+    image: cimg/android:2025.04.1
+    commands:
+      - mkdir -p ~/.gradle
+      - cp .woodpecker/ci-gradle.properties ~/.gradle/gradle.properties
+      - gradle app:lintGreenDebug
+
+  - name: Test
+    image: cimg/android:2025.04.1
+    commands:
+      - mkdir -p ~/.gradle
+      - cp .woodpecker/ci-gradle.properties ~/.gradle/gradle.properties
+      - gradle app:testGreenDebugUnitTest
+
+  - name: Build
+    image: cimg/android:2025.04.1
+    commands:
+      - mkdir -p ~/.gradle
+      - cp .woodpecker/ci-gradle.properties ~/.gradle/gradle.properties
+      - gradle app:buildGreenDebug
+
