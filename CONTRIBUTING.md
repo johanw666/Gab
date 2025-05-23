@@ -53,7 +53,7 @@ We try to make Tusky as accessible as possible for as many people as possible. P
 Tusky is primarily a Mastodon client and aims to always support the newest Mastodon version. Other platforms implementing the Mastodon API, e.g. Akkoma, GoToSocial or Pixelfed should also work with Tusky, but no special effort is made to support their quirks or additional features.
 
 ### Payment Policy
-Our payment policy may be viewed [here](https://github.com/tuskyapp/Tusky/blob/develop/doc/PaymentPolicy.md).
+Our payment policy may be viewed [here](https://codeberg.org/tusky/Tusky/src/branch/develop/doc/PaymentPolicy.md).
 
 ## Troubleshooting / FAQ
 
