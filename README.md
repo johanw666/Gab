@@ -1,7 +1,7 @@
 [![Translate - with Weblate](https://img.shields.io/badge/translate%20with-Weblate-green.svg?style=flat)](https://weblate.tusky.app/) [![OpenCollective](https://opencollective.com/tusky/backers/badge.svg)](https://opencollective.com/tusky/)
 # Tusky
 
-<img src="/fastlane/metadata/android/en-US/images/icon.png" width="120" height="120"/>
+<img src="fastlane/metadata/android/en-US/images/icon.png" width="120" height="120"/>
 
 Tusky is a beautiful Android client for [Mastodon](https://github.com/mastodon/mastodon). Mastodon is an ActivityPub federated social network. That means no single entity controls the whole network, rather, like e-mail, volunteers and organisations operate their own independent servers, users from which can all interact with each other seamlessly.
 
