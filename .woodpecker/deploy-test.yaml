@@ -32,4 +32,4 @@ steps:
       - echo $KEYSTORE | base64 -d > app/Tusky.jks
       - mkdir -p ~/.gradle
       - cp .woodpecker/ci-gradle.properties ~/.gradle/gradle.properties
-      - gradle app:bundleGreenRelease
+      - gradle app:bundleGreenRelease app:publishGreenReleaseBundle
