@@ -7,6 +7,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.parcelize)
     alias(libs.plugins.licensee)
+    alias(libs.plugins.play.publisher)
 }
 
 apply from: 'getGitSha.gradle'
@@ -43,6 +44,20 @@ android {
         buildConfigField("String", "CUSTOM_INSTANCE", "\"$CUSTOM_INSTANCE\"")
         buildConfigField("String", "SUPPORT_ACCOUNT_URL", "\"$SUPPORT_ACCOUNT_URL\"")
     }
+    signingConfigs {
+        test {
+            keyAlias System.getenv("KEY_ALIAS_TEST")
+            keyPassword System.getenv("KEY_PASSWORD_TEST")
+            storeFile file("Tusky.jks")
+            storePassword System.getenv("KEYSTORE_PASSWORD")
+        }
+        release {
+            keyAlias System.getenv("KEY_ALIAS_RELEASE")
+            keyPassword System.getenv("KEY_PASSWORD_RELEASE")
+            storeFile file("Tusky.jks")
+            storePassword System.getenv("KEYSTORE_PASSWORD")
+        }
+    }
     buildTypes {
         debug {
             isDefault true
@@ -64,12 +79,15 @@ android {
 
     flavorDimensions += "color"
     productFlavors {
-        blue {}
+        blue {
+            signingConfig = signingConfigs.release
+        }
         green {
             resValue "string", "app_name", APP_NAME + " Test"
             applicationIdSuffix ".test"
             versionNameSuffix "-" + gitSha
             isDefault true
+            signingConfig = signingConfigs.test
         }
     }
 
@@ -124,6 +142,15 @@ android {
         variant.outputs.configureEach {
             outputFileName = "Tusky_${variant.versionName}_${variant.versionCode}_${gitSha}_" +
                 "${variant.flavorName}_${buildType.name}.apk"
+        }
+    }
+
+    playConfigs {
+        register("green") {
+            track.set("production")
+        }
+        register("blue") {
+            track.set("internal")
         }
     }
 }

@@ -1,4 +1,4 @@
-[![Translate - with Weblate](https://img.shields.io/badge/translate%20with-Weblate-green.svg?style=flat)](https://weblate.tusky.app/) [![OpenCollective](https://opencollective.com/tusky/backers/badge.svg)](https://opencollective.com/tusky/)
+[![Translate - with Weblate](https://img.shields.io/badge/translate%20with-Weblate-green.svg?style=flat)](https://weblate.tusky.app/) [![OpenCollective](https://opencollective.com/tusky/backers/badge.svg)](https://opencollective.com/tusky/) ![Build status](https://ci.codeberg.org/api/badges/tusky/Tusky/status.svg?branch=develop)
 # Tusky
 
 <img src="fastlane/metadata/android/en-US/images/icon.png" width="120" height="120"/>

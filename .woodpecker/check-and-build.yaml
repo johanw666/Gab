@@ -1,5 +1,9 @@
 when:
-  - event: [pull_request, manual]
+  - event: pull_request
+  - event: manual
+  - event: push
+    branch: develop
+  - event: tag
 
 steps:
   # https://github.com/woodpecker-ci/woodpecker/issues/5181
