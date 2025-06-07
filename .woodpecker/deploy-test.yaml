@@ -30,6 +30,8 @@ steps:
         from_secret: ANDROID_PUBLISHER_CREDENTIALS
     commands:
       - echo $KEYSTORE | base64 -d > app/Tusky.jks
+      - export VERSION_CODE=$(( ${CI_PIPELINE_NUMBER} + 12000 ))
+      - sed -i'.original' -e "s/^\([[:space:]]*versionCode[[:space:]]*\)[0-9]*/\\1$VERSION_CODE/" app/build.gradle
       - mkdir -p ~/.gradle
       - cp .woodpecker/ci-gradle.properties ~/.gradle/gradle.properties
       - gradle app:bundleGreenRelease app:publishGreenReleaseBundle
