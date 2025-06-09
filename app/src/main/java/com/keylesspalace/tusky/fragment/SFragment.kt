@@ -63,6 +63,8 @@ import com.keylesspalace.tusky.util.parseAsMastodonHtml
 import com.keylesspalace.tusky.util.startActivityWithSlideInAnimation
 import com.keylesspalace.tusky.view.showMuteAccountDialog
 import com.keylesspalace.tusky.viewdata.AttachmentViewData
+import com.keylesspalace.tusky.viewdata.ConcreteViewData
+import com.keylesspalace.tusky.viewdata.TranslationViewData
 import java.util.Locale
 import javax.inject.Inject
 import kotlinx.coroutines.launch
@@ -73,12 +75,12 @@ import kotlinx.coroutines.launch
  * adapters. I feel like the profile pages and thread viewer, which I haven't made yet, will also
  * overlap functionality. So, I'm momentarily leaving it and hopefully working on those will clear
  * up what needs to be where. */
-abstract class SFragment(@LayoutRes contentLayoutId: Int) : Fragment(contentLayoutId) {
-    protected abstract fun removeItem(position: Int)
-    protected abstract fun onReblog(reblog: Boolean, position: Int, visibility: Status.Visibility?, button: SparkButton?)
+abstract class SFragment<C : ConcreteViewData>(@LayoutRes contentLayoutId: Int) : Fragment(contentLayoutId) {
+    protected abstract fun removeItem(viewData: C)
+    protected abstract fun onReblog(viewData: C, reblog: Boolean, visibility: Status.Visibility?, button: SparkButton?)
 
     /** `null` if translation is not supported on this screen */
-    protected abstract val onMoreTranslate: ((translate: Boolean, position: Int) -> Unit)?
+    protected abstract val onMoreTranslate: ((translate: Boolean, viewData: C) -> Unit)?
 
     private val bottomSheetActivity: BottomSheetActivity
         get() = (requireActivity() as? BottomSheetActivity)
@@ -179,17 +181,18 @@ abstract class SFragment(@LayoutRes contentLayoutId: Int) : Fragment(contentLayo
         requireActivity().startActivity(intent)
     }
 
-    protected fun more(status: Status, view: View, position: Int, translation: Translation?) {
+    protected fun more(viewData: C, view: View) {
+        val status = viewData.viewData.status
+        val translation: Translation? = (viewData.viewData.translation as? TranslationViewData.Loaded)?.data
+
         val id = status.actionableId
         val actionableStatus = status.actionableStatus
         val accountId = actionableStatus.account.id
         val accountUsername = actionableStatus.account.username
         val statusUrl = actionableStatus.url
-        var loggedInAccountId: String? = null
         val activeAccount = accountManager.activeAccount
-        if (activeAccount != null) {
-            loggedInAccountId = activeAccount.accountId
-        }
+        var loggedInAccountId: String? = activeAccount?.accountId
+
         val popup = PopupMenu(requireContext(), view)
         // Give a different menu depending on whether this is the user's own toot or not.
         val statusIsByCurrentUser = loggedInAccountId != null && loggedInAccountId == accountId
@@ -319,22 +322,22 @@ abstract class SFragment(@LayoutRes contentLayoutId: Int) : Fragment(contentLayo
                 }
 
                 R.id.status_unreblog_private -> {
-                    onReblog(false, position, Status.Visibility.PRIVATE, null)
+                    onReblog(viewData, false, Status.Visibility.PRIVATE, null)
                     return@setOnMenuItemClickListener true
                 }
 
                 R.id.status_reblog_private -> {
-                    onReblog(true, position, Status.Visibility.PRIVATE, null)
+                    onReblog(viewData, true, Status.Visibility.PRIVATE, null)
                     return@setOnMenuItemClickListener true
                 }
 
                 R.id.status_delete -> {
-                    showConfirmDeleteDialog(id, position)
+                    showConfirmDeleteDialog(viewData)
                     return@setOnMenuItemClickListener true
                 }
 
                 R.id.status_delete_and_redraft -> {
-                    showConfirmEditDialog(id, position, status)
+                    showConfirmEditDialog(viewData)
                     return@setOnMenuItemClickListener true
                 }
 
@@ -364,7 +367,7 @@ abstract class SFragment(@LayoutRes contentLayoutId: Int) : Fragment(contentLayo
                 }
 
                 R.id.status_translate -> {
-                    onMoreTranslate?.invoke(translation == null, position)
+                    onMoreTranslate?.invoke(translation == null, viewData)
                 }
             }
             false
@@ -428,12 +431,12 @@ abstract class SFragment(@LayoutRes contentLayoutId: Int) : Fragment(contentLayo
         startActivity(getIntent(requireContext(), accountId, accountUsername, statusId))
     }
 
-    private fun showConfirmDeleteDialog(id: String, position: Int) {
+    private fun showConfirmDeleteDialog(viewData: C) {
         MaterialAlertDialogBuilder(requireActivity())
             .setMessage(R.string.dialog_delete_post_warning)
             .setPositiveButton(android.R.string.ok) { _: DialogInterface?, _: Int ->
                 viewLifecycleOwner.lifecycleScope.launch {
-                    val result = timelineCases.delete(id, true).exceptionOrNull()
+                    val result = timelineCases.delete(viewData.viewData.id, true).exceptionOrNull()
                     if (result != null) {
                         Log.w("SFragment", "error deleting status", result)
                         Toast.makeText(requireContext(), R.string.error_generic, Toast.LENGTH_SHORT).show()
@@ -443,25 +446,25 @@ abstract class SFragment(@LayoutRes contentLayoutId: Int) : Fragment(contentLayo
                     // removes the item if the timelineCases.delete() call succeeded.
                     //
                     // Either way, this logic should be in the view model.
-                    removeItem(position)
+                    removeItem(viewData)
                 }
             }
             .setNegativeButton(android.R.string.cancel, null)
             .show()
     }
 
-    private fun showConfirmEditDialog(id: String, position: Int, status: Status) {
+    private fun showConfirmEditDialog(viewData: C) {
         val context = context ?: return
 
         MaterialAlertDialogBuilder(context)
             .setMessage(R.string.dialog_redraft_post_warning)
             .setPositiveButton(android.R.string.ok) { _: DialogInterface?, _: Int ->
                 viewLifecycleOwner.lifecycleScope.launch {
-                    timelineCases.delete(id, false).fold(
+                    timelineCases.delete(viewData.viewData.id, false).fold(
                         { deletedStatus ->
-                            removeItem(position)
+                            removeItem(viewData)
                             val sourceStatus = if (deletedStatus.isEmpty) {
-                                status.toDeletedStatus()
+                                viewData.viewData.status.toDeletedStatus()
                             } else {
                                 deletedStatus
                             }

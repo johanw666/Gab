@@ -33,14 +33,14 @@ import com.keylesspalace.tusky.viewdata.StatusViewData
 
 class ThreadAdapter(
     private val statusDisplayOptions: StatusDisplayOptions,
-    private val statusActionListener: StatusActionListener
+    private val statusActionListener: StatusActionListener<StatusViewData.Concrete>
 ) : ListAdapter<StatusViewData.Concrete, RecyclerView.ViewHolder>(ThreadDifferCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         return when (viewType) {
             VIEW_TYPE_STATUS ->
-                StatusViewHolder(inflater.inflate(R.layout.item_status, parent, false))
+                StatusViewHolder<StatusViewData.Concrete>(inflater.inflate(R.layout.item_status, parent, false))
             VIEW_TYPE_STATUS_FILTERED ->
                 FilteredStatusViewHolder(
                     ItemStatusFilteredBinding.inflate(inflater, parent, false),
@@ -59,11 +59,12 @@ class ThreadAdapter(
     }
 
     override fun onBindViewHolder(viewHolder: RecyclerView.ViewHolder, position: Int, payloads: List<Any>) {
-        val status = getItem(position)
-        if (viewHolder is FilteredStatusViewHolder) {
-            viewHolder.bind(status)
-        } else if (viewHolder is StatusBaseViewHolder) {
-            viewHolder.setupWithStatus(status, statusActionListener, statusDisplayOptions, payloads, false)
+        val viewData = getItem(position)
+        if (viewData.isDetailed || viewData.filter?.action != Filter.Action.WARN) {
+            (viewHolder as StatusBaseViewHolder<StatusViewData.Concrete>)
+                .setupWithStatus(viewData, statusActionListener, statusDisplayOptions, payloads, false)
+        } else {
+            (viewHolder as FilteredStatusViewHolder<StatusViewData.Concrete>).bind(viewData)
         }
     }
 

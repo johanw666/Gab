@@ -35,7 +35,11 @@ sealed class NotificationViewData {
         val report: Report?,
         val event: RelationshipSeveranceEvent?,
         val moderationWarning: AccountWarning?
-    ) : NotificationViewData() {
+    ) : NotificationViewData(), ConcreteViewData {
+
+        override val viewData: StatusViewData.Concrete
+            get() = statusViewData ?: throw IllegalStateException("notification type $type has no status attached")
+
         override fun asStatusOrNull() = statusViewData
 
         override fun asPlaceholderOrNull() = null
@@ -43,8 +47,8 @@ sealed class NotificationViewData {
 
     data class LoadMore(
         override val id: String,
-        val isLoading: Boolean
-    ) : NotificationViewData() {
+        override val isLoading: Boolean
+    ) : NotificationViewData(), LoadMoreViewData {
         override fun asStatusOrNull() = null
 
         override fun asPlaceholderOrNull() = this

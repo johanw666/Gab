@@ -58,9 +58,8 @@ import com.keylesspalace.tusky.util.updateRelativeTimePeriodically
 import com.keylesspalace.tusky.util.viewBinding
 import com.keylesspalace.tusky.view.ConfirmationBottomSheet.Companion.confirmFavourite
 import com.keylesspalace.tusky.view.ConfirmationBottomSheet.Companion.confirmReblog
-import com.keylesspalace.tusky.viewdata.AttachmentViewData.Companion.list
+import com.keylesspalace.tusky.viewdata.AttachmentViewData
 import com.keylesspalace.tusky.viewdata.StatusViewData
-import com.keylesspalace.tusky.viewdata.TranslationViewData
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineStart
@@ -70,9 +69,9 @@ import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class ViewThreadFragment :
-    SFragment(R.layout.fragment_view_thread),
+    SFragment<StatusViewData.Concrete>(R.layout.fragment_view_thread),
     OnRefreshListener,
-    StatusActionListener,
+    StatusActionListener<StatusViewData.Concrete>,
     MenuProvider {
 
     @Inject
@@ -333,23 +332,21 @@ class ViewThreadFragment :
         viewModel.refresh(thisThreadsStatusId)
     }
 
-    override fun onReply(position: Int) {
-        val viewData = adapter?.currentList?.getOrNull(position) ?: return
+    override fun onReply(viewData: StatusViewData.Concrete) {
         super.reply(viewData.status)
     }
 
-    override fun onReblog(reblog: Boolean, position: Int, visibility: Status.Visibility?, button: SparkButton?) {
-        val status = adapter?.currentList?.getOrNull(position) ?: return
+    override fun onReblog(viewData: StatusViewData.Concrete, reblog: Boolean, visibility: Status.Visibility?, button: SparkButton?) {
         buttonToAnimate = button
 
         if (reblog && visibility == null) {
             confirmReblog(preferences) { visibility ->
-                viewModel.reblog(true, status, visibility)
+                viewModel.reblog(true, viewData, visibility)
                 buttonToAnimate?.playAnimation()
                 buttonToAnimate?.isChecked = true
             }
         } else {
-            viewModel.reblog(reblog, status, visibility ?: Status.Visibility.PUBLIC)
+            viewModel.reblog(reblog, viewData, visibility ?: Status.Visibility.PUBLIC)
             if (reblog) {
                 buttonToAnimate?.playAnimation()
             }
@@ -357,21 +354,18 @@ class ViewThreadFragment :
         }
     }
 
-    override val onMoreTranslate: ((translate: Boolean, position: Int) -> Unit) =
-        { translate: Boolean, position: Int ->
+    override val onMoreTranslate: ((translate: Boolean, viewData: StatusViewData.Concrete) -> Unit) =
+        { translate: Boolean, viewData: StatusViewData.Concrete ->
             if (translate) {
-                onTranslate(position)
+                onTranslate(viewData)
             } else {
-                onUntranslate(
-                    position
-                )
+                onUntranslate(viewData)
             }
         }
 
-    private fun onTranslate(position: Int) {
-        val status = adapter?.currentList?.getOrNull(position) ?: return
+    private fun onTranslate(viewData: StatusViewData.Concrete) {
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.translate(status)
+            viewModel.translate(viewData)
                 .onFailure {
                     Snackbar.make(
                         requireView(),
@@ -382,58 +376,47 @@ class ViewThreadFragment :
         }
     }
 
-    override fun onUntranslate(position: Int) {
-        val status = adapter?.currentList?.getOrNull(position) ?: return
-        viewModel.untranslate(status)
+    override fun onUntranslate(viewData: StatusViewData.Concrete) {
+        viewModel.untranslate(viewData)
     }
 
-    override fun onFavourite(favourite: Boolean, position: Int, button: SparkButton?) {
-        val status = adapter?.currentList?.getOrNull(position) ?: return
+    override fun onFavourite(viewData: StatusViewData.Concrete, favourite: Boolean, button: SparkButton?) {
         buttonToAnimate = button
 
         if (favourite) {
             confirmFavourite(preferences) {
-                viewModel.favorite(true, status)
+                viewModel.favorite(true, viewData)
                 buttonToAnimate?.playAnimation()
                 buttonToAnimate?.isChecked = true
             }
         } else {
-            viewModel.favorite(false, status)
+            viewModel.favorite(false, viewData)
             buttonToAnimate?.isChecked = false
         }
     }
 
-    override fun onBookmark(bookmark: Boolean, position: Int) {
-        val status = adapter?.currentList?.getOrNull(position) ?: return
-        viewModel.bookmark(bookmark, status)
+    override fun onBookmark(viewData: StatusViewData.Concrete, bookmark: Boolean) {
+        viewModel.bookmark(bookmark, viewData)
     }
 
-    override fun onMore(view: View, position: Int) {
-        val viewData = adapter?.currentList?.getOrNull(position) ?: return
-        super.more(
-            viewData.status,
-            view,
-            position,
-            (viewData.translation as? TranslationViewData.Loaded)?.data
-        )
+    override fun onMore(viewData: StatusViewData.Concrete, view: View) {
+        super.more(viewData, view)
     }
 
-    override fun onViewMedia(position: Int, attachmentIndex: Int, view: View?) {
-        val status = adapter?.currentList?.getOrNull(position) ?: return
+    override fun onViewMedia(viewData: StatusViewData.Concrete, attachmentIndex: Int, view: View?) {
         super.viewMedia(
             attachmentIndex,
-            list(status, alwaysShowSensitiveMedia),
+            AttachmentViewData.list(viewData, alwaysShowSensitiveMedia),
             view
         )
     }
 
-    override fun onViewThread(position: Int) {
-        val status = adapter?.currentList?.getOrNull(position) ?: return
-        if (thisThreadsStatusId == status.id) {
+    override fun onViewThread(viewData: StatusViewData.Concrete) {
+        if (thisThreadsStatusId == viewData.id) {
             // If already viewing this thread, don't reopen it.
             return
         }
-        super.viewThread(status.actionableId, status.actionable.url)
+        super.viewThread(viewData.actionableId, viewData.actionable.url)
     }
 
     override fun onViewUrl(url: String) {
@@ -448,39 +431,30 @@ class ViewThreadFragment :
         super.onViewUrl(url)
     }
 
-    override fun onOpenReblog(position: Int) {
+    override fun onOpenReblog(viewData: StatusViewData.Concrete) {
         // there are no reblogs in threads
     }
 
-    override fun onExpandedChange(expanded: Boolean, position: Int) {
-        val status = adapter?.currentList?.getOrNull(position) ?: return
-        viewModel.changeExpanded(expanded, status)
+    override fun onExpandedChange(viewData: StatusViewData.Concrete, expanded: Boolean) {
+        viewModel.changeExpanded(expanded, viewData)
     }
 
-    override fun onContentHiddenChange(isShowing: Boolean, position: Int) {
-        val status = adapter?.currentList?.getOrNull(position) ?: return
-        viewModel.changeContentShowing(isShowing, status)
+    override fun onContentHiddenChange(viewData: StatusViewData.Concrete, isShowing: Boolean) {
+        viewModel.changeContentShowing(isShowing, viewData)
     }
 
-    override fun onLoadMore(position: Int) {
-        // only used in timelines
-    }
-
-    override fun onShowReblogs(position: Int) {
-        val status = adapter?.currentList?.getOrNull(position) ?: return
-        val intent = newIntent(requireContext(), AccountListActivity.Type.REBLOGGED, status.id)
+    override fun onShowReblogs(viewData: StatusViewData.Concrete) {
+        val intent = newIntent(requireContext(), AccountListActivity.Type.REBLOGGED, viewData.id)
         requireActivity().startActivityWithSlideInAnimation(intent)
     }
 
-    override fun onShowFavs(position: Int) {
-        val status = adapter?.currentList?.getOrNull(position) ?: return
-        val intent = newIntent(requireContext(), AccountListActivity.Type.FAVOURITED, status.id)
+    override fun onShowFavs(viewData: StatusViewData.Concrete) {
+        val intent = newIntent(requireContext(), AccountListActivity.Type.FAVOURITED, viewData.id)
         requireActivity().startActivityWithSlideInAnimation(intent)
     }
 
-    override fun onContentCollapsedChange(isCollapsed: Boolean, position: Int) {
-        val status = adapter?.currentList?.getOrNull(position) ?: return
-        viewModel.changeContentCollapsed(isCollapsed, status)
+    override fun onContentCollapsedChange(viewData: StatusViewData.Concrete, isCollapsed: Boolean) {
+        viewModel.changeContentCollapsed(isCollapsed, viewData)
     }
 
     override fun onViewTag(tag: String) {
@@ -491,31 +465,25 @@ class ViewThreadFragment :
         super.viewAccount(id)
     }
 
-    public override fun removeItem(position: Int) {
-        adapter?.currentList?.getOrNull(position)?.let { status ->
-            if (status.isDetailed) {
-                // the main status we are viewing is being removed, finish the activity
-                activity?.finish()
-                return
-            }
-            viewModel.removeStatus(status)
+    public override fun removeItem(viewData: StatusViewData.Concrete) {
+        if (viewData.isDetailed) {
+            // the main status we are viewing is being removed, finish the activity
+            activity?.finish()
+            return
         }
+        viewModel.removeStatus(viewData)
     }
 
-    override fun onVoteInPoll(position: Int, choices: List<Int>) {
-        val status = adapter?.currentList?.getOrNull(position) ?: return
-        viewModel.voteInPoll(choices, status)
+    override fun onVoteInPoll(viewData: StatusViewData.Concrete, choices: List<Int>) {
+        viewModel.voteInPoll(choices, viewData)
     }
 
-    override fun onShowPollResults(position: Int) {
-        adapter?.currentList?.getOrNull(position)?.let { status ->
-            viewModel.showPollResults(status)
-        }
+    override fun onShowPollResults(viewData: StatusViewData.Concrete) {
+        viewModel.showPollResults(viewData)
     }
 
-    override fun onShowEdits(position: Int) {
-        val status = adapter?.currentList?.getOrNull(position) ?: return
-        val viewEditsFragment = ViewEditsFragment.newInstance(status.actionableId)
+    override fun onShowEdits(viewData: StatusViewData.Concrete) {
+        val viewEditsFragment = ViewEditsFragment.newInstance(viewData.actionableId)
 
         parentFragmentManager.commit {
             setCustomAnimations(
@@ -529,9 +497,8 @@ class ViewThreadFragment :
         }
     }
 
-    override fun clearWarningAction(position: Int) {
-        val status = adapter?.currentList?.getOrNull(position) ?: return
-        viewModel.clearWarning(status)
+    override fun clearWarningAction(viewData: StatusViewData.Concrete) {
+        viewModel.clearWarning(viewData)
     }
 
     companion object {

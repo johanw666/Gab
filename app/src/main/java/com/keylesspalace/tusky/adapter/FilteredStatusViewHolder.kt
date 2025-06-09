@@ -22,32 +22,16 @@ import com.keylesspalace.tusky.entity.Filter
 import com.keylesspalace.tusky.entity.FilterResult
 import com.keylesspalace.tusky.interfaces.StatusActionListener
 import com.keylesspalace.tusky.util.StatusDisplayOptions
+import com.keylesspalace.tusky.viewdata.ConcreteViewData
 import com.keylesspalace.tusky.viewdata.NotificationViewData
-import com.keylesspalace.tusky.viewdata.StatusViewData
 
-class FilteredStatusViewHolder(
+open class FilteredStatusViewHolder<in C : ConcreteViewData>(
     private val binding: ItemStatusFilteredBinding,
-    listener: StatusActionListener
-) : NotificationsViewHolder, RecyclerView.ViewHolder(binding.root) {
+    private val listener: StatusActionListener<C>
+) : RecyclerView.ViewHolder(binding.root) {
 
-    init {
-        binding.statusFilterShowAnyway.setOnClickListener {
-            listener.clearWarningAction(bindingAdapterPosition)
-        }
-    }
-
-    override fun bind(
-        viewData: NotificationViewData.Concrete,
-        payloads: List<*>,
-        statusDisplayOptions: StatusDisplayOptions
-    ) {
-        if (payloads.isEmpty()) {
-            bind(viewData.statusViewData!!)
-        }
-    }
-
-    fun bind(viewData: StatusViewData.Concrete) {
-        val matchedFilterResult: FilterResult? = viewData.actionable.filtered.orEmpty().find { filterResult ->
+    fun bind(viewData: C) {
+        val matchedFilterResult: FilterResult? = viewData.viewData.actionable.filtered.orEmpty().find { filterResult ->
             filterResult.filter.action == Filter.Action.WARN
         }
 
@@ -57,5 +41,24 @@ class FilteredStatusViewHolder(
             R.string.status_filter_placeholder_label_format,
             matchedFilterTitle
         )
+        binding.statusFilterShowAnyway.setOnClickListener {
+            listener.clearWarningAction(viewData)
+        }
+    }
+}
+
+class FilteredNotificationViewHolder(
+    binding: ItemStatusFilteredBinding,
+    listener: StatusActionListener<NotificationViewData.Concrete>
+) : FilteredStatusViewHolder<NotificationViewData.Concrete>(binding, listener), NotificationsViewHolder {
+
+    override fun bind(
+        viewData: NotificationViewData.Concrete,
+        payloads: List<*>,
+        statusDisplayOptions: StatusDisplayOptions
+    ) {
+        if (payloads.isEmpty()) {
+            bind(viewData)
+        }
     }
 }

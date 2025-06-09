@@ -50,6 +50,7 @@ import com.keylesspalace.tusky.entity.Attachment.MetaData;
 import com.keylesspalace.tusky.entity.Emoji;
 import com.keylesspalace.tusky.entity.Filter;
 import com.keylesspalace.tusky.entity.HashTag;
+import com.keylesspalace.tusky.entity.Poll;
 import com.keylesspalace.tusky.entity.PreviewCard;
 import com.keylesspalace.tusky.entity.Status;
 import com.keylesspalace.tusky.entity.TimelineAccount;
@@ -70,6 +71,7 @@ import com.keylesspalace.tusky.util.TimestampUtils;
 import com.keylesspalace.tusky.util.TouchDelegateHelper;
 import com.keylesspalace.tusky.view.MediaPreviewImageView;
 import com.keylesspalace.tusky.view.MediaPreviewLayout;
+import com.keylesspalace.tusky.viewdata.ConcreteViewData;
 import com.keylesspalace.tusky.viewdata.PollOptionViewData;
 import com.keylesspalace.tusky.viewdata.PollViewData;
 import com.keylesspalace.tusky.viewdata.PollViewDataKt;
@@ -83,9 +85,10 @@ import java.util.List;
 
 import at.connyduck.sparkbutton.SparkButton;
 import at.connyduck.sparkbutton.helpers.Utils;
+import kotlin.Unit;
 import kotlin.collections.CollectionsKt;
 
-public abstract class StatusBaseViewHolder extends RecyclerView.ViewHolder {
+public abstract class StatusBaseViewHolder<C extends ConcreteViewData> extends RecyclerView.ViewHolder {
     public static class Key {
         public static final String KEY_CREATED = "created";
     }
@@ -231,10 +234,11 @@ public abstract class StatusBaseViewHolder extends RecyclerView.ViewHolder {
         contentWarningButton.performClick();
     }
 
-    protected void setSpoilerAndContent(@NonNull StatusViewData.Concrete status,
-                                        @NonNull StatusDisplayOptions statusDisplayOptions,
-                                        final @NonNull StatusActionListener listener) {
+    protected void setSpoilerAndContent(final @NonNull C concreteViewData,
+                                        final @NonNull StatusDisplayOptions statusDisplayOptions,
+                                        final @NonNull StatusActionListener<C> listener) {
 
+        final StatusViewData.Concrete status = concreteViewData.getViewData();
         Status actionable = status.getActionable();
         String spoilerText = status.getSpoilerText();
         List<Emoji> emojis = actionable.getEmojis();
@@ -252,15 +256,15 @@ public abstract class StatusBaseViewHolder extends RecyclerView.ViewHolder {
             if (hasContent) {
                 contentWarningButton.setVisibility(View.VISIBLE);
                 setContentWarningButtonText(expanded);
-                contentWarningButton.setOnClickListener(view -> toggleExpandedState(true, !expanded, status, statusDisplayOptions, listener));
+                contentWarningButton.setOnClickListener(view -> toggleExpandedState(true, !expanded, concreteViewData, statusDisplayOptions, listener));
             } else {
                 contentWarningButton.setVisibility(View.GONE);
             }
-            this.setTextVisible(true, expanded, status, statusDisplayOptions, listener);
+            this.setTextVisible(true, expanded, concreteViewData, statusDisplayOptions, listener);
         } else {
             contentWarningDescription.setVisibility(View.GONE);
             contentWarningButton.setVisibility(View.GONE);
-            this.setTextVisible(false, true, status, statusDisplayOptions, listener);
+            this.setTextVisible(false, true, concreteViewData, statusDisplayOptions, listener);
         }
     }
 
@@ -274,34 +278,32 @@ public abstract class StatusBaseViewHolder extends RecyclerView.ViewHolder {
 
     protected void toggleExpandedState(boolean sensitive,
                                        boolean expanded,
-                                       @NonNull final StatusViewData.Concrete status,
+                                       @NonNull final C concreteViewData,
                                        @NonNull final StatusDisplayOptions statusDisplayOptions,
-                                       @NonNull final StatusActionListener listener) {
+                                       @NonNull final StatusActionListener<C> listener) {
 
+        final StatusViewData.Concrete status = concreteViewData.getViewData();
         contentWarningDescription.invalidate();
-        int adapterPosition = getBindingAdapterPosition();
-        if (adapterPosition != RecyclerView.NO_POSITION) {
-            listener.onExpandedChange(expanded, adapterPosition);
-        }
+        listener.onExpandedChange(concreteViewData, expanded);
         setContentWarningButtonText(expanded);
 
-        this.setTextVisible(sensitive, expanded, status, statusDisplayOptions, listener);
+        this.setTextVisible(sensitive, expanded, concreteViewData, statusDisplayOptions, listener);
 
         setupCard(status, expanded, !status.isShowingContent(), statusDisplayOptions.cardViewMode(), statusDisplayOptions, listener);
     }
 
     private void setTextVisible(boolean sensitive,
                                 boolean expanded,
-                                @NonNull final StatusViewData.Concrete status,
+                                @NonNull final C concreteViewData,
                                 @NonNull final StatusDisplayOptions statusDisplayOptions,
-                                final StatusActionListener listener) {
+                                final StatusActionListener<C> listener) {
 
+        final StatusViewData.Concrete status = concreteViewData.getViewData();
         Status actionable = status.getActionable();
         Spanned content = status.getContent();
         List<Status.Mention> mentions = actionable.getMentions();
         List<HashTag> tags = actionable.getTags();
         List<Emoji> emojis = actionable.getEmojis();
-        PollViewData poll = PollViewDataKt.toViewData(status.getPoll());
 
         if (expanded) {
             CharSequence emojifiedText = CustomEmojiHelper.emojify(content, emojis, this.content, statusDisplayOptions.animateEmojis());
@@ -312,11 +314,7 @@ public abstract class StatusBaseViewHolder extends RecyclerView.ViewHolder {
             for (int i = 0; i < mediaLabels.length; ++i) {
                 updateMediaLabel(i, sensitive, true);
             }
-            if (poll != null) {
-                setupPoll(poll, emojis, statusDisplayOptions, listener);
-            } else {
-                hidePoll();
-            }
+            setupPoll(concreteViewData, statusDisplayOptions, listener);
         } else {
             hidePoll();
             if (trailingHashtagView != null) {
@@ -379,7 +377,9 @@ public abstract class StatusBaseViewHolder extends RecyclerView.ViewHolder {
         );
     }
 
-    protected void setMetaData(@NonNull StatusViewData.Concrete statusViewData, @NonNull StatusDisplayOptions statusDisplayOptions, @NonNull StatusActionListener listener) {
+    protected void setMetaData(@NonNull StatusViewData.Concrete statusViewData,
+                               @NonNull StatusDisplayOptions statusDisplayOptions,
+                               @NonNull StatusActionListener<C> listener) {
 
         Status status = statusViewData.getActionable();
         Date createdAt = status.getCreatedAt();
@@ -529,12 +529,13 @@ public abstract class StatusBaseViewHolder extends RecyclerView.ViewHolder {
     }
 
     protected void setMediaPreviews(
+        final @NonNull C concreteViewData,
         final @NonNull List<Attachment> attachments,
         boolean sensitive,
-        final @NonNull StatusActionListener listener,
+        final @NonNull StatusActionListener<C> listener,
         boolean showingContent,
         boolean useBlurhash,
-        final @NonNull Filter filter
+        final @Nullable Filter filter
     ) {
 
         mediaPreview.setVisibility(View.VISIBLE);
@@ -568,7 +569,7 @@ public abstract class StatusBaseViewHolder extends RecyclerView.ViewHolder {
             }
 
             final CharSequence formattedDescription = AttachmentHelper.getFormattedDescription(attachment, imageView.getContext());
-            setAttachmentClickListener(imageView, listener, i, formattedDescription, true);
+            setAttachmentClickListener(concreteViewData, imageView, listener, i, formattedDescription, true);
 
             if (filter != null) {
                 sensitiveMediaWarning.setText(sensitiveMediaWarning.getContext().getString(R.string.status_filter_placeholder_label_format, filter.getTitle()));
@@ -584,23 +585,19 @@ public abstract class StatusBaseViewHolder extends RecyclerView.ViewHolder {
             descriptionIndicator.setVisibility(hasDescription && showingContent ? View.VISIBLE : View.GONE);
 
             sensitiveMediaShow.setOnClickListener(v -> {
-                if (getBindingAdapterPosition() != RecyclerView.NO_POSITION) {
-                    listener.onContentHiddenChange(false, getBindingAdapterPosition());
-                }
+                listener.onContentHiddenChange(concreteViewData, false);
                 v.setVisibility(View.GONE);
                 sensitiveMediaWarning.setVisibility(View.VISIBLE);
                 descriptionIndicator.setVisibility(View.GONE);
             });
             sensitiveMediaWarning.setOnClickListener(v -> {
-                if (getBindingAdapterPosition() != RecyclerView.NO_POSITION) {
-                    listener.onContentHiddenChange(true, getBindingAdapterPosition());
-                }
+                listener.onContentHiddenChange(concreteViewData, true);
                 v.setVisibility(View.GONE);
                 sensitiveMediaShow.setVisibility(View.VISIBLE);
                 descriptionIndicator.setVisibility(hasDescription ? View.VISIBLE : View.GONE);
             });
 
-            return null;
+            return Unit.INSTANCE;
         });
     }
 
@@ -623,8 +620,13 @@ public abstract class StatusBaseViewHolder extends RecyclerView.ViewHolder {
         mediaLabels[index].setText(label);
     }
 
-    protected void setMediaLabel(@NonNull List<Attachment> attachments, boolean sensitive,
-                                 final @NonNull StatusActionListener listener, boolean showingContent) {
+    protected void setMediaLabel(
+        @NonNull final C concreteViewData,
+        @NonNull List<Attachment> attachments,
+        boolean sensitive,
+        final @NonNull StatusActionListener<C> listener,
+        boolean showingContent
+    ) {
         Context context = itemView.getContext();
         for (int i = 0; i < mediaLabels.length; i++) {
             TextView mediaLabel = mediaLabels[i];
@@ -638,22 +640,28 @@ public abstract class StatusBaseViewHolder extends RecyclerView.ViewHolder {
                 int drawableId = getLabelIcon(attachments.get(0).getType());
                 mediaLabel.setCompoundDrawablesRelativeWithIntrinsicBounds(drawableId, 0, 0, 0);
 
-                setAttachmentClickListener(mediaLabel, listener, i, mediaDescriptions[i], false);
+                setAttachmentClickListener(concreteViewData, mediaLabel, listener, i, mediaDescriptions[i], false);
             } else {
                 mediaLabelContainers[i].setVisibility(View.GONE);
             }
         }
     }
 
-    private void setAttachmentClickListener(@NonNull View view, @NonNull StatusActionListener listener,
-                                            int index, CharSequence description, boolean animateTransition) {
+    private void setAttachmentClickListener(
+        @NonNull final C concreteViewData,
+        @NonNull final View view,
+        @NonNull final StatusActionListener<C> listener,
+        int index,
+        @NonNull final CharSequence description,
+        boolean animateTransition
+    ) {
         view.setOnClickListener(v -> {
             int position = getBindingAdapterPosition();
             if (position != RecyclerView.NO_POSITION) {
                 if (sensitiveMediaWarning.getVisibility() == View.VISIBLE) {
-                    listener.onContentHiddenChange(true, getBindingAdapterPosition());
+                    listener.onContentHiddenChange(concreteViewData, true);
                 } else {
-                    listener.onViewMedia(position, index, animateTransition ? v : null);
+                    listener.onViewMedia(concreteViewData, index, animateTransition ? v : null);
                 }
             }
         });
@@ -665,75 +673,58 @@ public abstract class StatusBaseViewHolder extends RecyclerView.ViewHolder {
         sensitiveMediaShow.setVisibility(View.GONE);
     }
 
-    protected void setupButtons(final @NonNull StatusActionListener listener,
-                                final @NonNull String accountId,
-                                final @Nullable String statusContent,
-                                @NonNull StatusDisplayOptions statusDisplayOptions) {
+    protected void setupButtons(final @NonNull C concreteViewData,
+                                final @NonNull StatusActionListener<C> listener) {
+
+        final String accountId = concreteViewData.getViewData().getActionable().getAccount().getId();
+
         View.OnClickListener profileButtonClickListener = button -> listener.onViewAccount(accountId);
 
         avatar.setOnClickListener(profileButtonClickListener);
         displayName.setOnClickListener(profileButtonClickListener);
 
         replyButton.setOnClickListener(v -> {
-            int position = getBindingAdapterPosition();
-            if (position != RecyclerView.NO_POSITION) {
-                listener.onReply(position);
-            }
+            listener.onReply(concreteViewData);
         });
 
         if (reblogButton != null) {
             reblogButton.setEventListener((button, buttonState) -> {
-                // return true to play animation
-                int position = getBindingAdapterPosition();
-                if (position != RecyclerView.NO_POSITION) {
-                    listener.onReblog(!buttonState, position, null, button);
-                }
+                listener.onReblog(concreteViewData, !buttonState, null, button);
+                // return false to prevent animation (will be handled by listener)
                 return false;
             });
         }
 
         favouriteButton.setEventListener((button, buttonState) -> {
-            // return true to play animation
-            int position = getBindingAdapterPosition();
-            if (position != RecyclerView.NO_POSITION) {
-                listener.onFavourite(!buttonState, position, button);
-            }
+            listener.onFavourite(concreteViewData, !buttonState, button);
+            // return false to prevent animation (will be handled by listener)
             return false;
         });
 
         bookmarkButton.setEventListener((button, buttonState) -> {
-            int position = getBindingAdapterPosition();
-            if (position != RecyclerView.NO_POSITION) {
-                listener.onBookmark(!buttonState, position);
-            }
+            listener.onBookmark(concreteViewData, !buttonState);
             return true;
         });
 
-        moreButton.setOnClickListener(v -> {
-            int position = getBindingAdapterPosition();
-            if (position != RecyclerView.NO_POSITION) {
-                listener.onMore(v, position);
-            }
-        });
+        moreButton.setOnClickListener(v -> listener.onMore(concreteViewData, v));
+
         /* Even though the content TextView is a child of the container, it won't respond to clicks
          * if it contains URLSpans without also setting its listener. The surrounding spans will
          * just eat the clicks instead of deferring to the parent listener, but WILL respond to a
          * listener directly on the TextView, for whatever reason. */
-        View.OnClickListener viewThreadListener = v -> {
-            int position = getBindingAdapterPosition();
-            if (position != RecyclerView.NO_POSITION) {
-                listener.onViewThread(position);
-            }
-        };
+        View.OnClickListener viewThreadListener = v -> listener.onViewThread(concreteViewData);
         content.setOnClickListener(viewThreadListener);
         itemView.setOnClickListener(viewThreadListener);
     }
 
-    public void setupWithStatus(@NonNull StatusViewData.Concrete status,
-                                @NonNull final StatusActionListener listener,
+    public void setupWithStatus(@NonNull C concreteViewData,
+                                @NonNull final StatusActionListener<C> listener,
                                 @NonNull StatusDisplayOptions statusDisplayOptions,
                                 @NonNull List<Object> payloads,
                                 final boolean showStatusInfo) {
+
+        StatusViewData.Concrete status = concreteViewData.getViewData();
+
         if (payloads.isEmpty()) {
             Status actionable = status.getActionable();
             setDisplayName(actionable.getAccount().getName(), actionable.getAccount().getEmojis(), statusDisplayOptions);
@@ -753,7 +744,7 @@ public abstract class StatusBaseViewHolder extends RecyclerView.ViewHolder {
             } else if (statusDisplayOptions.mediaPreviewEnabled() && hasPreviewableAttachment(attachments)) {
                 mediaContainer.setVisibility(View.VISIBLE);
 
-                setMediaPreviews(attachments, sensitive, listener, status.isShowingContent(), statusDisplayOptions.useBlurhash(), status.getFilter());
+                setMediaPreviews(concreteViewData, attachments, sensitive, listener, status.isShowingContent(), statusDisplayOptions.useBlurhash(), status.getFilter());
 
                 if (attachments.isEmpty()) {
                     hideSensitiveMediaWarning();
@@ -765,7 +756,7 @@ public abstract class StatusBaseViewHolder extends RecyclerView.ViewHolder {
             } else {
                 mediaContainer.setVisibility(View.VISIBLE);
 
-                setMediaLabel(attachments, sensitive, listener, status.isShowingContent());
+                setMediaLabel(concreteViewData, attachments, sensitive, listener, status.isShowingContent());
                 // Hide all unused views.
                 mediaPreview.setVisibility(View.GONE);
                 hideSensitiveMediaWarning();
@@ -773,14 +764,13 @@ public abstract class StatusBaseViewHolder extends RecyclerView.ViewHolder {
 
             setupCard(status, status.isExpanded(), !status.isShowingContent(), statusDisplayOptions.cardViewMode(), statusDisplayOptions, listener);
 
-            setupButtons(listener, actionable.getAccount().getId(), status.getContent().toString(),
-                statusDisplayOptions);
+            setupButtons(concreteViewData, listener);
 
-            setTranslationStatus(status, listener);
+            setTranslationStatus(concreteViewData, listener);
 
             setRebloggingEnabled(actionable.isRebloggingAllowed(), actionable.getVisibility());
 
-            setSpoilerAndContent(status, statusDisplayOptions, listener);
+            setSpoilerAndContent(concreteViewData, statusDisplayOptions, listener);
 
             setDescriptionForStatus(status, statusDisplayOptions);
 
@@ -804,8 +794,8 @@ public abstract class StatusBaseViewHolder extends RecyclerView.ViewHolder {
         }
     }
 
-    private void setTranslationStatus(StatusViewData.Concrete status, StatusActionListener listener) {
-        var translationViewData = status.getTranslation();
+    private void setTranslationStatus(C concreteViewData, StatusActionListener<C> listener) {
+        var translationViewData = concreteViewData.getViewData().getTranslation();
         if (translationViewData != null) {
             if (translationViewData instanceof TranslationViewData.Loaded) {
                 Translation translation = ((TranslationViewData.Loaded) translationViewData).getData();
@@ -813,7 +803,7 @@ public abstract class StatusBaseViewHolder extends RecyclerView.ViewHolder {
                 var langName = LocaleUtilsKt.localeNameForUntrustedISO639LangCode(translation.getDetectedSourceLanguage());
                 translationStatusView.setText(translationStatusView.getContext().getString(R.string.label_translated, langName, translation.getProvider()));
                 untranslateButton.setVisibility(View.VISIBLE);
-                untranslateButton.setOnClickListener((v) -> listener.onUntranslate(getBindingAdapterPosition()));
+                untranslateButton.setOnClickListener((v) -> listener.onUntranslate(concreteViewData));
             } else {
                 translationStatusView.setVisibility(View.VISIBLE);
                 translationStatusView.setText(R.string.label_translating);
@@ -1001,83 +991,91 @@ public abstract class StatusBaseViewHolder extends RecyclerView.ViewHolder {
         return sb;
     }
 
-    private void setupPoll(PollViewData poll, List<Emoji> emojis,
-                           StatusDisplayOptions statusDisplayOptions,
-                           StatusActionListener listener) {
-        long timestamp = System.currentTimeMillis();
+    private void setupPoll(@NonNull final C concreteViewData,
+                           @NonNull final StatusDisplayOptions statusDisplayOptions,
+                           @NonNull final StatusActionListener<C> listener) {
 
-        boolean expired = poll.getExpired() || (poll.getExpiresAt() != null && timestamp > poll.getExpiresAt().getTime());
+        final StatusViewData.Concrete status = concreteViewData.getViewData();
+        final Poll poll = status.getPoll();
 
-        Context context = pollDescription.getContext();
-
-        pollOptions.setVisibility(View.VISIBLE);
-
-        if (expired || poll.getVoted()) {
-            // no voting possible
-            View.OnClickListener viewThreadListener = v -> {
-                int position = getBindingAdapterPosition();
-                if (position != RecyclerView.NO_POSITION) {
-                    listener.onViewThread(position);
-                }
-            };
-            pollAdapter.setup(
-                poll.getOptions(),
-                poll.getVotesCount(),
-                poll.getVotersCount(),
-                emojis,
-                PollAdapter.RESULT,
-                viewThreadListener,
-                statusDisplayOptions.animateEmojis()
-            );
-
-            pollButton.setVisibility(View.GONE);
-            pollResultsButton.setVisibility(View.GONE);
+        if (poll == null) {
+            hidePoll();
         } else {
-            // voting possible
-            pollAdapter.setup(
-                poll.getOptions(),
-                poll.getVotesCount(),
-                poll.getVotersCount(),
-                emojis,
-                poll.getMultiple() ? PollAdapter.MULTIPLE : PollAdapter.SINGLE,
-                null,
-                statusDisplayOptions.animateEmojis()
-            );
+            final PollViewData pollViewData = PollViewDataKt.toViewData(status.getPoll());
+            final List<Emoji> emojis = status.getActionable().getEmojis();
 
-            pollButton.setVisibility(View.VISIBLE);
-            pollResultsButton.setVisibility(View.VISIBLE);
+            long timestamp = System.currentTimeMillis();
 
-            pollButton.setOnClickListener(v -> {
+            boolean expired = poll.getExpired() || (poll.getExpiresAt() != null && timestamp > poll.getExpiresAt().getTime());
 
-                int position = getBindingAdapterPosition();
+            Context context = pollDescription.getContext();
 
-                if (position != RecyclerView.NO_POSITION) {
+            pollOptions.setVisibility(View.VISIBLE);
 
-                    List<Integer> pollResult = pollAdapter.getSelected();
+            if (expired || poll.getVoted()) {
+                // no voting possible
+                View.OnClickListener viewThreadListener = v -> listener.onViewThread(concreteViewData);
 
-                    if (!pollResult.isEmpty()) {
-                        listener.onVoteInPoll(position, pollResult);
+                pollAdapter.setup(
+                    pollViewData.getOptions(),
+                    pollViewData.getVotesCount(),
+                    pollViewData.getVotersCount(),
+                    emojis,
+                    PollAdapter.RESULT,
+                    viewThreadListener,
+                    statusDisplayOptions.animateEmojis()
+                );
+
+                pollButton.setVisibility(View.GONE);
+                pollResultsButton.setVisibility(View.GONE);
+            } else {
+                // voting possible
+                pollAdapter.setup(
+                    pollViewData.getOptions(),
+                    pollViewData.getVotesCount(),
+                    pollViewData.getVotersCount(),
+                    emojis,
+                    pollViewData.getMultiple() ? PollAdapter.MULTIPLE : PollAdapter.SINGLE,
+                    null,
+                    statusDisplayOptions.animateEmojis()
+                );
+
+                pollButton.setVisibility(View.VISIBLE);
+                pollResultsButton.setVisibility(View.VISIBLE);
+
+                pollButton.setOnClickListener(v -> {
+
+                    int position = getBindingAdapterPosition();
+
+                    if (position != RecyclerView.NO_POSITION) {
+
+                        List<Integer> pollResult = pollAdapter.getSelected();
+
+                        if (!pollResult.isEmpty()) {
+                            listener.onVoteInPoll(concreteViewData, pollResult);
+                        }
                     }
-                }
 
-            });
+                });
 
-            pollResultsButton.setOnClickListener(v -> {
-                int position = getBindingAdapterPosition();
+                pollResultsButton.setOnClickListener(v -> {
+                    int position = getBindingAdapterPosition();
 
-                if (position != RecyclerView.NO_POSITION) {
-                    listener.onShowPollResults(position);
-                }
-            });
+                    if (position != RecyclerView.NO_POSITION) {
+                        listener.onShowPollResults(concreteViewData);
+                    }
+                });
+            }
+
+            pollDescription.setVisibility(View.VISIBLE);
+            pollDescription.setText(getPollInfoText(timestamp, pollViewData, statusDisplayOptions, context));
         }
-
-        pollDescription.setVisibility(View.VISIBLE);
-        pollDescription.setText(getPollInfoText(timestamp, poll, statusDisplayOptions, context));
     }
 
-    private CharSequence getPollInfoText(long timestamp, PollViewData poll,
-                                         StatusDisplayOptions statusDisplayOptions,
-                                         Context context) {
+    private CharSequence getPollInfoText(long timestamp,
+                                         @NonNull final PollViewData poll,
+                                         @NonNull final StatusDisplayOptions statusDisplayOptions,
+                                         @NonNull final Context context) {
         String votesText;
         if (poll.getVotersCount() == null) {
             String voters = numberFormat.format(poll.getVotesCount());
@@ -1108,7 +1106,7 @@ public abstract class StatusBaseViewHolder extends RecyclerView.ViewHolder {
         boolean blurMedia,
         final @NonNull CardViewMode cardViewMode,
         final @NonNull StatusDisplayOptions statusDisplayOptions,
-        final @NonNull StatusActionListener listener
+        final @NonNull StatusActionListener<C> listener
     ) {
         if (cardView == null) {
             return;

@@ -74,7 +74,10 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class SearchStatusesFragment : SearchFragment<StatusViewData.Concrete>(), StatusActionListener {
+class SearchStatusesFragment :
+    SearchFragment<StatusViewData.Concrete>(),
+    StatusActionListener<StatusViewData.Concrete> {
+
     @Inject
     lateinit var accountManager: AccountManager
 
@@ -169,149 +172,114 @@ class SearchStatusesFragment : SearchFragment<StatusViewData.Concrete>(), Status
         super.onRefresh()
     }
 
-    override fun onContentHiddenChange(isShowing: Boolean, position: Int) {
-        adapter?.peek(position)?.let {
-            viewModel.contentHiddenChange(it, isShowing)
-        }
+    override fun onContentHiddenChange(viewData: StatusViewData.Concrete, isShowing: Boolean) {
+        viewModel.contentHiddenChange(viewData, isShowing)
     }
 
-    override fun onReply(position: Int) {
-        adapter?.peek(position)?.let { status ->
-            reply(status)
-        }
+    override fun onReply(viewData: StatusViewData.Concrete) {
+        reply(viewData)
     }
 
-    override fun onFavourite(favourite: Boolean, position: Int, button: SparkButton?) {
-        val status = adapter?.peek(position)?.asStatusOrNull() ?: return
-
+    override fun onFavourite(viewData: StatusViewData.Concrete, favourite: Boolean, button: SparkButton?) {
         if (favourite) {
             confirmFavourite(preferences) {
-                viewModel.favorite(status, true)
+                viewModel.favorite(viewData, true)
                 buttonToAnimate?.playAnimation()
                 buttonToAnimate?.isChecked = true
             }
         } else {
-            viewModel.favorite(status, false)
+            viewModel.favorite(viewData, false)
             buttonToAnimate?.isChecked = false
         }
     }
 
-    override fun onBookmark(bookmark: Boolean, position: Int) {
-        adapter?.peek(position)?.let { status ->
-            viewModel.bookmark(status, bookmark)
-        }
+    override fun onBookmark(viewData: StatusViewData.Concrete, bookmark: Boolean) {
+        viewModel.bookmark(viewData, bookmark)
     }
 
-    override fun onMore(view: View, position: Int) {
-        adapter?.peek(position)?.let {
-            more(it, view, position)
-        }
+    override fun onMore(viewData: StatusViewData.Concrete, view: View) {
+        more(viewData, view)
     }
 
-    override fun onViewMedia(position: Int, attachmentIndex: Int, view: View?) {
-        adapter?.peek(position)?.let { status ->
-            when (status.attachments[attachmentIndex].type) {
-                Attachment.Type.GIFV, Attachment.Type.VIDEO, Attachment.Type.IMAGE, Attachment.Type.AUDIO -> {
-                    val attachments = AttachmentViewData.list(status)
-                    val intent = ViewMediaActivity.newIntent(
-                        requireContext(),
-                        attachments,
-                        attachmentIndex
+    override fun onViewMedia(viewData: StatusViewData.Concrete, attachmentIndex: Int, view: View?) {
+        when (viewData.attachments[attachmentIndex].type) {
+            Attachment.Type.GIFV, Attachment.Type.VIDEO, Attachment.Type.IMAGE, Attachment.Type.AUDIO -> {
+                val attachments = AttachmentViewData.list(viewData)
+                val intent = ViewMediaActivity.newIntent(
+                    requireContext(),
+                    attachments,
+                    attachmentIndex
+                )
+                if (view != null) {
+                    val url = viewData.attachments[attachmentIndex].url
+                    ViewCompat.setTransitionName(view, url)
+                    val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                        requireActivity(),
+                        view,
+                        url
                     )
-                    if (view != null) {
-                        val url = status.attachments[attachmentIndex].url
-                        ViewCompat.setTransitionName(view, url)
-                        val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
-                            requireActivity(),
-                            view,
-                            url
-                        )
-                        startActivity(intent, options.toBundle())
-                    } else {
-                        startActivity(intent)
-                    }
+                    startActivity(intent, options.toBundle())
+                } else {
+                    startActivity(intent)
                 }
+            }
 
-                Attachment.Type.UNKNOWN -> {
-                    context?.openLink(status.attachments[attachmentIndex].unknownUrl)
-                }
+            Attachment.Type.UNKNOWN -> {
+                context?.openLink(viewData.attachments[attachmentIndex].unknownUrl)
             }
         }
     }
 
-    override fun onViewThread(position: Int) {
-        adapter?.peek(position)?.status?.let { status ->
-            val actionableStatus = status.actionableStatus
-            bottomSheetActivity?.viewThread(actionableStatus.id, actionableStatus.url)
-        }
+    override fun onViewThread(viewData: StatusViewData.Concrete) {
+        bottomSheetActivity?.viewThread(viewData.id, viewData.status.url)
     }
 
-    override fun onOpenReblog(position: Int) {
-        adapter?.peek(position)?.status?.let { status ->
-            bottomSheetActivity?.viewAccount(status.account.id)
-        }
+    override fun onOpenReblog(viewData: StatusViewData.Concrete) {
+        bottomSheetActivity?.viewAccount(viewData.status.account.id)
     }
 
-    override fun onExpandedChange(expanded: Boolean, position: Int) {
-        adapter?.peek(position)?.let {
-            viewModel.expandedChange(it, expanded)
-        }
+    override fun onExpandedChange(viewData: StatusViewData.Concrete, expanded: Boolean) {
+        viewModel.expandedChange(viewData, expanded)
     }
 
-    override fun onLoadMore(position: Int) {
-        // Not possible here
+    override fun onContentCollapsedChange(viewData: StatusViewData.Concrete, isCollapsed: Boolean) {
+        viewModel.collapsedChange(viewData, isCollapsed)
     }
 
-    override fun onContentCollapsedChange(isCollapsed: Boolean, position: Int) {
-        adapter?.peek(position)?.let {
-            viewModel.collapsedChange(it, isCollapsed)
-        }
+    override fun onVoteInPoll(viewData: StatusViewData.Concrete, choices: List<Int>) {
+        viewModel.voteInPoll(viewData, choices)
     }
 
-    override fun onVoteInPoll(position: Int, choices: List<Int>) {
-        adapter?.peek(position)?.let {
-            viewModel.voteInPoll(it, choices)
-        }
+    override fun onShowPollResults(viewData: StatusViewData.Concrete) {
+        viewModel.showPollResults(viewData)
     }
 
-    override fun onShowPollResults(position: Int) {
-        adapter?.peek(position)?.asStatusOrNull()?.let { status ->
-            viewModel.showPollResults(status)
-        }
+    override fun clearWarningAction(viewData: StatusViewData.Concrete) {}
+
+    private fun removeItem(viewData: StatusViewData.Concrete, deleteMedia: Boolean) {
+        viewModel.removeItem(viewData, deleteMedia)
     }
 
-    override fun clearWarningAction(position: Int) {}
+    override fun onReblog(viewData: StatusViewData.Concrete, reblog: Boolean, visibility: Status.Visibility?, button: SparkButton?) {
+        buttonToAnimate = button
 
-    private fun removeItem(position: Int, deleteMedia: Boolean) {
-        adapter?.peek(position)?.let {
-            viewModel.removeItem(it, deleteMedia)
-        }
-    }
-
-    override fun onReblog(reblog: Boolean, position: Int, visibility: Status.Visibility?, button: SparkButton?) {
-        adapter?.peek(position)?.let { status ->
-            buttonToAnimate = button
-
-            if (reblog && visibility == null) {
-                confirmReblog(preferences) { visibility ->
-                    viewModel.reblog(status, true, visibility)
-                    buttonToAnimate?.playAnimation()
-                    buttonToAnimate?.isChecked = true
-                }
-            } else {
-                viewModel.reblog(status, reblog, visibility ?: Status.Visibility.PUBLIC)
-                if (reblog) {
-                    buttonToAnimate?.playAnimation()
-                }
-                buttonToAnimate?.isChecked = false
+        if (reblog && visibility == null) {
+            confirmReblog(preferences) { visibility ->
+                viewModel.reblog(viewData, true, visibility)
+                buttonToAnimate?.playAnimation()
+                buttonToAnimate?.isChecked = true
             }
+        } else {
+            viewModel.reblog(viewData, reblog, visibility ?: Status.Visibility.PUBLIC)
+            if (reblog) {
+                buttonToAnimate?.playAnimation()
+            }
+            buttonToAnimate?.isChecked = false
         }
     }
 
-    override fun onUntranslate(position: Int) {
-        adapter?.peek(position)?.let {
-            viewModel.untranslate(it)
-        }
+    override fun onUntranslate(viewData: StatusViewData.Concrete) {
+        viewModel.untranslate(viewData)
     }
 
     private fun reply(status: StatusViewData.Concrete) {
@@ -339,8 +307,8 @@ class SearchStatusesFragment : SearchFragment<StatusViewData.Concrete>(), Status
         bottomSheetActivity?.startActivityWithSlideInAnimation(intent)
     }
 
-    private fun more(statusViewData: StatusViewData.Concrete, view: View, position: Int) {
-        val status = statusViewData.status
+    private fun more(viewData: StatusViewData.Concrete, view: View) {
+        val status = viewData.status
         val id = status.actionableId
         val accountId = status.actionableStatus.account.id
         val accountUsername = status.actionableStatus.account.username
@@ -407,7 +375,7 @@ class SearchStatusesFragment : SearchFragment<StatusViewData.Concrete>(), Status
             translateItem.isVisible =
                 !status.language.equals(Locale.getDefault().language, ignoreCase = true) &&
                 viewModel.supportsTranslation()
-            translateItem.setTitle(if (statusViewData.translation != null) R.string.action_show_original else R.string.action_translate)
+            translateItem.setTitle(if (viewData.translation != null) R.string.action_show_original else R.string.action_translate)
         }
 
         popup.setOnMenuItemClickListener { item ->
@@ -462,9 +430,7 @@ class SearchStatusesFragment : SearchFragment<StatusViewData.Concrete>(), Status
                 }
 
                 R.id.status_mute_conversation -> {
-                    adapter?.peek(position)?.let { foundStatus ->
-                        viewModel.muteConversation(foundStatus, !status.muted)
-                    }
+                    viewModel.muteConversation(viewData, !status.muted)
                     return@setOnMenuItemClickListener true
                 }
 
@@ -484,22 +450,22 @@ class SearchStatusesFragment : SearchFragment<StatusViewData.Concrete>(), Status
                 }
 
                 R.id.status_unreblog_private -> {
-                    onReblog(false, position, Status.Visibility.PRIVATE)
+                    onReblog(viewData, false, Status.Visibility.PRIVATE)
                     return@setOnMenuItemClickListener true
                 }
 
                 R.id.status_reblog_private -> {
-                    onReblog(true, position, Status.Visibility.PRIVATE)
+                    onReblog(viewData, true, Status.Visibility.PRIVATE)
                     return@setOnMenuItemClickListener true
                 }
 
                 R.id.status_delete -> {
-                    showConfirmDeleteDialog(id, position)
+                    showConfirmDeleteDialog(viewData)
                     return@setOnMenuItemClickListener true
                 }
 
                 R.id.status_delete_and_redraft -> {
-                    showConfirmEditDialog(id, position, status)
+                    showConfirmEditDialog(viewData)
                     return@setOnMenuItemClickListener true
                 }
 
@@ -514,11 +480,11 @@ class SearchStatusesFragment : SearchFragment<StatusViewData.Concrete>(), Status
                 }
 
                 R.id.status_translate -> {
-                    if (statusViewData.translation != null) {
-                        viewModel.untranslate(statusViewData)
+                    if (viewData.translation != null) {
+                        viewModel.untranslate(viewData)
                     } else {
                         viewLifecycleOwner.lifecycleScope.launch {
-                            viewModel.translate(statusViewData)
+                            viewModel.translate(viewData)
                                 .onFailure {
                                     Snackbar.make(
                                         requireView(),
@@ -604,31 +570,31 @@ class SearchStatusesFragment : SearchFragment<StatusViewData.Concrete>(), Status
         )
     }
 
-    private fun showConfirmDeleteDialog(id: String, position: Int) {
+    private fun showConfirmDeleteDialog(viewData: StatusViewData.Concrete) {
         context?.let {
             MaterialAlertDialogBuilder(it)
                 .setMessage(R.string.dialog_delete_post_warning)
                 .setPositiveButton(android.R.string.ok) { _, _ ->
-                    viewModel.deleteStatusAsync(id, true)
-                    removeItem(position, true)
+                    viewModel.deleteStatusAsync(viewData.id, true)
+                    removeItem(viewData, true)
                 }
                 .setNegativeButton(android.R.string.cancel, null)
                 .show()
         }
     }
 
-    private fun showConfirmEditDialog(id: String, position: Int, status: Status) {
+    private fun showConfirmEditDialog(viewData: StatusViewData.Concrete) {
         context?.let { context ->
             MaterialAlertDialogBuilder(context)
                 .setMessage(R.string.dialog_redraft_post_warning)
                 .setPositiveButton(android.R.string.ok) { _, _ ->
                     viewLifecycleOwner.lifecycleScope.launch {
-                        viewModel.deleteStatusAsync(id, false).await().fold(
+                        viewModel.deleteStatusAsync(viewData.id, false).await().fold(
                             { deletedStatus ->
-                                removeItem(position, false)
+                                removeItem(viewData, false)
 
                                 val redraftStatus = if (deletedStatus.isEmpty) {
-                                    status.toDeletedStatus()
+                                    viewData.status.toDeletedStatus()
                                 } else {
                                     deletedStatus
                                 }
@@ -642,7 +608,7 @@ class SearchStatusesFragment : SearchFragment<StatusViewData.Concrete>(), Status
                                         contentWarning = redraftStatus.spoilerText,
                                         mediaAttachments = redraftStatus.attachments,
                                         sensitive = redraftStatus.sensitive,
-                                        poll = redraftStatus.poll?.toNewPoll(status.createdAt),
+                                        poll = redraftStatus.poll?.toNewPoll(viewData.status.createdAt),
                                         language = redraftStatus.language,
                                         kind = ComposeActivity.ComposeKind.NEW
                                     )

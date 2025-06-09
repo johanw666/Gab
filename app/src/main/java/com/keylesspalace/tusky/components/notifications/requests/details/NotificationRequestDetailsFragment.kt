@@ -38,6 +38,7 @@ import com.keylesspalace.tusky.databinding.FragmentNotificationRequestDetailsBin
 import com.keylesspalace.tusky.entity.Status
 import com.keylesspalace.tusky.fragment.SFragment
 import com.keylesspalace.tusky.interfaces.AccountActionListener
+import com.keylesspalace.tusky.interfaces.LoadMoreActionListener
 import com.keylesspalace.tusky.interfaces.StatusActionListener
 import com.keylesspalace.tusky.settings.PrefKeys
 import com.keylesspalace.tusky.util.CardViewMode
@@ -51,15 +52,19 @@ import com.keylesspalace.tusky.util.visible
 import com.keylesspalace.tusky.view.ConfirmationBottomSheet.Companion.confirmFavourite
 import com.keylesspalace.tusky.view.ConfirmationBottomSheet.Companion.confirmReblog
 import com.keylesspalace.tusky.viewdata.AttachmentViewData
-import com.keylesspalace.tusky.viewdata.TranslationViewData
+import com.keylesspalace.tusky.viewdata.NotificationViewData
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
-import kotlin.getValue
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class NotificationRequestDetailsFragment : SFragment(R.layout.fragment_notification_request_details), StatusActionListener, NotificationActionListener, AccountActionListener {
+class NotificationRequestDetailsFragment :
+    SFragment<NotificationViewData.Concrete>(R.layout.fragment_notification_request_details),
+    StatusActionListener<NotificationViewData.Concrete>,
+    LoadMoreActionListener<NotificationViewData.LoadMore>,
+    NotificationActionListener,
+    AccountActionListener {
 
     @Inject
     lateinit var preferences: SharedPreferences
@@ -131,6 +136,7 @@ class NotificationRequestDetailsFragment : SFragment(R.layout.fragment_notificat
             accountId = activeAccount.accountId,
             statusDisplayOptions = statusDisplayOptions,
             statusListener = this,
+            loadMoreListener = this,
             notificationActionListener = this,
             accountActionListener = this,
             instanceName = activeAccount.domain
@@ -154,18 +160,21 @@ class NotificationRequestDetailsFragment : SFragment(R.layout.fragment_notificat
         }
     }
 
-    override fun onReply(position: Int) {
-        val status = adapter?.peek(position)?.asStatusOrNull() ?: return
+    override fun onLoadMore(loadMore: NotificationViewData.LoadMore) {
+        // not relevant here
+    }
+
+    override fun onReply(viewData: NotificationViewData.Concrete) {
+        val status = viewData.asStatusOrNull() ?: return
         super.reply(status.status)
     }
 
-    override fun removeItem(position: Int) {
-        val notification = adapter?.peek(position) ?: return
-        viewModel.remove(notification)
+    override fun removeItem(viewData: NotificationViewData.Concrete) {
+        viewModel.remove(viewData)
     }
 
-    override fun onReblog(reblog: Boolean, position: Int, visibility: Status.Visibility?, button: SparkButton?) {
-        val status = adapter?.peek(position)?.asStatusOrNull() ?: return
+    override fun onReblog(viewData: NotificationViewData.Concrete, reblog: Boolean, visibility: Status.Visibility?, button: SparkButton?) {
+        val status = viewData.asStatusOrNull() ?: return
         buttonToAnimate = button
 
         if (reblog && visibility == null) {
@@ -183,17 +192,17 @@ class NotificationRequestDetailsFragment : SFragment(R.layout.fragment_notificat
         }
     }
 
-    override val onMoreTranslate: ((Boolean, Int) -> Unit)?
-        get() = { translate: Boolean, position: Int ->
+    override val onMoreTranslate: ((Boolean, NotificationViewData.Concrete) -> Unit)?
+        get() = { translate: Boolean, viewData: NotificationViewData.Concrete ->
             if (translate) {
-                onTranslate(position)
+                onTranslate(viewData)
             } else {
-                onUntranslate(position)
+                onUntranslate(viewData)
             }
         }
 
-    override fun onFavourite(favourite: Boolean, position: Int, button: SparkButton?) {
-        val status = adapter?.peek(position)?.asStatusOrNull() ?: return
+    override fun onFavourite(viewData: NotificationViewData.Concrete, favourite: Boolean, button: SparkButton?) {
+        val status = viewData.asStatusOrNull() ?: return
         buttonToAnimate = button
 
         if (favourite) {
@@ -208,72 +217,61 @@ class NotificationRequestDetailsFragment : SFragment(R.layout.fragment_notificat
         }
     }
 
-    override fun onBookmark(bookmark: Boolean, position: Int) {
-        val status = adapter?.peek(position)?.asStatusOrNull() ?: return
+    override fun onBookmark(viewData: NotificationViewData.Concrete, bookmark: Boolean) {
+        val status = viewData.asStatusOrNull() ?: return
         viewModel.bookmark(bookmark, status)
     }
 
-    override fun onMore(view: View, position: Int) {
-        val status = adapter?.peek(position)?.asStatusOrNull() ?: return
-        super.more(
-            status.status,
-            view,
-            position,
-            (status.translation as? TranslationViewData.Loaded)?.data
-        )
+    override fun onMore(viewData: NotificationViewData.Concrete, view: View) {
+        super.more(viewData, view)
     }
 
-    override fun onViewMedia(position: Int, attachmentIndex: Int, view: View?) {
-        val status = adapter?.peek(position)?.asStatusOrNull() ?: return
+    override fun onViewMedia(viewData: NotificationViewData.Concrete, attachmentIndex: Int, view: View?) {
+        val status = viewData.asStatusOrNull() ?: return
         super.viewMedia(attachmentIndex, AttachmentViewData.list(status), view)
     }
 
-    override fun onViewThread(position: Int) {
-        val status = adapter?.peek(position)?.asStatusOrNull()?.status ?: return
+    override fun onViewThread(viewData: NotificationViewData.Concrete) {
+        val status = viewData.asStatusOrNull()?.status ?: return
         super.viewThread(status.id, status.url)
     }
 
-    override fun onOpenReblog(position: Int) {
-        val status = adapter?.peek(position)?.asStatusOrNull() ?: return
+    override fun onOpenReblog(viewData: NotificationViewData.Concrete) {
+        val status = viewData.asStatusOrNull() ?: return
         super.openReblog(status.status)
     }
 
-    override fun onExpandedChange(expanded: Boolean, position: Int) {
-        val status = adapter?.peek(position)?.asStatusOrNull() ?: return
+    override fun onExpandedChange(viewData: NotificationViewData.Concrete, expanded: Boolean) {
+        val status = viewData.asStatusOrNull() ?: return
         viewModel.changeExpanded(expanded, status)
     }
 
-    override fun onContentHiddenChange(isShowing: Boolean, position: Int) {
-        val status = adapter?.peek(position)?.asStatusOrNull() ?: return
+    override fun onContentHiddenChange(viewData: NotificationViewData.Concrete, isShowing: Boolean) {
+        val status = viewData.asStatusOrNull() ?: return
         viewModel.changeContentShowing(isShowing, status)
     }
 
-    override fun onLoadMore(position: Int) {
-        // not applicable here
-    }
-
-    override fun onContentCollapsedChange(isCollapsed: Boolean, position: Int) {
-        val status = adapter?.peek(position)?.asStatusOrNull() ?: return
+    override fun onContentCollapsedChange(viewData: NotificationViewData.Concrete, isCollapsed: Boolean) {
+        val status = viewData.asStatusOrNull() ?: return
         viewModel.changeContentCollapsed(isCollapsed, status)
     }
 
-    override fun onVoteInPoll(position: Int, choices: List<Int>) {
-        val status = adapter?.peek(position)?.asStatusOrNull() ?: return
+    override fun onVoteInPoll(viewData: NotificationViewData.Concrete, choices: List<Int>) {
+        val status = viewData.asStatusOrNull() ?: return
         viewModel.voteInPoll(choices, status)
     }
 
-    override fun onShowPollResults(position: Int) {
-        adapter?.peek(position)?.asStatusOrNull()?.let { status ->
-            viewModel.showPollResults(status)
-        }
+    override fun onShowPollResults(viewData: NotificationViewData.Concrete) {
+        val status = viewData.asStatusOrNull() ?: return
+        viewModel.showPollResults(status)
     }
 
-    override fun clearWarningAction(position: Int) {
+    override fun clearWarningAction(viewData: NotificationViewData.Concrete) {
         // not applicable here
     }
 
-    private fun onTranslate(position: Int) {
-        val status = adapter?.peek(position)?.asStatusOrNull() ?: return
+    private fun onTranslate(viewData: NotificationViewData.Concrete) {
+        val status = viewData.asStatusOrNull() ?: return
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.translate(status)
                 .onFailure {
@@ -286,8 +284,8 @@ class NotificationRequestDetailsFragment : SFragment(R.layout.fragment_notificat
         }
     }
 
-    override fun onUntranslate(position: Int) {
-        val status = adapter?.peek(position)?.asStatusOrNull() ?: return
+    override fun onUntranslate(viewData: NotificationViewData.Concrete) {
+        val status = viewData.asStatusOrNull() ?: return
         viewModel.untranslate(status)
     }
 

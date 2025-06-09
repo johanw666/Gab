@@ -39,7 +39,7 @@ import com.keylesspalace.tusky.viewdata.StatusViewData;
 
 import java.util.List;
 
-public class ConversationViewHolder extends StatusBaseViewHolder {
+public class ConversationViewHolder extends StatusBaseViewHolder<ConversationViewData> {
     private static final InputFilter[] COLLAPSE_INPUT_FILTER = new InputFilter[]{SmartLengthInputFilter.INSTANCE};
     private static final InputFilter[] NO_INPUT_FILTER = new InputFilter[0];
 
@@ -48,11 +48,11 @@ public class ConversationViewHolder extends StatusBaseViewHolder {
     private final ImageView[] avatars;
 
     private final StatusDisplayOptions statusDisplayOptions;
-    private final StatusActionListener listener;
+    private final StatusActionListener<ConversationViewData> listener;
 
     ConversationViewHolder(View itemView,
                            StatusDisplayOptions statusDisplayOptions,
-                           StatusActionListener listener) {
+                           StatusActionListener<ConversationViewData> listener) {
         super(itemView);
         conversationNameTextView = itemView.findViewById(R.id.conversation_name);
         contentCollapseButton = itemView.findViewById(R.id.button_toggle_content);
@@ -77,7 +77,7 @@ public class ConversationViewHolder extends StatusBaseViewHolder {
         if (payloads.isEmpty()) {
             TimelineAccount account = status.getAccount();
 
-            setupCollapsedState(statusViewData.isCollapsible(), statusViewData.isCollapsed(), statusViewData.isExpanded(), status.getSpoilerText(), listener);
+            setupCollapsedState(conversation, listener);
 
             String displayName = account.getDisplayName();
             if (displayName == null) {
@@ -95,7 +95,7 @@ public class ConversationViewHolder extends StatusBaseViewHolder {
             } else if (statusDisplayOptions.mediaPreviewEnabled() && hasPreviewableAttachment(attachments)) {
                 mediaContainer.setVisibility(View.VISIBLE);
 
-                setMediaPreviews(attachments, sensitive, listener, statusViewData.isShowingContent(),
+                setMediaPreviews(conversation, attachments, sensitive, listener, statusViewData.isShowingContent(),
                         statusDisplayOptions.useBlurhash(), statusViewData.getFilter());
 
                 if (attachments.isEmpty()) {
@@ -108,16 +108,15 @@ public class ConversationViewHolder extends StatusBaseViewHolder {
             } else {
                 mediaContainer.setVisibility(View.VISIBLE);
 
-                setMediaLabel(attachments, sensitive, listener, statusViewData.isShowingContent());
+                setMediaLabel(conversation, attachments, sensitive, listener, statusViewData.isShowingContent());
                 // Hide all unused views.
                 mediaPreview.setVisibility(View.GONE);
                 hideSensitiveMediaWarning();
             }
 
-            setupButtons(listener, account.getId(), statusViewData.getContent().toString(),
-                    statusDisplayOptions);
+            setupButtons(conversation, listener);
 
-            setSpoilerAndContent(statusViewData, statusDisplayOptions, listener);
+            setSpoilerAndContent(conversation, statusDisplayOptions, listener);
 
             setConversationName(conversation.getAccounts());
 
@@ -158,13 +157,21 @@ public class ConversationViewHolder extends StatusBaseViewHolder {
         }
     }
 
-    private void setupCollapsedState(boolean collapsible, boolean collapsed, boolean expanded, String spoilerText, final StatusActionListener listener) {
+    private void setupCollapsedState(ConversationViewData viewData,
+                                     @NonNull final StatusActionListener<ConversationViewData> listener) {
+
+        StatusViewData.Concrete statusViewData = viewData.getLastStatus();
+        boolean collapsible = statusViewData.isCollapsible();
+        boolean collapsed = statusViewData.isCollapsed();
+        boolean expanded = statusViewData.isExpanded();
+        @NonNull final String spoilerText = statusViewData.getStatus().getSpoilerText();
+
         /* input filter for TextViews have to be set before text */
         if (collapsible && (expanded || TextUtils.isEmpty(spoilerText))) {
             contentCollapseButton.setOnClickListener(view -> {
                 int position = getBindingAdapterPosition();
                 if (position != RecyclerView.NO_POSITION)
-                    listener.onContentCollapsedChange(!collapsed, position);
+                    listener.onContentCollapsedChange(viewData, !collapsed);
             });
 
             contentCollapseButton.setVisibility(View.VISIBLE);

@@ -18,18 +18,19 @@ import com.keylesspalace.tusky.R
 import com.keylesspalace.tusky.adapter.StatusBaseViewHolder
 import com.keylesspalace.tusky.entity.Status.Companion.MAX_MEDIA_ATTACHMENTS
 import com.keylesspalace.tusky.interfaces.StatusActionListener
+import com.keylesspalace.tusky.viewdata.ConcreteViewData
 import com.keylesspalace.tusky.viewdata.StatusViewData
 import kotlin.math.min
 
 // Not using lambdas because there's boxing of int then
-fun interface StatusProvider {
-    fun getStatus(pos: Int): StatusViewData?
+fun interface StatusProvider<C : ConcreteViewData> {
+    fun getStatus(pos: Int): C?
 }
 
-class ListStatusAccessibilityDelegate(
+class ListStatusAccessibilityDelegate<C : ConcreteViewData>(
     private val recyclerView: RecyclerView,
-    private val statusActionListener: StatusActionListener,
-    private val statusProvider: StatusProvider
+    private val statusActionListener: StatusActionListener<C>,
+    private val statusProvider: StatusProvider<C>
 ) : RecyclerViewAccessibilityDelegate(recyclerView) {
     private val a11yManager = context.getSystemService(Context.ACCESSIBILITY_SERVICE)
         as AccessibilityManager
@@ -46,97 +47,91 @@ class ListStatusAccessibilityDelegate(
             super.onInitializeAccessibilityNodeInfo(host, info)
 
             val pos = recyclerView.getChildAdapterPosition(host)
-            val status = statusProvider.getStatus(pos) ?: return
-            if (status is StatusViewData.Concrete) {
-                if (status.status.spoilerText.isNotEmpty()) {
-                    info.addAction(if (status.isExpanded) collapseCwAction else expandCwAction)
-                }
-
-                info.addAction(replyAction)
-
-                val actionable = status.actionable
-                if (actionable.isRebloggingAllowed) {
-                    info.addAction(if (actionable.reblogged) unreblogAction else reblogAction)
-                }
-                info.addAction(if (actionable.favourited) unfavouriteAction else favouriteAction)
-                info.addAction(if (actionable.bookmarked) unbookmarkAction else bookmarkAction)
-
-                val mediaActions = intArrayOf(
-                    R.id.action_open_media_1,
-                    R.id.action_open_media_2,
-                    R.id.action_open_media_3,
-                    R.id.action_open_media_4
-                )
-                val attachmentCount = min(actionable.attachments.size, MAX_MEDIA_ATTACHMENTS)
-                for (i in 0 until attachmentCount) {
-                    info.addAction(
-                        AccessibilityActionCompat(
-                            mediaActions[i],
-                            context.getString(R.string.action_open_media_n, i + 1)
-                        )
-                    )
-                }
-
-                info.addAction(openProfileAction)
-                if (getLinks(status).any()) info.addAction(linksAction)
-
-                val mentions = actionable.mentions
-                if (mentions.isNotEmpty()) info.addAction(mentionsAction)
-
-                if (getHashtags(status).any()) info.addAction(hashtagsAction)
-                if (!status.status.reblog?.account?.username.isNullOrEmpty()) {
-                    info.addAction(openRebloggerAction)
-                }
-                if (actionable.reblogsCount > 0) info.addAction(openRebloggedByAction)
-                if (actionable.favouritesCount > 0) info.addAction(openFavsAction)
-
-                info.addAction(moreAction)
+            val status = statusProvider.getStatus(pos)?.viewData ?: return
+            if (status.status.spoilerText.isNotEmpty()) {
+                info.addAction(if (status.isExpanded) collapseCwAction else expandCwAction)
             }
+
+            info.addAction(replyAction)
+
+            val actionable = status.actionable
+            if (actionable.isRebloggingAllowed) {
+                info.addAction(if (actionable.reblogged) unreblogAction else reblogAction)
+            }
+            info.addAction(if (actionable.favourited) unfavouriteAction else favouriteAction)
+            info.addAction(if (actionable.bookmarked) unbookmarkAction else bookmarkAction)
+
+            val mediaActions = intArrayOf(
+                R.id.action_open_media_1,
+                R.id.action_open_media_2,
+                R.id.action_open_media_3,
+                R.id.action_open_media_4
+            )
+            val attachmentCount = min(actionable.attachments.size, MAX_MEDIA_ATTACHMENTS)
+            for (i in 0 until attachmentCount) {
+                info.addAction(
+                    AccessibilityActionCompat(
+                        mediaActions[i],
+                        context.getString(R.string.action_open_media_n, i + 1)
+                    )
+                )
+            }
+
+            info.addAction(openProfileAction)
+            if (getLinks(status).any()) info.addAction(linksAction)
+
+            val mentions = actionable.mentions
+            if (mentions.isNotEmpty()) info.addAction(mentionsAction)
+
+            if (getHashtags(status).any()) info.addAction(hashtagsAction)
+            if (!status.status.reblog?.account?.username.isNullOrEmpty()) {
+                info.addAction(openRebloggerAction)
+            }
+            if (actionable.reblogsCount > 0) info.addAction(openRebloggedByAction)
+            if (actionable.favouritesCount > 0) info.addAction(openFavsAction)
+
+            info.addAction(moreAction)
         }
 
         override fun performAccessibilityAction(host: View, action: Int, args: Bundle?): Boolean {
             val pos = recyclerView.getChildAdapterPosition(host)
+            val viewData = statusProvider.getStatus(pos) ?: return false
+            val status = viewData.viewData
             when (action) {
                 R.id.action_reply -> {
                     interrupt()
-                    statusActionListener.onReply(pos)
+                    statusActionListener.onReply(viewData)
                 }
-                R.id.action_favourite -> statusActionListener.onFavourite(true, pos)
-                R.id.action_unfavourite -> statusActionListener.onFavourite(false, pos)
-                R.id.action_bookmark -> statusActionListener.onBookmark(true, pos)
-                R.id.action_unbookmark -> statusActionListener.onBookmark(false, pos)
-                R.id.action_reblog -> statusActionListener.onReblog(true, pos, null)
-                R.id.action_unreblog -> statusActionListener.onReblog(false, pos, null)
+                R.id.action_favourite -> statusActionListener.onFavourite(viewData, true)
+                R.id.action_unfavourite -> statusActionListener.onFavourite(viewData, false)
+                R.id.action_bookmark -> statusActionListener.onBookmark(viewData, true)
+                R.id.action_unbookmark -> statusActionListener.onBookmark(viewData, false)
+                R.id.action_reblog -> statusActionListener.onReblog(viewData, true, null)
+                R.id.action_unreblog -> statusActionListener.onReblog(viewData, false, null)
                 R.id.action_open_profile -> {
                     interrupt()
-                    statusActionListener.onViewAccount(
-                        (
-                            statusProvider.getStatus(
-                                pos
-                            ) as StatusViewData.Concrete
-                            ).actionable.account.id
-                    )
+                    statusActionListener.onViewAccount(status.actionable.account.id)
                 }
                 R.id.action_open_media_1 -> {
                     interrupt()
-                    statusActionListener.onViewMedia(pos, 0, null)
+                    statusActionListener.onViewMedia(viewData, 0, null)
                 }
                 R.id.action_open_media_2 -> {
                     interrupt()
-                    statusActionListener.onViewMedia(pos, 1, null)
+                    statusActionListener.onViewMedia(viewData, 1, null)
                 }
                 R.id.action_open_media_3 -> {
                     interrupt()
-                    statusActionListener.onViewMedia(pos, 2, null)
+                    statusActionListener.onViewMedia(viewData, 2, null)
                 }
                 R.id.action_open_media_4 -> {
                     interrupt()
-                    statusActionListener.onViewMedia(pos, 3, null)
+                    statusActionListener.onViewMedia(viewData, 3, null)
                 }
                 R.id.action_expand_cw -> {
                     // Toggling it directly to avoid animations
                     // which cannot be disabled for detailed status for some reason
-                    val holder = recyclerView.getChildViewHolder(host) as StatusBaseViewHolder
+                    val holder = recyclerView.getChildViewHolder(host) as StatusBaseViewHolder<C>
                     holder.toggleContentWarning()
                     // Stop and restart narrator before it reads old description.
                     // Would be nice if we could *just* read the content here but doesn't seem
@@ -144,7 +139,7 @@ class ListStatusAccessibilityDelegate(
                     forceFocus(host)
                 }
                 R.id.action_collapse_cw -> {
-                    statusActionListener.onExpandedChange(false, pos)
+                    statusActionListener.onExpandedChange(viewData, false)
                     interrupt()
                 }
                 R.id.action_links -> showLinksDialog(host)
@@ -152,18 +147,18 @@ class ListStatusAccessibilityDelegate(
                 R.id.action_hashtags -> showHashtagsDialog(host)
                 R.id.action_open_reblogger -> {
                     interrupt()
-                    statusActionListener.onOpenReblog(pos)
+                    statusActionListener.onOpenReblog(viewData)
                 }
                 R.id.action_open_reblogged_by -> {
                     interrupt()
-                    statusActionListener.onShowReblogs(pos)
+                    statusActionListener.onShowReblogs(viewData)
                 }
                 R.id.action_open_faved_by -> {
                     interrupt()
-                    statusActionListener.onShowFavs(pos)
+                    statusActionListener.onShowFavs(viewData)
                 }
                 R.id.action_more -> {
-                    statusActionListener.onMore(host, pos)
+                    statusActionListener.onMore(viewData, host)
                 }
                 else -> return super.performAccessibilityAction(host, action, args)
             }
@@ -171,7 +166,7 @@ class ListStatusAccessibilityDelegate(
         }
 
         private fun showLinksDialog(host: View) {
-            val status = getStatus(host) as? StatusViewData.Concrete ?: return
+            val status = getStatus(host) ?: return
             val links = getLinks(status).toList()
             val textLinks = links.map { item -> item.link }
             MaterialAlertDialogBuilder(host.context)
@@ -188,7 +183,7 @@ class ListStatusAccessibilityDelegate(
         }
 
         private fun showMentionsDialog(host: View) {
-            val status = getStatus(host) as? StatusViewData.Concrete ?: return
+            val status = getStatus(host) ?: return
             val mentions = status.actionable.mentions
             val stringMentions = mentions.map { it.username }
             MaterialAlertDialogBuilder(host.context)
@@ -207,7 +202,7 @@ class ListStatusAccessibilityDelegate(
         }
 
         private fun showHashtagsDialog(host: View) {
-            val status = getStatus(host) as? StatusViewData.Concrete ?: return
+            val status = getStatus(host) ?: return
             val tags = getHashtags(status).map { it.subSequence(1, it.length) }.toList()
             MaterialAlertDialogBuilder(host.context)
                 .setTitle(R.string.title_hashtags_dialog)
@@ -224,8 +219,8 @@ class ListStatusAccessibilityDelegate(
                 .let { forceFocus(it.listView) }
         }
 
-        private fun getStatus(childView: View): StatusViewData {
-            return statusProvider.getStatus(recyclerView.getChildAdapterPosition(childView))!!
+        private fun getStatus(childView: View): StatusViewData.Concrete? {
+            return statusProvider.getStatus(recyclerView.getChildAdapterPosition(childView))?.viewData
         }
     }
 

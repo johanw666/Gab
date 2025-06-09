@@ -23,6 +23,14 @@ import com.keylesspalace.tusky.entity.Translation
 import com.keylesspalace.tusky.util.parseAsMastodonHtml
 import com.keylesspalace.tusky.util.shouldTrimStatus
 
+interface ConcreteViewData {
+    val viewData: StatusViewData.Concrete
+}
+
+interface LoadMoreViewData {
+    val isLoading: Boolean
+}
+
 sealed interface TranslationViewData {
     val data: Translation?
 
@@ -58,9 +66,12 @@ sealed class StatusViewData {
         val isDetailed: Boolean = false,
         val repliedToAccount: TimelineAccount? = null,
         val translation: TranslationViewData? = null,
-    ) : StatusViewData() {
+    ) : StatusViewData(), ConcreteViewData {
         override val id: String
             get() = status.id
+
+        override val viewData: Concrete
+            get() = this
 
         val content: Spanned =
             (translation?.data?.content ?: actionable.content).parseAsMastodonHtml()
@@ -135,8 +146,8 @@ sealed class StatusViewData {
 
     data class LoadMore(
         override val id: String,
-        val isLoading: Boolean
-    ) : StatusViewData()
+        override val isLoading: Boolean
+    ) : StatusViewData(), LoadMoreViewData
 
     fun asStatusOrNull() = this as? Concrete
 

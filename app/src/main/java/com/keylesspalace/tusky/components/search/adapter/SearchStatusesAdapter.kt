@@ -28,20 +28,20 @@ import com.keylesspalace.tusky.viewdata.StatusViewData
 
 class SearchStatusesAdapter(
     private val statusDisplayOptions: StatusDisplayOptions,
-    private val statusListener: StatusActionListener
-) : PagingDataAdapter<StatusViewData.Concrete, StatusViewHolder>(STATUS_COMPARATOR) {
+    private val statusListener: StatusActionListener<StatusViewData.Concrete>
+) : PagingDataAdapter<StatusViewData.Concrete, StatusViewHolder<StatusViewData.Concrete>>(STATUS_COMPARATOR) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StatusViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StatusViewHolder<StatusViewData.Concrete> {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.item_status, parent, false)
         return StatusViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: StatusViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: StatusViewHolder<StatusViewData.Concrete>, position: Int) {
         onBindViewHolder(holder, position, emptyList())
     }
 
-    override fun onBindViewHolder(holder: StatusViewHolder, position: Int, payloads: List<Any>) {
+    override fun onBindViewHolder(holder: StatusViewHolder<StatusViewData.Concrete>, position: Int, payloads: List<Any>) {
         getItem(position)?.let { item ->
             holder.setupWithStatus(item, statusListener, statusDisplayOptions, payloads, true)
         }

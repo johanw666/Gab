@@ -21,7 +21,7 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.keylesspalace.tusky.R
-import com.keylesspalace.tusky.adapter.FilteredStatusViewHolder
+import com.keylesspalace.tusky.adapter.FilteredNotificationViewHolder
 import com.keylesspalace.tusky.adapter.FollowRequestViewHolder
 import com.keylesspalace.tusky.adapter.LoadMoreViewHolder
 import com.keylesspalace.tusky.adapter.PlaceholderViewHolder
@@ -39,6 +39,7 @@ import com.keylesspalace.tusky.databinding.ItemUnknownNotificationBinding
 import com.keylesspalace.tusky.entity.Filter
 import com.keylesspalace.tusky.entity.Notification
 import com.keylesspalace.tusky.interfaces.AccountActionListener
+import com.keylesspalace.tusky.interfaces.LoadMoreActionListener
 import com.keylesspalace.tusky.interfaces.StatusActionListener
 import com.keylesspalace.tusky.util.AbsoluteTimeFormatter
 import com.keylesspalace.tusky.util.StatusDisplayOptions
@@ -59,7 +60,8 @@ interface NotificationsViewHolder {
 class NotificationsPagingAdapter(
     private val accountId: String,
     private var statusDisplayOptions: StatusDisplayOptions,
-    private val statusListener: StatusActionListener,
+    private val statusListener: StatusActionListener<NotificationViewData.Concrete>,
+    private val loadMoreListener: LoadMoreActionListener<NotificationViewData.LoadMore>,
     private val notificationActionListener: NotificationActionListener,
     private val accountActionListener: AccountActionListener,
     private val instanceName: String
@@ -124,7 +126,7 @@ class NotificationsPagingAdapter(
                 statusListener,
                 accountId
             )
-            VIEW_TYPE_STATUS_FILTERED -> FilteredStatusViewHolder(
+            VIEW_TYPE_STATUS_FILTERED -> FilteredNotificationViewHolder(
                 ItemStatusFilteredBinding.inflate(inflater, parent, false),
                 statusListener
             )
@@ -144,9 +146,9 @@ class NotificationsPagingAdapter(
                 statusListener,
                 true
             )
-            VIEW_TYPE_LOAD_MORE -> LoadMoreViewHolder(
+            VIEW_TYPE_LOAD_MORE -> LoadMoreViewHolder<NotificationViewData.LoadMore>(
                 ItemLoadMoreBinding.inflate(inflater, parent, false),
-                statusListener
+                loadMoreListener
             )
             VIEW_TYPE_REPORT -> ReportNotificationViewHolder(
                 ItemReportNotificationBinding.inflate(inflater, parent, false),
@@ -177,7 +179,7 @@ class NotificationsPagingAdapter(
                 is NotificationViewData.Concrete ->
                     (viewHolder as NotificationsViewHolder).bind(notification, payloads, statusDisplayOptions)
                 is NotificationViewData.LoadMore -> {
-                    (viewHolder as LoadMoreViewHolder).setup(notification.isLoading)
+                    (viewHolder as LoadMoreViewHolder<NotificationViewData.LoadMore>).setup(notification)
                 }
             }
         }

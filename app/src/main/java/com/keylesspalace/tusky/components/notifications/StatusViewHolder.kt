@@ -29,9 +29,9 @@ import com.keylesspalace.tusky.viewdata.NotificationViewData
 
 internal class StatusViewHolder(
     itemView: View,
-    private val statusActionListener: StatusActionListener,
+    private val statusActionListener: StatusActionListener<NotificationViewData.Concrete>,
     private val accountId: String
-) : NotificationsViewHolder, StatusViewHolder(itemView) {
+) : NotificationsViewHolder, StatusViewHolder<NotificationViewData.Concrete>(itemView) {
 
     override fun bind(
         viewData: NotificationViewData.Concrete,
@@ -47,7 +47,7 @@ internal class StatusViewHolder(
                 showStatusContent(true)
             }
             setupWithStatus(
-                statusViewData,
+                viewData,
                 statusActionListener,
                 statusDisplayOptions,
                 payloads,
@@ -67,10 +67,10 @@ internal class StatusViewHolder(
                 statusInfo.setCompoundDrawablePadding(res.getDimensionPixelSize(R.dimen.status_info_drawable_padding_small))
                 statusInfo.setPaddingRelative(res.getDimensionPixelSize(R.dimen.status_info_padding_small), 0, 0, 0)
                 statusInfo.show()
-                if (viewData.statusViewData.status.inReplyToAccountId == accountId) {
+                if (viewData.viewData.status.inReplyToAccountId == accountId) {
                     statusInfo.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_reply_18dp, 0, 0, 0)
 
-                    if (viewData.statusViewData.status.visibility == Status.Visibility.DIRECT) {
+                    if (viewData.viewData.status.visibility == Status.Visibility.DIRECT) {
                         statusInfo.setText(R.string.notification_info_private_reply)
                     } else {
                         statusInfo.setText(R.string.notification_info_reply)
@@ -78,7 +78,7 @@ internal class StatusViewHolder(
                 } else {
                     statusInfo.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_email_alternate_18dp, 0, 0, 0)
 
-                    if (viewData.statusViewData.status.visibility == Status.Visibility.DIRECT) {
+                    if (viewData.viewData.status.visibility == Status.Visibility.DIRECT) {
                         statusInfo.setText(R.string.notification_info_private_mention)
                     } else {
                         statusInfo.setText(R.string.notification_info_mention)

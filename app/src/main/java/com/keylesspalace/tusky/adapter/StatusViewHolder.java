@@ -35,12 +35,13 @@ import com.keylesspalace.tusky.util.NumberUtils;
 import com.keylesspalace.tusky.util.SmartLengthInputFilter;
 import com.keylesspalace.tusky.util.StatusDisplayOptions;
 import com.keylesspalace.tusky.util.StringUtils;
+import com.keylesspalace.tusky.viewdata.ConcreteViewData;
 import com.keylesspalace.tusky.viewdata.StatusViewData;
 
 import java.util.Collections;
 import java.util.List;
 
-public class StatusViewHolder extends StatusBaseViewHolder {
+public class StatusViewHolder<C extends ConcreteViewData> extends StatusBaseViewHolder<C> {
     private static final InputFilter[] COLLAPSE_INPUT_FILTER = new InputFilter[]{SmartLengthInputFilter.INSTANCE};
     private static final InputFilter[] NO_INPUT_FILTER = new InputFilter[0];
 
@@ -58,16 +59,17 @@ public class StatusViewHolder extends StatusBaseViewHolder {
     }
 
     @Override
-    public void setupWithStatus(@NonNull StatusViewData.Concrete status,
-                                @NonNull final StatusActionListener listener,
-                                @NonNull StatusDisplayOptions statusDisplayOptions,
-                                @NonNull List<Object> payloads,
+    public void setupWithStatus(@NonNull C viewData,
+                                @NonNull final StatusActionListener<C> listener,
+                                @NonNull final StatusDisplayOptions statusDisplayOptions,
+                                @NonNull final List<Object> payloads,
                                 final boolean showStatusInfo) {
+        final StatusViewData.Concrete status = viewData.getViewData();
         if (payloads.isEmpty()) {
             boolean sensitive = !TextUtils.isEmpty(status.getActionable().getSpoilerText());
             boolean expanded = status.isExpanded();
 
-            setupCollapsedState(sensitive, expanded, status, listener);
+            setupCollapsedState(sensitive, expanded, viewData, listener);
 
             if (!showStatusInfo || (status.getFilter() != null && status.getFilter().getAction() == Filter.Action.WARN)) {
                 hideStatusInfo();
@@ -89,7 +91,7 @@ public class StatusViewHolder extends StatusBaseViewHolder {
                 if (isReplyOnly) {
                     statusInfo.setOnClickListener(null);
                 } else {
-                    statusInfo.setOnClickListener(v -> listener.onOpenReblog(getBindingAdapterPosition()));
+                    statusInfo.setOnClickListener(v -> listener.onOpenReblog(viewData));
                 }
             }
         }
@@ -99,7 +101,7 @@ public class StatusViewHolder extends StatusBaseViewHolder {
         setFavouritedCount(status.getActionable().getFavouritesCount());
         setReblogsCount(status.getActionable().getReblogsCount());
 
-        super.setupWithStatus(status, listener, statusDisplayOptions, payloads, showStatusInfo);
+        super.setupWithStatus(viewData, listener, statusDisplayOptions, payloads, showStatusInfo);
     }
 
     private void setStatusInfoContent(final TimelineAccount account,
@@ -109,7 +111,7 @@ public class StatusViewHolder extends StatusBaseViewHolder {
         Context context = statusInfo.getContext();
         CharSequence accountName = account != null ? account.getName() : "";
         CharSequence wrappedName = StringUtils.unicodeWrap(accountName);
-        CharSequence translatedText = "";
+        CharSequence translatedText;
 
         if (!isReply) {
             translatedText = context.getString(R.string.post_boosted_format, wrappedName);
@@ -152,15 +154,12 @@ public class StatusViewHolder extends StatusBaseViewHolder {
 
     private void setupCollapsedState(boolean sensitive,
                                      boolean expanded,
-                                     final StatusViewData.Concrete status,
-                                     final StatusActionListener listener) {
+                                     final C viewData,
+                                     final StatusActionListener<C> listener) {
+        final StatusViewData.Concrete status = viewData.getViewData();
         /* input filter for TextViews have to be set before text */
         if (status.isCollapsible() && (!sensitive || expanded)) {
-            contentCollapseButton.setOnClickListener(view -> {
-                int position = getBindingAdapterPosition();
-                if (position != RecyclerView.NO_POSITION)
-                    listener.onContentCollapsedChange(!status.isCollapsed(), position);
-            });
+            contentCollapseButton.setOnClickListener(view -> listener.onContentCollapsedChange(viewData, !status.isCollapsed()));
 
             contentCollapseButton.setVisibility(View.VISIBLE);
             if (status.isCollapsed()) {
@@ -184,9 +183,9 @@ public class StatusViewHolder extends StatusBaseViewHolder {
     @Override
     protected void toggleExpandedState(boolean sensitive,
                                        boolean expanded,
-                                       @NonNull StatusViewData.Concrete status,
+                                       @NonNull C status,
                                        @NonNull StatusDisplayOptions statusDisplayOptions,
-                                       @NonNull final StatusActionListener listener) {
+                                       @NonNull final StatusActionListener<C> listener) {
 
         setupCollapsedState(sensitive, expanded, status, listener);
 

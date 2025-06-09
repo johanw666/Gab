@@ -16,6 +16,7 @@
 package com.keylesspalace.tusky.components.conversation
 
 import com.keylesspalace.tusky.entity.Poll
+import com.keylesspalace.tusky.viewdata.ConcreteViewData
 import com.keylesspalace.tusky.viewdata.StatusViewData
 
 data class ConversationViewData(
@@ -24,7 +25,11 @@ data class ConversationViewData(
     val accounts: List<ConversationAccountEntity>,
     val unread: Boolean,
     val lastStatus: StatusViewData.Concrete
-) {
+) : ConcreteViewData {
+
+    override val viewData: StatusViewData.Concrete
+        get() = lastStatus
+
     fun toEntity(
         accountId: Long,
         favourited: Boolean = lastStatus.status.favourited,

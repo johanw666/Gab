@@ -29,7 +29,7 @@ import java.text.DateFormat;
 import java.util.Date;
 import java.util.List;
 
-public class StatusDetailedViewHolder extends StatusBaseViewHolder {
+public class StatusDetailedViewHolder extends StatusBaseViewHolder<StatusViewData.Concrete> {
     private final TextView reblogs;
     private final TextView favourites;
     private final View infoDivider;
@@ -44,7 +44,9 @@ public class StatusDetailedViewHolder extends StatusBaseViewHolder {
     }
 
     @Override
-    protected void setMetaData(@NonNull StatusViewData.Concrete statusViewData, @NonNull StatusDisplayOptions statusDisplayOptions, @NonNull StatusActionListener listener) {
+    protected void setMetaData(@NonNull StatusViewData.Concrete statusViewData,
+                               @NonNull StatusDisplayOptions statusDisplayOptions,
+                               @NonNull StatusActionListener<StatusViewData.Concrete> listener) {
 
         Status status = statusViewData.getActionable();
 
@@ -87,7 +89,7 @@ public class StatusDetailedViewHolder extends StatusBaseViewHolder {
                 NoUnderlineURLSpan editedClickSpan = new NoUnderlineURLSpan("") {
                     @Override
                     public void onClick(@NonNull View view) {
-                        listener.onShowEdits(getBindingAdapterPosition());
+                        listener.onShowEdits(statusViewData);
                     }
                 };
 
@@ -119,27 +121,27 @@ public class StatusDetailedViewHolder extends StatusBaseViewHolder {
         metaInfo.setText(sb);
     }
 
-    private void setReblogAndFavCount(int reblogCount, int favCount, StatusActionListener listener) {
-        reblogs.setText(getReblogsText(reblogs.getContext(), reblogCount));
-        favourites.setText(getFavsText(favourites.getContext(), favCount));
+    private void setReblogAndFavCount(StatusViewData.Concrete viewData, StatusActionListener<StatusViewData.Concrete> listener) {
+        reblogs.setText(getReblogsText(reblogs.getContext(), viewData.getStatus().getReblogsCount()));
+        favourites.setText(getFavsText(favourites.getContext(), viewData.getStatus().getFavouritesCount()));
 
         reblogs.setOnClickListener(v -> {
             int position = getBindingAdapterPosition();
             if (position != RecyclerView.NO_POSITION) {
-                listener.onShowReblogs(position);
+                listener.onShowReblogs(viewData);
             }
         });
         favourites.setOnClickListener(v -> {
             int position = getBindingAdapterPosition();
             if (position != RecyclerView.NO_POSITION) {
-                listener.onShowFavs(position);
+                listener.onShowFavs(viewData);
             }
         });
     }
 
     @Override
     public void setupWithStatus(@NonNull final StatusViewData.Concrete status,
-                                @NonNull final StatusActionListener listener,
+                                @NonNull final StatusActionListener<StatusViewData.Concrete> listener,
                                 @NonNull StatusDisplayOptions statusDisplayOptions,
                                 @NonNull List<Object> payloads,
                                 final boolean showStatusInfo) {
@@ -151,11 +153,8 @@ public class StatusDetailedViewHolder extends StatusBaseViewHolder {
         super.setupWithStatus(uncollapsedStatus, listener, statusDisplayOptions, payloads, showStatusInfo);
         setupCard(uncollapsedStatus, status.isExpanded(), !status.isShowingContent(), CardViewMode.FULL_WIDTH, statusDisplayOptions, listener); // Always show card for detailed status
         if (payloads.isEmpty()) {
-            Status actionable = uncollapsedStatus.getActionable();
-
             if (!statusDisplayOptions.hideStats()) {
-                setReblogAndFavCount(actionable.getReblogsCount(),
-                    actionable.getFavouritesCount(), listener);
+                setReblogAndFavCount(uncollapsedStatus, listener);
             } else {
                 hideQuantitativeStats();
             }

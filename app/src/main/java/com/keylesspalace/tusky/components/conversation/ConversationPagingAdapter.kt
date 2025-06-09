@@ -29,7 +29,7 @@ import com.keylesspalace.tusky.util.StatusDisplayOptions
 
 class ConversationPagingAdapter(
     private var statusDisplayOptions: StatusDisplayOptions,
-    private val listener: StatusActionListener
+    private val listener: StatusActionListener<ConversationViewData>
 ) : PagingDataAdapter<ConversationViewData, RecyclerView.ViewHolder>(CONVERSATION_COMPARATOR) {
 
     var mediaPreviewEnabled: Boolean

@@ -16,9 +16,10 @@ package com.keylesspalace.tusky.adapter
 
 import androidx.recyclerview.widget.RecyclerView
 import com.keylesspalace.tusky.databinding.ItemLoadMoreBinding
-import com.keylesspalace.tusky.interfaces.StatusActionListener
+import com.keylesspalace.tusky.interfaces.LoadMoreActionListener
 import com.keylesspalace.tusky.util.hide
 import com.keylesspalace.tusky.util.visible
+import com.keylesspalace.tusky.viewdata.LoadMoreViewData
 
 /**
  * Placeholder for missing parts in timelines.
@@ -26,21 +27,18 @@ import com.keylesspalace.tusky.util.visible
  * Displays a "Load more" button to load the gap, or a
  * circular progress bar if the missing page is being loaded.
  */
-class LoadMoreViewHolder(
+class LoadMoreViewHolder<LM : LoadMoreViewData>(
     private val binding: ItemLoadMoreBinding,
-    listener: StatusActionListener
+    private val listener: LoadMoreActionListener<LM>
 ) : RecyclerView.ViewHolder(binding.root) {
 
-    init {
+    fun setup(viewData: LM) {
+        binding.loadMoreButton.visible(!viewData.isLoading)
+        binding.loadMoreProgressBar.visible(viewData.isLoading)
         binding.loadMoreButton.setOnClickListener {
             binding.loadMoreButton.hide()
             binding.loadMoreProgressBar.show()
-            listener.onLoadMore(bindingAdapterPosition)
+            listener.onLoadMore(viewData)
         }
-    }
-
-    fun setup(loading: Boolean) {
-        binding.loadMoreButton.visible(!loading)
-        binding.loadMoreProgressBar.visible(loading)
     }
 }

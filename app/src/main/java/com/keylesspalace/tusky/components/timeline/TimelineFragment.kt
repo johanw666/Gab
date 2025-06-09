@@ -52,6 +52,7 @@ import com.keylesspalace.tusky.databinding.FragmentTimelineBinding
 import com.keylesspalace.tusky.entity.Status
 import com.keylesspalace.tusky.fragment.SFragment
 import com.keylesspalace.tusky.interfaces.ActionButtonActivity
+import com.keylesspalace.tusky.interfaces.LoadMoreActionListener
 import com.keylesspalace.tusky.interfaces.RefreshableFragment
 import com.keylesspalace.tusky.interfaces.ReselectableFragment
 import com.keylesspalace.tusky.interfaces.StatusActionListener
@@ -70,7 +71,6 @@ import com.keylesspalace.tusky.view.ConfirmationBottomSheet.Companion.confirmFav
 import com.keylesspalace.tusky.view.ConfirmationBottomSheet.Companion.confirmReblog
 import com.keylesspalace.tusky.viewdata.AttachmentViewData
 import com.keylesspalace.tusky.viewdata.StatusViewData
-import com.keylesspalace.tusky.viewdata.TranslationViewData
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 import kotlinx.coroutines.flow.collectLatest
@@ -78,9 +78,10 @@ import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class TimelineFragment :
-    SFragment(R.layout.fragment_timeline),
+    SFragment<StatusViewData.Concrete>(R.layout.fragment_timeline),
     OnRefreshListener,
-    StatusActionListener,
+    StatusActionListener<StatusViewData.Concrete>,
+    LoadMoreActionListener<StatusViewData.LoadMore>,
     ReselectableFragment,
     RefreshableFragment,
     MenuProvider {
@@ -197,6 +198,7 @@ class TimelineFragment :
         )
         return TimelinePagingAdapter(
             statusDisplayOptions,
+            this,
             this
         )
     }
@@ -369,7 +371,7 @@ class TimelineFragment :
         binding.recyclerView.setAccessibilityDelegateCompat(
             ListStatusAccessibilityDelegate(binding.recyclerView, this) { pos ->
                 if (pos in 0 until adapter.itemCount) {
-                    adapter.peek(pos)
+                    adapter.peek(pos) as? StatusViewData.Concrete?
                 } else {
                     null
                 }
@@ -392,33 +394,29 @@ class TimelineFragment :
     }
 
     override val onMoreTranslate =
-        { translate: Boolean, position: Int ->
+        { translate: Boolean, viewData: StatusViewData.Concrete ->
             if (translate) {
-                onTranslate(position)
+                onTranslate(viewData)
             } else {
-                onUntranslate(
-                    position
-                )
+                onUntranslate(viewData)
             }
         }
 
-    override fun onReply(position: Int) {
-        val status = adapter?.peek(position)?.asStatusOrNull() ?: return
-        super.reply(status.status)
+    override fun onReply(viewData: StatusViewData.Concrete) {
+        super.reply(viewData.status)
     }
 
-    override fun onReblog(reblog: Boolean, position: Int, visibility: Status.Visibility?, button: SparkButton?) {
-        val status = adapter?.peek(position)?.asStatusOrNull() ?: return
+    override fun onReblog(viewData: StatusViewData.Concrete, reblog: Boolean, visibility: Status.Visibility?, button: SparkButton?) {
         buttonToAnimate = button
 
         if (reblog && visibility == null) {
             confirmReblog(preferences) { visibility ->
-                viewModel.reblog(true, status, visibility)
+                viewModel.reblog(true, viewData, visibility)
                 buttonToAnimate?.playAnimation()
                 buttonToAnimate?.isChecked = true
             }
         } else {
-            viewModel.reblog(reblog, status, visibility ?: Status.Visibility.PUBLIC)
+            viewModel.reblog(reblog, viewData, visibility ?: Status.Visibility.PUBLIC)
             if (reblog) {
                 buttonToAnimate?.playAnimation()
             }
@@ -426,10 +424,9 @@ class TimelineFragment :
         }
     }
 
-    private fun onTranslate(position: Int) {
-        val status = adapter?.peek(position)?.asStatusOrNull() ?: return
+    private fun onTranslate(viewData: StatusViewData.Concrete) {
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.translate(status)
+            viewModel.translate(viewData)
                 .onFailure {
                     Snackbar.make(
                         requireView(),
@@ -440,110 +437,95 @@ class TimelineFragment :
         }
     }
 
-    override fun onUntranslate(position: Int) {
-        val status = adapter?.peek(position)?.asStatusOrNull() ?: return
-        viewModel.untranslate(status)
+    override fun onUntranslate(viewData: StatusViewData.Concrete) {
+        viewModel.untranslate(viewData)
     }
 
-    override fun onFavourite(favourite: Boolean, position: Int, button: SparkButton?) {
-        val status = adapter?.peek(position)?.asStatusOrNull() ?: return
+    override fun onFavourite(viewData: StatusViewData.Concrete, favourite: Boolean, button: SparkButton?) {
         buttonToAnimate = button
 
         if (favourite) {
             confirmFavourite(preferences) {
-                viewModel.favorite(true, status)
+                viewModel.favorite(true, viewData)
                 buttonToAnimate?.playAnimation()
                 buttonToAnimate?.isChecked = true
             }
         } else {
-            viewModel.favorite(false, status)
+            viewModel.favorite(false, viewData)
         }
     }
 
-    override fun onBookmark(bookmark: Boolean, position: Int) {
-        val status = adapter?.peek(position)?.asStatusOrNull() ?: return
-        viewModel.bookmark(bookmark, status)
+    override fun onBookmark(viewData: StatusViewData.Concrete, bookmark: Boolean) {
+        viewModel.bookmark(bookmark, viewData)
     }
 
-    override fun onVoteInPoll(position: Int, choices: List<Int>) {
-        val status = adapter?.peek(position)?.asStatusOrNull() ?: return
+    override fun onVoteInPoll(viewData: StatusViewData.Concrete, choices: List<Int>) {
+        val status = viewData.asStatusOrNull() ?: return
         viewModel.voteInPoll(choices, status)
     }
 
-    override fun onShowPollResults(position: Int) {
-        adapter?.peek(position)?.asStatusOrNull()?.let { status ->
-            viewModel.showPollResults(status)
-        }
+    override fun onShowPollResults(viewData: StatusViewData.Concrete) {
+        val status = viewData.asStatusOrNull() ?: return
+        viewModel.showPollResults(status)
     }
 
-    override fun clearWarningAction(position: Int) {
-        val status = adapter?.peek(position)?.asStatusOrNull() ?: return
+    override fun clearWarningAction(viewData: StatusViewData.Concrete) {
+        val status = viewData.asStatusOrNull() ?: return
         viewModel.clearWarning(status)
     }
 
-    override fun onMore(view: View, position: Int) {
-        val status = adapter?.peek(position)?.asStatusOrNull() ?: return
-        super.more(
-            status.status,
-            view,
-            position,
-            (status.translation as? TranslationViewData.Loaded)?.data
-        )
+    override fun onMore(viewData: StatusViewData.Concrete, view: View) {
+        super.more(viewData, view)
     }
 
-    override fun onOpenReblog(position: Int) {
-        val status = adapter?.peek(position)?.asStatusOrNull() ?: return
-        super.openReblog(status.status)
+    override fun onOpenReblog(viewData: StatusViewData.Concrete) {
+        super.openReblog(viewData.status)
     }
 
-    override fun onExpandedChange(expanded: Boolean, position: Int) {
-        val status = adapter?.peek(position)?.asStatusOrNull() ?: return
-        viewModel.changeExpanded(expanded, status)
+    override fun onExpandedChange(viewData: StatusViewData.Concrete, expanded: Boolean) {
+        viewModel.changeExpanded(expanded, viewData)
     }
 
-    override fun onContentHiddenChange(isShowing: Boolean, position: Int) {
-        val status = adapter?.peek(position)?.asStatusOrNull() ?: return
-        viewModel.changeContentShowing(isShowing, status)
+    override fun onContentHiddenChange(viewData: StatusViewData.Concrete, isShowing: Boolean) {
+        viewModel.changeContentShowing(isShowing, viewData)
     }
 
-    override fun onShowReblogs(position: Int) {
-        val statusId = adapter?.peek(position)?.asStatusOrNull()?.id ?: return
+    override fun onShowReblogs(viewData: StatusViewData.Concrete) {
+        val statusId = viewData.asStatusOrNull()?.id ?: return
         val intent = newIntent(requireContext(), AccountListActivity.Type.REBLOGGED, statusId)
         activity?.startActivityWithSlideInAnimation(intent)
     }
 
-    override fun onShowFavs(position: Int) {
-        val statusId = adapter?.peek(position)?.asStatusOrNull()?.id ?: return
+    override fun onShowFavs(viewData: StatusViewData.Concrete) {
+        val statusId = viewData.asStatusOrNull()?.id ?: return
         val intent = newIntent(requireContext(), AccountListActivity.Type.FAVOURITED, statusId)
         activity?.startActivityWithSlideInAnimation(intent)
     }
 
-    override fun onLoadMore(position: Int) {
-        val adapter = this.adapter
-        val placeholder = adapter?.peek(position)?.asPlaceholderOrNull() ?: return
+    override fun onLoadMore(loadMore: StatusViewData.LoadMore) {
+        val adapter = this.adapter ?: return
+        val items = adapter.snapshot()
+        val position = items.indexOf(loadMore)
         loadMorePosition = position
-        statusIdBelowLoadMore =
-            if (position + 1 < adapter.itemCount) adapter.peek(position + 1)?.id else null
-        viewModel.loadMore(placeholder.id)
+        statusIdBelowLoadMore = items.getOrNull(position + 1)?.id
+        viewModel.loadMore(loadMore.id)
     }
 
-    override fun onContentCollapsedChange(isCollapsed: Boolean, position: Int) {
-        val status = adapter?.peek(position)?.asStatusOrNull() ?: return
+    override fun onContentCollapsedChange(viewData: StatusViewData.Concrete, isCollapsed: Boolean) {
+        val status = viewData.asStatusOrNull() ?: return
         viewModel.changeContentCollapsed(isCollapsed, status)
     }
 
-    override fun onViewMedia(position: Int, attachmentIndex: Int, view: View?) {
-        val status = adapter?.peek(position)?.asStatusOrNull() ?: return
+    override fun onViewMedia(viewData: StatusViewData.Concrete, attachmentIndex: Int, view: View?) {
         super.viewMedia(
             attachmentIndex,
-            AttachmentViewData.list(status),
+            AttachmentViewData.list(viewData),
             view
         )
     }
 
-    override fun onViewThread(position: Int) {
-        val status = adapter?.peek(position)?.asStatusOrNull() ?: return
-        super.viewThread(status.actionable.id, status.actionable.url)
+    override fun onViewThread(viewData: StatusViewData.Concrete) {
+        super.viewThread(viewData.actionableId, viewData.actionable.url)
     }
 
     override fun onViewTag(tag: String) {
@@ -609,9 +591,8 @@ class TimelineFragment :
         }
     }
 
-    public override fun removeItem(position: Int) {
-        val status = adapter?.peek(position)?.asStatusOrNull() ?: return
-        viewModel.removeStatusWithId(status.id)
+    public override fun removeItem(viewData: StatusViewData.Concrete) {
+        viewModel.removeStatusWithId(viewData.id)
     }
 
     private var talkBackWasEnabled = false

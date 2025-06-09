@@ -17,64 +17,62 @@ package com.keylesspalace.tusky.interfaces
 import android.view.View
 import at.connyduck.sparkbutton.SparkButton
 import com.keylesspalace.tusky.entity.Status
+import com.keylesspalace.tusky.viewdata.ConcreteViewData
 
-interface StatusActionListener : LinkListener {
-    fun onReply(position: Int)
+interface StatusActionListener<in C : ConcreteViewData> : LinkListener {
+    fun onReply(viewData: C)
 
     /**
-     * Reblog the post at [position]
+     * Reblog the post represented by [viewData]
+     * @param reblog true to reblog, false to undo a reblog
      * @param visibility The visibility to use for the reblog, if the user has already chosen it, null otherwise
      * @param button Optional button to animate
      */
-    fun onReblog(reblog: Boolean, position: Int, visibility: Status.Visibility?, button: SparkButton? = null)
+    fun onReblog(viewData: C, reblog: Boolean, visibility: Status.Visibility?, button: SparkButton? = null)
 
     /**
-     * Favourite the post at [position]
+     * Favourite the post represented by [viewData]
      * @param button Optional button to animate
      */
-    fun onFavourite(favourite: Boolean, position: Int, button: SparkButton? = null)
-    fun onBookmark(bookmark: Boolean, position: Int)
-    fun onMore(view: View, position: Int)
-    fun onViewMedia(position: Int, attachmentIndex: Int, view: View?)
-    fun onViewThread(position: Int)
+    fun onFavourite(viewData: C, favourite: Boolean, button: SparkButton? = null)
+    fun onBookmark(viewData: C, bookmark: Boolean)
+    fun onMore(viewData: C, view: View)
+    fun onViewMedia(viewData: C, attachmentIndex: Int, view: View?)
+    fun onViewThread(viewData: C)
 
     /**
-     * Open reblog author for the status.
-     * @param position At which position in the list status is located
+     * Open reblog author for the status [viewData].
      */
-    fun onOpenReblog(position: Int)
-    fun onExpandedChange(expanded: Boolean, position: Int)
-    fun onContentHiddenChange(isShowing: Boolean, position: Int)
-    fun onLoadMore(position: Int)
+    fun onOpenReblog(viewData: C)
+    fun onExpandedChange(viewData: C, expanded: Boolean)
+    fun onContentHiddenChange(viewData: C, isShowing: Boolean)
 
     /**
      * Called when the status [android.widget.ToggleButton] responsible for collapsing long
      * status content is interacted with.
      *
+     * @param viewData    The status that is being toggled
      * @param isCollapsed Whether the status content is shown in a collapsed state or fully.
-     * @param position    The position of the status in the list.
      */
-    fun onContentCollapsedChange(isCollapsed: Boolean, position: Int)
+    fun onContentCollapsedChange(viewData: C, isCollapsed: Boolean)
 
     /**
      * called when the reblog count has been clicked
-     * @param position The position of the status in the list.
      */
-    fun onShowReblogs(position: Int) {}
+    fun onShowReblogs(viewData: C) {}
 
     /**
      * called when the favourite count has been clicked
-     * @param position The position of the status in the list.
      */
-    fun onShowFavs(position: Int) {}
+    fun onShowFavs(viewData: C) {}
 
-    fun onVoteInPoll(position: Int, choices: List<Int>)
+    fun onVoteInPoll(viewData: C, choices: List<Int>)
 
-    fun onShowPollResults(position: Int)
+    fun onShowPollResults(viewData: C)
 
-    fun onShowEdits(position: Int) {}
+    fun onShowEdits(viewData: C) {}
 
-    fun clearWarningAction(position: Int)
+    fun clearWarningAction(viewData: C)
 
-    fun onUntranslate(position: Int)
+    fun onUntranslate(viewData: C)
 }

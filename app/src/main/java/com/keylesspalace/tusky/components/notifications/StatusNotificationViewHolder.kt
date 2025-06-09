@@ -49,12 +49,11 @@ import com.keylesspalace.tusky.util.show
 import com.keylesspalace.tusky.util.unicodeWrap
 import com.keylesspalace.tusky.util.visible
 import com.keylesspalace.tusky.viewdata.NotificationViewData
-import com.keylesspalace.tusky.viewdata.StatusViewData
 import java.util.Date
 
 internal class StatusNotificationViewHolder(
     private val binding: ItemStatusNotificationBinding,
-    private val statusActionListener: StatusActionListener,
+    private val statusActionListener: StatusActionListener<NotificationViewData.Concrete>,
     private val absoluteTimeFormatter: AbsoluteTimeFormatter
 ) : NotificationsViewHolder, RecyclerView.ViewHolder(binding.root) {
     private val avatarRadius48dp = itemView.context.resources.getDimensionPixelSize(
@@ -102,10 +101,7 @@ internal class StatusNotificationViewHolder(
                 }
 
                 val viewThreadListener = View.OnClickListener {
-                    val position = bindingAdapterPosition
-                    if (position != RecyclerView.NO_POSITION) {
-                        statusActionListener.onViewThread(position)
-                    }
+                    statusActionListener.onViewThread(viewData)
                 }
 
                 binding.notificationContainer.setOnClickListener(viewThreadListener)
@@ -281,24 +277,23 @@ internal class StatusNotificationViewHolder(
                 )
             }
             binding.notificationContentWarningButton.setOnClickListener {
-                if (bindingAdapterPosition != RecyclerView.NO_POSITION) {
-                    statusActionListener.onExpandedChange(
-                        !statusViewData.isExpanded,
-                        bindingAdapterPosition
-                    )
-                }
+                statusActionListener.onExpandedChange(
+                    notificationViewData,
+                    !statusViewData.isExpanded
+                )
                 binding.notificationContent.visibility =
                     if (statusViewData.isExpanded) View.GONE else View.VISIBLE
             }
-            setupContentAndSpoiler(listener, statusViewData, animateEmojis)
+            setupContentAndSpoiler(listener, notificationViewData, animateEmojis)
         }
     }
 
     private fun setupContentAndSpoiler(
         listener: LinkListener,
-        statusViewData: StatusViewData.Concrete,
+        notificationViewData: NotificationViewData.Concrete,
         animateEmojis: Boolean
     ) {
+        val statusViewData = notificationViewData.viewData
         val shouldShowContentIfSpoiler = statusViewData.isExpanded
         val hasSpoiler = statusViewData.status.spoilerText.isNotEmpty()
         if (!shouldShowContentIfSpoiler && hasSpoiler) {
@@ -313,8 +308,8 @@ internal class StatusNotificationViewHolder(
                 val position = bindingAdapterPosition
                 if (position != RecyclerView.NO_POSITION) {
                     statusActionListener.onContentCollapsedChange(
-                        !statusViewData.isCollapsed,
-                        position
+                        notificationViewData,
+                        !statusViewData.isCollapsed
                     )
                 }
             }
