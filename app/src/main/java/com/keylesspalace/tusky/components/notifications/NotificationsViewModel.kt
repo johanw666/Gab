@@ -169,7 +169,7 @@ class NotificationsViewModel @Inject constructor(
         return when ((notificationViewData as? NotificationViewData.Concrete)?.type) {
             Notification.Type.Mention, Notification.Type.Poll, Notification.Type.Status, Notification.Type.Update -> {
                 val account = activeAccountFlow.value
-                notificationViewData.viewData?.let { statusViewData ->
+                notificationViewData.statusViewData?.let { statusViewData ->
                     if (statusViewData.status.account.id == account?.accountId) {
                         return null
                     }
