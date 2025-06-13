@@ -136,13 +136,7 @@
     <string name="label_header">Omslagfoto</string>
     <string name="link_whats_an_instance">Wat is een server?</string>
     <string name="login_connection">Aan het verbinden…</string>
-    <string name="dialog_whats_an_instance">Het adres of domein van eender welke server kan hier worden ingevoerd, zoals mastodon.social, mastodon.nl, mastodon-belgium.be en <a href="https://instances.social">nog veel meer!</a> \u0020 
-\n \u0020 
-\nWanneer je nog geen account hebt, kun je de naam van de server waar jij je graag wil registeren invoeren, waarna je daar een account kunt aanmaken. \u0020 
-\n \u0020 
-\nOp Mastodon is een server (Engels: instance) een computerserver waar jouw account zich bevindt (vergelijk het met een e-mailserver). Je kan eenvoudig mensen van andere servers volgen en met ze communiceren, alsof jullie met elkaar op dezelfde website zitten. \u0020 
-\n \u0020 
-\n Meer informatie kun je vinden op <a href="https://joinmastodon.org">joinmastodon.org</a>. \u0020</string>
+    <string name="dialog_whats_an_instance">Het adres of domein van eender welke server kan hier worden ingevoerd, zoals mastodon.social, mastodon.nl, mastodon-belgium.be en <a href="https://instances.social">nog veel meer!</a> \u0020 \u0020 \n \u0020 \u0020 \nWanneer je nog geen account hebt, kun je de naam van de server waar jij je graag wil registeren invoeren, waarna je daar een account kunt aanmaken. \u0020 \u0020 \n \u0020 \u0020 \nOp Mastodon is een server (Engels: instance) een computerserver waar jouw account zich bevindt (vergelijk het met een e-mailserver). Je kan eenvoudig mensen van andere servers volgen en met ze communiceren, alsof jullie met elkaar op dezelfde website zitten. \u0020 \u0020 \n \u0020 \u0020 \n Meer informatie kun je vinden op <a href="https://joinmastodon.org">joinmastodon.org</a>. \u0020</string>
     <string name="dialog_title_finishing_media_upload">Uploaden media bijna voltooid</string>
     <string name="dialog_message_uploading_media">Aan het uploaden…</string>
     <string name="dialog_download_image">Downloaden</string>
@@ -221,8 +215,7 @@
          * the url can be changed to link to the localized version of the license.
     -->
     <string name="about_project_site">Projectwebsite: https://tusky.app</string>
-    <string name="about_bug_feature_request_site">Fouten melden &amp; nieuwe functies aanvragen:
-\nhttps://github.com/tuskyapp/Tusky/issues</string>
+    <string name="about_bug_feature_request_site">Fouten melden &amp; nieuwe functies aanvragen: \nhttps://github.com/tuskyapp/Tusky/issues</string>
     <string name="about_tusky_account">Tusky\'s profiel</string>
     <string name="post_share_content">Inhoud van bericht delen</string>
     <string name="post_share_link">Link naar het bericht delen</string>
@@ -348,7 +341,7 @@
     <string name="compose_shortcut_short_label">Schrijven</string>
     <string name="pref_title_bot_overlay">Indicator voor bots tonen</string>
     <string name="notification_clear_text">Weet je zeker dat je alle meldingen permanent wilt verwijderen?</string>
-    <string name="poll_info_format"> \u0020<!-- 15 votes • 1 hour left --> \u0020%1$s • %2$s</string>
+    <string name="poll_info_format"><!-- 15 votes • 1 hour left --> \u0020%1$s • %2$s</string>
     <plurals name="poll_info_votes">
         <item quantity="one">%1$s stem</item>
         <item quantity="other">%1$s stemmen</item>
@@ -485,13 +478,7 @@
     <string name="dialog_delete_conversation_warning">Dit gesprek verwijderen?</string>
     <string name="action_delete_conversation">Gesprek verwijderen</string>
     <string name="follow_requests_info">Ook al heb je geen besloten account, de medewerkers van %1$s dachten dat je misschien de volgverzoeken van deze accounts handmatig zou willen controleren.</string>
-    <string name="wellbeing_mode_notice">Informatie die je geestelijk welzijn kan beïnvloeden, zal worden verborgen. Het gaat om:
-\n
-\n- Meldingen over favorieten, boosts en volgers
-\n- Weergave van het aantal favorieten en boosts per bericht
-\n- Statistieken over het aantal volgers en berichten op profielen
-\n
-\nPushmeldingen worden hierdoor niet beïnvloed, maar je kunt de voorkeuren voor meldingen handmatig wijzigen.</string>
+    <string name="wellbeing_mode_notice">Informatie die je geestelijk welzijn kan beïnvloeden, zal worden verborgen. Het gaat om: \n \n- Meldingen over favorieten, boosts en volgers \n- Weergave van het aantal favorieten en boosts per bericht \n- Statistieken over het aantal volgers en berichten op profielen \n \nPushmeldingen worden hierdoor niet beïnvloed, maar je kunt de voorkeuren voor meldingen handmatig wijzigen.</string>
     <string name="notification_sign_up_format">%1$s heeft zich geregistreerd</string>
     <string name="error_multimedia_size_limit">Afbeeldingen en video\'s mogen niet groter zijn dan %1$s MB.</string>
     <string name="error_image_edit_failed">Deze afbeelding kon niet worden bewerkt.</string>
@@ -567,12 +554,8 @@
     <string name="dialog_follow_hashtag_title">Hashtag volgen</string>
     <string name="action_post_failed">Upload mislukt</string>
     <plurals name="action_post_failed_detail">
-        <item quantity="one">Je bericht kan niet worden geüpload en is opgeslagen in concepten.
-\n
-\nEr kon geen contact worden opgenomen met de server, of het bericht werd geweigerd.</item>
-        <item quantity="other">Je berichten kunnen niet worden geüpload en zijn opgeslagen in concepten.
-\n
-\nEr kon geen contact worden opgenomen met de server of de berichten werden geweigerd.</item>
+        <item quantity="one">Je bericht kan niet worden geüpload en is opgeslagen in concepten. \n \nEr kon geen contact worden opgenomen met de server, of het bericht werd geweigerd.</item>
+        <item quantity="other">Je berichten kunnen niet worden geüpload en zijn opgeslagen in concepten. \n \nEr kon geen contact worden opgenomen met de server of de berichten werden geweigerd.</item>
     </plurals>
     <string name="action_post_failed_do_nothing">Afwijzen</string>
     <string name="action_post_failed_show_drafts">Concepten tonen</string>
@@ -626,12 +609,9 @@
     <string name="notification_notification_worker">Meldingen ophalen…</string>
     <string name="notification_listenable_worker_name">Achtergrondactiviteit</string>
     <string name="notification_listenable_worker_description">Meldingen als Tusky op de achtergrond bezig is</string>
-    <string name="about_device_info">%1$s %2$s
-\nAndroid versie: %3$s
-\nSDK versie: %4$d</string>
+    <string name="about_device_info">%1$s %2$s \nAndroid versie: %3$s \nSDK versie: %4$d</string>
     <string name="about_account_info_title">Je account</string>
-    <string name="about_account_info">\@%1$s@%2$s
-\nVersie: %3$s</string>
+    <string name="about_account_info">\@%1$s@%2$s \nVersie: %3$s</string>
     <string name="about_copy">Versie en apparaatinformatie kopiëren</string>
     <string name="about_copied">Versie en apparaatinformatie gekopieerd</string>
     <string name="error_media_upload_sending_fmt">Het uploaden is mislukt: %1$s</string>
@@ -644,21 +624,11 @@
     <string name="dialog_save_profile_changes_message">Wil je de wijzigingen aan je profiel bewaren?</string>
     <string name="notification_policies_title">Meldingsbeleid</string>
     <string name="label_translated">Uit het %1$s met %2$s vertaald</string>
-    <string name="help_empty_lists">Dit zijn je <b>lijsten</b>. Je kunt privélijsten maken en er accounts aan toevoegen. \u0020 \u0020
-\n \u0020 \u0020
-\nMERK OP dat je enkel accounts aan lijsten kunt toevoegen als je deze volgt. \u0020 \u0020
-\n \u0020 \u0020
-\nJe kunt je lijsten als tabbladen toevoegen in je account-instellingen [iconics gmd_account_circle] [iconics gmd_navigate_next] tabs. \u0020</string>
+    <string name="help_empty_lists">Dit zijn je <b>lijsten</b>. Je kunt privélijsten maken en er accounts aan toevoegen. \u0020 \u0020 \n \u0020 \u0020 \nMERK OP dat je enkel accounts aan lijsten kunt toevoegen als je deze volgt. \u0020 \u0020 \n \u0020 \u0020 \nJe kunt je lijsten als tabbladen toevoegen in je account-instellingen [iconics gmd_account_circle] [iconics gmd_navigate_next] tabs. \u0020</string>
     <string name="notification_policies_filter_not_following_description">Inclusief accounts die jou korter dan 3 dagen volgen</string>
-    <string name="help_empty_home">Dit is je <b> hoofdtijdlijn</b>. Hier zie je de berichten van de mensen die jij volgt. \u0020 
-\n 
-\nOm andere accounts te ontdekken, kan je andere tijdlijnen bekijken, bijvoorbeeld je lokale tijdlijn van jouw server {{group}}. Of je kan zoeken op naam {{search}}, bijvoorbeeld typ \"tusky\" in het zoekveld om onze Mastodonaccount te vinden.</string>
+    <string name="help_empty_home">Dit is je <b> hoofdtijdlijn</b>. Hier zie je de berichten van de mensen die jij volgt. \u0020 \u0020 \n \u0020 \nOm andere accounts te ontdekken, kan je andere tijdlijnen bekijken, bijvoorbeeld je lokale tijdlijn van jouw server {{group}}. Of je kan zoeken op naam {{search}}, bijvoorbeeld typ \"tusky\" in het zoekveld om onze Mastodonaccount te vinden.</string>
     <string name="unknown_notification_filter_unsolicited_private_mentions_description">Gefilterd, tenzij het een reactie is op je eigen vermelding, of als je het account volgt</string>
-    <string name="help_empty_conversations">Dit zijn je <b>privé berichten</b>, ook wel conversaties of direct messages genoemd (DM). \u0020
-\n \u0020
-\nPrivé berichten maak je door het zichtbaarheidsinstellingen {{public}} van een bericht op {{mail}} <i>Direct</i> te zetten, en dan één of meerdere accounts te vermelden in je bericht. \u0020 \u0020
-\n \u0020
-\nBijvoorbeeld: je kan op het profiel van een account op de toot-knop [iconics gmd_edit] klikken en dan de zichtbaarheid veranderen. \u0020</string>
+    <string name="help_empty_conversations">Dit zijn je <b>privé berichten</b>, ook wel conversaties of direct messages genoemd (DM). \u0020 \n \u0020 \nPrivé berichten maak je door het zichtbaarheidsinstellingen {{public}} van een bericht op {{mail}} <i>Direct</i> te zetten, en dan één of meerdere accounts te vermelden in je bericht. \u0020 \u0020 \n \u0020 \nBijvoorbeeld: je kan op het profiel van een account op de toot-knop [iconics gmd_edit] klikken en dan de zichtbaarheid veranderen. \u0020</string>
     <string name="post_privacy_direct">Direct</string>
     <string name="pref_default_reply_privacy_explanation">De gekozen zichtbaarheid hangt af van het bericht waarop je reageert.</string>
     <string name="pref_match_default_post_privacy">Standaardzichtbaarheid overnemen</string>
@@ -681,9 +651,7 @@
     <string name="app_theme_system_black">Systeemthema gebruiken (zwart)</string>
     <string name="pref_default_reply_privacy">Zichtbaarheid van reacties (niet met de server gesynchroniseerd)</string>
     <string name="ui_error_translate">Fout bij het vertalen: %1$s</string>
-    <string name="error_missing_edits">Je server weet dat dit bericht bewerkt is, maar kent de bewerkingsgeschiedenis niet, en kan deze dus niet tonen. 
-\n 
-\nDit gaat om <a href="https://github.com/mastodon/mastodon/issues/25398">Mastodon issue #25398</a>.</string>
+    <string name="error_missing_edits">Je server weet dat dit bericht bewerkt is, maar kent de bewerkingsgeschiedenis niet, en kan deze dus niet tonen. \u0020 \n \u0020 \nDit gaat om <a href="https://github.com/mastodon/mastodon/issues/25398">Mastodon issue #25398</a>.</string>
     <string name="list_reply_policy_list">Leden van de lijst</string>
     <string name="list_reply_policy_followed">Iedereen die jij volgt</string>
     <string name="unknown_notification_type">Onbekend type melding</string>
