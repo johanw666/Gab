@@ -80,13 +80,7 @@
     <string name="wellbeing_hide_stats_posts">Falaich an stadastaireachd àireamhail air postaichean</string>
     <string name="limit_notifications">Cuingich na brathan mun loidhne-ama</string>
     <string name="review_notifications">Thoir sùil air na brathan</string>
-    <string name="wellbeing_mode_notice">Thèid cuid a dh’fhiosrachadh a dh’fhaodadh droch-bhuaidh a thoirt air d’ shlàinte-inntinn fhalach. Tha seo a’ gabhail a-staigh:
-\n
-\n - Brathan air annsachdan/brosnachaidhean/leanntainn
-\n - Cunntas nan annsachdan/brosnachaidhean air postaichean
-\n - Stadastaireachd an luchd-leantainn/nam postaichean air pròifilean
-\n
-\n Cha doir seo buaidh air na brathan-putaidh ach ’s urrainn dhut roghainnean nam brathan agad atharrachadh a làimh.</string>
+    <string name="wellbeing_mode_notice">Thèid cuid a dh’fhiosrachadh a dh’fhaodadh droch-bhuaidh a thoirt air d’ shlàinte-inntinn fhalach. Tha seo a’ gabhail a-staigh: \n \n - Brathan air annsachdan/brosnachaidhean/leanntainn \n - Cunntas nan annsachdan/brosnachaidhean air postaichean \n - Stadastaireachd an luchd-leantainn/nam postaichean air pròifilean \n \n Cha doir seo buaidh air na brathan-putaidh ach ’s urrainn dhut roghainnean nam brathan agad atharrachadh a làimh.</string>
     <string name="pref_title_wellbeing_mode">Slàinte-inntinn</string>
     <string name="notification_subscription_description">Brathan nuair a dh’fhoillsich cuideigin air a rinn mi fo-sgrìobhadh post ùr</string>
     <string name="notification_subscription_name">Postaichean ùra</string>
@@ -161,7 +155,7 @@
         <item quantity="few">%1$s bhòtaichean</item>
         <item quantity="other">%1$s bhòt</item>
     </plurals>
-    <string name="poll_info_format"> \u0020<!-- 15 bhòtaichean • 1 uair a thìde air fhàgail --> %1$s • %2$s</string>
+    <string name="poll_info_format"><!-- 15 bhòtaichean • 1 uair a thìde air fhàgail --> %1$s • %2$s</string>
     <string name="compose_preview_image_description">Gnìomhan dhan dealbh %1$s</string>
     <string name="notification_clear_text">A bheil thu cinnteach gu bheil thu airson na brathan uile agad fhalamhachadh gu buan?</string>
     <string name="compose_shortcut_long_label">Sgrìobh post</string>
@@ -266,13 +260,7 @@
     <string name="notification_boost_description">Brathan nuair a thèid post agad brosnachadh</string>
     <string name="dialog_redraft_post_warning">A bheil thu airson am post seo a sguabadh às is dreachd ùr a dhèanamh air?</string>
     <string name="dialog_delete_post_warning">A bheil thu airson am post seo a sguabadh às?</string>
-    <string name="dialog_whats_an_instance">’S urrainn dhut seòladh no àrainn-lìn aig ionstans sam bith a chur a-steach an-seo, can mastodon.social, icosahedron.website, social.tchncs.de agus <a href="https://instances.social">a bharrachd!</a> \u0020 
-\n \u0020 
-\nMur eil cunntas agad fhathast, cuir a-steach ainm an ionstans sa bheil thu airson ballrachd fhaighinn airson cunntas a chruthachadh ann. \u0020 
-\n \u0020 
-\n’S e an t-aon àite far an cruthaich thu cunntas a th’ ann an ionstans ud ’s a nì an t-òstadh dhan chunntas agad. Gidheadh, ’s urrainn dhut conaltradh le daoine a tha air ionstans eile agus leantainn orra mar gun robh sibh air an aon làrach. \u0020 
-\n \u0020 
-\nGheibh thu barrachd fiosrachaidh air <a href="https://joinmastodon.org">joinmastodon.org</a>. \u0020</string>
+    <string name="dialog_whats_an_instance">’S urrainn dhut seòladh no àrainn-lìn aig ionstans sam bith a chur a-steach an-seo, can mastodon.social, icosahedron.website, social.tchncs.de agus <a href="https://instances.social">a bharrachd!</a> \u0020 \u0020 \n \u0020 \u0020 \nMur eil cunntas agad fhathast, cuir a-steach ainm an ionstans sa bheil thu airson ballrachd fhaighinn airson cunntas a chruthachadh ann. \u0020 \u0020 \n \u0020 \u0020 \n’S e an t-aon àite far an cruthaich thu cunntas a th’ ann an ionstans ud ’s a nì an t-òstadh dhan chunntas agad. Gidheadh, ’s urrainn dhut conaltradh le daoine a tha air ionstans eile agus leantainn orra mar gun robh sibh air an aon làrach. \u0020 \u0020 \n \u0020 \u0020 \nGheibh thu barrachd fiosrachaidh air <a href="https://joinmastodon.org">joinmastodon.org</a>. \u0020</string>
     <string name="send_post_content_to">Co-roinn am post le…</string>
     <string name="send_post_link_to">Co-roinn URL a’ phuist le…</string>
     <string name="action_schedule_post">Cuir post air an sgeideal</string>
@@ -315,8 +303,7 @@
     <string name="post_media_video">Videothan</string>
     <string name="post_media_images">Dealbhan</string>
     <string name="about_tusky_account">Pròifil Tusky</string>
-    <string name="about_bug_feature_request_site">Aithrisean air bugaichean ⁊ iarrtasan air gleusan:
-\nhttps://github.com/tuskyapp/Tusky/issues</string>
+    <string name="about_bug_feature_request_site">Aithrisean air bugaichean ⁊ iarrtasan air gleusan: \nhttps://github.com/tuskyapp/Tusky/issues</string>
     <string name="about_project_site">Làrach-lìn a’ phròiseict: https://tusky.app</string>
     <string name="about_powered_by_tusky">Le cumhachd Tusky</string>
     <string name="about_tusky_version">Tusky %1$s</string>
@@ -582,14 +569,10 @@
     <string name="post_media_alt">ALT</string>
     <string name="action_post_failed">Dh’fhàillig leis an luchdadh suas</string>
     <plurals name="action_post_failed_detail">
-        <item quantity="one">Dh’fhàillig luchdadh suas a’ phuist agad is chaidh a shàbhaladh ’na dhreachd.
-\n
-\nCha d’ fhuair sinn grèim air an fhrithealaiche no dhiùlt e am post.</item>
+        <item quantity="one">Dh’fhàillig luchdadh suas a’ phuist agad is chaidh a shàbhaladh ’na dhreachd. \n \nCha d’ fhuair sinn grèim air an fhrithealaiche no dhiùlt e am post.</item>
         <item quantity="two"/>
         <item quantity="few"/>
-        <item quantity="other">Dh’fhàillig luchdadh suas nam postaichean agad is chaidh an sàbhaladh ’nan dreachdan.
-\n
-\nCha d’ fhuair sinn grèim air an fhrithealaiche no dhiùlt e na postaichean.</item>
+        <item quantity="other">Dh’fhàillig luchdadh suas nam postaichean agad is chaidh an sàbhaladh ’nan dreachdan. \n \nCha d’ fhuair sinn grèim air an fhrithealaiche no dhiùlt e na postaichean.</item>
     </plurals>
     <string name="action_post_failed_show_drafts">Seall na dreachdan</string>
     <string name="action_post_failed_do_nothing">Leig seachad</string>
@@ -651,26 +634,19 @@
     <string name="filter_keyword_addition_title">Cuir facal-luirg ris</string>
     <string name="filter_description_format">%1$s: %2$s</string>
     <string name="label_filter_title">Tiotal</string>
-    <string name="help_empty_home">Seo <b>loidhne-ama do dhachaigh</b>. Seallaidh i na postaichean o chionn goirid aig na cunntasan a leanas tu. 
-\n 
-\nAirson cunntasan a rùrachadh, lorg iad air tè dhe na loidhnichean-ama eile; mar eisimpleir, loidhne-ama ionadail an ionstans agad {{group}}. Air neo lorg cunntasan a-rèir ainm {{search}}; mar eisimpleir, lorg “Tusky” ach am faigh thu grèim air a’ chunntas againne air Mastodon.</string>
+    <string name="help_empty_home">Seo <b>loidhne-ama do dhachaigh</b>. Seallaidh i na postaichean o chionn goirid aig na cunntasan a leanas tu. \u0020 \n \u0020 \nAirson cunntasan a rùrachadh, lorg iad air tè dhe na loidhnichean-ama eile; mar eisimpleir, loidhne-ama ionadail an ionstans agad {{group}}. Air neo lorg cunntasan a-rèir ainm {{search}}; mar eisimpleir, lorg “Tusky” ach am faigh thu grèim air a’ chunntas againne air Mastodon.</string>
     <string name="compose_delete_draft">A bheil thu airson an dreachd a sguabadh às?</string>
     <string name="load_newest_notifications">Luchdaich na brathan as ùire</string>
-    <string name="error_missing_edits">Tha fios aig an fhrithealaiche gun deach am post seo a dheasachadh ach chan eil lethbhreac dhen deasachadh aige-san is chan urrainn dhuinn a shealltainn dhut. 
-\n 
-\nSeo <a href="https://github.com/mastodon/mastodon/issues/25398">duilgheadas Mastodon #25398</a>.</string>
+    <string name="error_missing_edits">Tha fios aig an fhrithealaiche gun deach am post seo a dheasachadh ach chan eil lethbhreac dhen deasachadh aige-san is chan urrainn dhuinn a shealltainn dhut. \u0020 \n \u0020 \nSeo <a href="https://github.com/mastodon/mastodon/issues/25398">duilgheadas Mastodon #25398</a>.</string>
     <string name="pref_ui_text_size">Meud teacsa na eadar-aghaidh</string>
     <string name="notification_listenable_worker_name">Gnìomhachd sa chùlaibh</string>
     <string name="notification_listenable_worker_description">Brathan nuair a bhios Tusky ag obair sa chùlaibh</string>
     <string name="notification_notification_worker">A’ faighinn nam brathan…</string>
     <string name="notification_prune_cache">Obair-ghlèidhidh air an tasgadan…</string>
     <string name="about_device_info_title">An t-uidheam agad</string>
-    <string name="about_device_info">%1$s %2$s
-\nTionndadh dhe Android: %3$s
-\nTionndadh dhen SDK: %4$d</string>
+    <string name="about_device_info">%1$s %2$s \nTionndadh dhe Android: %3$s \nTionndadh dhen SDK: %4$d</string>
     <string name="about_account_info_title">An cunntas agad</string>
-    <string name="about_account_info">\@%1$s@%2$s
-\nTionndadh: %3$s</string>
+    <string name="about_account_info">\@%1$s@%2$s \nTionndadh: %3$s</string>
     <string name="about_copy">Dèan lethbhreac de thionndadh is fiosrachadh an uidheim</string>
     <string name="about_copied">Chaidh lethbhreac de thionndadh is fiosrachadh an uidheim a dhèanamh</string>
     <string name="list_exclusive_label">Falaich o loidhne-ama na dachaigh</string>
@@ -693,16 +669,8 @@
     <string name="reply_sending">’Ga chur…</string>
     <string name="reply_sending_long">Tha an fhreagairt agad ’ga cur.</string>
     <string name="pref_default_reply_privacy">Prìobhaideachd nam freagairtean (gun sioncronachadh leis an fhrithealaiche)</string>
-    <string name="help_empty_conversations">Seo na <b>teachdaireachdan prìobhaideach</b> agad ris an canar còmhraidhean no teachdaireachdan dìreach (DM) cuideachd. \u0020 \u0020
-\n \u0020
-\nAirson teachdaireachd phrìobhaideach a chruthachadh, suidhich faicsinneachd {{public}} puist air {{mail}} <i>Dìreach</i> agus thoir iomradh air cleachdaiche no dhà san teacsa. \u0020 \u0020
-\n \u0020
-\nMar eisimpleir, ’s urrainn dhut tòiseachadh air sealladh pròifil cunntais agus gnogag a thoirt air putan a’ chruthachaidh [iconics gmd_edit] agus an fhaicsinneachd atharrachadh. \u0020</string>
-    <string name="help_empty_lists">Seo <b>sealladh nan liostaichean</b> agad. ’S urrainn dhut iomadh liosta phrìobhaideach a chruthachadh ’s cunntasan a chur riutha. \u0020 
-\n 
-\n \u0020THOIR AN AIRE nach urrainn dhut ach cunntasan a leanas tu a chur ris na liostaichean agad. \u0020 
-\n 
-\n \u0020’S urrainn dhut na liostaichean seo a chleachdadh ’nan tabaichean ann an “Roghainnean a’ chunntais” [iconics gmd_account_circle] [iconics gmd_navigate_next] “Tabaichean”. \u0020</string>
+    <string name="help_empty_conversations">Seo na <b>teachdaireachdan prìobhaideach</b> agad ris an canar còmhraidhean no teachdaireachdan dìreach (DM) cuideachd. \u0020 \u0020 \n \u0020 \nAirson teachdaireachd phrìobhaideach a chruthachadh, suidhich faicsinneachd {{public}} puist air {{mail}} <i>Dìreach</i> agus thoir iomradh air cleachdaiche no dhà san teacsa. \u0020 \u0020 \n \u0020 \nMar eisimpleir, ’s urrainn dhut tòiseachadh air sealladh pròifil cunntais agus gnogag a thoirt air putan a’ chruthachaidh [iconics gmd_edit] agus an fhaicsinneachd atharrachadh. \u0020</string>
+    <string name="help_empty_lists">Seo <b>sealladh nan liostaichean</b> agad. ’S urrainn dhut iomadh liosta phrìobhaideach a chruthachadh ’s cunntasan a chur riutha. \u0020 \u0020 \n \u0020 \n \u0020THOIR AN AIRE nach urrainn dhut ach cunntasan a leanas tu a chur ris na liostaichean agad. \u0020 \u0020 \n \u0020 \n \u0020’S urrainn dhut na liostaichean seo a chleachdadh ’nan tabaichean ann an “Roghainnean a’ chunntais” [iconics gmd_account_circle] [iconics gmd_navigate_next] “Tabaichean”. \u0020</string>
     <string name="list_reply_policy_list">Buill na liosta</string>
     <string name="list_reply_policy_followed">Cleachdaiche sam bith a leanas mi</string>
     <string name="list_reply_policy_label">Seall na freagairtean gu</string>
