@@ -117,10 +117,10 @@
     <string name="download_image">%1$s heruntergeladen</string>
     <string name="action_copy_link">Link kopieren</string>
     <string name="action_open_as">Als %1$s öffnen</string>
-    <string name="action_share_as">Teilen als …</string>
-    <string name="send_post_link_to">Beitragslink teilen an …</string>
-    <string name="send_post_content_to">Beitrag teilen an …</string>
-    <string name="send_media_to">Mediendateien teilen an …</string>
+    <string name="action_share_as">Teilen als …</string>
+    <string name="send_post_link_to">Beitragslink teilen an …</string>
+    <string name="send_post_content_to">Beitrag teilen an …</string>
+    <string name="send_media_to">Mediendateien teilen an …</string>
     <string name="confirmation_reported">Gesendet!</string>
     <string name="confirmation_unblocked">Blockierung des Profils aufgehoben</string>
     <string name="confirmation_unmuted">Stummschaltung des Profils aufgehoben</string>
@@ -129,23 +129,17 @@
     <string name="hint_content_warning">Inhaltswarnung</string>
     <string name="hint_display_name">Anzeigename</string>
     <string name="hint_note">Über mich</string>
-    <string name="hint_search">Suchen …</string>
+    <string name="hint_search">Suchen …</string>
     <string name="hint_media_description_missing">Medien sollten Beschreibungen haben.</string>
     <string name="search_no_results">Keine Ergebnisse</string>
-    <string name="label_quick_reply">Antworten …</string>
+    <string name="label_quick_reply">Antworten …</string>
     <string name="label_avatar">Profilbild</string>
     <string name="label_header">Titelbild</string>
     <string name="link_whats_an_instance">Was ist eine Instanz?</string>
-    <string name="login_connection">Wird verbunden …</string>
-    <string name="dialog_whats_an_instance">Die Adresse oder Domain einer Instanz kann hier eingegeben werden, wie z. B. mastodon.social, icosahedron.website, social.tchncs.de, oder<a href="https://instances.social">weitere!</a> 
-\n 
-\nWenn du bis jetzt kein Konto hast, kannst du hier den Namen einer Instanz eingeben und dort ein Konto einrichten. 
-\n 
-\nEine Instanz ist ein einzelner Ort, an dem dein Konto gehostet ist, aber du kannst dennoch mit anderen Leuten interagieren, als wärt ihr alle auf derselben Website. 
-\n 
-\nWeitere Informationen gibt es auf <a href="https://joinmastodon.org">joinmastodon.org</a>.</string>
+    <string name="login_connection">Wird verbunden …</string>
+    <string name="dialog_whats_an_instance">Die Adresse oder Domain einer Instanz kann hier eingegeben werden, wie z. B. mastodon.social, icosahedron.website, social.tchncs.de, oder<a href="https://instances.social">weitere!</a> \u0020 \n \u0020 \nWenn du bis jetzt kein Konto hast, kannst du hier den Namen einer Instanz eingeben und dort ein Konto einrichten. \u0020 \n \u0020 \nEine Instanz ist ein einzelner Ort, an dem dein Konto gehostet ist, aber du kannst dennoch mit anderen Leuten interagieren, als wärt ihr alle auf derselben Website. \u0020 \n \u0020 \nWeitere Informationen gibt es auf <a href="https://joinmastodon.org">joinmastodon.org</a>.</string>
     <string name="dialog_title_finishing_media_upload">Hochladen der Datei wird abgeschlossen</string>
-    <string name="dialog_message_uploading_media">Wird hochgeladen …</string>
+    <string name="dialog_message_uploading_media">Wird hochgeladen …</string>
     <string name="dialog_download_image">Herunterladen</string>
     <string name="dialog_message_cancel_follow_request">Follow-Anfrage zurückziehen?</string>
     <string name="dialog_unfollow_warning">Dieses Profil entfolgen?</string>
@@ -222,8 +216,7 @@
          * the url can be changed to link to the localized version of the license.
     -->
     <string name="about_project_site">Website des Projekts: https://tusky.app</string>
-    <string name="about_bug_feature_request_site">Fehlermeldungen und Verbesserungsvorschläge:
-\nhttps://github.com/tuskyapp/Tusky/issues</string>
+    <string name="about_bug_feature_request_site">Fehlermeldungen und Verbesserungsvorschläge: \nhttps://github.com/tuskyapp/Tusky/issues</string>
     <string name="about_tusky_account">Profil von Tusky</string>
     <string name="post_share_content">Inhalt des Beitrags teilen</string>
     <string name="post_share_link">Link zum Beitrag teilen</string>
@@ -259,7 +252,7 @@
     <string name="lock_account_label">Geschütztes Profil</string>
     <string name="lock_account_label_description">Follower müssen manuell genehmigt werden</string>
     <string name="compose_save_draft">Entwurf speichern?</string>
-    <string name="send_post_notification_title">Beitrag wird gesendet …</string>
+    <string name="send_post_notification_title">Beitrag wird gesendet …</string>
     <string name="send_post_notification_error_title">Fehler beim Senden</string>
     <string name="send_post_notification_channel_name">Beiträge senden</string>
     <string name="send_post_notification_cancel_title">Senden abgebrochen</string>
@@ -269,7 +262,7 @@
     <string name="emoji_style">Emoji-Stil</string>
     <string name="system_default">Systemstandard</string>
     <string name="download_fonts">Du musst diese Emoji-Sets zunächst herunterladen</string>
-    <string name="performing_lookup_title">Wird nachgeschlagen …</string>
+    <string name="performing_lookup_title">Wird nachgeschlagen …</string>
     <string name="expand_collapse_all_posts">Alle Beiträge aus-/einklappen</string>
     <string name="action_open_post">Beitrag öffnen</string>
     <string name="restart_required">App-Neustart erforderlich</string>
@@ -446,10 +439,10 @@
     <string name="pref_main_nav_position">Position der Hauptnavigation</string>
     <string name="dialog_mute_hide_notifications">Benachrichtigungen ausblenden</string>
     <string name="action_unmute_desc">%1$s nicht mehr stummschalten</string>
-    <string name="abbreviated_seconds_ago">%1$d Sek.</string>
-    <string name="abbreviated_hours_ago">%1$d Std.</string>
+    <string name="abbreviated_seconds_ago">%1$d Sek.</string>
+    <string name="abbreviated_hours_ago">%1$d Std.</string>
     <string name="abbreviated_in_days">in %1$d T.</string>
-    <string name="abbreviated_years_ago">%1$d J.</string>
+    <string name="abbreviated_years_ago">%1$d J.</string>
     <string name="account_note_saved">Gespeichert!</string>
     <string name="account_note_hint">Private Notiz über dieses Konto</string>
     <string name="pref_title_hide_top_toolbar">Titel der Hauptnavigation ausblenden</string>
@@ -472,15 +465,9 @@
     <string name="notification_subscription_name">Neue Beiträge</string>
     <string name="pref_title_animate_custom_emojis">GIF-Emojis animieren</string>
     <string name="notification_subscription_format">%1$s hat gerade etwas veröffentlicht</string>
-    <string name="abbreviated_minutes_ago">%1$d Min.</string>
+    <string name="abbreviated_minutes_ago">%1$d Min.</string>
     <string name="review_notifications">Benachrichtigungen überprüfen</string>
-    <string name="wellbeing_mode_notice">Informationen, die dein geistiges Wohlbefinden beeinflussen könnten, werden ausgeblendet. Dazu gehören:
-\n
-\n• Benachrichtigungen über favorisierte/geteilte Beiträge, sowie »X folgt dir«-Benachrichtigungen
-\n• Anzahl der Favoriten von Beiträgen und wie oft diese geteilt wurden
-\n• Statistiken zu Followern/Beiträgen auf Profilen
-\n
-\nPush-Benachrichtigungen sind nicht betroffen, aber du kannst deine Benachrichtigungseinstellungen manuell überprüfen.</string>
+    <string name="wellbeing_mode_notice">Informationen, die dein geistiges Wohlbefinden beeinflussen könnten, werden ausgeblendet. Dazu gehören: \n \n• Benachrichtigungen über favorisierte/geteilte Beiträge, sowie »X folgt dir«-Benachrichtigungen \n• Anzahl der Favoriten von Beiträgen und wie oft diese geteilt wurden \n• Statistiken zu Followern/Beiträgen auf Profilen \n \nPush-Benachrichtigungen sind nicht betroffen, aber du kannst deine Benachrichtigungseinstellungen manuell überprüfen.</string>
     <string name="follow_requests_info">Auch wenn dein Konto öffentlich bzw. nicht geschützt ist, haben die Admins von %1$s gedacht, dass du diese Follower lieber manuell bestätigen solltest.</string>
     <string name="wellbeing_hide_stats_profile">Statistiken auf Profilen ausblenden</string>
     <string name="wellbeing_hide_stats_posts">Statistiken in Beiträgen ausblenden</string>
@@ -490,7 +477,7 @@
     <string name="abbreviated_in_minutes">in %1$d Min.</string>
     <string name="abbreviated_in_hours">in %1$d Std.</string>
     <string name="drafts_failed_loading_reply">Informationen zur Antwort konnten nicht geladen werden</string>
-    <string name="abbreviated_days_ago">%1$d T.</string>
+    <string name="abbreviated_days_ago">%1$d T.</string>
     <string name="abbreviated_in_years">in %1$d J.</string>
     <string name="abbreviated_in_seconds">in %1$d Sek.</string>
     <string name="action_unbookmark">Lesezeichen entfernen</string>
@@ -520,7 +507,7 @@
     <string name="action_edit_image">Bild bearbeiten</string>
     <string name="action_details">Details</string>
     <string name="error_image_edit_failed">Das Bild konnte nicht bearbeitet werden.</string>
-    <string name="saving_draft">Entwurf wird gespeichert …</string>
+    <string name="saving_draft">Entwurf wird gespeichert …</string>
     <string name="error_multimedia_size_limit">Video- und Audiodateien dürfen nicht größer als %1$s MB sein.</string>
     <string name="error_following_hashtag_format">Fehler beim Folgen von #%1$s</string>
     <string name="error_unfollowing_hashtag_format">Fehler beim Entfolgen von #%1$s</string>
@@ -541,7 +528,7 @@
     <string name="action_set_focus">Fokuspunkt setzen</string>
     <string name="action_add_reaction">Reaktion hinzufügen</string>
     <string name="failed_to_remove_from_list">Das Konto konnte nicht aus der Liste entfernt werden</string>
-    <string name="action_add_or_remove_from_list">Zur Liste hzfg. / aus Liste entf.</string>
+    <string name="action_add_or_remove_from_list">Zur Liste hzfg. / aus Liste entf.</string>
     <string name="failed_to_add_to_list">Das Konto konnte nicht zur Liste hinzugefügt werden</string>
     <string name="no_lists">Du hast keine Listen.</string>
     <string name="notification_summary_report_format">%1$s · %2$d Beiträge angehängt</string>
@@ -556,7 +543,7 @@
     <string name="title_followed_hashtags">Gefolgte Hashtags</string>
     <string name="action_unfollow_hashtag_format">#%1$s entfolgen?</string>
     <string name="description_post_edited">Bearbeitet</string>
-    <string name="a11y_label_loading_thread">Thread wird geladen …</string>
+    <string name="a11y_label_loading_thread">Thread wird geladen …</string>
     <string name="mute_notifications_switch">Benachrichtigungen stummschalten</string>
     <string name="pref_reading_order_newest_first">Neueste zuerst</string>
     <string name="pref_reading_order_oldest_first">Älteste zuerst</string>
@@ -570,12 +557,8 @@
     <string name="error_muting_hashtag_format">Fehler beim Stummschalten von #%1$s</string>
     <string name="action_post_failed">Hochladen fehlgeschlagen</string>
     <plurals name="action_post_failed_detail">
-        <item quantity="one">Dein Beitrag konnte nicht gepostet werden und wurde als Entwurf gespeichert.
-\n
-\nEntweder ist die Verbindung zum Server fehlgeschlagen oder der Server hat den Beitrag abgelehnt.</item>
-        <item quantity="other">Deine Beiträge konnte nicht gepostet werden und wurde als Entwürfe gespeichert.
-\n
-\nEntweder ist die Verbindung zum Server fehlgeschlagen oder der Server hat die Beiträge abgelehnt.</item>
+        <item quantity="one">Dein Beitrag konnte nicht gepostet werden und wurde als Entwurf gespeichert. \n \nEntweder ist die Verbindung zum Server fehlgeschlagen oder der Server hat den Beitrag abgelehnt.</item>
+        <item quantity="other">Deine Beiträge konnte nicht gepostet werden und wurde als Entwürfe gespeichert. \n \nEntweder ist die Verbindung zum Server fehlgeschlagen oder der Server hat die Beiträge abgelehnt.</item>
     </plurals>
     <string name="action_post_failed_show_drafts">Entwürfe anzeigen</string>
     <string name="action_post_failed_do_nothing">Abbrechen</string>
@@ -585,8 +568,8 @@
     <string name="action_browser_login">Mit Browser anmelden</string>
     <string name="action_share_account_username">Name des Profils teilen</string>
     <string name="action_share_account_link">Link zum Profil teilen</string>
-    <string name="send_account_link_to">Profil-Link teilen an …</string>
-    <string name="send_account_username_to">Profilname teilen an …</string>
+    <string name="send_account_link_to">Profil-Link teilen an …</string>
+    <string name="send_account_username_to">Profilname teilen an …</string>
     <string name="account_username_copied">Profilname kopiert</string>
     <string name="status_edit_info">Bearbeitet: %1$s</string>
     <string name="status_created_info">Erstellt: %1$s</string>
@@ -632,45 +615,28 @@
     <string name="filter_edit_keyword_title">Schlagwort bearbeiten</string>
     <string name="filter_description_format">%1$s: %2$s</string>
     <string name="status_filtered_show_anyway">Trotzdem anzeigen</string>
-    <string name="help_empty_home">Dies ist deine <b>Startseite</b>. Sie zeigt die neuesten Beiträge von Konten, denen du folgst. 
-\n 
-\nDamit du andere Konten entdeckst, kannst du entweder andere Timelines lesen – z. B. die Lokale Timeline deiner Instanz {{group}} \u0020– oder du suchst nach Namen {{search}} – z. B. kannst du nach Tusky suchen, um unser Mastodon-Konto zu finden.</string>
+    <string name="help_empty_home">Dies ist deine <b>Startseite</b>. Sie zeigt die neuesten Beiträge von Konten, denen du folgst. \u0020 \n \u0020 \nDamit du andere Konten entdeckst, kannst du entweder andere Timelines lesen – z. B. die Lokale Timeline deiner Instanz {{group}} \u0020– oder du suchst nach Namen {{search}} – z. B. kannst du nach Tusky suchen, um unser Mastodon-Konto zu finden.</string>
     <string name="post_media_image">Bild</string>
     <string name="pref_title_show_stat_inline">Beitragsstatistiken in der Timeline anzeigen</string>
     <string name="pref_ui_text_size">Schriftgröße der Oberfläche</string>
-    <string name="notification_prune_cache">Cache-Wartung …</string>
+    <string name="notification_prune_cache">Cache-Wartung …</string>
     <string name="notification_listenable_worker_description">Benachrichtigungen, wenn Tusky im Hintergrund aktiv ist</string>
     <string name="notification_listenable_worker_name">Hintergrundaktivität</string>
-    <string name="notification_notification_worker">Benachrichtigungen werden abgerufen …</string>
+    <string name="notification_notification_worker">Benachrichtigungen werden abgerufen …</string>
     <string name="load_newest_notifications">Neueste Benachrichtigungen laden</string>
     <string name="compose_delete_draft">Entwurf löschen?</string>
-    <string name="error_missing_edits">Deinem Server ist bekannt, dass dieser Beitrag bearbeitet wurde. Allerdings besitzt er keine Kopien der Änderungen, weshalb diese nicht angezeigt werden können. 
-\n 
-\nHierbei handelt es sich um <a href="https://github.com/mastodon/mastodon/issues/25398">Mastodon Issue #25398</a>.</string>
+    <string name="error_missing_edits">Deinem Server ist bekannt, dass dieser Beitrag bearbeitet wurde. Allerdings besitzt er keine Kopien der Änderungen, weshalb diese nicht angezeigt werden können. \u0020 \n \u0020 \nHierbei handelt es sich um <a href="https://github.com/mastodon/mastodon/issues/25398">Mastodon Issue #25398</a>.</string>
     <string name="about_device_info_title">Dein Gerät</string>
-    <string name="about_device_info">%1$s %2$s
-\nAndroid-Version: %3$s
-\nSDK-Version: %4$d</string>
+    <string name="about_device_info">%1$s %2$s \nAndroid-Version: %3$s \nSDK-Version: %4$d</string>
     <string name="about_account_info_title">Dein Konto</string>
-    <string name="about_account_info">\@%1$s@%2$s
-\nVersion: %3$s</string>
+    <string name="about_account_info">\@%1$s@%2$s \nVersion: %3$s</string>
     <string name="about_copied">Version und Geräteinformationen kopiert</string>
     <string name="about_copy">Version und Geräteinformationen kopieren</string>
     <string name="list_exclusive_label">Nicht in der Startseite anzeigen</string>
     <string name="error_media_upload_sending_fmt">Das Hochladen ist fehlgeschlagen: %1$s</string>
     <string name="label_image">Bild</string>
-    <string name="help_empty_lists">Das ist deine <b>Listenansicht</b>. Du kannst private Listen erstellen und diese Profile hinzufügen. \u0020
-\n \u0020
-\nBEACHTE, dass du nur Profile hinzufügen kannst, denen du folgst. \u0020
-\n \u0020
-\nDiese Listen können als Tab in den Kontoeinstellungen {{manage_accounts}} {{chevron_right}} Tabs festgelegt werden.</string>
-    <string name="help_empty_conversations">Hier befinden sich deine <b>privaten Nachrichten</b> – auch bekannt als Unterhaltungen oder »direct messages« (DM, Direktnachricht).
-\n
-\nPrivate Nachrichten werden erstellt, indem die Beitragssichtbarkeit {{public}} auf {{mail}} <i>Direkt</i> gesetzt wird und ein oder mehrere Profile erwähnt werden.
-\n
-\nBeispiel: Du befindest dich auf einer Profilseite und klickst auf die Schaltfläche »Verfassen« {{edit}} und änderst anschließend die Sichtbarkeit.
-\n
-\nBeachte dass Nachrichten im Fediverse nicht Ende-zu-Ende verschlüsselt sind. Versende keine heiklen Informationen.</string>
+    <string name="help_empty_lists">Das ist deine <b>Listenansicht</b>. Du kannst private Listen erstellen und diese Profile hinzufügen. \u0020 \n \u0020 \nBEACHTE, dass du nur Profile hinzufügen kannst, denen du folgst. \u0020 \n \u0020 \nDiese Listen können als Tab in den Kontoeinstellungen {{manage_accounts}} {{chevron_right}} Tabs festgelegt werden.</string>
+    <string name="help_empty_conversations">Hier befinden sich deine <b>privaten Nachrichten</b> – auch bekannt als Unterhaltungen oder »direct messages« (DM, Direktnachricht). \n \nPrivate Nachrichten werden erstellt, indem die Beitragssichtbarkeit {{public}} auf {{mail}} <i>Direkt</i> gesetzt wird und ein oder mehrere Profile erwähnt werden. \n \nBeispiel: Du befindest dich auf einer Profilseite und klickst auf die Schaltfläche »Verfassen« {{edit}} und änderst anschließend die Sichtbarkeit. \n \nBeachte dass Nachrichten im Fediverse nicht Ende-zu-Ende verschlüsselt sind. Versende keine heiklen Informationen.</string>
     <string name="app_theme_system_black">Systemdesign verwenden (Schwarz)</string>
     <string name="error_media_playback">Wiedergabe fehlgeschlagen: %1$s</string>
     <string name="dialog_delete_filter_positive_action">Entfernen</string>
@@ -691,11 +657,11 @@
     <string name="pref_title_show_self_boosts">Eigene geteilte Beiträge anzeigen</string>
     <string name="pref_title_show_self_boosts_description">Die Person teilt ihre eigenen Beiträge</string>
     <string name="pref_title_per_timeline_preferences">Einstellungen pro Timeline</string>
-    <string name="reply_sending">Wird gesendet …</string>
+    <string name="reply_sending">Wird gesendet …</string>
     <string name="reply_sending_long">Deine Antwort wird gesendet.</string>
     <string name="action_translate">Übersetzen</string>
     <string name="action_show_original">Ursprünglichen Beitrag anzeigen</string>
-    <string name="label_translating">Wird übersetzt …</string>
+    <string name="label_translating">Wird übersetzt …</string>
     <string name="label_translated">Aus %1$s mittels %2$s übersetzt</string>
     <string name="ui_error_translate">Fehler beim Übersetzen: %1$s</string>
     <string name="pref_title_show_notifications_filter">Benachrichtigungsfilter anzeigen</string>
@@ -714,7 +680,7 @@
     <string name="post_privacy_direct">Direkt</string>
     <string name="label_expires_after">Gültig bis</string>
     <string name="notification_policies_title">Benachrichtigungsrichtlinien</string>
-    <string name="notification_policies_filter_out">Benachrichtigungen verwalten von …</string>
+    <string name="notification_policies_filter_out">Benachrichtigungen verwalten von …</string>
     <string name="notification_policies_filter_dont_follow_title">Profilen, denen ich nicht folge</string>
     <string name="notification_policies_filter_dont_follow_description">Bis du sie manuell genehmigst</string>
     <string name="notification_policies_filter_not_following_title">Profilen, die mir nicht folgen</string>
