@@ -9,7 +9,7 @@
     <string name="action_edit_profile">Ẓreg amaɣnu</string>
     <string name="action_search">Nadi</string>
     <string name="about_title_activity">Ɣef</string>
-    <string name="action_lists">Tabdart</string>
+    <string name="action_lists">Tabdarin</string>
     <string name="title_lists">Tabdarin</string>
     <string name="error_compose_character_limit">Tasuffeɣt ɣezzifet aṭas!</string>
     <string name="title_home">Agejdan</string>
@@ -215,8 +215,7 @@
     <string name="post_privacy_followers_only">I yimeḍfaṛen kan</string>
     <string name="pref_post_text_size">Teɣzi n weḍṛis</string>
     <string name="about_powered_by_tusky">Yettwamdemmar s Tusky</string>
-    <string name="about_project_site">Asmel Web n usenfaṛ:
-\nhttps://tusky.app</string>
+    <string name="about_project_site">Asmel Web n usenfaṛ: https://tusky.app</string>
     <string name="abbreviated_hours_ago">%1$dsr</string>
     <string name="abbreviated_minutes_ago">%1$dtsd</string>
     <string name="abbreviated_seconds_ago">%1$dtsn</string>
@@ -238,12 +237,12 @@
     <string name="error_sender_account_gone">Tuccḍa deg tuzna n tsuffeɣt.</string>
     <string name="title_public_local">Adigan</string>
     <string name="title_licenses">Turagin</string>
-    <string name="post_boosted_format">Yebḍa-t %1$s</string>
-    <string name="notification_reblog_format">%1$s yebḍa tasuffeɣt-ik·im</string>
+    <string name="post_boosted_format">Yezzuzer-it %1$s</string>
+    <string name="notification_reblog_format">%1$s yezzuzer tasuffeɣt-ik·im</string>
     <string name="notification_favourite_format">%1$s yerna izen-ik·im ɣer ismenyafen-is</string>
     <string name="action_quick_reply">Tiririt taruradt</string>
     <string name="action_reblog">Zuzer</string>
-    <string name="action_unreblog">Kkes beṭṭu</string>
+    <string name="action_unreblog">Kkes azuzer</string>
     <string name="action_hide_reblogs">Ffer izuzar</string>
     <string name="action_show_reblogs">Sken-d izuzar</string>
     <string name="action_unmute">Ur sgugum ara</string>
@@ -276,7 +275,7 @@
     <string name="button_done">Immed</string>
     <string name="label_image">Tugna</string>
     <plurals name="reblogs">
-        <item quantity="one">%1$s n uzuzar</item>
+        <item quantity="one">%1$s n uzuzer</item>
         <item quantity="other">%1$s n yizurar</item>
     </plurals>
     <string name="action_translate">Suqel</string>
@@ -287,7 +286,7 @@
     <string name="dialog_block_warning">Sewḥel @%1$s?</string>
     <string name="duration_14_days">14 n wussan</string>
     <string name="description_post_media_no_description_placeholder">Ur yesɛi ara aglam</string>
-    <string name="action_post_failed_do_nothing">Zgel</string>
+    <string name="action_post_failed_do_nothing">Anef-as</string>
     <string name="duration_30_days">30 n wussan</string>
     <string name="duration_60_days">60 n wussan</string>
     <string name="duration_180_days">180 n wussan</string>
@@ -355,9 +354,9 @@
     <string name="action_add">Rnu</string>
     <string name="notification_policy_accept">Qbel</string>
     <string name="notification_policy_filter">Sizdeg</string>
-    <string name="notification_policy_ignore">Zgel</string>
+    <string name="notification_policy_ignore">Anef-as</string>
     <string name="action_accept_notification_request">Qbel</string>
-    <string name="action_dismiss_notification_request">Zgel</string>
+    <string name="action_dismiss_notification_request">Zgel-it</string>
     <string name="notification_info_reply">Tiririt</string>
     <string name="notification_info_mention">Abdar</string>
     <string name="title_public_federated">S lmendad</string>
@@ -456,6 +455,34 @@
     <string name="notification_sign_up_format">%1$s yesnulfa-d amiḍan</string>
     <string name="action_browser_login">Qqen s yimining Web</string>
     <string name="load_newest_notifications">Sali-d ilɣa imaynuten</string>
-    <string name="about_account_info">\@%1$s@%2$s
-\nLqem: %3$s</string>
+    <string name="about_account_info">\@%1$s@%2$s \nLqem: %3$s</string>
+    <string name="pref_reading_order_newest_first">Imaynuten d imezwura</string>
+    <string name="confirmation_hashtag_unfollowed">#%1$s ur yettwaḍfaṛ ara</string>
+    <string name="dialog_follow_hashtag_title">Ḍfeṛ ahacṭag</string>
+    <string name="hint_filter_title">Amsizdeg-iw</string>
+    <string name="post_text_size_smallest">Amecṭuḥ</string>
+    <string name="action_continue_edit">Kemmel asnifel</string>
+    <string name="mute_notifications_switch">Sgugem ilɣa</string>
+    <string name="action_discard">Anef-asen i yisenfal</string>
+    <string name="pref_reading_order_oldest_first">Iqburen d imezwura</string>
+    <string name="status_filter_placeholder_label_format">Yettwasizdeg: %1$s</string>
+    <string name="action_post_failed">Yeṛṛeẓ uɛebbi</string>
+    <string name="total_usage">Aseqdec s umata</string>
+    <string name="total_accounts">Imiḍan s umata</string>
+    <string name="ui_error_unknown">taɣẓint tarussint</string>
+    <string name="pref_title_http_proxy_port">Tawwurt n upṛuksi HTTP</string>
+    <string name="dialog_delete_conversation_warning">Kkes adiwenni-a?</string>
+    <string name="pref_title_confirm_reblogs">Suter asentem send ad tebḍuḍ</string>
+    <string name="reblog_privacy_public_description">Medden akk zemren ad walin azuzer-ik·im</string>
+    <string name="reblog_confirm">Zuzer tasuffeɣt-a?</string>
+    <string name="filter_keyword_display_format">%1$s (awal ummid)</string>
+    <string name="filter_description_format">%1$s: %2$s</string>
+    <string name="action_view_filter">Wali amsizdeg</string>
+    <string name="confirmation_hashtag_copied">\'#%1$s\' yettwanɣel</string>
+    <string name="post_sensitive_media_directions">Sit i uskan</string>
+    <string name="list_reply_policy_none">Ula yiwen</string>
+    <string name="dialog_delete_filter_text">Kkes amsizdeg \'%1$s\'?</string>
+    <string name="mute_domain_warning_dialog_ok">Ffer akk taɣult-a</string>
+    <string name="select_list_manage">Sefrek tibdarin</string>
+    <string name="compose_delete_draft">Kkes arewway?</string>
 </resources>
