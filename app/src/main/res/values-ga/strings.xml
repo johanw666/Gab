@@ -249,17 +249,9 @@
     <string name="action_mute_conversation">Comhrá tost</string>
     <string name="action_hashtags">Clibeanna hash</string>
     <string name="title_hashtags_dialog">Hashtags</string>
-    <string name="dialog_whats_an_instance">Is féidir an seoladh nó fearann a ghabhann le hásc ar bith a chur isteach anseo, mar shampla mastodon.social, icosahedron.website, social.tchncs.de, agus <a href="https://instances.social">níos mó!</a> \u0020
-\n \u0020
-\nMuna bhfuil cuntas agat fós, is féidir leat ainm an áisc ar mhaith leat a bheith páirteach ann a chur isteach, agus cuntas a chruthú ann. \u0020
-\n \u0020
-\nIs éard atá i gceist le hásc na láthair amháin ina ndéantar do chuntas a óstáil, ach is féidir leat cumarsáid a dhéanamh go héasca le daoine eile agus iad a leanúint ar áisc eile mar a bheadh sibh ar an suíomh céanna. \u0020
-\n \u0020
-\nIs féidir tuilleadh faisnéise a fháil ag <a href="https://joinmastodon.org"> joinmastodon.org </a>. </string>
-    <string name="about_project_site">Suíomh Gréasáin an tionscadail:
-\n https://tusky.app</string>
-    <string name="about_bug_feature_request_site">Tuarascálacha ar fhabhtanna &amp; iarratais ar ghnéithe:
-\n https://github.com/tuskyapp/Tusky/issues</string>
+    <string name="dialog_whats_an_instance">Is féidir an seoladh nó fearann a ghabhann le hásc ar bith a chur isteach anseo, mar shampla mastodon.social, icosahedron.website, social.tchncs.de, agus <a href="https://instances.social">níos mó!</a> \u0020 \n \u0020 \nMuna bhfuil cuntas agat fós, is féidir leat ainm an áisc ar mhaith leat a bheith páirteach ann a chur isteach, agus cuntas a chruthú ann. \u0020 \n \u0020 \nIs éard atá i gceist le hásc na láthair amháin ina ndéantar do chuntas a óstáil, ach is féidir leat cumarsáid a dhéanamh go héasca le daoine eile agus iad a leanúint ar áisc eile mar a bheadh sibh ar an suíomh céanna. \u0020 \n \u0020 \nIs féidir tuilleadh faisnéise a fháil ag <a href="https://joinmastodon.org"> joinmastodon.org </a>.</string>
+    <string name="about_project_site">Suíomh Gréasáin an tionscadail: \n https://tusky.app</string>
+    <string name="about_bug_feature_request_site">Tuarascálacha ar fhabhtanna &amp; iarratais ar ghnéithe: \n https://github.com/tuskyapp/Tusky/issues</string>
     <string name="post_media_video">Físeán</string>
     <string name="state_follow_requested">Lean iarrtha</string>
     <string name="follows_you">Do do leanúint</string>
@@ -312,8 +304,7 @@
         <item quantity="two"/>
         <item quantity="few"/>
         <item quantity="many"/>
-        <item quantity="other">Déan cur síos ar dhaoine lagamhairc
-\n(teorainn carachtar %1$d)</item>
+        <item quantity="other">Déan cur síos ar dhaoine lagamhairc \n(teorainn carachtar %1$d)</item>
     </plurals>
     <string name="action_set_caption">Socraigh fotheideal</string>
     <string name="action_remove">Bain</string>
@@ -385,7 +376,7 @@
     <string name="filter_apply">Cuir iarratas isteach</string>
     <string name="compose_shortcut_short_label">Cum</string>
     <string name="compose_preview_image_description">Gníomhartha maidir le híomhá %1$s</string>
-    <string name="poll_info_format"> <!-- 15 vóta • 1 uair fágtha --> %1$s •%2$s</string>
+    <string name="poll_info_format"><!-- 15 vóta • 1 uair fágtha --> %1$s •%2$s</string>
     <plurals name="poll_info_votes">
         <item quantity="one">%1$s vóta</item>
         <item quantity="two">%1$s vóta</item>
@@ -478,13 +469,7 @@
     <string name="conversation_1_recipients">%1$s</string>
     <string name="description_post_reblogged">Reblogged</string>
     <string name="hashtags">Hashtags</string>
-    <string name="wellbeing_mode_notice">Folófar roinnt eolais ar féidir leis cuir isteach ar do mheabhairshláinte. Tá an méid seo a leanas san áireamh:
-\n
-\n - fógraí Toghanna/Athchraolta/Leanúna
-\n - líon Toghanna/Athchraolta ar postálacha
-\n - staitisticí Leantóirí/Postálacha ar phróifílí
-\n
-\n Ní chuirfear isteach ar brúfhógraí, ach is féidir leat do chuid sainroghanna phearsanra d\'fhógraí a athbhreithniú de láimh.</string>
+    <string name="wellbeing_mode_notice">Folófar roinnt eolais ar féidir leis cuir isteach ar do mheabhairshláinte. Tá an méid seo a leanas san áireamh: \n \n - fógraí Toghanna/Athchraolta/Leanúna \n - líon Toghanna/Athchraolta ar postálacha \n - staitisticí Leantóirí/Postálacha ar phróifílí \n \n Ní chuirfear isteach ar brúfhógraí, ach is féidir leat do chuid sainroghanna phearsanra d\'fhógraí a athbhreithniú de láimh.</string>
     <string name="error_loading_account_details">Theip ar sonraí an chuntais a lódáil</string>
     <string name="instance_rule_title">Rialacha %1$s</string>
     <string name="notification_subscription_name">Postálacha nua</string>
