@@ -64,13 +64,7 @@
     <string name="dialog_download_image">Tải về</string>
     <string name="dialog_message_uploading_media">Đang tải…</string>
     <string name="dialog_title_finishing_media_upload">Đã tải xong tập tin</string>
-    <string name="dialog_whats_an_instance">Bạn phải nhập một tên miền. Ví dụ mastodon.social, icosahedron.website, social.tchncs.de và <a href="https://instances.social">vô số khác!</a> 
-\n 
-\nNếu chưa có tài khoản, bạn phải tạo tài khoản ở đó trước. 
-\n 
-\nMáy chủ, nói cách khác là một cộng đồng nơi mà bạn đăng ký tài khoản trên đó, nhưng bạn vẫn có thể dễ dàng giao tiếp và theo dõi mọi người trên các máy chủ khác. 
-\n 
-\nTham khảo <a href="https://joinmastodon.org">joinmastodon.org</a> \u0020</string>
+    <string name="dialog_whats_an_instance">Bạn phải nhập một tên miền. Ví dụ mastodon.social, icosahedron.website, social.tchncs.de và <a href="https://instances.social">vô số khác!</a> \u0020 \n \u0020 \nNếu chưa có tài khoản, bạn phải tạo tài khoản ở đó trước. \u0020 \n \u0020 \nMáy chủ, nói cách khác là một cộng đồng nơi mà bạn đăng ký tài khoản trên đó, nhưng bạn vẫn có thể dễ dàng giao tiếp và theo dõi mọi người trên các máy chủ khác. \u0020 \n \u0020 \nTham khảo <a href="https://joinmastodon.org">joinmastodon.org</a> \u0020</string>
     <string name="login_connection">Đang kết nối…</string>
     <string name="label_header">Ảnh bìa</string>
     <string name="label_avatar">Ảnh đại diện</string>
@@ -249,8 +243,8 @@
     <string name="pref_main_nav_position">Vị trí menu</string>
     <string name="pref_failed_to_sync">Không thể lưu thiết lập</string>
     <string name="pref_publishing">Mặc định khi đăng</string>
-    <string name="pref_default_media_sensitivity">Media nhạy cảm (đ.bộ máy chủ)</string>
-    <string name="pref_default_post_privacy">Kiểu tút (đ.bộ máy chủ)</string>
+    <string name="pref_default_media_sensitivity">Media nhạy cảm (mọi nơi)</string>
+    <string name="pref_default_post_privacy">Kiểu tút (mọi nơi)</string>
     <string name="pref_title_http_proxy_server">Máy chủ proxy</string>
     <string name="pref_title_http_proxy_port">Cổng</string>
     <string name="pref_title_http_proxy_enable">Bật proxy</string>
@@ -259,8 +253,7 @@
     <string name="notification_boost_description">Thông báo khi tút của bạn được đăng lại</string>
     <string name="notification_boost_name">Đăng lại</string>
     <string name="notification_follow_request_description">Thông báo về lượt yêu cầu theo dõi</string>
-    <string name="about_bug_feature_request_site">Báo lỗi và đề xuất tính năng
-\nhttps://github.com/tuskyapp/Tusky/issues</string>
+    <string name="about_bug_feature_request_site">Báo lỗi và đề xuất tính năng \nhttps://codeberg.org/tusky/Tusky/issues</string>
     <string name="about_project_site">Website dự án: https://tusky.app</string>
     <string name="about_tusky_license">Tusky là phần mềm mã nguồn mở, được phân phối với giấy phép GNU General Public License Version 3. Tham khảo thêm tại: https://www.gnu.org/licenses/gpl-3.0.en.html</string>
     <string name="about_powered_by_tusky">Powered by Tusky</string>
@@ -414,13 +407,12 @@
     <string name="emoji_style">Emoji</string>
     <string name="action_compose_shortcut">Soạn</string>
     <string name="compose_save_draft">Lưu nháp?</string>
-    <string name="lock_account_label_description">Tự bạn sẽ phê duyệt người theo dõi</string>
+    <string name="lock_account_label_description">Bạn sẽ phê duyệt từng người theo dõi</string>
     <string name="lock_account_label">Tài khoản riêng tư</string>
     <string name="action_remove">Hủy bỏ</string>
     <string name="action_set_caption">Mô tả</string>
     <plurals name="hint_describe_for_visually_impaired">
-        <item quantity="other">Mô tả dành cho người khiếm thị
-\n(Tối đa %1$d ký tự)</item>
+        <item quantity="other">Mô tả dành cho người khiếm thị \n(Tối đa %1$d ký tự)</item>
     </plurals>
     <string name="compose_active_account_description">Đăng với tư cách %1$s</string>
     <string name="action_add_to_list">Thêm người này vào danh sách</string>
@@ -446,13 +438,7 @@
     <string name="wellbeing_hide_stats_posts">Ẩn số liệu trên tút</string>
     <string name="limit_notifications">Giảm bớt thông báo</string>
     <string name="review_notifications">Chọn loại thông báo</string>
-    <string name="wellbeing_mode_notice">Các thông tin ảnh hưởng tới tâm lý hành vi của bạn sẽ bị ẩn. Bao gồm:
-\n
-\n- Thông báo Thích/Đăng lại/Theo dõi
-\n- Số lượt Thích/Đăng lại tút
-\n- Số Người theo dõi/Tút trên trang hồ sơ
-\n
-\nThông báo đẩy sẽ không ảnh hưởng, bạn có thể tự thiết lập trong phần cài đặt điện thoại của bạn.</string>
+    <string name="wellbeing_mode_notice">Các thông tin ảnh hưởng tới tâm lý hành vi của bạn sẽ bị ẩn. Bao gồm: \n \n- Thông báo Thích/Đăng lại/Theo dõi \n- Số lượt Thích/Đăng lại tút \n- Số Người theo dõi/Tút trên trang hồ sơ \n \nThông báo đẩy sẽ không ảnh hưởng, bạn có thể tự thiết lập trong phần cài đặt điện thoại của bạn.</string>
     <string name="pref_title_wellbeing_mode">Chống nghiện</string>
     <string name="notification_subscription_description">Thông báo khi người bạn theo dõi đăng tút mới</string>
     <string name="notification_subscription_name">Tút mới</string>
@@ -538,7 +524,7 @@
     <string name="title_followed_hashtags">Những hashtag theo dõi</string>
     <string name="post_edited">Sửa %1$s</string>
     <string name="description_post_edited">Đã sửa</string>
-    <string name="pref_default_post_language">Ngôn ngữ đăng (đ.bộ máy chủ)</string>
+    <string name="pref_default_post_language">Ngôn ngữ đăng (mọi nơi)</string>
     <string name="language_display_name_format">%1$s (%2$s)</string>
     <string name="error_muting_hashtag_format">Lỗi khi ẩn #%1$s</string>
     <string name="error_unmuting_hashtag_format">Lỗi khi bỏ ẩn #%1$s</string>
@@ -570,9 +556,7 @@
     <string name="description_login">Đăng nhập ổn định. Dữ liệu sẽ không bị lộ.</string>
     <string name="action_post_failed">Tải lên thất bại</string>
     <plurals name="action_post_failed_detail">
-        <item quantity="other">Tút của bạn không tải lên được và đã được lưu nháp.
-\n
-\nKhông thể kết nối tới máy chủ hoặc nó đã từ chối tút.</item>
+        <item quantity="other">Tút của bạn không tải lên được và đã được lưu nháp. \n \nKhông thể kết nối tới máy chủ hoặc nó đã từ chối tút.</item>
     </plurals>
     <string name="action_post_failed_show_drafts">Xem bản nháp</string>
     <string name="action_post_failed_do_nothing">Bỏ qua</string>
@@ -612,28 +596,21 @@
     <string name="filter_edit_keyword_title">Sửa từ</string>
     <string name="filter_description_format">%1$s: %2$s</string>
     <string name="pref_title_show_stat_inline">Hiện số tương tác tút</string>
-    <string name="help_empty_home">Đây là <b>bảng tin của bạn</b>. Nó sẽ hiện tút gần đây từ những người bạn theo dõi. 
-\n 
-\nĐể khám phá mọi người, bạn có thể xem qua ở các bảng tin khác. Ví dụ: {{group}} Bảng tin máy chủ của bạn. Hoặc bạn cũng có thể {{search}} tìm theo tên người dùng; ví dụ như Tusky.</string>
+    <string name="help_empty_home">Đây là <b>bảng tin của bạn</b>. Nó sẽ hiện tút gần đây từ những người bạn theo dõi. \u0020 \n \u0020 \nĐể khám phá mọi người, bạn có thể xem qua ở các bảng tin khác. Ví dụ: {{group}} Bảng tin máy chủ của bạn. Hoặc bạn cũng có thể {{search}} tìm theo tên người dùng; ví dụ như Tusky.</string>
     <string name="post_media_image">Hình ảnh</string>
     <string name="select_list_manage">Quản lý danh sách</string>
     <string name="load_newest_notifications">Tải những thông báo mới nhất</string>
     <string name="compose_delete_draft">Xóa bản nháp?</string>
-    <string name="error_missing_edits">Máy chủ của bạn biết tút đã được sửa, nhưng không có bản sao của lần sửa, nên nó không thể hiện. 
-\n 
-\nĐây là <a href="https://github.com/mastodon/mastodon/issues/25398">Lỗi Mastodon #25398</a>.</string>
+    <string name="error_missing_edits">Máy chủ của bạn biết tút đã được sửa, nhưng không có bản sao của lần sửa, nên nó không thể hiện. \u0020 \n \u0020 \nĐây là <a href="https://github.com/mastodon/mastodon/issues/25398">Lỗi Mastodon #25398</a>.</string>
     <string name="pref_ui_text_size">Cỡ chữ giao diện</string>
     <string name="notification_listenable_worker_name">Hoạt động chạy nền</string>
     <string name="notification_listenable_worker_description">Thông báo khi Tusky hoạt động ngầm</string>
     <string name="notification_notification_worker">Đang nạp thông báo…</string>
     <string name="notification_prune_cache">Bảo trì bộ nhớ đệm…</string>
     <string name="error_media_upload_sending_fmt">Không thể tải lên: %1$s</string>
-    <string name="about_device_info">%1$s %2$s
-\nAndroid %3$s
-\nSDK %4$d</string>
+    <string name="about_device_info">%1$s %2$s \nAndroid %3$s \nSDK %4$d</string>
     <string name="about_account_info_title">Tài khoản của bạn</string>
-    <string name="about_account_info">\@%1$s@%2$s
-\nPhiên bản máy chủ: %3$s</string>
+    <string name="about_account_info">\@%1$s@%2$s \nPhiên bản máy chủ: %3$s</string>
     <string name="about_copy">Sao chép phiên bản và thông tin thiết bị</string>
     <string name="about_copied">Đã sao chép phiên bản và thông tin thiết bị</string>
     <string name="about_device_info_title">Thiết bị của bạn</string>
@@ -642,18 +619,8 @@
     <string name="dialog_delete_filter_text">Xóa bộ lọc \'%1$s\'?</string>
     <string name="dialog_delete_filter_positive_action">Xóa</string>
     <string name="dialog_save_profile_changes_message">Bạn có chắc muốn lưu thay đổi?</string>
-    <string name="help_empty_conversations">Đây là <b>tin nhắn riêng</b>; đôi khi gọi là thảo luận hoặc nhắn riêng (DM). \u0020
-\n \u0020
-\nTin nhắn riêng được tạo bằng cách chọn tùy chọn kiểu tút {{public}} thành {{mail}} <i>Nhắn riêng</i> và có nhắc đến một người nào đó. \u0020
-\n \u0020
-\nVí dụ: bạn có thể xem hồ sơ của một người và nhấn vào nút {{edit}} và đổi kiểu tút. \u0020
-\n
-\nLưu ý rằng tin nhắn trên Fediverse không được mã hóa đầu cuối. Không chia sẻ bất kỳ thông tin nhạy cảm nào.</string>
-    <string name="help_empty_lists">Đây là <b>danh sách</b>. Bạn có thể tạo nhiều danh sách riêng tư và thêm người dùng vào đó. \u0020 
-\n \u0020 \u0020
-\nChỉ những người BẠN ĐANG THEO DÕI mới có thể thêm vào danh sách. \u0020 \u0020
-\n \u0020 \u0020
-\nDanh sách có thể được sử dụng như một tab trong thiết lập {{manage_accounts}} Cá nhân {{chevron_right}} Xếp tab.</string>
+    <string name="help_empty_conversations">Đây là <b>tin nhắn riêng</b>; đôi khi gọi là thảo luận hoặc nhắn riêng (DM). \u0020 \n \u0020 \nTin nhắn riêng được tạo bằng cách chọn tùy chọn kiểu tút {{public}} thành {{mail}} <i>Nhắn riêng</i> và có nhắc đến một người nào đó. \u0020 \n \u0020 \nVí dụ: bạn có thể xem hồ sơ của một người và nhấn vào nút {{edit}} và đổi kiểu tút. \u0020 \n \nLưu ý rằng tin nhắn trên Fediverse không được mã hóa đầu cuối. Không chia sẻ bất kỳ thông tin nhạy cảm nào.</string>
+    <string name="help_empty_lists">Đây là <b>danh sách</b>. Bạn có thể tạo nhiều danh sách riêng tư và thêm người dùng vào đó. \u0020 \u0020 \n \u0020 \u0020 \nChỉ những người BẠN ĐANG THEO DÕI mới có thể thêm vào danh sách. \u0020 \u0020 \n \u0020 \u0020 \nDanh sách có thể được sử dụng như một tab trong thiết lập {{manage_accounts}} Cá nhân {{chevron_right}} Xếp tab.</string>
     <string name="muting_hashtag_success_format">Đang ẩn hashtag #%1$s như một cảnh báo</string>
     <string name="unmuting_hashtag_success_format">Đang bỏ ẩn hashtag #%1$s</string>
     <string name="action_view_filter">Xem bộ lọc</string>
@@ -685,11 +652,11 @@
     <string name="pref_title_confirm_follows">Hỏi trước khi theo dõi</string>
     <string name="url_copied">Đã sao chép liên kết</string>
     <string name="confirmation_hashtag_copied">Đã sao chép \'#%1$s\'</string>
-    <string name="pref_default_reply_privacy">Kiểu trả lời (không đ.bộ máy chủ)</string>
+    <string name="pref_default_reply_privacy">Kiểu trả lời (chỉ Tusky)</string>
     <string name="error_deleting_filter">Xóa bộ lọc \'%1$s\' không được</string>
     <string name="error_saving_filter">Chưa thể lưu bộ lọc \'%1$s\'</string>
     <string name="action_follow_hashtag">Theo dõi một hashtag mới</string>
-    <string name="pref_default_reply_privacy_explanation">Tự động giống tút bạn đang trả lời</string>
+    <string name="pref_default_reply_privacy_explanation">Giống kiểu tút bạn đang trả lời</string>
     <string name="pref_match_default_post_privacy">Giống mặc định tút</string>
     <string name="post_privacy_direct">Nhắn riêng</string>
     <string name="label_expires_after">Hết hạn sau</string>
@@ -717,7 +684,7 @@
     <string name="action_accept_notification_request">Chấp nhận</string>
     <string name="action_dismiss_notification_request">Bỏ qua</string>
     <string name="notification_policies_not_supported">Tính năng này chỉ được hỗ trợ trên máy chủ Mastodon chạy phiên bản 4.3.0 trở lên.</string>
-    <string name="unknown_notification_filter_unsolicited_private_mentions_title">Lượt nhắn riêng không mong muốn</string>
+    <string name="unknown_notification_filter_unsolicited_private_mentions_title">Nhắn riêng không mong muốn</string>
     <string name="post_replied_format">Trả lời đến %1$s</string>
     <string name="post_replied_self">Tiếp tục chủ đề</string>
     <string name="post_replied">Trả lời</string>
@@ -777,4 +744,5 @@
     <string name="reblog_privacy_followers_only_description">Chỉ người theo dõi thấy lượt đăng lại</string>
     <string name="reblog_privacy_public_description">Ai cũng có thể thấy lượt đăng lại</string>
     <string name="reblog_privacy_unlisted_description">Ai cũng thấy, nhưng không hiện trên bảng tin</string>
+    <string name="confirm_dismiss_poll">Hủy bỏ cuộc bình chọn?</string>
 </resources>

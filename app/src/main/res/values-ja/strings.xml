@@ -127,13 +127,7 @@
     <string name="label_header">ヘッダー</string>
     <string name="link_whats_an_instance">インスタンスとは？</string>
     <string name="login_connection">接続中…</string>
-    <string name="dialog_whats_an_instance">mastodon.social, icosahedron.website, social.tchncs.deや<a href="https://instances.social">その他</a> のような、あらゆるインスタンスのアドレスやドメインを入力できます。 \u0020
-\n \u0020
-\nまだアカウントをお持ちでない場合は、参加したいインスタンスの名前を入力することで そのインスタンスにアカウントを作成できます。 \u0020
-\n \u0020
-\nインスタンスはあなたのアカウントが提供される単独の場所ですが、他のインスタンスのユーザーとあたかも同じ場所にいるように簡単にコミュニケーションをとったりフォローしたりできます。 \u0020
-\n \u0020
-\nさらに詳しい情報は<a href="https://joinmastodon.org">joinmastodon.org</a>でご覧いただけます。 </string>
+    <string name="dialog_whats_an_instance">mastodon.social, icosahedron.website, social.tchncs.deや<a href="https://instances.social">その他</a> のような、あらゆるインスタンスのアドレスやドメインを入力できます。 \u0020 \n \u0020 \nまだアカウントをお持ちでない場合は、参加したいインスタンスの名前を入力することで そのインスタンスにアカウントを作成できます。 \u0020 \n \u0020 \nインスタンスはあなたのアカウントが提供される単独の場所ですが、他のインスタンスのユーザーとあたかも同じ場所にいるように簡単にコミュニケーションをとったりフォローしたりできます。 \u0020 \n \u0020 \nさらに詳しい情報は<a href="https://joinmastodon.org">joinmastodon.org</a>でご覧いただけます。</string>
     <string name="dialog_title_finishing_media_upload">メディアをアップロードしています</string>
     <string name="dialog_message_uploading_media">アップロード中…</string>
     <string name="dialog_download_image">ダウンロード</string>
@@ -425,7 +419,7 @@
     <string name="pref_title_confirm_reblogs">ブーストする前に確認を表示</string>
     <string name="pick_hashtag_hint">ハッシュタグ (#をつけない)</string>
     <string name="select_list_title">リストを選択</string>
-    <string name="poll_info_format"> <!-- 15 votes • 1 hour left --> %1$s • %2$s</string>
+    <string name="poll_info_format"><!-- 15 votes • 1 hour left --> %1$s • %2$s</string>
     <string name="poll_info_time_absolute">%1$sに終了</string>
     <string name="hint_additional_info">追加コメント</string>
     <string name="report_remote_instance">%1$sに転送</string>
@@ -521,13 +515,7 @@
     <string name="draft_deleted">下書きを削除しました</string>
     <string name="drafts_post_reply_removed">下書きの返信先の投稿が削除されました</string>
     <string name="action_subscribe_account">購読する</string>
-    <string name="wellbeing_mode_notice">あなたのメンタルヘルスに影響を与える可能性のある情報は隠されます。例:
-\n
-\n - お気に入り/ブースト/フォローの通知
-\n - 投稿のお気に入り/ブーストの数
-\n - プロフィールのフォロワー/投稿の統計情報
-\n
-\n プッシュ通知には影響ありませんが、通知設定は手動で確認できます。</string>
+    <string name="wellbeing_mode_notice">あなたのメンタルヘルスに影響を与える可能性のある情報は隠されます。例: \n \n - お気に入り/ブースト/フォローの通知 \n - 投稿のお気に入り/ブーストの数 \n - プロフィールのフォロワー/投稿の統計情報 \n \n プッシュ通知には影響ありませんが、通知設定は手動で確認できます。</string>
     <string name="review_notifications">通知の確認</string>
     <string name="action_unsubscribe_account">購読の解除</string>
     <string name="report_category_violation">ルール違反</string>
@@ -572,9 +560,7 @@
     <string name="pref_title_http_proxy_port_message">ポートは %1$d から %2$d の間でなければなりません</string>
     <string name="action_post_failed">アップロードに失敗しました</string>
     <plurals name="action_post_failed_detail">
-        <item quantity="other">アップロードに失敗した投稿は下書きに保存されました。
-\n
-\nサーバーと接続できなかったか、投稿が拒否されました。</item>
+        <item quantity="other">アップロードに失敗した投稿は下書きに保存されました。 \n \nサーバーと接続できなかったか、投稿が拒否されました。</item>
     </plurals>
     <string name="action_post_failed_show_drafts">下書きを表示</string>
     <string name="action_post_failed_do_nothing">閉じる</string>
@@ -624,17 +610,12 @@
     <string name="load_newest_notifications">最新の通知を読み込む</string>
     <string name="compose_delete_draft">下書きを削除しますか？</string>
     <string name="error_media_upload_sending_fmt">アップロードに失敗しました: %1$s</string>
-    <string name="error_missing_edits">あなたのサーバーは、この投稿が変更されたことを把握していますが、編集履歴のコピーを備えていないので、表示できません。 
-\n 
-\nこれは<a href="https://github.com/mastodon/mastodon/issues/25398">Mastodonのissue #25398</a>です。</string>
+    <string name="error_missing_edits">あなたのサーバーは、この投稿が変更されたことを把握していますが、編集履歴のコピーを備えていないので、表示できません。 \u0020 \n \u0020 \nこれは<a href="https://github.com/mastodon/mastodon/issues/25398">Mastodonのissue #25398</a>です。</string>
     <string name="title_public_trending_statuses">トレンドの投稿</string>
-    <string name="about_device_info">%1$s %2$s
-\nAndroid バージョン: %3$s
-\nSDK バージョン: %4$d</string>
+    <string name="about_device_info">%1$s %2$s \nAndroid バージョン: %3$s \nSDK バージョン: %4$d</string>
     <string name="about_account_info_title">あなたのアカウント</string>
     <string name="about_device_info_title">あなたのデバイス</string>
-    <string name="about_account_info">\@%1$s@%2$s
-\nバージョン: %3$s</string>
+    <string name="about_account_info">\@%1$s@%2$s \nバージョン: %3$s</string>
     <string name="about_copy">バージョンとデバイス情報をコピー</string>
     <string name="about_copied">バージョンとデバイス情報をコピーしました</string>
     <string name="error_media_playback">再生に失敗しました: \t%1$s</string>

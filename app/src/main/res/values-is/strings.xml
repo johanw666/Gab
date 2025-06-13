@@ -155,13 +155,7 @@
     <string name="label_avatar">Auðkennismynd</string>
     <string name="label_header">Haus</string>
     <string name="login_connection">Tengist…</string>
-    <string name="dialog_whats_an_instance">Hægt er að setja hér inn vistfang eða lén á hvaða tilviki sem er, svo sem mastodon.social, icosahedron.website, social.tchncs.de og <a href="https://instances.social">fleiri!</a> 
-\n \u0020
-\nEf þú ert ekki ennþá með notandaaðgang, geturðu sett inn nafnið á því tilviki sem þú vilt tilheyra og búið til aðgang þar. \u0020
-\n \u0020
-\nTilvik er ákveðinn einn vefþjónn þar sem notandaaðgangurinn þinn er hýstur, en eftir sem áður er auðvelt fyrir þig að eiga í samskiptum við fólk og fylgjast með einstaklingum á öðrum tilvikum, rétt eins og þið væruð á sama vefsvæðinu. \u0020
-\n \u0020
-\nNánari upplýsingar má finna á <a href="https://joinmastodon.org">joinmastodon.org</a>.</string>
+    <string name="dialog_whats_an_instance">Hægt er að setja hér inn vistfang eða lén á hvaða tilviki sem er, svo sem mastodon.social, icosahedron.website, social.tchncs.de og <a href="https://instances.social">fleiri!</a> \u0020 \n \u0020 \nEf þú ert ekki ennþá með notandaaðgang, geturðu sett inn nafnið á því tilviki sem þú vilt tilheyra og búið til aðgang þar. \u0020 \n \u0020 \nTilvik er ákveðinn einn vefþjónn þar sem notandaaðgangurinn þinn er hýstur, en eftir sem áður er auðvelt fyrir þig að eiga í samskiptum við fólk og fylgjast með einstaklingum á öðrum tilvikum, rétt eins og þið væruð á sama vefsvæðinu. \u0020 \n \u0020 \nNánari upplýsingar má finna á <a href="https://joinmastodon.org">joinmastodon.org</a>.</string>
     <string name="dialog_title_finishing_media_upload">Klára innsendingu myndefnis</string>
     <string name="dialog_message_uploading_media">Sendi inn…</string>
     <string name="dialog_download_image">Sækja</string>
@@ -242,8 +236,7 @@
     <string name="about_powered_by_tusky">Keyrir á Tusky</string>
     <string name="about_tusky_license">Tusky er frjáls hugbúnaður með opinn grunnkóða. Hann er gefinn út með GNU General Public notkunarleyfi, útgáfu 3. Þú getur skoðað notkunarleyfið hér: https://www.gnu.org/licenses/gpl-3.0.en.html</string>
     <string name="about_project_site">Vefsvæði verkefnisins: https://tusky.app</string>
-    <string name="about_bug_feature_request_site">Villutilkynningar og beiðnir um nýja eiginleika:
-\nhttps://github.com/tuskyapp/Tusky/issues</string>
+    <string name="about_bug_feature_request_site">Villutilkynningar og beiðnir um nýja eiginleika: \nhttps://github.com/tuskyapp/Tusky/issues</string>
     <string name="about_tusky_account">Notandasnið Tusky</string>
     <string name="post_share_content">Deila efni úr færslu</string>
     <string name="post_share_link">Deila tengli á færslu</string>
@@ -451,13 +444,7 @@
     <string name="action_unmute_desc">Afþagga %1$s</string>
     <string name="notification_follow_request_format">%1$s bað um að fylgjast með þér</string>
     <string name="title_announcements">Tilkynningar</string>
-    <string name="wellbeing_mode_notice">Sumar upplýsingar sem gætu haft áhrif á andlega vellíðan þína verða faldar. Þetta hefur áhrif á:
-\n
-\n - Eftirlæti/Endurbirtingar/Tilkynningar um fylgjendabeiðnir
-\n - Eftirlæti/Talningu á endurbirtingum færslna
-\n - Fylgjendur/Tölfræði færslna í notendasniðum
-\n
-\n Þetta hefur ekki áhrif á ýti-tilkynningar, en þú getur yfirfarið handvirkt kjörstillingar þínar varðandi tilkynningar.</string>
+    <string name="wellbeing_mode_notice">Sumar upplýsingar sem gætu haft áhrif á andlega vellíðan þína verða faldar. Þetta hefur áhrif á: \n \n - Eftirlæti/Endurbirtingar/Tilkynningar um fylgjendabeiðnir \n - Eftirlæti/Talningu á endurbirtingum færslna \n - Fylgjendur/Tölfræði færslna í notendasniðum \n \n Þetta hefur ekki áhrif á ýti-tilkynningar, en þú getur yfirfarið handvirkt kjörstillingar þínar varðandi tilkynningar.</string>
     <string name="action_unsubscribe_account">Segja upp áskrift</string>
     <string name="action_subscribe_account">Gerast áskrifandi</string>
     <string name="pref_title_animate_custom_emojis">Hreyfa sérsniðin tjáningartákn</string>
@@ -581,12 +568,8 @@
     <string name="action_post_failed_show_drafts">Birta drög</string>
     <string name="action_post_failed_do_nothing">Afgreiða</string>
     <plurals name="action_post_failed_detail">
-        <item quantity="one">Ekki tókst að senda inn færsluna þína og hefur hún verið vistuð í Drög.
-\n
-\nAnnað hvort náðist ekki í netþjóninn, eða hann hafnaði færslunni.</item>
-        <item quantity="other">Ekki tókst að senda inn færslurnar þína og hafa þær verið vistaðar í Drög.
-\n
-\nAnnað hvort náðist ekki í netþjóninn, eða hann hafnaði færslunum.</item>
+        <item quantity="one">Ekki tókst að senda inn færsluna þína og hefur hún verið vistuð í Drög. \n \nAnnað hvort náðist ekki í netþjóninn, eða hann hafnaði færslunni.</item>
+        <item quantity="other">Ekki tókst að senda inn færslurnar þína og hafa þær verið vistaðar í Drög. \n \nAnnað hvort náðist ekki í netþjóninn, eða hann hafnaði færslunum.</item>
     </plurals>
     <string name="action_browser_login">Skrá inn í vafra</string>
     <string name="description_login">Virkar í flestum tilvikum. Engum gögnum er lekið til annarra forrita.</string>
@@ -627,9 +610,7 @@
     <string name="filter_description_format">%1$s: %2$s</string>
     <string name="post_media_image">Mynd</string>
     <string name="select_list_manage">Sýsla með lista</string>
-    <string name="help_empty_home">Þetta er <b>tímalínan þín</b>. Hún sýnir nýlegar færslur þeirra sem þú fylgist með. 
-\n \u0020
-\nTil að skoða hvað aðrir eru að gera getur þú til dæmis uppgötvað viðkomandi í einni af hinum tímalínunum. Til dæmis á staðværu tímalínu netþjónsins þíns {{group}}. Eða að þú leitar að þeim eftir nafni {{search}}; til dæmis geturðu leitað að Tusky til að finna Mastodon-aðganginn okkar.</string>
+    <string name="help_empty_home">Þetta er <b>tímalínan þín</b>. Hún sýnir nýlegar færslur þeirra sem þú fylgist með.\n\nTil að skoða hvað aðrir eru að gera getur þú til dæmis uppgötvað viðkomandi í einni af hinum tímalínunum. Til dæmis á staðværu tímalínu netþjónsins þíns {{group}}. Eða að þú leitar að þeim eftir nafni {{search}}; til dæmis geturðu leitað að Tusky til að finna Mastodon-aðganginn okkar.</string>
     <string name="pref_ui_text_size">Textastærð viðmóts</string>
     <string name="notification_listenable_worker_name">Bakgrunnsvirkni</string>
     <string name="notification_listenable_worker_description">Tilkynningar þegar Tusky er að vinna í bakgrunni</string>
@@ -637,16 +618,11 @@
     <string name="notification_prune_cache">Viðhaldsvinna biðminnis…</string>
     <string name="load_newest_notifications">Hlaða inn nýjustu tilkynningum</string>
     <string name="compose_delete_draft">Eyða drögum?</string>
-    <string name="error_missing_edits">Þjónninn þinn veit að þessari færslu hefur verið breytt, en er hins vegar ekki með afrit af breytingunum, þannig að ekki er hægt að sýna þér þær. 
-\n \u0020
-\nÞetta er <a href="https://github.com/mastodon/mastodon/issues/25398">Mastodon verkbeiðni #25398</a>.</string>
+    <string name="error_missing_edits">Þjónninn þinn veit að þessari færslu hefur verið breytt, en er hins vegar ekki með afrit af breytingunum, þannig að ekki er hægt að sýna þér þær.\n\nÞetta er <a href="https://github.com/mastodon/mastodon/issues/25398">Mastodon verkbeiðni #25398</a>.</string>
     <string name="about_device_info_title">Tækið þitt</string>
-    <string name="about_device_info">%1$s %2$s
-\nAndroid-útgáfa: %3$s
-\nSDK-útgáfa: %4$d</string>
+    <string name="about_device_info">%1$s %2$s \nAndroid-útgáfa: %3$s \nSDK-útgáfa: %4$d</string>
     <string name="about_account_info_title">Notandaaðgangurinn þinn</string>
-    <string name="about_account_info">\@%1$s@%2$s
-\nÚtgáfa: %3$s</string>
+    <string name="about_account_info">\@%1$s@%2$s \nÚtgáfa: %3$s</string>
     <string name="about_copy">Afrita upplýsingar um útgáfu og tæki</string>
     <string name="about_copied">Afritaði upplýsingar um útgáfu og tæki</string>
     <string name="list_exclusive_label">Fela frá tímalínu</string>
@@ -662,18 +638,8 @@
     <string name="error_blocking_domain">Mistókst að þagga niður í %1$s: %2$s</string>
     <string name="error_unblocking_domain">Mistókst að hætta að þagga niður í %1$s: %2$s</string>
     <string name="error_media_upload_sending_fmt">Innsendingin mistókst: %1$s</string>
-    <string name="help_empty_conversations">Hér eru <b>einkaskilaboðin</b> þín; stundum kölluð samtöl eða bein skilaboð (DM). 
-\n \u0020
-\nEinkaskilaboð eru gerð með því að stilla sýnileika {{public}} færslu {{mail}} á <i>Beint</i> og að minnast á einn eða fleiri notendur í textanum. \u0020
-\n \u0020
-\nÞú getur til dæmis farið á notandaaðgang einhvers og ýtt á \'Útbúa\'-hnappinn {{edit}} og breytt sýnileikanum.
-\n
-\nAthugaðu að skilaboð í Fediverse-almannarýminu eru ekki dulrituð enda-í-enda. Ekki deila neinum viðkvæmum upplýsingum.</string>
-    <string name="help_empty_lists">Þetta er <b>listasýnin</b> þín. Þú getur skilgreint fjölmarga einkalista og bætt notendaaðgöngum á þá. 
-\n \u0020
-\nATHUGAÐU: þú getur bara bætt notendaaðgöngum sem þú fylgist með á listana þína. \u0020
-\n \u0020
-\nÞessa lista má nota sem flipa í Kjörstillingar aðgangs{{manage_accounts}} {{chevron_right} flipunum.</string>
+    <string name="help_empty_conversations">Hér eru <b>einkaskilaboðin</b> þín; stundum kölluð samtöl eða bein skilaboð (DM). \u0020 \n \u0020 \nEinkaskilaboð eru gerð með því að stilla sýnileika {{public}} færslu {{mail}} á <i>Beint</i> og að minnast á einn eða fleiri notendur í textanum. \u0020 \n \u0020 \nÞú getur til dæmis farið á notandaaðgang einhvers og ýtt á \'Útbúa\'-hnappinn {{edit}} og breytt sýnileikanum. \n \nAthugaðu að skilaboð í Fediverse-almannarýminu eru ekki dulrituð enda-í-enda. Ekki deila neinum viðkvæmum upplýsingum.</string>
+    <string name="help_empty_lists">Þetta er <b>listasýnin</b> þín. Þú getur skilgreint fjölmarga einkalista og bætt notendaaðgöngum á þá. \u0020 \n \u0020 \nATHUGAÐU: þú getur bara bætt notendaaðgöngum sem þú fylgist með á listana þína. \u0020 \n \u0020 \nÞessa lista má nota sem flipa í Kjörstillingar aðgangs{{manage_accounts}} {{chevron_right} flipunum.</string>
     <string name="label_image">Mynd</string>
     <string name="app_theme_system_black">Nota hönnun kerfis (svart)</string>
     <string name="title_public_trending_statuses">Færslur í umræðunni</string>
@@ -792,4 +758,5 @@
     <string name="reblog_privacy_unlisted_description">Sama og opinbert, en verður ekki birt á opinberum tímalínum</string>
     <string name="reblog_confirm">Endurbirta þessa færslu?</string>
     <string name="favourite_confirm">Setja þessa færslu í eftirlæti?</string>
+    <string name="confirm_dismiss_poll">Henda breytingum á könnun?</string>
 </resources>

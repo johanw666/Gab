@@ -137,13 +137,7 @@
     <string name="confirmation_unmuted">Prekinjeno utišanje uporabnika</string>
     <string name="hint_domain">Katero vozlišče?</string>
     <string name="link_whats_an_instance">Kaj je instanca?</string>
-    <string name="dialog_whats_an_instance">Tu lahko vnesete naslov ali domeno katerega koli vozlišča, na primer mastodon.social, icosahedron.website, social.tchncs.de in <a href="https://instances.social"> več! </a> \u0020
-\n \u0020
-\nČe še nimate računa, lahko vnesete ime vozlišča, kateremu bi se radi pridružili, in tam ustvarite račun. \u0020
-\n \u0020
-\nVozlišče je ena lokacija, kjer je gostovanje vašega računa, vendar lahko preprosto komunicirate in sledite ljudem na drugih vozliščih, kot da bi bili na isti lokaciji. \u0020
-\n \u0020
-\nVeč informacij najdete na naslovu <a href="https://joinmastodon.org">joinmastodon.org</a>. </string>
+    <string name="dialog_whats_an_instance">Tu lahko vnesete naslov ali domeno katerega koli vozlišča, na primer mastodon.social, icosahedron.website, social.tchncs.de in <a href="https://instances.social"> več! </a> \u0020 \n \u0020 \nČe še nimate računa, lahko vnesete ime vozlišča, kateremu bi se radi pridružili, in tam ustvarite račun. \u0020 \n \u0020 \nVozlišče je ena lokacija, kjer je gostovanje vašega računa, vendar lahko preprosto komunicirate in sledite ljudem na drugih vozliščih, kot da bi bili na isti lokaciji. \u0020 \n \u0020 \nVeč informacij najdete na naslovu <a href="https://joinmastodon.org">joinmastodon.org</a>.</string>
     <string name="dialog_title_finishing_media_upload">Dokončanje pošiljanja medija</string>
     <string name="dialog_message_uploading_media">Pošiljanje…</string>
     <string name="dialog_download_image">Prejmi</string>
@@ -205,10 +199,8 @@
     <string name="about_title_activity">O aplikaciji</string>
     <string name="about_tusky_version">Tusky %1$s</string>
     <string name="about_tusky_license">Tusky je prosta in odprtokodna programska oprema. Licencirana je pod licenco GNU General Public License različice 3. Licenco si lahko ogledate tukaj: https://www.gnu.org/licenses/gpl-3.0.en.html</string>
-    <string name="about_project_site">Spletna stran projekta:
-\nhttps://tusky.app</string>
-    <string name="about_bug_feature_request_site">Poročila o napakah in želje za nove funkcije:
-\nhttps://github.com/tuskyapp/Tusky/issues</string>
+    <string name="about_project_site">Spletna stran projekta: \nhttps://tusky.app</string>
+    <string name="about_bug_feature_request_site">Poročila o napakah in želje za nove funkcije: \nhttps://github.com/tuskyapp/Tusky/issues</string>
     <string name="about_tusky_account">Profil Tusky</string>
     <string name="post_share_content">Deli vsebino tuta</string>
     <string name="post_share_link">Deli povezavo do tuta</string>
@@ -255,8 +247,7 @@
         <item quantity="one"/>
         <item quantity="two"/>
         <item quantity="few"/>
-        <item quantity="other">Opišite za slabovidne
-\n(omejitev znakov - %1$d)</item>
+        <item quantity="other">Opišite za slabovidne \n(omejitev znakov - %1$d)</item>
     </plurals>
     <string name="action_set_caption">Nastavi opis</string>
     <string name="action_remove">Odstrani</string>
@@ -331,7 +322,7 @@
     <string name="notification_clear_text">Ali ste prepričani, da želite trajno izbrisati vsa obvestila?</string>
     <string name="action_delete_and_redraft">Izbriši in preoblikuj</string>
     <string name="dialog_redraft_post_warning">Izbriši in preoblikuj tut?</string>
-    <string name="poll_info_format"> <!-- 15 votes • 1 hour left --> %1$s • %2$s</string>
+    <string name="poll_info_format"><!-- 15 votes • 1 hour left --> %1$s • %2$s</string>
     <plurals name="poll_info_votes">
         <item quantity="one">%1$s glas</item>
         <item quantity="two">%1$s glasova</item>

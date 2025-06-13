@@ -375,14 +375,12 @@
     <string name="compose_unsaved_changes">Tev ir nesaglabātas izmaiņas.</string>
     <string name="description_post_media">Multivide: %1$s</string>
     <string name="description_poll">Aptauja ar izvēlēm: %1$s, %2$s, %3$s, %4$s; %5$s</string>
-    <string name="poll_info_format"> <!-- 15 balsis • atlikusi 1 stunda --> %1$s • %2$s</string>
+    <string name="poll_info_format"><!-- 15 balsis • atlikusi 1 stunda --> %1$s • %2$s</string>
     <string name="notification_clear_text">Vai tiešām vēlies neatgriezeniski notīrīt visus paziņojumus?</string>
     <string name="poll_ended_created">Tevis izveidotā aptauja ir noslēgusies</string>
     <string name="compose_preview_image_description">Darības ar attēlu %1$s</string>
     <string name="tusky_compose_post_quicksetting_label">Rakstīt ziņu</string>
-    <string name="about_bug_feature_request_site">"Kļūdu ziņojumi un jaunas funkcionalitātes pieprasījumi:
-\n
-\n  https://github.com/tuskyapp/Tusky/issues"</string>
+    <string name="about_bug_feature_request_site">"Kļūdu ziņojumi un jaunas funkcionalitātes pieprasījumi:\n\n\n\n\n\n\n\n  https://github.com/tuskyapp/Tusky/issues"</string>
     <string name="action_mention">Pieminēt</string>
     <string name="pref_title_gradient_for_media">Rādīt krāsainus gradientus paslēptajai multividei</string>
     <string name="pref_title_show_media_preview">Lejupielādēt multivides priekšskatījumus</string>
@@ -540,29 +538,13 @@
     <string name="pref_title_alway_open_spoiler">Vienmēr izvērst ziņas, kas atzīmētas ar satura brīdinājumu</string>
     <plurals name="action_post_failed_detail">
         <item quantity="zero"/>
-        <item quantity="one">Neizdevās augšupielādēt tavu ierakstu un tas tika saglabāts melnrakstos.
-\n
-\nVai nu neizdevās sazināties ar serveri, vai arī tas noraidīja ierakstu.</item>
-        <item quantity="other">Neizdevās augšupielādēt tavus ierakstus un tie tika saglabāti melnrakstos.
-\n
-\nVai nu neizdevās sazināties ar serveri, vai arī tas noraidīja ierakstus.</item>
+        <item quantity="one">Neizdevās augšupielādēt tavu ierakstu un tas tika saglabāts melnrakstos. \n \nVai nu neizdevās sazināties ar serveri, vai arī tas noraidīja ierakstu.</item>
+        <item quantity="other">Neizdevās augšupielādēt tavus ierakstus un tie tika saglabāti melnrakstos. \n \nVai nu neizdevās sazināties ar serveri, vai arī tas noraidīja ierakstus.</item>
     </plurals>
     <string name="notification_favourite_description">Paziņojumi par tavu ierakstu pievienošanu izlasei</string>
-    <string name="wellbeing_mode_notice">Daļa informācijas, kas varētu ietekmēt tavu garīgo labsajūtu, tiks slēpta. Tas ietver:
-\n
-\n - Pievienošanas izlasei/pastiprināšanas/jaunu sekotāju paziņojumus
-\n - Izlasēm pievienoto/pastiprinājumu skaitu ierakstiem
-\n - Sekotāju/ierakstu skaitu profilos
-\n
-\n Pašpiegādātie paziņojumi netiks ietekmēti, bet paziņojumu preferences var pārskatīt manuāli.</string>
+    <string name="wellbeing_mode_notice">Daļa informācijas, kas varētu ietekmēt tavu garīgo labsajūtu, tiks slēpta. Tas ietver: \n \n - Pievienošanas izlasei/pastiprināšanas/jaunu sekotāju paziņojumus \n - Izlasēm pievienoto/pastiprinājumu skaitu ierakstiem \n - Sekotāju/ierakstu skaitu profilos \n \n Pašpiegādātie paziņojumi netiks ietekmēti, bet paziņojumu preferences var pārskatīt manuāli.</string>
     <string name="description_browser_login">Var atbalstīt papildu autentifikācijas metodes, bet ir nepieciešama atbalstīta pārlūkprogramma.</string>
-    <string name="dialog_whats_an_instance">Šeit var ievadīt jebkuras instances adresi vai domēnu, piemēram, mastodon.social, icosahedron.website, social.tchncs.de un <a href="https://instances.social">citus!</a> \u0020
-\n \u0020
-\nJa tev vēl nav konta, vari ievadīt tās instances nosaukumu, kurai vēlies pievienoties un izveidot kontu. \u0020
-\n \u0020
-\nInstance ir vieta, kur tiek mitināts tavs konts, taču tu vari viegli sazināties ar cilvēkiem citās instancēs un sekot tiem, it kā atrastos tajā pašā vietnē. \u0020
-\n \u0020
-\nVairāk informācijas var atrast <a href="https://joinmastodon.org">joinmastodon.org</a>. </string>
+    <string name="dialog_whats_an_instance">Šeit var ievadīt jebkuras instances adresi vai domēnu, piemēram, mastodon.social, icosahedron.website, social.tchncs.de un <a href="https://instances.social">citus!</a> \u0020 \n \u0020 \nJa tev vēl nav konta, vari ievadīt tās instances nosaukumu, kurai vēlies pievienoties un izveidot kontu. \u0020 \n \u0020 \nInstance ir vieta, kur tiek mitināts tavs konts, taču tu vari viegli sazināties ar cilvēkiem citās instancēs un sekot tiem, it kā atrastos tajā pašā vietnē. \u0020 \n \u0020 \nVairāk informācijas var atrast <a href="https://joinmastodon.org">joinmastodon.org</a>.</string>
     <string name="failed_fetch_posts">Neizdevās iegūt ierakstus</string>
     <string name="accessibility_talking_about_tag">%1$d cilvēki runā par tēmturi %2$s</string>
     <string name="total_usage">Kopējais lietojums</string>
@@ -595,12 +577,9 @@
     <string name="error_media_upload_sending_fmt">Augšupielāde neizdevās: %1$s</string>
     <string name="notification_unknown_name">Nezināms</string>
     <string name="about_device_info_title">Tava ierīce</string>
-    <string name="about_device_info">%1$s %2$s
-\nAndroid versija: %3$s
-\nSDK versija: %4$d</string>
+    <string name="about_device_info">%1$s %2$s \nAndroid versija: %3$s \nSDK versija: %4$d</string>
     <string name="about_account_info_title">Tavs konts</string>
-    <string name="about_account_info">\@%1$s@%2$s
-\nVersija: %3$s</string>
+    <string name="about_account_info">\@%1$s@%2$s \nVersija: %3$s</string>
     <string name="compose_delete_draft">Dzēst melnrakstu?</string>
     <string name="label_translating">Tulko…</string>
     <string name="action_show_original">Rādīt oriģinālu</string>

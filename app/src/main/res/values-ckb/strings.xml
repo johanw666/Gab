@@ -196,13 +196,7 @@
     <string name="dialog_download_image">داگرتن</string>
     <string name="dialog_message_uploading_media">بارکردن…</string>
     <string name="dialog_title_finishing_media_upload">تەواوکردنی بارکردنی میدیا</string>
-    <string name="dialog_whats_an_instance">ناونیشان یان دۆمەینی هەر نمونەیەک دەکرێت لێرە تێبنووسرێت، وەک <a href="https://instances.social">فرەتر!</a> \u0020
-\n \u0020
-\nئەگەر هێشتا ئەژمێرێکت نیە، دەتوانیت ناوی ئەو نمونەیە داخڵ بکەیت کە دەتەوێت بیبەستیت و ئەژمێرێک دروست بکەیت لەوێ. \u0020
-\n \u0020
-\nنموونەیەک تاکە شوێنە کە ئەژمێرەکەت میوانداری کراوە، بەڵام دەتوانیت بە ئاسانی پەیوەندی لەگەڵ بکەیت و دوای ئەو خەڵکانە بکەویت لە نمونەکانی تر وەک ئەوەی تۆ لە هەمان سایت دابیت. \u0020
-\n \u0020
-\nزانیاری زیاتر دەتوانرێت بدۆزرێتەوە لە <a href="https://joinmastodon.org">joinmastodon.org</a>. </string>
+    <string name="dialog_whats_an_instance">ناونیشان یان دۆمەینی هەر نمونەیەک دەکرێت لێرە تێبنووسرێت، وەک <a href="https://instances.social">فرەتر!</a> \u0020 \n \u0020 \nئەگەر هێشتا ئەژمێرێکت نیە، دەتوانیت ناوی ئەو نمونەیە داخڵ بکەیت کە دەتەوێت بیبەستیت و ئەژمێرێک دروست بکەیت لەوێ. \u0020 \n \u0020 \nنموونەیەک تاکە شوێنە کە ئەژمێرەکەت میوانداری کراوە، بەڵام دەتوانیت بە ئاسانی پەیوەندی لەگەڵ بکەیت و دوای ئەو خەڵکانە بکەویت لە نمونەکانی تر وەک ئەوەی تۆ لە هەمان سایت دابیت. \u0020 \n \u0020 \nزانیاری زیاتر دەتوانرێت بدۆزرێتەوە لە <a href="https://joinmastodon.org">joinmastodon.org</a>.</string>
     <string name="login_connection">گرێدان…</string>
     <string name="link_whats_an_instance">نموونەیەک چییە؟</string>
     <string name="label_header">سەرپەڕە</string>
@@ -227,13 +221,7 @@
     <string name="wellbeing_hide_stats_posts">شاردنەوەی زانیاری چەندێتی لە بابەتەکان</string>
     <string name="limit_notifications">سنووردارکردنی ئاگانامەکانی تایم لاین</string>
     <string name="review_notifications">پێداچوونەوەی ئاگانامەکان</string>
-    <string name="wellbeing_mode_notice">هەندێک زانیاری کە لەوانەیە کاریگەری لەسەر باشبوونی دەروونیت دروست بکات دەشاردرێنەوە. ئەمە پێکدێت لە:
-\n
-\n- ئاگانامەکانی پەسەند/بەهێزکردن/بەدوادا
-\n - پەسەندترین/بەرزکردنەوە لەسەر توت
-\n - بەدواداچوون/زانیاری بابەت لەسەر پرۆفایلەکان
-\n
-\nکارتێکردنی ئاگانامەکانی پاڵپێوەنان، بەڵام دەتوانیت بە پەسەندکردنە ئاگانامەکانت دا بخشێنیەوە بە دەستی.</string>
+    <string name="wellbeing_mode_notice">هەندێک زانیاری کە لەوانەیە کاریگەری لەسەر باشبوونی دەروونیت دروست بکات دەشاردرێنەوە. ئەمە پێکدێت لە: \n \n- ئاگانامەکانی پەسەند/بەهێزکردن/بەدوادا \n - پەسەندترین/بەرزکردنەوە لەسەر توت \n - بەدواداچوون/زانیاری بابەت لەسەر پرۆفایلەکان \n \nکارتێکردنی ئاگانامەکانی پاڵپێوەنان، بەڵام دەتوانیت بە پەسەندکردنە ئاگانامەکانت دا بخشێنیەوە بە دەستی.</string>
     <string name="account_note_saved">ڕزگارکرا</string>
     <string name="account_note_hint">تێبینیی تایبەتیت بۆ ئەم هەژمارە</string>
     <string name="pref_title_wellbeing_mode">Wellbeing</string>
@@ -289,7 +277,7 @@
         <item quantity="one">%1$s دەنگ</item>
         <item quantity="other">%1$s دەنگ</item>
     </plurals>
-    <string name="poll_info_format"> <!-- 15 دەنگ • 1 کاتژمێر ماوە --> %1$s • %2$s</string>
+    <string name="poll_info_format"><!-- 15 دەنگ • 1 کاتژمێر ماوە --> %1$s • %2$s</string>
     <string name="compose_preview_image_description">کارەکان بۆ وێنە %1$s</string>
     <string name="notification_clear_text">ئایا دڵنیایت لەوەی دەتەوێت بە هەمیشەیی هەموو ئاگانامەکانت بسڕیتەوە؟</string>
     <string name="compose_shortcut_short_label">دروستکردن</string>
@@ -371,8 +359,7 @@
     <string name="action_set_caption">دانانی سەردێڕ</string>
     <plurals name="hint_describe_for_visually_impaired">
         <item quantity="one"/>
-        <item quantity="other">وەسف بکە بۆ بینایی داڕماو
-\n(%1$d سنوری کاراکتەر)</item>
+        <item quantity="other">وەسف بکە بۆ بینایی داڕماو \n(%1$d سنوری کاراکتەر)</item>
     </plurals>
     <string name="compose_active_account_description">بڵاوکردنەوە بە هەژماری %1$s</string>
     <string name="action_remove_from_list">لابردنی ئەژمێر لە لیستەکە</string>
@@ -418,10 +405,8 @@
     <string name="post_share_link">هاوبەشکردنی لینک بۆ توت</string>
     <string name="post_share_content">هاوبەشکردنی ناوەڕۆکی دووت</string>
     <string name="about_tusky_account">پرۆفایلی تاسکی</string>
-    <string name="about_bug_feature_request_site">ڕاپۆرتەکانی هەڵەکان و داواکاریەکانی تایبەتمەندی:
-\nhttps://github.com/tuskyapp/Tusky/issues</string>
-    <string name="about_project_site">وێبسایتی پڕۆژە:
-\nhttps://tusky.app</string>
+    <string name="about_bug_feature_request_site">ڕاپۆرتەکانی هەڵەکان و داواکاریەکانی تایبەتمەندی: \nhttps://github.com/tuskyapp/Tusky/issues</string>
+    <string name="about_project_site">وێبسایتی پڕۆژە: \nhttps://tusky.app</string>
     <string name="about_tusky_license">توسکی سۆفتوێری ئازاد و سەرچاوەی کراوەیە مۆڵەتدراوە بە پێ نامەی گشتی GNU Public Version 3. دەتوانیت لێرە مۆڵەتەکە نیشان بدەی: https://www.gnu.org/licenses/gpl-3.0.en.html</string>
     <string name="about_powered_by_tusky">لەلایەن تاسکیەوە دەست کراوە بە</string>
     <string name="about_tusky_version">توسکی %1$s</string>

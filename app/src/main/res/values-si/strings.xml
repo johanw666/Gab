@@ -53,7 +53,7 @@
     <string name="filter_edit_title">පෙරහන සංස්කරණය</string>
     <string name="notification_summary_medium">%1$s, %2$s, සහ %3$s</string>
     <string name="caption_twemoji">මාස්ටඩන් හි සම්මත ඉමෝජි කට්ටලය</string>
-    <string name="poll_info_format"> <!-- 15 votes • 1 hour left --> %1$s • %2$s</string>
+    <string name="poll_info_format"><!-- 15 votes • 1 hour left --> %1$s • %2$s</string>
     <string name="action_retry">යළි උත්සාහය</string>
     <string name="lock_account_label">ගිණුම අගුළුලන්න</string>
     <string name="post_media_hidden_title">මාධ්‍ය සැඟවී ඇත</string>
@@ -163,8 +163,7 @@
     <string name="post_content_show_more">විහිදන්න</string>
     <string name="action_mute">නිහඬ කරන්න</string>
     <string name="about_tusky_version">ටුස්කි %1$s</string>
-    <string name="about_project_site">වියමන අඩවිය:
-\n https://tusky.app</string>
+    <string name="about_project_site">වියමන අඩවිය: \n https://tusky.app</string>
     <string name="action_accept">පිළිගන්න</string>
     <string name="abbreviated_in_hours">පැ. %1$d කින්</string>
     <string name="create_poll_title">මතවිමසුම</string>
