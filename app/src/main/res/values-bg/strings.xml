@@ -50,7 +50,7 @@
         <item quantity="one">%1$s глас</item>
         <item quantity="other">%1$s гласа</item>
     </plurals>
-    <string name="poll_info_format"> \u0020<!-- 15 votes • 1 hour left --> \u0020%1$s • %2$s</string>
+    <string name="poll_info_format"><!-- 15 votes • 1 hour left --> \u0020%1$s • %2$s</string>
     <string name="compose_preview_image_description">Действия за изображение %1$s</string>
     <string name="notification_clear_text">Сигурни ли сте, че искате да изчистите окончателно всичките си известия?</string>
     <string name="compose_shortcut_short_label">Композиране</string>
@@ -181,8 +181,7 @@
     <string name="post_share_link">Споделяне на връзка към публикация</string>
     <string name="post_share_content">Споделяне на съдържание на публикация</string>
     <string name="about_tusky_account">Профилът на Tusky</string>
-    <string name="about_bug_feature_request_site">Доклади за грешки и заявки за функции:
-\nhttps://github.com/tuskyapp/Tusky/issues</string>
+    <string name="about_bug_feature_request_site">Доклади за грешки и заявки за функции: \nhttps://github.com/tuskyapp/Tusky/issues</string>
     <string name="about_project_site">Уебсайт на проекта: https://tusky.app</string>
     <string name="about_tusky_license">Tusky е свободен софтуер с отворен код. Той е лицензиран под Общият публичен лиценз на GNU Версия 3. Можете да видите лиценза тук: https://www.gnu.org/licenses/gpl-3.0.en.html</string>
     <string name="about_powered_by_tusky">Осъществено от Tusky</string>
@@ -246,13 +245,7 @@
     <string name="dialog_download_image">Изтегляне</string>
     <string name="dialog_message_uploading_media">Качване…</string>
     <string name="dialog_title_finishing_media_upload">Завършване на мултимедийно качване</string>
-    <string name="dialog_whats_an_instance">Тук може да се въведе адресът или домейнът на която и да е инстанция, като mastodon.social, icosahedron.website, social.tchncs.de и <a href="https://instances.social">други!</a> \u0020
-\n \u0020
-\nАко все още нямате акаунт, можете да въведете името на инстанцията, към която искате да се присъедините, и да създадете акаунт там. \u0020
-\n \u0020
-\nИнстанцията е единично място, където се хоства акаунтът ви, но можете лесно да комуникирате и да следвате хора в други инстанции, сякаш сте на същия сайт. \u0020
-\n \u0020
-\nПовече информация можете да намерите на <a href="https://joinmastodon.org">joinmastodon.org</a>. </string>
+    <string name="dialog_whats_an_instance">Тук може да се въведе адресът или домейнът на която и да е инстанция, като mastodon.social, icosahedron.website, social.tchncs.de и <a href="https://instances.social">други!</a> \u0020 \n \u0020 \nАко все още нямате акаунт, можете да въведете името на инстанцията, към която искате да се присъедините, и да създадете акаунт там. \u0020 \n \u0020 \nИнстанцията е единично място, където се хоства акаунтът ви, но можете лесно да комуникирате и да следвате хора в други инстанции, сякаш сте на същия сайт. \u0020 \n \u0020 \nПовече информация можете да намерите на <a href="https://joinmastodon.org">joinmastodon.org</a>.</string>
     <string name="login_connection">Свързване…</string>
     <string name="link_whats_an_instance">Какво е инстанция?</string>
     <string name="label_header">Заглавна част</string>
@@ -422,13 +415,7 @@
     <string name="wellbeing_hide_stats_posts">Скриване на количествена статистика на публикации</string>
     <string name="limit_notifications">Ограничаване на известия от емисия</string>
     <string name="review_notifications">Преглед на известията</string>
-    <string name="wellbeing_mode_notice">Част от информацията, която може да повлияе на вашето психично състояние, ще бъде скрита. Това включва:
-\n
-\n - Известия за Любими/Споделяния/Последвани
-\n - Брой Любими/Споделяния на публикации
-\n - Статистика за Последователи/Публикации на профили
-\n
-\n Изскачащите известия няма да бъдат засегнати, но можете да прегледате предпочитанията си за известяване ръчно.</string>
+    <string name="wellbeing_mode_notice">Част от информацията, която може да повлияе на вашето психично състояние, ще бъде скрита. Това включва: \n \n - Известия за Любими/Споделяния/Последвани \n - Брой Любими/Споделяния на публикации \n - Статистика за Последователи/Публикации на профили \n \n Изскачащите известия няма да бъдат засегнати, но можете да прегледате предпочитанията си за известяване ръчно.</string>
     <string name="account_note_saved">Запазено!</string>
     <string name="account_note_hint">Вашата лична бележка за този акаунт</string>
     <string name="pref_title_wellbeing_mode">Благосъстояние</string>
