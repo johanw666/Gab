@@ -125,13 +125,7 @@
     <string name="label_header">Capa</string>
     <string name="link_whats_an_instance">O que é uma instância?</string>
     <string name="login_connection">Conectando…</string>
-    <string name="dialog_whats_an_instance">O domínio de qualquer instância pode ser inserido aqui, como mastodon.social, masto.donte.com.br, colorid.es ou qualquer <a href="https://instances.social">outro!</a> \u0020
-\n \u0020
-\n Se não tem uma conta ainda, insira o nome da instância que gostaria de participar e crie uma conta lá. \u0020
-\n \u0020
-\n Uma instância é um lugar onde sua conta é hospedada, mas é fácil se comunicar e seguir pessoas de outras instâncias como se todos estivessem no mesmo site. \u0020
-\n \u0020
-\n Mais informações podem ser encontradas em <a href="https://joinmastodon.org">joinmastodon.org</a>. </string>
+    <string name="dialog_whats_an_instance">O domínio de qualquer instância pode ser inserido aqui, como mastodon.social, masto.donte.com.br, colorid.es ou qualquer <a href="https://instances.social">outro!</a> \u0020 \n \u0020 \n Se não tem uma conta ainda, insira o nome da instância que gostaria de participar e crie uma conta lá. \u0020 \n \u0020 \n Uma instância é um lugar onde sua conta é hospedada, mas é fácil se comunicar e seguir pessoas de outras instâncias como se todos estivessem no mesmo site. \u0020 \n \u0020 \n Mais informações podem ser encontradas em <a href="https://joinmastodon.org">joinmastodon.org</a>.</string>
     <string name="dialog_title_finishing_media_upload">Envio de mídia terminando</string>
     <string name="dialog_message_uploading_media">Enviando…</string>
     <string name="dialog_download_image">Baixar</string>
@@ -209,8 +203,7 @@
          * the url can be changed to link to the localized version of the license.
     -->
     <string name="about_project_site">Site do projeto: https://tusky.app</string>
-    <string name="about_bug_feature_request_site">Reporte bugs e solicite funcionalidades:
-\nhttps://github.com/tuskyapp/Tusky/issues</string>
+    <string name="about_bug_feature_request_site">Reporte bugs e solicite funcionalidades: \nhttps://github.com/tuskyapp/Tusky/issues</string>
     <string name="about_tusky_account">Perfil do Tusky</string>
     <string name="post_share_content">Compartilhar conteúdo do toot</string>
     <string name="post_share_link">Compartilhar link do toot</string>
@@ -355,7 +348,7 @@
     <string name="pref_title_bot_overlay">Mostrar indicador de robôs</string>
     <string name="notification_clear_text">Tem certeza de que deseja limpar permanentemente todas as suas notificações?</string>
     <string name="compose_preview_image_description">Opções para imagem %1$s</string>
-    <string name="poll_info_format"> <!-- 15 votos • 1 hora restante --> %1$s • %2$s</string>
+    <string name="poll_info_format"><!-- 15 votos • 1 hora restante --> %1$s • %2$s</string>
     <plurals name="poll_info_votes">
         <item quantity="one">%1$s voto</item>
         <item quantity="many">%1$s votos</item>
@@ -478,13 +471,7 @@
     <string name="wellbeing_hide_stats_posts">Ocultar status dos toots</string>
     <string name="limit_notifications">Limitar notificações da linha do tempo</string>
     <string name="review_notifications">Revisar notificações</string>
-    <string name="wellbeing_mode_notice">Algumas informações que podem afetar seu bem-estar serão ocultadas. Isso inclui:
-\n
-\n- Notificações de favoritos, boosts e seguidores
-\n- Número de favoritos e boosts nos toots
-\n- Status de toots e seguidores nos perfis
-\n
-\nNotificações push não serão afetadas, mas é possível revisar sua preferência manualmente.</string>
+    <string name="wellbeing_mode_notice">Algumas informações que podem afetar seu bem-estar serão ocultadas. Isso inclui: \n \n- Notificações de favoritos, boosts e seguidores \n- Número de favoritos e boosts nos toots \n- Status de toots e seguidores nos perfis \n \nNotificações push não serão afetadas, mas é possível revisar sua preferência manualmente.</string>
     <string name="account_note_saved">Salvo!</string>
     <string name="account_note_hint">Nota pessoal sobre este perfil aqui</string>
     <string name="pref_title_wellbeing_mode">Bem-estar</string>
@@ -587,11 +574,8 @@
     <string name="notification_listenable_worker_description">Notificações quando o Tusky está trabalhando em segundo plano</string>
     <string name="notification_notification_worker">Buscando notificações…</string>
     <string name="about_device_info_title">Seu dispositivo</string>
-    <string name="about_device_info">%1$s %2$s
-\nVersão Android: %3$s
-\nVersão do SDK: %4$d</string>
-    <string name="about_account_info">\@%1$s@%2$s
-\nVersão: %3$s</string>
+    <string name="about_device_info">%1$s %2$s \nVersão Android: %3$s \nVersão do SDK: %4$d</string>
+    <string name="about_account_info">\@%1$s@%2$s \nVersão: %3$s</string>
     <string name="about_account_info_title">Sua conta</string>
     <string name="action_refresh">Atualizar</string>
     <string name="action_add">Adicionar</string>
