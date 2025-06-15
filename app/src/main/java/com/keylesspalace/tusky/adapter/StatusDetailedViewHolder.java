@@ -185,12 +185,13 @@ public class StatusDetailedViewHolder extends StatusBaseViewHolder<StatusViewDat
                 return null;
         }
 
-        final Drawable visibilityDrawable = AppCompatResources.getDrawable(
+        Drawable visibilityDrawable = AppCompatResources.getDrawable(
             this.metaInfo.getContext(), visibilityIcon
         );
         if (visibilityDrawable == null) {
             return null;
         }
+        visibilityDrawable = visibilityDrawable.mutate();
 
         final int size = (int) this.metaInfo.getTextSize();
         visibilityDrawable.setBounds(
