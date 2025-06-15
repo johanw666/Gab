@@ -72,16 +72,10 @@ class ReportNotificationViewHolder(
         )
 
         binding.notificationReporteeAvatar.setOnClickListener {
-            val position = bindingAdapterPosition
-            if (position != RecyclerView.NO_POSITION) {
-                accountActionListener.onViewAccount(report.targetAccount.id)
-            }
+            accountActionListener.onViewAccount(report.targetAccount.id)
         }
         binding.notificationReporterAvatar.setOnClickListener {
-            val position = bindingAdapterPosition
-            if (position != RecyclerView.NO_POSITION) {
-                accountActionListener.onViewAccount(reporter.id)
-            }
+            accountActionListener.onViewAccount(reporter.id)
         }
 
         itemView.setOnClickListener { listener.onViewReport(report.id) }

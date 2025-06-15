@@ -126,16 +126,10 @@ public class StatusDetailedViewHolder extends StatusBaseViewHolder<StatusViewDat
         favourites.setText(getFavsText(favourites.getContext(), viewData.getStatus().getFavouritesCount()));
 
         reblogs.setOnClickListener(v -> {
-            int position = getBindingAdapterPosition();
-            if (position != RecyclerView.NO_POSITION) {
-                listener.onShowReblogs(viewData);
-            }
+            listener.onShowReblogs(viewData);
         });
         favourites.setOnClickListener(v -> {
-            int position = getBindingAdapterPosition();
-            if (position != RecyclerView.NO_POSITION) {
-                listener.onShowFavs(viewData);
-            }
+            listener.onShowFavs(viewData);
         });
     }
 

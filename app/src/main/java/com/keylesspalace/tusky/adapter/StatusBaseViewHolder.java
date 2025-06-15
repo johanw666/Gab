@@ -656,13 +656,10 @@ public abstract class StatusBaseViewHolder<C extends ConcreteViewData> extends R
         boolean animateTransition
     ) {
         view.setOnClickListener(v -> {
-            int position = getBindingAdapterPosition();
-            if (position != RecyclerView.NO_POSITION) {
-                if (sensitiveMediaWarning.getVisibility() == View.VISIBLE) {
-                    listener.onContentHiddenChange(concreteViewData, true);
-                } else {
-                    listener.onViewMedia(concreteViewData, index, animateTransition ? v : null);
-                }
+            if (sensitiveMediaWarning.getVisibility() == View.VISIBLE) {
+                listener.onContentHiddenChange(concreteViewData, true);
+            } else {
+                listener.onViewMedia(concreteViewData, index, animateTransition ? v : null);
             }
         });
         TooltipCompat.setTooltipText(view, description);
@@ -1044,26 +1041,15 @@ public abstract class StatusBaseViewHolder<C extends ConcreteViewData> extends R
                 pollResultsButton.setVisibility(View.VISIBLE);
 
                 pollButton.setOnClickListener(v -> {
-
-                    int position = getBindingAdapterPosition();
-
-                    if (position != RecyclerView.NO_POSITION) {
-
-                        List<Integer> pollResult = pollAdapter.getSelected();
+                    List<Integer> pollResult = pollAdapter.getSelected();
 
                         if (!pollResult.isEmpty()) {
                             listener.onVoteInPoll(concreteViewData, pollResult);
                         }
-                    }
-
                 });
 
                 pollResultsButton.setOnClickListener(v -> {
-                    int position = getBindingAdapterPosition();
-
-                    if (position != RecyclerView.NO_POSITION) {
-                        listener.onShowPollResults(concreteViewData);
-                    }
+                    listener.onShowPollResults(concreteViewData);
                 });
             }
 
