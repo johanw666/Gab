@@ -16,38 +16,30 @@ steps:
   - name: Licensee
     image: cimg/android:2025.04.1
     commands:
-      # I don't love recopying the gradle properties before each step
-      # but if I share the gradle home directory between steps,
-      # the `Regular lint` step fails
-      - mkdir -p ~/.gradle
-      - cp .woodpecker/ci-gradle.properties ~/.gradle/gradle.properties
-      - gradle licensee
+      - export GRADLE_USER_HOME=$PWD/.gradle
+      - ./gradlew licensee
 
   - name: ktlint
     image: cimg/android:2025.04.1
     commands:
-      - mkdir -p ~/.gradle
-      - cp .woodpecker/ci-gradle.properties ~/.gradle/gradle.properties
-      - gradle clean ktlintCheck
+      - export GRADLE_USER_HOME=$PWD/.gradle
+      - ./gradlew ktlintCheck
 
   - name: Regular lint
     image: cimg/android:2025.04.1
     commands:
-      - mkdir -p ~/.gradle
-      - cp .woodpecker/ci-gradle.properties ~/.gradle/gradle.properties
-      - gradle app:lintGreenDebug
+      - export GRADLE_USER_HOME=$PWD/.gradle
+      - ./gradlew app:lintGreenDebug
 
   - name: Test
     image: cimg/android:2025.04.1
     commands:
-      - mkdir -p ~/.gradle
-      - cp .woodpecker/ci-gradle.properties ~/.gradle/gradle.properties
-      - gradle app:testGreenDebugUnitTest
+      - export GRADLE_USER_HOME=$PWD/.gradle
+      - ./gradlew app:testGreenDebugUnitTest
 
   - name: Build
     image: cimg/android:2025.04.1
     commands:
-      - mkdir -p ~/.gradle
-      - cp .woodpecker/ci-gradle.properties ~/.gradle/gradle.properties
-      - gradle app:buildGreenDebug
+      - export GRADLE_USER_HOME=$PWD/.gradle
+      - ./gradlew app:buildGreenDebug
 
