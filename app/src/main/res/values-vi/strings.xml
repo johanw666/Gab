@@ -663,13 +663,13 @@
     <string name="notification_policies_title">Chính sách thông báo</string>
     <string name="notification_policies_filter_out">Quản lý thông báo từ…</string>
     <string name="notification_policies_filter_dont_follow_title">Người bạn không theo dõi</string>
-    <string name="notification_policies_filter_dont_follow_description">Cho tới khi bạn duyệt họ</string>
+    <string name="notification_policies_filter_dont_follow_description">Cho đến khi bạn duyệt họ</string>
     <string name="notification_policies_filter_not_following_title">Người không theo dõi bạn</string>
-    <string name="notification_policies_filter_not_following_description">Gồm những ai theo dõi bạn ít hơn 3 ngày</string>
+    <string name="notification_policies_filter_not_following_description">Kể cả người theo dõi bạn dưới 3 ngày</string>
     <string name="unknown_notification_filter_new_accounts_title">Người mới tạo tài khoản</string>
-    <string name="unknown_notification_filter_new_accounts_description">Đã tạo trong vòng 30 ngày</string>
-    <string name="unknown_notification_filter_unsolicited_private_mentions_description">Trừ khi đó là trả lời lượt nhắc từ bạn hoặc nếu bạn có theo dõi người gửi</string>
-    <string name="unknown_notification_filter_moderated_accounts">Kiểm duyệt máy chủ</string>
+    <string name="unknown_notification_filter_new_accounts_description">Dưới 30 ngày</string>
+    <string name="unknown_notification_filter_unsolicited_private_mentions_description">Trừ khi bạn nhắn họ trước hoặc bạn có theo dõi họ</string>
+    <string name="unknown_notification_filter_moderated_accounts">Kiểm duyệt tài khoản</string>
     <string name="unknown_notification_filter_moderated_accounts_description">Chỉ dành cho kiểm duyệt viên</string>
     <string name="filtered_notifications">Những thông báo đã lọc</string>
     <string name="notifications_from_people_you_may_know">Thông báo từ %1$d người bạn có thể biết</string>
@@ -715,7 +715,7 @@
     <string name="moderation_warning_action_sensitive">Tút của bạn sẽ bị đánh dấu nhạy cảm kể từ bây giờ.</string>
     <string name="relationship_severance_event_user_domain_block">Bạn đã chặn %1$s, xóa đi %2$s người theo dõi của bạn và %3$s người mà bạn theo dõi.</string>
     <string name="notification_info_private_reply">Trả lời riêng</string>
-    <string name="notification_info_mention">Nhắc tới tôi</string>
+    <string name="notification_info_mention">Nhắc tới bạn</string>
     <string name="relationship_severance_event_account_suspension">Quản trị viên %1$s đã vô hiệu hóa %2$s, bạn không còn có thể tương tác hoặc nhận được thông tin cập nhật từ họ nữa.</string>
     <string name="moderation_warning_action_mark_statuses_as_sensitive">Vài tút của bạn được đánh dấu là nhạy cảm.</string>
     <string name="relationship_severance_event_title">Mất kết nối</string>
