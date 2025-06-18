@@ -523,7 +523,7 @@
     <string name="pref_default_post_language">Tungumál færslna (samstillt við netþjón)</string>
     <string name="language_display_name_format">%1$s (%2$s)</string>
     <string name="error_following_hashtags_unsupported">Þessi netþjónn styður ekki að fylgst sé með myllumerkjum.</string>
-    <string name="title_followed_hashtags">Myllumerki sem fylgst er með</string>
+    <string name="title_followed_hashtags">Vöktuð myllumerki</string>
     <string name="status_created_at_now">núna</string>
     <string name="action_unfollow_hashtag_format">Hætta að fylgjast með #%1$s?</string>
     <string name="notification_report_format">Ný kæra vegna %1$s</string>
