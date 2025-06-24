@@ -20,6 +20,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.card.MaterialCardView
 import com.google.android.material.color.MaterialColors
 import com.keylesspalace.tusky.R
 import com.keylesspalace.tusky.databinding.ItemPollBinding
@@ -113,13 +114,8 @@ class PollAdapter : RecyclerView.Adapter<BindingHolder<ItemPollBinding>>() {
         } else {
             holder.binding.pollLayout.background = null
 
-            if (option.selected) {
-                holder.binding.root.setCardBackgroundColor(ColorStateList.valueOf(MaterialColors.getColor(holder.binding.root, com.google.android.material.R.attr.colorSurface)))
-                holder.binding.root.strokeColor = MaterialColors.getColor(holder.binding.root, com.google.android.material.R.attr.colorSurface)
-            } else {
-                holder.binding.root.setCardBackgroundColor(ColorStateList.valueOf(MaterialColors.getColor(holder.binding.root, android.R.attr.colorBackground)))
-                holder.binding.root.strokeColor = MaterialColors.getColor(holder.binding.root, R.attr.colorBackgroundAccent)
-            }
+            configureBackground(holder.binding.root, option.selected)
+
             if (mode == SINGLE) {
                 radioButton.text = option.title.emojify(emojis, radioButton, animateEmojis)
                 radioButton.isChecked = option.selected
@@ -134,9 +130,19 @@ class PollAdapter : RecyclerView.Adapter<BindingHolder<ItemPollBinding>>() {
                 checkBox.isChecked = option.selected
                 checkBox.setOnCheckedChangeListener { _, isChecked ->
                     pollOptions[holder.bindingAdapterPosition].selected = isChecked
-                    notifyItemChanged(holder.bindingAdapterPosition)
+                    configureBackground(holder.binding.root, isChecked)
                 }
             }
+        }
+    }
+
+    private fun configureBackground(card: MaterialCardView, isSelected: Boolean) {
+        if (isSelected) {
+            card.setCardBackgroundColor(ColorStateList.valueOf(MaterialColors.getColor(card, com.google.android.material.R.attr.colorSurface)))
+            card.strokeColor = MaterialColors.getColor(card, com.google.android.material.R.attr.colorSurface)
+        } else {
+            card.setCardBackgroundColor(ColorStateList.valueOf(MaterialColors.getColor(card, android.R.attr.colorBackground)))
+            card.strokeColor = MaterialColors.getColor(card, R.attr.colorBackgroundAccent)
         }
     }
 
