@@ -16,8 +16,10 @@
 package com.keylesspalace.tusky.components.compose
 
 import android.net.Uri
+import android.os.Parcelable
 import android.util.Log
 import androidx.core.net.toUri
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import at.connyduck.calladapter.networkresult.fold
@@ -37,8 +39,11 @@ import com.keylesspalace.tusky.service.MediaToSend
 import com.keylesspalace.tusky.service.ServiceClient
 import com.keylesspalace.tusky.service.StatusToSend
 import com.keylesspalace.tusky.util.randomAlphanumericString
+import com.keylesspalace.tusky.util.savedstateflow.SavedStateFlow
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.channels.BufferOverflow
@@ -55,32 +60,23 @@ import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import kotlinx.parcelize.Parcelize
 
-@HiltViewModel
-class ComposeViewModel @Inject constructor(
+@HiltViewModel(assistedFactory = ComposeViewModel.Factory::class)
+class ComposeViewModel @AssistedInject constructor(
     private val api: MastodonApi,
     private val accountManager: AccountManager,
     private val mediaUploader: MediaUploader,
     private val serviceClient: ServiceClient,
     private val draftHelper: DraftHelper,
+    private val state: SavedStateHandle,
+    @Assisted("options") private val composeOptions: ComposeActivity.ComposeOptions?,
     instanceInfoRepo: InstanceInfoRepository
 ) : ViewModel() {
 
-    private var replyingStatusAuthor: String? = null
-    private var replyingStatusContent: String? = null
     internal var startingText: String? = null
     internal var postLanguage: String? = null
-    private var draftId: Int = 0
-    private var scheduledTootId: String? = null
     private var startingContentWarning: String = ""
-    private var inReplyToId: String? = null
-    private var originalStatusId: String? = null
-    private var startingVisibility: Status.Visibility = Status.Visibility.UNKNOWN
-
-    private var contentWarningStateChanged: Boolean = false
-    private var modifiedInitialState: Boolean = false
-    private var hasScheduledTimeChanged: Boolean = false
-
     private var currentContent: String? = ""
     private var currentContentWarning: String? = ""
 
@@ -90,23 +86,46 @@ class ComposeViewModel @Inject constructor(
     val emoji: SharedFlow<List<Emoji>> = instanceInfoRepo::getEmojis.asFlow()
         .shareIn(viewModelScope, SharingStarted.Eagerly, replay = 1)
 
-    private val _markMediaAsSensitive =
-        MutableStateFlow(accountManager.activeAccount?.defaultMediaSensitivity == true)
+    private val _markMediaAsSensitive: SavedStateFlow<Boolean> = SavedStateFlow(
+        savedStateHandle = state,
+        key = "MARK_MEDIA_AS_SENSITIVE",
+        initialValue = composeOptions?.sensitive ?: (accountManager.activeAccount?.defaultMediaSensitivity == true)
+    )
     val markMediaAsSensitive: StateFlow<Boolean> = _markMediaAsSensitive.asStateFlow()
 
-    private val _statusVisibility = MutableStateFlow(Status.Visibility.UNKNOWN)
+    private val _statusVisibility: SavedStateFlow<Status.Visibility> = SavedStateFlow(
+        savedStateHandle = state,
+        key = "STATUS_VISIBILITY",
+        initialValue = startingVisibility()
+    )
     val statusVisibility: StateFlow<Status.Visibility> = _statusVisibility.asStateFlow()
 
-    private val _showContentWarning = MutableStateFlow(false)
+    private val _showContentWarning: SavedStateFlow<Boolean> = SavedStateFlow(
+        savedStateHandle = state,
+        key = "SHOW_CONTENT_WARNING",
+        initialValue = !composeOptions?.contentWarning.isNullOrEmpty()
+    )
     val showContentWarning: StateFlow<Boolean> = _showContentWarning.asStateFlow()
 
-    private val _poll = MutableStateFlow(null as NewPoll?)
+    private val _poll: SavedStateFlow<NewPoll?> = SavedStateFlow(
+        savedStateHandle = state,
+        key = "POLL",
+        initialValue = composeOptions?.poll
+    )
     val poll: StateFlow<NewPoll?> = _poll.asStateFlow()
 
-    private val _scheduledAt = MutableStateFlow(null as String?)
+    private val _scheduledAt: SavedStateFlow<String?> = SavedStateFlow(
+        savedStateHandle = state,
+        key = "SCHEDULED_AT",
+        initialValue = composeOptions?.scheduledAt
+    )
     val scheduledAt: StateFlow<String?> = _scheduledAt.asStateFlow()
 
-    private val _media = MutableStateFlow(emptyList<QueuedMedia>())
+    private val _media: SavedStateFlow<List<QueuedMedia>> = SavedStateFlow(
+        savedStateHandle = state,
+        key = MEDIA_KEY,
+        initialValue = emptyList()
+    )
     val media: StateFlow<List<QueuedMedia>> = _media.asStateFlow()
 
     private val _uploadError = MutableSharedFlow<Throwable>(
@@ -119,12 +138,91 @@ class ComposeViewModel @Inject constructor(
     private val _closeConfirmation = MutableStateFlow(ConfirmationKind.NONE)
     val closeConfirmation: StateFlow<ConfirmationKind> = _closeConfirmation.asStateFlow()
 
-    private lateinit var composeKind: ComposeKind
+    private val composeKind: ComposeKind
+        get() = composeOptions?.kind ?: ComposeKind.NEW
+    private val inReplyToId: String?
+        get() = composeOptions?.inReplyToId
+    private val modifiedInitialState: Boolean
+        get() = composeOptions?.modifiedInitialState == true
+    val editing: Boolean
+        get() = !composeOptions?.statusId.isNullOrEmpty()
 
     // Used in ComposeActivity to pass state to result function when cropImage contract inflight
     var cropImageItemOld: QueuedMedia? = null
 
-    private var setupComplete = false
+    init {
+        // recreate media list
+        val savedMediaState: List<QueuedMedia>? = state[MEDIA_KEY]
+        if (savedMediaState != null) {
+            // restart upload for media that was not completely uploaded
+            _media.value.forEach { m ->
+                if (m.state == QueuedMedia.State.UPLOADING) {
+                    addMediaToQueue(
+                        m.type,
+                        m.uri,
+                        m.mediaSize,
+                        m.description,
+                        m.focus,
+                        m
+                    )
+                }
+            }
+        } else {
+            val draftAttachments = composeOptions?.draftAttachments
+            if (draftAttachments != null) {
+                // when coming from DraftActivity
+                draftAttachments.map { attachment ->
+                    MediaData(attachment.uri, attachment.description, attachment.focus)
+                }.let(::pickMedia)
+            } else {
+                composeOptions?.mediaAttachments?.forEach { a ->
+                    // when coming from redraft or ScheduledTootActivity
+                    val mediaType = when (a.type) {
+                        Attachment.Type.VIDEO, Attachment.Type.GIFV -> QueuedMedia.Type.VIDEO
+                        Attachment.Type.UNKNOWN, Attachment.Type.IMAGE -> QueuedMedia.Type.IMAGE
+                        Attachment.Type.AUDIO -> QueuedMedia.Type.AUDIO
+                    }
+                    addUploadedMedia(a.id, mediaType, a.url.toUri(), a.description, a.meta?.focus)
+                }
+            }
+        }
+
+        startingText = composeOptions?.content
+        currentContent = composeOptions?.content
+        postLanguage = composeOptions?.language
+
+        val mentionedUsernames = composeOptions?.mentionedUsernames
+        if (mentionedUsernames != null) {
+            val builder = StringBuilder()
+            for (name in mentionedUsernames) {
+                builder.append('@')
+                builder.append(name)
+                builder.append(' ')
+            }
+            startingText = builder.toString()
+        }
+
+        updateCloseConfirmation()
+    }
+
+    fun startingVisibility(): Status.Visibility {
+        val tootVisibility = composeOptions?.visibility
+        if (tootVisibility != null) {
+            return tootVisibility
+        }
+
+        val activeAccount = accountManager.activeAccount ?: return Status.Visibility.UNKNOWN
+        val preferredVisibility = if (inReplyToId != null) {
+            activeAccount.defaultReplyPrivacy.toVisibilityOr(activeAccount.defaultPostPrivacy)
+        } else {
+            activeAccount.defaultPostPrivacy
+        }
+
+        val replyVisibility = composeOptions?.replyVisibility ?: Status.Visibility.UNKNOWN
+        return Status.Visibility.fromInt(
+            preferredVisibility.int.coerceAtLeast(replyVisibility.int)
+        )
+    }
 
     fun pickMedia(uri: Uri) {
         pickMedia(listOf(MediaData(uri)))
@@ -297,8 +395,8 @@ class ComposeViewModel @Inject constructor(
         val textChanged = content.orEmpty() != startingText.orEmpty()
         val contentWarningChanged = contentWarning.orEmpty() != startingContentWarning
         val mediaChanged = _media.value.isNotEmpty()
-        val pollChanged = _poll.value != null
-        val didScheduledTimeChange = hasScheduledTimeChanged
+        val pollChanged = _poll.isChanged()
+        val didScheduledTimeChange = _scheduledAt.isChanged()
 
         return modifiedInitialState || textChanged || contentWarningChanged || mediaChanged || pollChanged || didScheduledTimeChange
     }
@@ -309,13 +407,12 @@ class ComposeViewModel @Inject constructor(
 
     fun contentWarningChanged(value: Boolean) {
         _showContentWarning.value = value
-        contentWarningStateChanged = true
         updateCloseConfirmation()
     }
 
     fun deleteDraft() {
-        viewModelScope.launch {
-            if (draftId != 0) {
+        composeOptions?.draftId?.let { draftId ->
+            viewModelScope.launch {
                 draftHelper.deleteDraftAndAttachments(draftId)
             }
         }
@@ -336,7 +433,7 @@ class ComposeViewModel @Inject constructor(
         }
 
         draftHelper.saveDraft(
-            draftId = draftId,
+            draftId = composeOptions?.draftId ?: 0,
             accountId = accountManager.activeAccount?.id!!,
             inReplyToId = inReplyToId,
             content = content,
@@ -351,7 +448,7 @@ class ComposeViewModel @Inject constructor(
             failedToSendAlert = false,
             scheduledAt = _scheduledAt.value,
             language = postLanguage,
-            statusId = originalStatusId
+            statusId = composeOptions?.statusId
         )
     }
 
@@ -360,8 +457,8 @@ class ComposeViewModel @Inject constructor(
      * Uses current state plus provided arguments.
      */
     suspend fun sendStatus(content: String, spoilerText: String, accountId: Long) {
-        if (!scheduledTootId.isNullOrEmpty()) {
-            api.deleteScheduledStatus(scheduledTootId!!)
+        if (!composeOptions?.scheduledTootId.isNullOrEmpty()) {
+            api.deleteScheduledStatus(composeOptions.scheduledTootId)
         }
 
         val attachedMedia = _media.value.map { item ->
@@ -386,11 +483,11 @@ class ComposeViewModel @Inject constructor(
             replyingStatusContent = null,
             replyingStatusAuthorUsername = null,
             accountId = accountId,
-            draftId = draftId,
+            draftId = composeOptions?.draftId ?: 0,
             idempotencyKey = randomAlphanumericString(16),
             retries = 0,
             language = postLanguage,
-            statusId = originalStatusId
+            statusId = composeOptions?.statusId
         )
 
         serviceClient.sendToot(tootToSend)
@@ -465,112 +562,19 @@ class ComposeViewModel @Inject constructor(
         }
     }
 
-    fun setup(composeOptions: ComposeActivity.ComposeOptions?) {
-        if (setupComplete) {
-            return
-        }
-
-        composeKind = composeOptions?.kind ?: ComposeKind.NEW
-        inReplyToId = composeOptions?.inReplyToId
-
-        val activeAccount = accountManager.activeAccount!!
-        val preferredVisibility = if (inReplyToId != null) {
-            activeAccount.defaultReplyPrivacy.toVisibilityOr(activeAccount.defaultPostPrivacy)
-        } else {
-            activeAccount.defaultPostPrivacy
-        }
-
-        val replyVisibility = composeOptions?.replyVisibility ?: Status.Visibility.UNKNOWN
-        startingVisibility = Status.Visibility.fromInt(
-            preferredVisibility.int.coerceAtLeast(replyVisibility.int)
-        )
-
-        modifiedInitialState = composeOptions?.modifiedInitialState == true
-
-        val contentWarning = composeOptions?.contentWarning
-        if (contentWarning != null) {
-            startingContentWarning = contentWarning
-        }
-        if (!contentWarningStateChanged) {
-            _showContentWarning.value = !contentWarning.isNullOrBlank()
-        }
-
-        // recreate media list
-        val draftAttachments = composeOptions?.draftAttachments
-        if (draftAttachments != null) {
-            // when coming from DraftActivity
-            draftAttachments.map { attachment ->
-                MediaData(attachment.uri, attachment.description, attachment.focus)
-            }.let(::pickMedia)
-        } else {
-            composeOptions?.mediaAttachments?.forEach { a ->
-                // when coming from redraft or ScheduledTootActivity
-                val mediaType = when (a.type) {
-                    Attachment.Type.VIDEO, Attachment.Type.GIFV -> QueuedMedia.Type.VIDEO
-                    Attachment.Type.UNKNOWN, Attachment.Type.IMAGE -> QueuedMedia.Type.IMAGE
-                    Attachment.Type.AUDIO -> QueuedMedia.Type.AUDIO
-                }
-                addUploadedMedia(a.id, mediaType, a.url.toUri(), a.description, a.meta?.focus)
-            }
-        }
-
-        draftId = composeOptions?.draftId ?: 0
-        scheduledTootId = composeOptions?.scheduledTootId
-        originalStatusId = composeOptions?.statusId
-        startingText = composeOptions?.content
-        currentContent = composeOptions?.content
-        postLanguage = composeOptions?.language
-
-        val tootVisibility = composeOptions?.visibility ?: Status.Visibility.UNKNOWN
-        if (tootVisibility.int != Status.Visibility.UNKNOWN.int) {
-            startingVisibility = tootVisibility
-        }
-        _statusVisibility.value = startingVisibility
-        val mentionedUsernames = composeOptions?.mentionedUsernames
-        if (mentionedUsernames != null) {
-            val builder = StringBuilder()
-            for (name in mentionedUsernames) {
-                builder.append('@')
-                builder.append(name)
-                builder.append(' ')
-            }
-            startingText = builder.toString()
-        }
-
-        _scheduledAt.value = composeOptions?.scheduledAt
-
-        composeOptions?.sensitive?.let { _markMediaAsSensitive.value = it }
-
-        val poll = composeOptions?.poll
-        if (poll != null && composeOptions.mediaAttachments.isNullOrEmpty()) {
-            this._poll.value = poll
-        }
-        replyingStatusContent = composeOptions?.replyingStatusContent
-        replyingStatusAuthor = composeOptions?.replyingStatusAuthor
-
-        updateCloseConfirmation()
-
-        setupComplete = true
-    }
-
     fun updatePoll(newPoll: NewPoll?) {
         _poll.value = newPoll
         updateCloseConfirmation()
     }
 
     fun updateScheduledAt(newScheduledAt: String?) {
-        if (newScheduledAt != _scheduledAt.value) {
-            hasScheduledTimeChanged = true
-        }
-
         _scheduledAt.value = newScheduledAt
     }
 
-    val editing: Boolean
-        get() = !originalStatusId.isNullOrEmpty()
-
     private companion object {
         const val TAG = "ComposeViewModel"
+
+        private const val MEDIA_KEY = "MEDIA"
     }
 
     enum class ConfirmationKind {
@@ -581,6 +585,7 @@ class ComposeViewModel @Inject constructor(
         CONTINUE_EDITING_OR_DISCARD_DRAFT // edit draft
     }
 
+    @Parcelize
     data class QueuedMedia(
         val localId: Int,
         val uri: Uri,
@@ -591,7 +596,7 @@ class ComposeViewModel @Inject constructor(
         val description: String? = null,
         val focus: Attachment.Focus? = null,
         val state: State
-    ) {
+    ) : Parcelable {
         enum class Type {
             IMAGE,
             VIDEO,
@@ -610,6 +615,13 @@ class ComposeViewModel @Inject constructor(
         val description: String? = null,
         val focus: Attachment.Focus? = null
     )
+
+    @AssistedFactory
+    interface Factory {
+        fun create(
+            @Assisted("options") options: ComposeActivity.ComposeOptions?
+        ): ComposeViewModel
+    }
 }
 
 /**

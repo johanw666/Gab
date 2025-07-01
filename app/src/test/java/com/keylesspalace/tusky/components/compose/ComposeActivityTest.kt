@@ -150,6 +150,8 @@ class ComposeActivityTest {
             mediaUploader = mock(),
             serviceClient = mock(),
             draftHelper = mock(),
+            state = mock(),
+            composeOptions = composeOptions,
             instanceInfoRepo = instanceInfoRepo
         )
         activity.intent = Intent(activity, ComposeActivity::class.java).apply {

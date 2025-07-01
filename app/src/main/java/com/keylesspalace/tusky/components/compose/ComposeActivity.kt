@@ -104,7 +104,6 @@ import com.keylesspalace.tusky.util.getMediaSize
 import com.keylesspalace.tusky.util.getParcelableArrayListExtraCompat
 import com.keylesspalace.tusky.util.getParcelableCompat
 import com.keylesspalace.tusky.util.getParcelableExtraCompat
-import com.keylesspalace.tusky.util.getSerializableCompat
 import com.keylesspalace.tusky.util.hide
 import com.keylesspalace.tusky.util.highlightSpans
 import com.keylesspalace.tusky.util.loadAvatar
@@ -116,6 +115,7 @@ import com.keylesspalace.tusky.util.show
 import com.keylesspalace.tusky.util.viewBinding
 import com.keylesspalace.tusky.util.visible
 import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.lifecycle.withCreationCallback
 import dagger.hilt.android.migration.OptionalInject
 import java.io.File
 import java.io.IOException
@@ -157,7 +157,15 @@ class ComposeActivity :
     var maximumTootCharacters = InstanceInfoRepository.DEFAULT_CHARACTER_LIMIT
     var charactersReservedPerUrl = InstanceInfoRepository.DEFAULT_CHARACTERS_RESERVED_PER_URL
 
-    private val viewModel: ComposeViewModel by viewModels()
+    private val viewModel: ComposeViewModel by viewModels(
+        extrasProducer = {
+            defaultViewModelCreationExtras.withCreationCallback<ComposeViewModel.Factory> { factory ->
+                factory.create(
+                    options = intent.getParcelableExtraCompat(COMPOSE_OPTIONS_EXTRA),
+                )
+            }
+        }
+    )
 
     private val binding by viewBinding(ActivityComposeBinding::inflate)
 
@@ -302,7 +310,6 @@ class ComposeActivity :
         /* If the composer is started up as a reply to another post, override the "starting" state
          * based on what the intent from the reply request passes. */
         val composeOptions: ComposeOptions? = intent.getParcelableExtraCompat(COMPOSE_OPTIONS_EXTRA)
-        viewModel.setup(composeOptions)
 
         setupButtons()
         subscribeToUpdates(mediaAdapter)
@@ -336,16 +343,6 @@ class ComposeActivity :
         /* Finally, overwrite state with data from saved instance state. */
         savedInstanceState?.let {
             photoUploadUri = it.getParcelableCompat(PHOTO_UPLOAD_URI_KEY)
-
-            setStatusVisibility(it.getSerializableCompat(VISIBILITY_KEY)!!)
-
-            it.getBoolean(CONTENT_WARNING_VISIBLE_KEY).apply {
-                viewModel.contentWarningChanged(this)
-            }
-
-            it.getString(SCHEDULED_TIME_KEY)?.let { time ->
-                viewModel.updateScheduledAt(time)
-            }
         }
 
         binding.composeEditField.post {
@@ -779,9 +776,7 @@ class ComposeActivity :
 
     override fun onSaveInstanceState(outState: Bundle) {
         outState.putParcelable(PHOTO_UPLOAD_URI_KEY, photoUploadUri)
-        outState.putSerializable(VISIBILITY_KEY, viewModel.statusVisibility.value)
-        outState.putBoolean(CONTENT_WARNING_VISIBLE_KEY, viewModel.showContentWarning.value)
-        outState.putString(SCHEDULED_TIME_KEY, viewModel.scheduledAt.value)
+
         super.onSaveInstanceState(outState)
     }
 
@@ -1409,28 +1404,27 @@ class ComposeActivity :
 
     @Parcelize
     data class ComposeOptions(
-        // Let's keep fields var until all consumers are Kotlin
-        var scheduledTootId: String? = null,
-        var draftId: Int? = null,
-        var content: String? = null,
-        var mediaUrls: List<String>? = null,
-        var mediaDescriptions: List<String>? = null,
-        var mentionedUsernames: Set<String>? = null,
-        var inReplyToId: String? = null,
-        var replyVisibility: Status.Visibility? = null,
-        var visibility: Status.Visibility? = null,
-        var contentWarning: String? = null,
-        var replyingStatusAuthor: String? = null,
-        var replyingStatusContent: String? = null,
-        var mediaAttachments: List<Attachment>? = null,
-        var draftAttachments: List<DraftAttachment>? = null,
-        var scheduledAt: String? = null,
-        var sensitive: Boolean? = null,
-        var poll: NewPoll? = null,
-        var modifiedInitialState: Boolean? = null,
-        var language: String? = null,
-        var statusId: String? = null,
-        var kind: ComposeKind? = null
+        val scheduledTootId: String? = null,
+        val draftId: Int? = null,
+        val content: String? = null,
+        val mediaUrls: List<String>? = null,
+        val mediaDescriptions: List<String>? = null,
+        val mentionedUsernames: Set<String>? = null,
+        val inReplyToId: String? = null,
+        val replyVisibility: Status.Visibility? = null,
+        val visibility: Status.Visibility? = null,
+        val contentWarning: String? = null,
+        val replyingStatusAuthor: String? = null,
+        val replyingStatusContent: String? = null,
+        val mediaAttachments: List<Attachment>? = null,
+        val draftAttachments: List<DraftAttachment>? = null,
+        val scheduledAt: String? = null,
+        val sensitive: Boolean? = null,
+        val poll: NewPoll? = null,
+        val modifiedInitialState: Boolean? = null,
+        val language: String? = null,
+        val statusId: String? = null,
+        val kind: ComposeKind? = null
     ) : Parcelable
 
     companion object {
@@ -1438,9 +1432,6 @@ class ComposeActivity :
 
         internal const val COMPOSE_OPTIONS_EXTRA = "COMPOSE_OPTIONS"
         private const val PHOTO_UPLOAD_URI_KEY = "PHOTO_UPLOAD_URI"
-        private const val VISIBILITY_KEY = "VISIBILITY"
-        private const val SCHEDULED_TIME_KEY = "SCHEDULE"
-        private const val CONTENT_WARNING_VISIBLE_KEY = "CONTENT_WARNING_VISIBLE"
 
         /**
          * @param options ComposeOptions to configure the ComposeActivity

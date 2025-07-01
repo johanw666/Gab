@@ -681,16 +681,17 @@ class NotificationHelper @Inject constructor(
             remove(account.username)
         }
 
-        val composeOptions = ComposeOptions()
-        composeOptions.inReplyToId = inReplyToId
-        composeOptions.replyVisibility = replyVisibility
-        composeOptions.contentWarning = contentWarning
-        composeOptions.replyingStatusAuthor = citedLocalAuthor
-        composeOptions.replyingStatusContent = citedText
-        composeOptions.mentionedUsernames = mentionedUsernames
-        composeOptions.modifiedInitialState = true
-        composeOptions.language = actionableStatus.language
-        composeOptions.kind = ComposeActivity.ComposeKind.NEW
+        val composeOptions = ComposeOptions(
+            inReplyToId = inReplyToId,
+            replyVisibility = replyVisibility,
+            contentWarning = contentWarning,
+            replyingStatusAuthor = citedLocalAuthor,
+            replyingStatusContent = citedText,
+            mentionedUsernames = mentionedUsernames,
+            modifiedInitialState = true,
+            language = actionableStatus.language,
+            kind = ComposeActivity.ComposeKind.NEW
+        )
 
         val composeIntent = composeIntent(context, composeOptions, account.id, apiNotification.id, account.id.toInt())
 
