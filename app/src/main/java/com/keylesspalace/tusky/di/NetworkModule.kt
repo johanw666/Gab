@@ -48,7 +48,6 @@ import java.net.InetSocketAddress
 import java.net.Proxy
 import java.util.Date
 import java.util.concurrent.TimeUnit
-import javax.inject.Named
 import javax.inject.Singleton
 import okhttp3.Cache
 import okhttp3.OkHttp
@@ -66,18 +65,6 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 object NetworkModule {
 
     private const val TAG = "NetworkModule"
-
-    @Provides
-    @Named("defaultPort")
-    fun providesDefaultPort(): Int {
-        return 443
-    }
-
-    @Provides
-    @Named("defaultScheme")
-    fun providesDefaultScheme(): String {
-        return "https://"
-    }
 
     @Provides
     @Singleton

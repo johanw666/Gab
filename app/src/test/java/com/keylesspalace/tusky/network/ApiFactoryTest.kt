@@ -54,7 +54,7 @@ class ApiFactoryTest {
         )
 
         val retrofit = retrofit()
-        val api: MastodonApi = apiForAccount(account, okHttpClient, retrofit, "http://", mockWebServer.port)
+        val api: MastodonApi = apiForAccount(account, okHttpClient, retrofit, "http", mockWebServer.port)
 
         val instanceResponse = api.getInstance()
 
@@ -76,7 +76,7 @@ class ApiFactoryTest {
         )
 
         val retrofit = retrofit()
-        val api: MastodonApi = apiForAccount(account, okHttpClient, retrofit, "http://", mockWebServer.port)
+        val api: MastodonApi = apiForAccount(account, okHttpClient, retrofit, "http", mockWebServer.port)
 
         val instanceResponse = api.getInstance(domain = mockWebServer.hostName)
 
@@ -89,7 +89,7 @@ class ApiFactoryTest {
         mockInstanceResponse()
 
         val retrofit = retrofit()
-        val api: MastodonApi = apiForAccount(null, okHttpClient, retrofit, "http://", mockWebServer.port)
+        val api: MastodonApi = apiForAccount(null, okHttpClient, retrofit, "http", mockWebServer.port)
 
         val instanceResponse = api.getInstance(domain = mockWebServer.hostName)
 
@@ -102,7 +102,7 @@ class ApiFactoryTest {
         mockInstanceResponse()
 
         val retrofit = retrofit()
-        val api: MastodonApi = apiForAccount(null, okHttpClient, retrofit, "http://", mockWebServer.port)
+        val api: MastodonApi = apiForAccount(null, okHttpClient, retrofit, "http", mockWebServer.port)
 
         val instanceResponse = api.getInstance()
 

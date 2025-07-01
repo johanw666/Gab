@@ -40,6 +40,7 @@ import com.keylesspalace.tusky.R
 import com.keylesspalace.tusky.databinding.ActivityLoginBinding
 import com.keylesspalace.tusky.entity.AccessToken
 import com.keylesspalace.tusky.network.MastodonApi
+import com.keylesspalace.tusky.network.schemeForDomain
 import com.keylesspalace.tusky.util.getNonNullString
 import com.keylesspalace.tusky.util.openLinkInCustomTab
 import com.keylesspalace.tusky.util.rickRoll
@@ -136,9 +137,9 @@ class LoginActivity : BaseActivity() {
         binding.domainTextInputLayout.error = null
 
         val domain = canonicalizeDomain(binding.domainEditText.text.toString())
-
+        val scheme = schemeForDomain(domain)
         try {
-            HttpUrl.Builder().host(domain).scheme("https").build()
+            HttpUrl.Builder().host(domain).scheme(scheme).build()
         } catch (_: IllegalArgumentException) {
             setLoading(false)
             binding.domainTextInputLayout.error = getString(R.string.error_invalid_domain)
@@ -190,7 +191,7 @@ class LoginActivity : BaseActivity() {
         // To authorize this app and log in it's necessary to redirect to the domain given,
         // login there, and the server will redirect back to the app with its response.
         val uri = Uri.Builder()
-            .scheme("https")
+            .scheme(schemeForDomain(domain))
             .authority(domain)
             .path(MastodonApi.ENDPOINT_AUTHORIZE)
             .appendQueryParameter("client_id", clientId)

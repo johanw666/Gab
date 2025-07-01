@@ -11,20 +11,21 @@ import retrofit2.create
  * When null, request without additional DOMAIN_HEADER will fail.
  * @param httpClient The OkHttpClient to make requests as
  * @param retrofit The Retrofit instance to derive the api from
- * @param scheme The scheme to use. Only used in tests.
+ * @param defaultScheme The default scheme to use. Only used in tests.
  * @param port The port to use. Only used in tests.
  */
 inline fun <reified T> apiForAccount(
     account: AccountEntity?,
     httpClient: OkHttpClient,
     retrofit: Retrofit,
-    scheme: String = "https://",
+    defaultScheme: String = "https",
     port: Int? = null
 ): T {
     return retrofit.newBuilder()
         .apply {
             if (account != null) {
-                baseUrl("$scheme${account.domain}${ if (port == null) "" else ":$port"}")
+                val scheme = schemeForDomain(account.domain, defaultScheme)
+                baseUrl("$scheme://${account.domain}${ if (port == null) "" else ":$port"}")
             }
         }
         .callFactory { originalRequest ->
@@ -32,9 +33,15 @@ inline fun <reified T> apiForAccount(
 
             val domainHeader = originalRequest.header(MastodonApi.DOMAIN_HEADER)
             if (domainHeader != null) {
+                val scheme = schemeForDomain(domainHeader, defaultScheme)
+
                 request = originalRequest.newBuilder()
                     .url(
-                        originalRequest.url.newBuilder().host(domainHeader).build()
+                        originalRequest.url
+                            .newBuilder()
+                            .scheme(scheme)
+                            .host(domainHeader)
+                            .build()
                     )
                     .removeHeader(MastodonApi.DOMAIN_HEADER)
                     .build()
@@ -52,4 +59,14 @@ inline fun <reified T> apiForAccount(
         }
         .build()
         .create()
+}
+
+fun schemeForDomain(domain: String, defaultScheme: String = "https"): String {
+    // Special case for onion services. All other servers must never use cleartext traffic.
+    // defaultScheme is only for testing
+    return if (domain.endsWith(".onion")) {
+        "http"
+    } else {
+        defaultScheme
+    }
 }
