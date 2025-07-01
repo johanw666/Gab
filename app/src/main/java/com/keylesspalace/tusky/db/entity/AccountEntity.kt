@@ -99,10 +99,6 @@ data class AccountEntity(
     // the scope needs to be changed in the future
     val oauthScopes: String = "",
     val unifiedPushUrl: String = "",
-    val pushPubKey: String = "",
-    val pushPrivKey: String = "",
-    val pushAuth: String = "",
-    val pushServerKey: String = "",
 
     /**
      * ID of the status at the top of the visible list in the home timeline when the

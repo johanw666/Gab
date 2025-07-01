@@ -164,8 +164,8 @@ ksp {
 licensee {
     allow(SpdxId.Apache_20)
     allow(SpdxId.MIT)
+    allow(SpdxId.BSD_3_Clause)
     allowUrl('https://github.com/AOMediaCodec/libavif/blob/master/LICENSE')
-    allowUrl('https://www.bouncycastle.org/licence.html')
 }
 
 configurations {
@@ -214,8 +214,7 @@ dependencies {
 
     implementation libs.bundles.filemojicompat
 
-    implementation libs.bouncycastle
-    implementation libs.unified.push
+    implementation libs.bundles.unifiedpush
 
     implementation libs.bundles.xmldiff
 

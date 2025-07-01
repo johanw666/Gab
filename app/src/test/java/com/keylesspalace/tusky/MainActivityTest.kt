@@ -13,7 +13,7 @@ import androidx.work.testing.WorkManagerTestInitHelper
 import at.connyduck.calladapter.networkresult.NetworkResult
 import com.keylesspalace.tusky.appstore.EventHub
 import com.keylesspalace.tusky.components.accountlist.AccountListActivity
-import com.keylesspalace.tusky.components.systemnotifications.NotificationService
+import com.keylesspalace.tusky.components.systemnotifications.NotificationHelper
 import com.keylesspalace.tusky.db.AccountManager
 import com.keylesspalace.tusky.db.entity.AccountEntity
 import com.keylesspalace.tusky.entity.Account
@@ -99,21 +99,22 @@ class MainActivityTest {
         val notificationManager = context.getSystemService(NotificationManager::class.java)
         val shadowNotificationManager = shadowOf(notificationManager)
 
-        val notificationService = NotificationService(
-            notificationManager,
-            mock {
+        val notificationHelper = NotificationHelper(
+            notificationManager = notificationManager,
+            accountManager = mock {
                 on { areNotificationsEnabled() } doReturn true
             },
-            mock(),
-            mock(),
-            context,
-            mock(),
+            api = mock(),
+            preferences = mock(),
+            context = context,
+            applicationScope = mock(),
+            instanceInfoRepository = mock()
         )
 
-        notificationService.createNotificationChannelsForAccount(accountEntity)
+        notificationHelper.createNotificationChannelsForAccount(accountEntity)
 
         runInBackground {
-            val notification = notificationService.createBaseNotification(
+            val notification = notificationHelper.createBaseNotification(
                 Notification(
                     type = type,
                     id = "id",
@@ -167,7 +168,7 @@ class MainActivityTest {
             eventHub = eventHub,
             accountManager = accountManager,
             shareShortcutHelper = mock(),
-            notificationService = mock(),
+            notificationHelper = mock(),
         )
         val testViewModelFactory = viewModelFactory {
             initializer { viewModel }

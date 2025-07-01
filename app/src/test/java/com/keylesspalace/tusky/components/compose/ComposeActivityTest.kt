@@ -31,7 +31,6 @@ import com.keylesspalace.tusky.db.AppDatabase
 import com.keylesspalace.tusky.db.dao.InstanceDao
 import com.keylesspalace.tusky.db.entity.AccountEntity
 import com.keylesspalace.tusky.db.entity.EmojisEntity
-import com.keylesspalace.tusky.db.entity.InstanceInfoEntity
 import com.keylesspalace.tusky.di.NetworkModule
 import com.keylesspalace.tusky.entity.Instance
 import com.keylesspalace.tusky.entity.InstanceConfiguration
@@ -72,8 +71,6 @@ import retrofit2.Response
 @RunWith(AndroidJUnit4::class)
 class ComposeActivityTest {
     private lateinit var activity: ComposeActivity
-    private lateinit var accountManagerMock: AccountManager
-    private lateinit var apiMock: MastodonApi
 
     private val instanceDomain = "example.domain"
 
@@ -108,13 +105,13 @@ class ComposeActivityTest {
         val controller = Robolectric.buildActivity(ComposeActivity::class.java)
         activity = controller.get()
 
-        accountManagerMock = mock {
+        val accountManagerMock: AccountManager = mock {
             on { accounts } doReturn listOf(account)
             on { accountsFlow } doReturn MutableStateFlow(listOf(account))
             on { activeAccount } doReturn account
         }
 
-        apiMock = mock {
+        val apiMock: MastodonApi = mock {
             onBlocking { getCustomEmojis() } doReturn NetworkResult.success(emptyList())
             onBlocking { getInstance() } doReturn instanceResponseCallback?.invoke().let { instance ->
                 if (instance == null) {
@@ -136,8 +133,7 @@ class ComposeActivityTest {
         }
 
         val instanceDaoMock: InstanceDao = mock {
-            onBlocking { getInstanceInfo(any()) } doReturn
-                InstanceInfoEntity(instanceDomain, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null)
+            onBlocking { getInstanceInfo(any()) } doReturn null
             onBlocking { getEmojiInfo(any()) } doReturn
                 EmojisEntity(instanceDomain, emptyList())
         }
@@ -149,12 +145,12 @@ class ComposeActivityTest {
         val instanceInfoRepo = InstanceInfoRepository(apiMock, dbMock, accountManagerMock, CoroutineScope(SupervisorJob()))
 
         val viewModel = ComposeViewModel(
-            apiMock,
-            accountManagerMock,
-            mock(),
-            mock(),
-            mock(),
-            instanceInfoRepo
+            api = apiMock,
+            accountManager = accountManagerMock,
+            mediaUploader = mock(),
+            serviceClient = mock(),
+            draftHelper = mock(),
+            instanceInfoRepo = instanceInfoRepo
         )
         activity.intent = Intent(activity, ComposeActivity::class.java).apply {
             putExtra(ComposeActivity.COMPOSE_OPTIONS_EXTRA, composeOptions)
@@ -598,16 +594,17 @@ class ComposeActivityTest {
 
     private fun getConfiguration(maximumStatusCharacters: Int?, charactersReservedPerUrl: Int?): Instance.Configuration {
         return Instance.Configuration(
-            Instance.Configuration.Urls(),
-            Instance.Configuration.Accounts(maxFeaturedTags = 1, maxProfileFields = 4),
-            Instance.Configuration.Statuses(
-                maximumStatusCharacters ?: InstanceInfoRepository.DEFAULT_CHARACTER_LIMIT,
-                InstanceInfoRepository.DEFAULT_MAX_MEDIA_ATTACHMENTS,
-                charactersReservedPerUrl ?: InstanceInfoRepository.DEFAULT_CHARACTERS_RESERVED_PER_URL
+            urls = Instance.Configuration.Urls(),
+            vapid = Instance.Configuration.VapidKey(),
+            accounts = Instance.Configuration.Accounts(maxFeaturedTags = 1, maxProfileFields = 4),
+            statuses = Instance.Configuration.Statuses(
+                maxCharacters = maximumStatusCharacters ?: InstanceInfoRepository.DEFAULT_CHARACTER_LIMIT,
+                maxMediaAttachments = InstanceInfoRepository.DEFAULT_MAX_MEDIA_ATTACHMENTS,
+                charactersReservedPerUrl = charactersReservedPerUrl ?: InstanceInfoRepository.DEFAULT_CHARACTERS_RESERVED_PER_URL
             ),
-            Instance.Configuration.MediaAttachments(0, 0, 0, 0, 0),
-            Instance.Configuration.Polls(0, 0, 0, 0),
-            Instance.Configuration.Translation(false)
+            mediaAttachments = Instance.Configuration.MediaAttachments(0, 0, 0, 0, 0),
+            polls = Instance.Configuration.Polls(0, 0, 0, 0),
+            translation = Instance.Configuration.Translation(false)
         )
     }
 

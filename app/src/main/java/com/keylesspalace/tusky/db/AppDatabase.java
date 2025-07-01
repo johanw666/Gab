@@ -65,7 +65,7 @@ import java.io.File;
     },
     // Note: Starting with version 54, database versions in Tusky are always even.
     // This is to reserve odd version numbers for use by forks.
-    version = 70,
+    version = 72,
     autoMigrations = {
         @AutoMigration(from = 48, to = 49),
         @AutoMigration(from = 49, to = 50, spec = AppDatabase.MIGRATION_49_50.class),
@@ -76,7 +76,9 @@ import java.io.File;
         @AutoMigration(from = 62, to = 64), // filterV2Available in InstanceEntity
         @AutoMigration(from = 64, to = 66), // added profileHeaderUrl to AccountEntity
         @AutoMigration(from = 66, to = 68, spec = AppDatabase.MIGRATION_66_68.class), // added event and moderationAction to NotificationEntity, new NotificationPolicyEntity
-        @AutoMigration(from = 68, to = 70), // added mastodonApiVersion to InstanceEntity
+        @AutoMigration(from = 68, to = 70), // added mastodonApiVersion to InstanceEntity,
+        @AutoMigration(from = 70, to = 72, spec = AppDatabase.MIGRATION_70_72.class), // added vapidKey to InstanceEntity, removed push keys from AccountEntity
+
     }
 )
 public abstract class AppDatabase extends RoomDatabase {
@@ -860,4 +862,10 @@ public abstract class AppDatabase extends RoomDatabase {
     @DeleteColumn(tableName = "AccountEntity", columnName = "notificationsSignUps")
     @DeleteColumn(tableName = "AccountEntity", columnName = "notificationsReports")
     static class MIGRATION_66_68 implements AutoMigrationSpec { }
+
+    @DeleteColumn(tableName = "AccountEntity", columnName = "pushPubKey")
+    @DeleteColumn(tableName = "AccountEntity", columnName = "pushPrivKey")
+    @DeleteColumn(tableName = "AccountEntity", columnName = "pushAuth")
+    @DeleteColumn(tableName = "AccountEntity", columnName = "pushServerKey")
+    static class MIGRATION_70_72 implements AutoMigrationSpec { }
 }
