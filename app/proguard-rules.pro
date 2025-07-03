@@ -66,3 +66,6 @@
 }
 
 -checkdiscard class com.keylesspalace.tusky.usecase.DeveloperToolsUseCase
+
+# https://codeberg.org/tusky/Tusky/pulls/5172
+-keep class androidx.appcompat.app.AppLocalesMetadataHolderService
