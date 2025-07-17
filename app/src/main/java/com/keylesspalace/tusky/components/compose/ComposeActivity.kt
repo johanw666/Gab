@@ -62,9 +62,6 @@ import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.transition.TransitionManager
-import com.canhub.cropper.CropImage
-import com.canhub.cropper.CropImageContract
-import com.canhub.cropper.options
 import com.google.android.material.R as materialR
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetBehavior.BottomSheetCallback
@@ -84,6 +81,9 @@ import com.keylesspalace.tusky.components.compose.dialog.makeFocusDialog
 import com.keylesspalace.tusky.components.compose.dialog.showAddPollDialog
 import com.keylesspalace.tusky.components.compose.view.ComposeOptionsListener
 import com.keylesspalace.tusky.components.compose.view.ComposeScheduleView
+import com.keylesspalace.tusky.components.editimage.EditImageContract
+import com.keylesspalace.tusky.components.editimage.EditImageOptions
+import com.keylesspalace.tusky.components.editimage.EditImageResult
 import com.keylesspalace.tusky.components.instanceinfo.InstanceInfoRepository
 import com.keylesspalace.tusky.databinding.ActivityComposeBinding
 import com.keylesspalace.tusky.db.entity.AccountEntity
@@ -215,27 +215,31 @@ class ComposeActivity :
     }
 
     // Contract kicked off by editImageInQueue; expects viewModel.cropImageItemOld set
-    private val cropImage = registerForActivityResult(CropImageContract()) { result ->
-        val uriNew = result.uriContent
-        if (result.isSuccessful && uriNew != null) {
-            viewModel.cropImageItemOld?.let { itemOld ->
-                val size = getMediaSize(contentResolver, uriNew)
+    private val editImage = registerForActivityResult(EditImageContract()) { result ->
 
-                viewModel.addMediaToQueue(
-                    type = itemOld.type,
-                    uri = uriNew,
-                    mediaSize = size,
-                    description = itemOld.description,
-                    // Intentionally reset focus when cropping
-                    focus = null,
-                    replaceItem = itemOld
-                )
+        when (result) {
+            is EditImageResult.Success -> {
+                viewModel.cropImageItemOld?.let { itemOld ->
+                    val size = getMediaSize(contentResolver, result.outputUri)
+
+                    viewModel.addMediaToQueue(
+                        type = itemOld.type,
+                        uri = result.outputUri,
+                        mediaSize = size,
+                        description = itemOld.description,
+                        // Intentionally reset focus when cropping
+                        focus = null,
+                        replaceItem = itemOld
+                    )
+                }
             }
-        } else if (result == CropImage.CancelledResult) {
-            Log.w(TAG, "Edit image cancelled by user")
-        } else {
-            Log.w(TAG, "Edit image failed: " + result.error)
-            displayTransientMessage(R.string.error_image_edit_failed)
+            is EditImageResult.Error -> {
+                Log.w(TAG, "Edit image failed: " + result.exception)
+                displayTransientMessage(R.string.error_image_edit_failed)
+            }
+            is EditImageResult.Cancelled -> {
+                Log.w(TAG, "Edit image cancelled by user")
+            }
         }
         viewModel.cropImageItemOld = null
     }
@@ -1170,13 +1174,12 @@ class ComposeActivity :
 
         viewModel.cropImageItemOld = item
 
-        cropImage.launch(
-            options(uri = item.uri) {
-                setOutputUri(uriNew)
-                setOutputCompressFormat(
-                    if (isPng) Bitmap.CompressFormat.PNG else Bitmap.CompressFormat.JPEG
-                )
-            }
+        editImage.launch(
+            EditImageOptions(
+                input = item.uri,
+                outputUri = uriNew,
+                outputCompressFormat = if (isPng) Bitmap.CompressFormat.PNG else Bitmap.CompressFormat.JPEG
+            )
         )
     }
 

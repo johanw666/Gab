@@ -121,9 +121,7 @@
         <activity android:name=".components.accountlist.AccountListActivity" />
         <activity android:name=".AboutActivity" />
         <activity android:name=".TabPreferenceActivity" />
-        <activity
-            android:name="com.canhub.cropper.CropImageActivity"
-            android:theme="@style/Base.Theme.AppCompat" />
+        <activity android:name=".components.editimage.EditImageActivity" />
         <activity
             android:name=".components.search.SearchActivity"
             android:launchMode="singleTask"

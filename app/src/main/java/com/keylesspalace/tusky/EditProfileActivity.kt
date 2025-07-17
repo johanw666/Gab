@@ -15,7 +15,6 @@
 
 package com.keylesspalace.tusky
 
-import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
@@ -25,6 +24,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
 import androidx.activity.OnBackPressedCallback
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.core.graphics.Insets
@@ -41,12 +41,12 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.bitmap.FitCenter
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
-import com.canhub.cropper.CropImage
-import com.canhub.cropper.CropImageContract
-import com.canhub.cropper.options
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.keylesspalace.tusky.adapter.AccountFieldEditAdapter
+import com.keylesspalace.tusky.components.editimage.EditImageContract
+import com.keylesspalace.tusky.components.editimage.EditImageOptions
+import com.keylesspalace.tusky.components.editimage.EditImageResult
 import com.keylesspalace.tusky.components.instanceinfo.InstanceInfoRepository
 import com.keylesspalace.tusky.databinding.ActivityEditProfileBinding
 import com.keylesspalace.tusky.util.Error
@@ -78,24 +78,51 @@ class EditProfileActivity : BaseActivity() {
 
     private var maxAccountFields = InstanceInfoRepository.DEFAULT_MAX_ACCOUNT_FIELDS
 
-    private enum class PickType {
+    enum class PickType {
         AVATAR,
         HEADER
     }
 
-    private val cropImage = registerForActivityResult(CropImageContract()) { result ->
-        if (result is CropImage.CancelledResult) {
-            return@registerForActivityResult
+    private val pickImage = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
+        viewModel.picking?.let { pickType ->
+            if (uri != null) {
+                cropImage.launch(
+                    when (pickType) {
+                        PickType.AVATAR -> {
+                            EditImageOptions(
+                                input = uri,
+                                outputUri = viewModel.getAvatarUri(),
+                                requiredWidth = AVATAR_SIZE,
+                                requiredHeight = AVATAR_SIZE,
+                                outputCompressFormat = Bitmap.CompressFormat.PNG
+                            )
+                        }
+                        PickType.HEADER -> {
+                            EditImageOptions(
+                                input = uri,
+                                outputUri = viewModel.getHeaderUri(),
+                                requiredWidth = HEADER_WIDTH,
+                                requiredHeight = HEADER_HEIGHT,
+                                outputCompressFormat = Bitmap.CompressFormat.PNG
+                            )
+                        }
+                    }
+                )
+            }
         }
+    }
 
-        if (!result.isSuccessful) {
-            return@registerForActivityResult onPickFailure(result.error)
-        }
-
-        if (result.uriContent == viewModel.getAvatarUri()) {
-            viewModel.newAvatarPicked()
-        } else {
-            viewModel.newHeaderPicked()
+    private val cropImage = registerForActivityResult(EditImageContract()) { result ->
+        when (result) {
+            is EditImageResult.Success -> {
+                viewModel.newImagePicked(result.outputUri)
+            }
+            is EditImageResult.Error -> {
+                onPickFailure(result.exception)
+            }
+            is EditImageResult.Cancelled -> {
+                // nothing to do
+            }
         }
     }
 
@@ -306,33 +333,8 @@ class EditProfileActivity : BaseActivity() {
     }
 
     private fun pickMedia(pickType: PickType) {
-        val intent = Intent(Intent.ACTION_GET_CONTENT)
-        intent.addCategory(Intent.CATEGORY_OPENABLE)
-        intent.type = "image/*"
-        when (pickType) {
-            PickType.AVATAR -> {
-                cropImage.launch(
-                    options {
-                        setRequestedSize(AVATAR_SIZE, AVATAR_SIZE)
-                        setAspectRatio(AVATAR_SIZE, AVATAR_SIZE)
-                        setImageSource(includeGallery = true, includeCamera = false)
-                        setOutputUri(viewModel.getAvatarUri())
-                        setOutputCompressFormat(Bitmap.CompressFormat.PNG)
-                    }
-                )
-            }
-            PickType.HEADER -> {
-                cropImage.launch(
-                    options {
-                        setRequestedSize(HEADER_WIDTH, HEADER_HEIGHT)
-                        setAspectRatio(HEADER_WIDTH, HEADER_HEIGHT)
-                        setImageSource(includeGallery = true, includeCamera = false)
-                        setOutputUri(viewModel.getHeaderUri())
-                        setOutputCompressFormat(Bitmap.CompressFormat.PNG)
-                    }
-                )
-            }
-        }
+        viewModel.picking = pickType
+        pickImage.launch("image/*")
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

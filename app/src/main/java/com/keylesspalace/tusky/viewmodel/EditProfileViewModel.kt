@@ -22,6 +22,7 @@ import androidx.core.net.toUri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import at.connyduck.calladapter.networkresult.fold
+import com.keylesspalace.tusky.EditProfileActivity.PickType
 import com.keylesspalace.tusky.appstore.EventHub
 import com.keylesspalace.tusky.appstore.ProfileEditedEvent
 import com.keylesspalace.tusky.components.instanceinfo.InstanceInfo
@@ -93,6 +94,8 @@ class EditProfileViewModel @Inject constructor(
 
     private var apiProfileAccount: Account? = null
 
+    var picking: PickType? = null
+
     fun obtainProfile() = viewModelScope.launch {
         if (_profileData.value == null || _profileData.value is Error) {
             _profileData.value = Loading()
@@ -113,12 +116,12 @@ class EditProfileViewModel @Inject constructor(
 
     fun getHeaderUri() = getCacheFileForName(HEADER_FILE_NAME).toUri()
 
-    fun newAvatarPicked() {
-        _avatarData.value = getAvatarUri()
-    }
-
-    fun newHeaderPicked() {
-        _headerData.value = getHeaderUri()
+    fun newImagePicked(uri: Uri) {
+        if (uri == getAvatarUri()) {
+            _avatarData.value = uri
+        } else {
+            _headerData.value = uri
+        }
     }
 
     internal fun dataChanged(newProfileData: ProfileDataInUi) {

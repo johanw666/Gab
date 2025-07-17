@@ -932,4 +932,10 @@
 
     <string name="reblog_confirm">Boost this post?</string>
     <string name="favourite_confirm">Favorite this post?</string>
+
+    <string name="edit_image_rotate">Rotate</string>
+    <string name="edit_image_flip">Flip</string>
+    <string name="edit_image_flip_horizontally">Flip horizontally</string>
+    <string name="edit_image_flip_vertically">Flip vertically</string>
+
 </resources>

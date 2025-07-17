@@ -33,7 +33,7 @@ glide = "4.16.0"
 glide-animation-plugin = "3.0.4"
 hilt = "2.56.2"
 kotlin = "2.1.21"
-image-cropper = "4.3.2"
+image-cropper = "4.6.0"
 material = "1.12.0"
 material-drawer = "9.0.2"
 mockito-inline = "5.2.0"
@@ -110,7 +110,7 @@ glide-core = { module = "com.github.bumptech.glide:glide", version.ref = "glide"
 glide-okhttp3-integration = { module = "com.github.bumptech.glide:okhttp3-integration", version.ref = "glide" }
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
-image-cropper = { module = "com.github.CanHub:Android-Image-Cropper", version.ref = "image-cropper" }
+image-cropper = { module = "com.vanniktech:android-image-cropper", version.ref = "image-cropper" }
 material-drawer-core = { module = "com.mikepenz:materialdrawer", version.ref = "material-drawer" }
 material-drawer-iconics = { module = "com.mikepenz:materialdrawer-iconics", version.ref = "material-drawer" }
 mockito-kotlin = { module = "org.mockito.kotlin:mockito-kotlin", version.ref = "mockito-kotlin" }
