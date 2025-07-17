@@ -172,8 +172,7 @@ class NotificationsFragment :
                 this,
                 StatusProvider { pos: Int ->
                     if (pos in 0 until adapter.itemCount) {
-                        val notification = adapter.peek(pos)
-                        // We support replies only for now
+                        val notification = adapter.peek(pos)?.takeIf { it.asStatusOrNull() != null }
                         return@StatusProvider notification as? NotificationViewData.Concrete?
                     } else {
                         null
