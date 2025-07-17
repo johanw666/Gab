@@ -91,6 +91,12 @@ android {
         }
     }
 
+    kotlin {
+        compilerOptions {
+            freeCompilerArgs = ["-Xannotation-default-target=param-property"]
+        }
+    }
+
     lint {
         lintConfig file("lint.xml")
         // Regenerate by deleting the file and running `./gradlew app:lintGreenDebug`
