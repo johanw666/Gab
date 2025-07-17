@@ -5,9 +5,9 @@ import com.keylesspalace.tusky.db.entity.AccountEntity
 import com.keylesspalace.tusky.entity.Instance
 import com.squareup.moshi.Moshi
 import kotlinx.coroutines.test.runTest
+import mockwebserver3.MockResponse
+import mockwebserver3.MockWebServer
 import okhttp3.OkHttpClient
-import okhttp3.mockwebserver.MockResponse
-import okhttp3.mockwebserver.MockWebServer
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
@@ -30,7 +30,7 @@ class ApiFactoryTest {
 
     @After
     fun teardown() {
-        mockWebServer.shutdown()
+        mockWebServer.close()
     }
 
     private fun retrofit() = Retrofit.Builder()
@@ -59,7 +59,7 @@ class ApiFactoryTest {
         val instanceResponse = api.getInstance()
 
         assertTrue(instanceResponse.isSuccess)
-        assertEquals("Bearer fakeToken", mockWebServer.takeRequest().getHeader("Authorization"))
+        assertEquals("Bearer fakeToken", mockWebServer.takeRequest().headers["Authorization"])
     }
 
     @Test
@@ -81,7 +81,7 @@ class ApiFactoryTest {
         val instanceResponse = api.getInstance(domain = mockWebServer.hostName)
 
         assertTrue(instanceResponse.isSuccess)
-        assertNull(mockWebServer.takeRequest().getHeader("Authorization"))
+        assertNull(mockWebServer.takeRequest().headers["Authorization"])
     }
 
     @Test
@@ -94,7 +94,7 @@ class ApiFactoryTest {
         val instanceResponse = api.getInstance(domain = mockWebServer.hostName)
 
         assertTrue(instanceResponse.isSuccess)
-        assertNull(mockWebServer.takeRequest().getHeader("Authorization"))
+        assertNull(mockWebServer.takeRequest().headers["Authorization"])
     }
 
     @Test
@@ -112,15 +112,14 @@ class ApiFactoryTest {
 
     private fun mockInstanceResponse() {
         mockWebServer.enqueue(
-            MockResponse()
-                .setBody(
-                    moshi.adapter(Instance::class.java).toJson(
-                        Instance(
-                            domain = "example.org",
-                            version = "1.0.0"
-                        )
+            MockResponse(
+                body = moshi.adapter(Instance::class.java).toJson(
+                    Instance(
+                        domain = "example.org",
+                        version = "1.0.0"
                     )
                 )
+            )
         )
     }
 }
