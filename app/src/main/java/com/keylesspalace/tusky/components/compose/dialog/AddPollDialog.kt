@@ -117,7 +117,7 @@ fun showAddPollDialog(
         dialog.getButton(AlertDialog.BUTTON_NEGATIVE)?.setOnClickListener {
             if (existingPoll != newPoll()) {
                 MaterialAlertDialogBuilder(context)
-                    .setMessage(R.string.confirm_dismiss_caption)
+                    .setMessage(R.string.confirm_dismiss_poll)
                     .setPositiveButton(R.string.yes) { _, _ ->
                         dialog.dismiss()
                     }
