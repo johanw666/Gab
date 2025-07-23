@@ -46,7 +46,9 @@ import com.keylesspalace.tusky.util.viewBinding
 import com.keylesspalace.tusky.util.visible
 import com.ortiz.touchview.OnTouchCoordinatesListener
 import com.ortiz.touchview.TouchImageView
+import kotlin.math.PI
 import kotlin.math.abs
+import kotlin.math.atan
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.launch
 
@@ -146,6 +148,11 @@ class ViewImageFragment : ViewMediaFragment() {
             /** Y coordinate of the last single-finger drag */
             var lastDragY: Float? = null
 
+            /** The coordinates of the start of the last single-finger drag */
+            var startDragCoordinates: Pair<Float, Float>? = null
+
+            var detectedImageDrag: Boolean = false
+
             override fun onTouchCoordinate(view: View, event: MotionEvent, bitmapPoint: PointF) {
                 singleTapDetector.onTouchEvent(event)
 
@@ -153,27 +160,61 @@ class ViewImageFragment : ViewMediaFragment() {
                 if (event.pointerCount == 2 && lastDragY != null) {
                     onGestureEnd(view)
                     lastDragY = null
+
+                    startDragCoordinates = null
+                    if (detectedImageDrag) {
+                        view.parent.requestDisallowInterceptTouchEvent(false)
+                        detectedImageDrag = false
+                    }
                 }
 
                 // Stop the parent view from handling touches if either (a) the user has 2+
                 // fingers on the screen, or (b) the image has been zoomed in, and can be scrolled
-                // horizontally in both directions.
+                // horizontally in both directions. (c) the image has been zoomed in, and the user
+                // started a single finger swipe, and started moving the image in a way that doesn't
+                // "look" like a horizontal swipe
                 //
                 // This stops things like ViewPager2 from trying to intercept a left/right swipe
                 // and ensures that the image does not appear to "stick" to the screen as different
                 // views fight over who should be handling the swipe.
-                //
-                // If the view can be scrolled in one direction it's OK to let the parent intercept,
-                // which allows the user to swipe between images even if one or more of them have
-                // been zoomed in.
-                if (event.pointerCount >= 2 || view.canScrollHorizontally(1) && view.canScrollHorizontally(-1)) {
+                if (view.canScrollHorizontally(1) || view.canScrollHorizontally(-1)) {
                     when (event.action) {
                         MotionEvent.ACTION_DOWN, MotionEvent.ACTION_MOVE -> {
-                            view.parent.requestDisallowInterceptTouchEvent(true)
-                        }
+                            if (event.pointerCount == 1) {
+                                if (startDragCoordinates == null) {
+                                    startDragCoordinates = Pair(event.rawX, event.rawY)
+                                }
+                                val diffX = startDragCoordinates!!.first - event.rawX
+                                val diffY = startDragCoordinates!!.second - event.rawY
 
+                                if (abs(diffX) > 0.0001) {
+                                    val ratio = diffY / diffX
+                                    val angle = abs(atan(ratio))
+                                    val angleDegrees = angle / PI * 180
+                                    // if the angle of the swipe ever exceeds 10 degrees in each direction
+                                    // or has a difference of more then 5 px up or down from the starting point
+                                    // before the ViewPager2 starts intercepting the events, we consider
+                                    // that an image drag
+                                    if (angleDegrees > 10.0 && abs(diffY) > 5) {
+                                        detectedImageDrag = true
+                                    }
+                                }
+                            }
+                            // If the view can be scrolled in one direction it's OK to let the parent intercept,
+                            // which allows the user to swipe between images even if one or more of them have
+                            // been zoomed in.
+                            if (detectedImageDrag || event.pointerCount >= 2 || view.canScrollHorizontally(1) && view.canScrollHorizontally(-1)) {
+                                view.parent.requestDisallowInterceptTouchEvent(true)
+                            }
+                        }
                         MotionEvent.ACTION_UP -> {
-                            view.parent.requestDisallowInterceptTouchEvent(false)
+                            if (event.pointerCount >= 2 || view.canScrollHorizontally(1) && view.canScrollHorizontally(-1)) {
+                                view.parent.requestDisallowInterceptTouchEvent(false)
+                            } else if (event.pointerCount == 1 && detectedImageDrag) {
+                                view.parent.requestDisallowInterceptTouchEvent(false)
+                                detectedImageDrag = false
+                                startDragCoordinates = null
+                            }
                         }
                     }
                     return
