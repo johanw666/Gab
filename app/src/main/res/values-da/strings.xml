@@ -1,2 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="title_home">Hjem</string>
+    <string name="title_notifications">Notifikationer</string>
+    <string name="error_empty">Dette må ikke være tomt.</string>
+    <string name="error_invalid_domain">Ugyldigt domæne indtastet</string>
+    <string name="error_failed_app_registration">Autentificering med den instans mislykkedes. Hvis problemet fortsætter, kan du prøve at logge ind i browseren fra menuen.</string>
+    <string name="error_no_web_browser_found">Kunne ikke finde en webbrowser at bruge.</string>
+    <string name="error_authorization_denied">Autorisationen blev afvist. Hvis du er sikker på, at du har angivet de korrekte legitimationsoplysninger, kan du prøve at logge ind i browseren fra menuen.</string>
+    <string name="error_loading_account_details">Fejl ved indlæsning af kontooplysninger</string>
+    <string name="error_could_not_load_login_page">Kunne ikke indlæse login-siden.</string>
+    <string name="error_compose_character_limit">Indlægget er for langt!</string>
+    <string name="error_multimedia_size_limit">Video- og lydfiler må ikke overstige %1$s MB i størrelse.</string>
+    <string name="error_image_edit_failed">Billedet kunne ikke redigeres.</string>
+    <string name="error_media_upload_type">Den type fil kan ikke uploades.</string>
+    <string name="error_media_upload_opening">Den fil kunne ikke åbnes.</string>
+    <string name="error_media_upload_permission">Der kræves tilladelse til at læse medier.</string>
+    <string name="error_media_upload_image_or_video">Billeder og videoer kan ikke begge vedhæftes til det samme indlæg.</string>
+    <string name="error_media_upload_sending">Uploadet mislykkedes.</string>
+    <string name="error_generic">Der opstod en fejl.</string>
+    <string name="error_authorization_unknown">Der opstod en uidentificeret autorisationsfejl. Hvis problemet fortsætter, kan du prøve at logge ind i browseren fra menuen.</string>
+    <string name="error_network">Der opstod en netværksfejl. Kontroller din forbindelse og prøv igen.</string>
+    <string name="error_retrieving_oauth_token">Det lykkedes ikke at hente et login-token. Hvis problemet fortsætter, kan du prøve at logge ind i browseren fra menuen.</string>
+    <string name="error_media_download_permission">Der kræves tilladelse til at gemme medier.</string>
+</resources>

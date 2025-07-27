@@ -822,4 +822,8 @@
     <string name="reblog_confirm">Hybu\'r neges hon?</string>
     <string name="favourite_confirm">Hoffi\'r neges hon?</string>
     <string name="confirm_dismiss_poll">Cael gwared ar newidiadau\'r pôl?</string>
+    <string name="edit_image_rotate">Cylchdroi</string>
+    <string name="edit_image_flip_horizontally">Fflipio\'n llorweddol</string>
+    <string name="edit_image_flip">Fflipio</string>
+    <string name="edit_image_flip_vertically">Fflipio\'n fertigol</string>
 </resources>
