@@ -6,6 +6,23 @@
 
 ### Significant bug fixes
 
+## v30.0
+
+### New features and other improvements
+
+- The Tusky repository is now on [Codeberg](https://codeberg.org/tusky/Tusky) https://codeberg.org/tusky/Tusky/pulls/5133 https://codeberg.org/tusky/Tusky/pulls/5134 https://codeberg.org/tusky/Tusky/pulls/5144
+- The reporting flow has been overhauled. It is now possible to select a report reason. https://codeberg.org/tusky/Tusky/pulls/5188
+- The image editor got an improved look https://codeberg.org/tusky/Tusky/pulls/5173
+- Tusky can now be used with onion services https://codeberg.org/tusky/Tusky/issues/5170
+- A dialog has been added that prevents accidentally dismissing the poll composer https://codeberg.org/tusky/Tusky/issues/5131
+- The UnifiedPush connector has been updated, which should improve reliability of pushes https://codeberg.org/tusky/Tusky/issues/5040
+- Tusky now supports 16KB page sizes https://codeberg.org/tusky/Tusky/pulls/5193
+
+### Significant bug fixes
+- Fixes a bug where sometimes clicking a post would open the wrong thread https://codeberg.org/tusky/Tusky/issues/5142
+- Small layout tweaks https://codeberg.org/tusky/Tusky/pulls/5153 https://codeberg.org/tusky/Tusky/pulls/5159
+- It is now harder to lose a draft when switching to other apps while editing https://codeberg.org/tusky/Tusky/issues/5166
+
 ## v29.0
 
 ### New features and other improvements
