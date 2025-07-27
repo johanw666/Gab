@@ -113,6 +113,7 @@ class ComposeScheduleView
             set(Calendar.MINUTE, 0)
             set(Calendar.SECOND, 0)
             set(Calendar.MILLISECOND, 0)
+            setTimeZone(TimeZone.getTimeZone("UTC"))
         }
         val calendarConstraints = CalendarConstraints.Builder()
             .setValidator(DateValidatorPointForward.from(earliest.timeInMillis))
