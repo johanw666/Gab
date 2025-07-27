@@ -39,7 +39,6 @@ import com.keylesspalace.tusky.StatusListActivity
 import com.keylesspalace.tusky.ViewMediaActivity
 import com.keylesspalace.tusky.components.account.AccountActivity
 import com.keylesspalace.tusky.components.report.ReportViewModel
-import com.keylesspalace.tusky.components.report.Screen
 import com.keylesspalace.tusky.components.report.adapter.AdapterHandler
 import com.keylesspalace.tusky.components.report.adapter.StatusesAdapter
 import com.keylesspalace.tusky.databinding.FragmentReportStatusesBinding
@@ -203,12 +202,12 @@ class ReportStatusesFragment :
     }
 
     private fun handleClicks() {
-        binding.buttonCancel.setOnClickListener {
-            viewModel.navigateTo(Screen.Back)
+        binding.buttonBack.setOnClickListener {
+            viewModel.backFrom(ReportViewModel.Screen.Statuses)
         }
 
         binding.buttonContinue.setOnClickListener {
-            viewModel.navigateTo(Screen.Note)
+            viewModel.forwardFrom(ReportViewModel.Screen.Statuses)
         }
     }
 

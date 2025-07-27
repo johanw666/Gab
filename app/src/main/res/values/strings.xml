@@ -938,4 +938,15 @@
     <string name="edit_image_flip_horizontally">Flip horizontally</string>
     <string name="edit_image_flip_vertically">Flip vertically</string>
 
+    <string name="report_which_rules_violated">Which rules are being violated? Select all that apply.</string>
+    <string name="report_problem_with_post">What is the problem with this post?</string>
+    <string name="report_category_spam_description">Malicious links, fake engagement, or repetitive replies</string>
+    <string name="report_category_spam_title">It\'s spam</string>
+    <string name="report_category_legal_description">You believe it violates the law of your or the server\'s country</string>
+    <string name="report_category_legal_title">It\'s illegal</string>
+    <string name="report_category_violation_description">You are aware that it breaks specific rules</string>
+    <string name="report_category_violation_title">It violates server rules</string>
+    <string name="report_category_other_description">The issue does not fit into other categories</string>
+    <string name="report_category_other_title">It\'s something else</string>
+
 </resources>

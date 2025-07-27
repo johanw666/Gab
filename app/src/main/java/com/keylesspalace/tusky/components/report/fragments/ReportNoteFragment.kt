@@ -24,7 +24,6 @@ import androidx.lifecycle.lifecycleScope
 import com.google.android.material.snackbar.Snackbar
 import com.keylesspalace.tusky.R
 import com.keylesspalace.tusky.components.report.ReportViewModel
-import com.keylesspalace.tusky.components.report.Screen
 import com.keylesspalace.tusky.databinding.FragmentReportNoteBinding
 import com.keylesspalace.tusky.util.Error
 import com.keylesspalace.tusky.util.Loading
@@ -81,7 +80,7 @@ class ReportNoteFragment : Fragment(R.layout.fragment_report_note) {
             viewModel.reportingState.collect {
                 if (it == null) return@collect
                 when (it) {
-                    is Success -> viewModel.navigateTo(Screen.Done)
+                    is Success -> viewModel.forwardFrom(ReportViewModel.Screen.Note)
                     is Loading -> showLoading()
                     is Error -> showError(it.cause)
                 }
@@ -121,7 +120,7 @@ class ReportNoteFragment : Fragment(R.layout.fragment_report_note) {
 
     private fun handleClicks() {
         binding.buttonBack.setOnClickListener {
-            viewModel.navigateTo(Screen.Back)
+            viewModel.backFrom(ReportViewModel.Screen.Note)
         }
 
         binding.buttonReport.setOnClickListener {

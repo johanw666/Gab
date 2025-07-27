@@ -22,7 +22,6 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import com.keylesspalace.tusky.R
 import com.keylesspalace.tusky.components.report.ReportViewModel
-import com.keylesspalace.tusky.components.report.Screen
 import com.keylesspalace.tusky.databinding.FragmentReportDoneBinding
 import com.keylesspalace.tusky.util.Loading
 import com.keylesspalace.tusky.util.viewBinding
@@ -37,7 +36,8 @@ class ReportDoneFragment : Fragment(R.layout.fragment_report_done) {
     private val binding by viewBinding(FragmentReportDoneBinding::bind)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        binding.textReported.text = getString(R.string.report_sent_success, viewModel.accountUserName)
+        binding.textReported.text = getString(R.string.report_sent_success, viewModel.userName)
+
         handleClicks()
         subscribeObservables()
     }
@@ -85,7 +85,7 @@ class ReportDoneFragment : Fragment(R.layout.fragment_report_done) {
 
     private fun handleClicks() {
         binding.buttonDone.setOnClickListener {
-            viewModel.navigateTo(Screen.Finish)
+            activity?.finish()
         }
         binding.buttonBlock.setOnClickListener {
             viewModel.toggleBlock()

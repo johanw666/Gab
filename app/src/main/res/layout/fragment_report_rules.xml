@@ -6,44 +6,44 @@
     android:layout_height="match_parent"
     tools:context=".components.report.fragments.ReportStatusesFragment">
 
-    <com.keylesspalace.tusky.view.TuskySwipeRefreshLayout
-        android:id="@+id/swipeRefreshLayout"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@id/buttonContinue"
         app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-    </com.keylesspalace.tusky.view.TuskySwipeRefreshLayout>
+            <TextView
+                android:id="@+id/ruleQuestion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="12dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="8dp"
+                android:lineSpacingMultiplier="1.1"
+                android:text="@string/report_which_rules_violated"
+                android:textColor="?android:textColorPrimary"
+                android:textSize="?attr/status_text_medium"
+                app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.material.progressindicator.LinearProgressIndicator
-        android:id="@+id/progressBarTop"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:indeterminate="true"
-        app:layout_constraintTop_toTopOf="@id/swipeRefreshLayout" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/ruleList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"
+                android:overScrollMode="never"
+                android:paddingBottom="8dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintBottom_toTopOf="@id/buttonContinue"
+                app:layout_constraintTop_toBottomOf="@id/ruleQuestion" />
 
-    <com.google.android.material.progressindicator.LinearProgressIndicator
-        android:id="@+id/progressBarBottom"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:indeterminate="true"
-        app:layout_constraintBottom_toBottomOf="@id/swipeRefreshLayout" />
+        </LinearLayout>
 
-    <com.google.android.material.progressindicator.CircularProgressIndicator
-        android:id="@+id/progressBarLoading"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:indeterminate="true"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@id/swipeRefreshLayout"
-        app:layout_constraintEnd_toEndOf="@id/swipeRefreshLayout"
-        app:layout_constraintStart_toStartOf="@id/swipeRefreshLayout"
-        app:layout_constraintTop_toTopOf="@id/swipeRefreshLayout" />
+    </ScrollView>
 
     <Button
         android:id="@+id/buttonBack"

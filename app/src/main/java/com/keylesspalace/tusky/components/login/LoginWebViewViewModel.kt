@@ -20,7 +20,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import at.connyduck.calladapter.networkresult.fold
 import com.keylesspalace.tusky.network.MastodonApi
-import com.keylesspalace.tusky.util.isHttpNotFound
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -41,31 +40,17 @@ class LoginWebViewViewModel @Inject constructor(
         if (this.domain == null) {
             this.domain = domain
             viewModelScope.launch {
-                api.getInstance(domain).fold(
-                    { instance ->
-                        _instanceRules.value = instance.rules.map { rule -> rule.text }
+                api.getInstanceRules(domain).fold(
+                    { rules ->
+                        _instanceRules.value = rules.map { rule -> rule.text }
                     },
                     { throwable ->
-                        if (throwable.isHttpNotFound()) {
-                            api.getInstanceV1(domain).fold(
-                                { instance ->
-                                    _instanceRules.value = instance.rules.map { rule -> rule.text }
-                                },
-                                { throwable2 ->
-                                    Log.w(
-                                        "LoginWebViewViewModel",
-                                        "failed to load instance info",
-                                        throwable2
-                                    )
-                                }
-                            )
-                        } else {
-                            Log.w(
-                                "LoginWebViewViewModel",
-                                "failed to load instance info",
-                                throwable
-                            )
-                        }
+                        // not all fedi servers support this endpoint
+                        Log.w(
+                            "LoginWebViewViewModel",
+                            "failed to load instance rules",
+                            throwable
+                        )
                     }
                 )
             }

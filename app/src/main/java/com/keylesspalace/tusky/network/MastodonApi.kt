@@ -88,14 +88,10 @@ interface MastodonApi {
     suspend fun getCustomEmojis(): NetworkResult<List<Emoji>>
 
     @GET("api/v1/instance")
-    suspend fun getInstanceV1(
-        @Header(DOMAIN_HEADER) domain: String? = null
-    ): NetworkResult<InstanceV1>
+    suspend fun getInstanceV1(): NetworkResult<InstanceV1>
 
     @GET("api/v2/instance")
-    suspend fun getInstance(
-        @Header(DOMAIN_HEADER) domain: String? = null
-    ): NetworkResult<Instance>
+    suspend fun getInstance(): NetworkResult<Instance>
 
     @GET("api/v1/filters")
     suspend fun getFiltersV1(): NetworkResult<List<FilterV1>>
@@ -632,9 +628,11 @@ interface MastodonApi {
     @POST("api/v1/reports")
     suspend fun report(
         @Field("account_id") accountId: String,
-        @Field("status_ids[]") statusIds: List<String>,
+        @Field("status_ids[]") statusIds: Set<String>,
         @Field("comment") comment: String,
-        @Field("forward") isNotifyRemote: Boolean?
+        @Field("forward") forward: Boolean?,
+        @Field("category") category: String?,
+        @Field("rule_ids[]") ruleIds: Set<String>?,
     ): NetworkResult<Unit>
 
     @GET("api/v1/accounts/{id}/statuses")
@@ -758,4 +756,9 @@ interface MastodonApi {
 
     @POST("api/v1/notifications/requests/{id}/dismiss")
     suspend fun dismissNotificationRequest(@Path("id") notificationId: String): NetworkResult<Unit>
+
+    @GET("api/v1/instance/rules")
+    suspend fun getInstanceRules(
+        @Header(DOMAIN_HEADER) domain: String? = null
+    ): NetworkResult<List<Instance.Rule>>
 }

@@ -19,7 +19,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
-import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat.Type.ime
 import androidx.core.view.WindowInsetsCompat.Type.systemBars
 import androidx.core.view.updatePadding
 import androidx.lifecycle.lifecycleScope
@@ -27,51 +27,49 @@ import com.keylesspalace.tusky.BottomSheetActivity
 import com.keylesspalace.tusky.R
 import com.keylesspalace.tusky.components.report.adapter.ReportPagerAdapter
 import com.keylesspalace.tusky.databinding.ActivityReportBinding
+import com.keylesspalace.tusky.util.setOnWindowInsetsChangeListener
 import com.keylesspalace.tusky.util.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.lifecycle.withCreationCallback
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class ReportActivity : BottomSheetActivity() {
 
-    private val viewModel: ReportViewModel by viewModels()
+    private val viewModel: ReportViewModel by viewModels(
+        extrasProducer = {
+            defaultViewModelCreationExtras.withCreationCallback<ReportViewModel.Factory> { factory ->
+                factory.create(
+                    accountId = requireNotNull(intent?.getStringExtra(ACCOUNT_ID)),
+                    userName = requireNotNull(intent?.getStringExtra(ACCOUNT_USERNAME)),
+                    statusId = intent?.getStringExtra(STATUS_ID)
+                )
+            }
+        }
+    )
 
     private val binding by viewBinding(ActivityReportBinding::inflate)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val accountId = intent?.getStringExtra(ACCOUNT_ID)
-        val accountUserName = intent?.getStringExtra(ACCOUNT_USERNAME)
-        if (accountId.isNullOrBlank() || accountUserName.isNullOrBlank()) {
-            throw IllegalStateException(
-                "accountId ($accountId) or accountUserName ($accountUserName) is null"
-            )
-        }
-
-        viewModel.init(accountId, accountUserName, intent?.getStringExtra(STATUS_ID))
 
         setContentView(binding.root)
 
         setSupportActionBar(binding.includedToolbar.toolbar)
 
         supportActionBar?.apply {
-            title = getString(R.string.report_username_format, viewModel.accountUserName)
+            title = getString(R.string.report_username_format, viewModel.userName)
             setDisplayHomeAsUpEnabled(true)
             setDisplayShowHomeEnabled(true)
             setHomeAsUpIndicator(R.drawable.ic_close_24dp)
         }
 
-        ViewCompat.setOnApplyWindowInsetsListener(binding.wizard) { wizard, insets ->
-            val systemBarInsets = insets.getInsets(systemBars())
-            wizard.updatePadding(bottom = systemBarInsets.bottom)
-
-            insets.inset(0, 0, 0, systemBarInsets.bottom)
+        binding.wizard.setOnWindowInsetsChangeListener { insets ->
+            val bottomInsets = insets.getInsets(systemBars() or ime()).bottom
+            binding.wizard.updatePadding(bottom = bottomInsets)
         }
 
         initViewPager()
-        if (savedInstanceState == null) {
-            viewModel.navigateTo(Screen.Statuses)
-        }
         subscribeObservables()
     }
 
@@ -87,16 +85,18 @@ class ReportActivity : BottomSheetActivity() {
 
     private fun subscribeObservables() {
         lifecycleScope.launch {
-            viewModel.navigation.collect { screen ->
-                if (screen == null) return@collect
-                viewModel.navigated()
-                when (screen) {
-                    Screen.Statuses -> showStatusesPage()
-                    Screen.Note -> showNotesPage()
-                    Screen.Done -> showDonePage()
-                    Screen.Back -> showPreviousScreen()
-                    Screen.Finish -> closeScreen()
+            viewModel.navigation.collect { navIndex ->
+                if (navIndex == null) {
+                    finish()
+                } else {
+                    binding.wizard.currentItem = navIndex
                 }
+            }
+        }
+
+        lifecycleScope.launch {
+            viewModel.showRules.collect { showRules ->
+                (binding.wizard.adapter as ReportPagerAdapter).showRules = showRules
             }
         }
 
@@ -108,29 +108,6 @@ class ReportActivity : BottomSheetActivity() {
                 }
             }
         }
-    }
-
-    private fun showPreviousScreen() {
-        when (binding.wizard.currentItem) {
-            0 -> closeScreen()
-            1 -> showStatusesPage()
-        }
-    }
-
-    private fun showDonePage() {
-        binding.wizard.currentItem = 2
-    }
-
-    private fun showNotesPage() {
-        binding.wizard.currentItem = 1
-    }
-
-    private fun closeScreen() {
-        finish()
-    }
-
-    private fun showStatusesPage() {
-        binding.wizard.currentItem = 0
     }
 
     companion object {
