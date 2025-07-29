@@ -754,4 +754,18 @@
     <string name="reblog_confirm">转发此嘟文？</string>
     <string name="favourite_confirm">收藏此嘟文？</string>
     <string name="confirm_dismiss_poll">放弃投票更改？</string>
+    <string name="edit_image_rotate">旋转</string>
+    <string name="edit_image_flip">翻转</string>
+    <string name="edit_image_flip_horizontally">水平翻转</string>
+    <string name="edit_image_flip_vertically">垂直翻转</string>
+    <string name="report_which_rules_violated">违反了哪些规则？请选择所有适用的项目。</string>
+    <string name="report_problem_with_post">这则嘟文的问题是什么？</string>
+    <string name="report_category_spam_description">恶意链接、虚假联络、或重复回复</string>
+    <string name="report_category_spam_title">垃圾信息</string>
+    <string name="report_category_legal_description">你相信它违反了你的国家或服务器所在国的法律</string>
+    <string name="report_category_legal_title">非法</string>
+    <string name="report_category_violation_description">你知道它违反了特定规则</string>
+    <string name="report_category_violation_title">它违反了服务器规则</string>
+    <string name="report_category_other_description">该问题无法归入其他类别</string>
+    <string name="report_category_other_title">別的什么</string>
 </resources>
