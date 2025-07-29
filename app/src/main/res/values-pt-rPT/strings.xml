@@ -773,4 +773,18 @@
     <string name="reblog_privacy_followers_only_description">Apenas seguidores podem ver as tuas partilhas</string>
     <string name="reblog_confirm">Partilhar esta publicação?</string>
     <string name="favourite_confirm">Gostar desta publicação?</string>
+    <string name="edit_image_rotate">Rodar</string>
+    <string name="edit_image_flip">Inverter</string>
+    <string name="edit_image_flip_horizontally">Inverter horizontalmente</string>
+    <string name="edit_image_flip_vertically">Inverter verticalmente</string>
+    <string name="report_problem_with_post">Qual o problema com esta publicação?</string>
+    <string name="report_category_spam_description">Ligações maliciosas, interações falsas ou respostas repetidas</string>
+    <string name="report_category_spam_title">É spam</string>
+    <string name="report_category_legal_title">É ilegal</string>
+    <string name="report_category_violation_description">Está consciente de que viola regras específicas</string>
+    <string name="report_category_other_title">É outra coisa</string>
+    <string name="report_which_rules_violated">Quais as regras que estão a ser quebradas? Selecione todas as que se aplicam.</string>
+    <string name="report_category_violation_title">Viola as regras do servidor</string>
+    <string name="report_category_legal_description">Acredita que viola a legislação do seu país ou do país do servidor</string>
+    <string name="report_category_other_description">O problema não se enquadra noutras categorias</string>
 </resources>
