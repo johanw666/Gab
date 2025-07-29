@@ -114,7 +114,7 @@
     <string name="label_header">سرایند</string>
     <string name="link_whats_an_instance">نمونه چیست؟</string>
     <string name="login_connection">در حال وصل شدن…</string>
-    <string name="dialog_whats_an_instance">نشانی یا دامنهٔ هر نمونه‌ای می‌تواند وارد شود، چون mastodon.social, icosahedron.website, social.tchncs.de و <a href="https://instances.social">بیش‌تر!</a>. \n \nاگر هنوز حسابی ندارید، می‌توانید نام نمونه‌ای که می‌خواهید به آن بپیوندید را وارد کرده و در آن‌جا حسابی بسازید. \n \nنمونه جاییست که حسابتان رویش میزبانی می‌شود. به راحتی می‌توانید با افراد روی نمونه‌های دیگر ارتباط داشته و دنبالشان کنید؛ انگار که روی یک پایگاه باشید. \n \nاطّلاعات بیش‌تر می‌تواند در <a href="https://joinmastodon.org">joinmastodon.org</a> پیدا شود.</string>
+    <string name="dialog_whats_an_instance">نشانی یا دامنهٔ هر نمونه‌ای می‌تواند وارد شود، چون mastodon.social،‏ icosahedron.website،‏ social.tchncs.de و <a href="https://instances.social">بیش‌تر!</a>. \n \nاگر هنوز حسابی ندارید، می‌توانید نام نمونه‌ای که می‌خواهید به آن بپیوندید را وارد کرده و در آن‌جا حسابی بسازید. \n \nنمونه جاییست که حسابتان رویش میزبانی می‌شود. به راحتی می‌توانید با افراد روی نمونه‌های دیگر ارتباط داشته و دنبالشان کنید؛ انگار که روی یک پایگاه باشید. \n \nاطّلاعات بیش‌تر می‌تواند در <a href="https://joinmastodon.org">joinmastodon.org</a> پیدا شود.</string>
     <string name="dialog_title_finishing_media_upload">پایان بارگذاری رسانه</string>
     <string name="dialog_message_uploading_media">در حال بارگذاری…</string>
     <string name="dialog_download_image">بارگیری</string>
@@ -340,7 +340,7 @@
     <string name="description_post_reblogged">تقویت شده</string>
     <string name="description_post_favourited">برگزیده</string>
     <string name="description_visibility_public">عمومی</string>
-    <string name="description_visibility_unlisted">فهرست نشده</string>
+    <string name="description_visibility_unlisted">سیاهه نشده</string>
     <string name="description_visibility_private">پی‌گیران</string>
     <string name="description_visibility_direct">مستقیم</string>
     <string name="description_poll">نظرسنجی با گزینه‌ها: %1$s، %2$s، %3$s، %4$s؛ %5$s</string>
@@ -568,7 +568,7 @@
     </plurals>
     <string name="description_login">در بیش‌تر حالت‌ها کار می‌کند. هیچ داده‌ای به دیگر کاره‌ها نشت نمی‌کند.</string>
     <string name="pref_reading_order_oldest_first">نخست قدیمی‌ترین</string>
-    <string name="description_browser_login">ممکن است از روش‌های تأیید هویت اضافی پشتیبانی کند؛ ولی نیازمند مرورگری پشتیبانی شده است.</string>
+    <string name="description_browser_login">ممکن است از روش‌های تأیید هویت اضافی پشتیبانی کند؛ ولی نیازمند مرورگری پشتیبانی شده است.</string>
     <string name="action_discard">دور انداختن تغییرات</string>
     <string name="action_continue_edit">ادامهٔ ویرایش</string>
     <string name="action_browser_login">ورود با مرورگر</string>
@@ -683,8 +683,8 @@
     <string name="notification_policies_filter_dont_follow_description">تا به طور دستی تأییدشان کنید</string>
     <string name="notification_policies_filter_not_following_title">افرادی که پیتان نمی‌گیرند</string>
     <string name="unknown_notification_filter_new_accounts_title">حساب‌های جدید</string>
-    <string name="unknown_notification_filter_new_accounts_description">ساخته شده در ۳۰ روز اخیر</string>
-    <string name="unknown_notification_filter_moderated_accounts">حساب‌های نظارت شده</string>
+    <string name="unknown_notification_filter_new_accounts_description">ساخته شده در ۳۰ روز اخیر</string>
+    <string name="unknown_notification_filter_moderated_accounts">حساب‌های نظارت شده</string>
     <string name="unknown_notification_filter_moderated_accounts_description">محدود شده به دست ناظران کارساز</string>
     <string name="filtered_notifications">آگاهی‌های پالوده</string>
     <string name="unknown_notification_filter_unsolicited_private_mentions_title">اشاره‌های خصوصی ناخواسته</string>
@@ -725,7 +725,7 @@
     <string name="moderation_warning">هشدار مدیریتی گرفتید.</string>
     <string name="moderation_warning_action_delete_statuses">برخی فرسته‌هایتان برداشته شدند.</string>
     <string name="moderation_warning_action_disable">حسابتان از کار افتاده.</string>
-    <string name="relationship_severance_event_account_suspension">مدیری از %1$s حساب %2$s را معلّق کرد که یعنی دیگر نمی‌تواند به‌روز رسانی‌هایش را گرفته یا با او تعامل کنید.</string>
+    <string name="relationship_severance_event_account_suspension">مدیری از %1$s حساب %2$s را معلّق کرد که یعنی دیگر نمی‌تواند به‌روز رسانی‌هایش را گرفته یا با او تعامل کنید.</string>
     <string name="relationship_severance_event_domain_block">مدیری از %1$s حساب %2$s را از جمله %3$s نفر از پی‌گیرانتان و %4$s نفر از پی‌گرفته‌هایتان مسدود کرد.</string>
     <string name="relationship_severance_event_user_domain_block">شما %1$s را مسدود کردید که %2$s نفر از پی‌گیران و %3$s نفر از پی‌گرفته‌ّایتان را برداشت.</string>
     <string name="moderation_warning_action_mark_statuses_as_sensitive">برخی فرسته‌هایتان به عنوان حسّاس علامت خوردند.</string>
@@ -766,4 +766,18 @@
     <string name="reblog_privacy_public_description">همه می‌توانند تقویتتان را ببینند</string>
     <string name="reblog_privacy_unlisted_description">همانند عمومی ولی هرگز در خط‌های زمانی عمومی نشان داده نخواهد شد</string>
     <string name="confirm_dismiss_poll">دور انداختن تغییرات نظرسنجی؟</string>
+    <string name="edit_image_rotate">چرخش</string>
+    <string name="edit_image_flip">برگرداندن</string>
+    <string name="edit_image_flip_horizontally">برگرداندن افقی</string>
+    <string name="edit_image_flip_vertically">برگرداندن عمودی</string>
+    <string name="report_problem_with_post">مشکل این فرسته چیست؟</string>
+    <string name="report_category_spam_title">هرزنامه است</string>
+    <string name="report_category_legal_description">باور دارید که قوانین کشور شما یا کارساز را نقض می‌کند</string>
+    <string name="report_category_legal_title">غیرقانونیست</string>
+    <string name="report_category_violation_description">آگاهید که قواعد خاصی را زیرپا می‌گذارد</string>
+    <string name="report_category_other_description">مسئله در دسته‌های دیگر جا نمی‌گیرد</string>
+    <string name="report_category_other_title">چیزی دیگر</string>
+    <string name="report_category_violation_title">قواعد کارساز را نقض می‌کند</string>
+    <string name="report_which_rules_violated">کدام قواعد نقض شده‌اند؟ همهٔ قواعد اعمالی را بگزینید.</string>
+    <string name="report_category_spam_description">پیوندهای مضر، تأثیرگذاری قلابی یا پاسخ‌های تکراری</string>
 </resources>
