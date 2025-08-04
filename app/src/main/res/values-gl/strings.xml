@@ -759,4 +759,18 @@
     <string name="reblog_privacy_unlisted_description">Igual que público pero non se mostra en cronoloxías públicas</string>
     <string name="reblog_privacy_public_description">Todo o mundo pode ver a promoción</string>
     <string name="confirm_dismiss_poll">Desbotar cambios da enquisa?</string>
+    <string name="edit_image_rotate">Rotar</string>
+    <string name="edit_image_flip">Voltear</string>
+    <string name="edit_image_flip_horizontally">Voltear horizontalmente</string>
+    <string name="edit_image_flip_vertically">Voltear verticalmente</string>
+    <string name="report_problem_with_post">Cal é o problema con esta publicación?</string>
+    <string name="report_category_spam_title">É spam</string>
+    <string name="report_category_legal_description">Cres que viola as leis do teu pais ou as do país do servidor</string>
+    <string name="report_category_legal_title">É ilegal</string>
+    <string name="report_category_violation_description">Entendes que falta a algunha norma en concreto</string>
+    <string name="report_category_violation_title">Non segue as regras do servidor</string>
+    <string name="report_category_other_title">É outro asunto diferente</string>
+    <string name="report_which_rules_violated">Que normas se deixaron de atender? Elixe o que corresponda.</string>
+    <string name="report_category_spam_description">Ligazóns maliciosas, suplantación, respostas repetitivas</string>
+    <string name="report_category_other_description">O problema non se axusta ás outras categorías</string>
 </resources>

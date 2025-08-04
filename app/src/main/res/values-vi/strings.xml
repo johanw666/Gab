@@ -745,4 +745,18 @@
     <string name="reblog_privacy_public_description">Ai cũng có thể thấy lượt đăng lại</string>
     <string name="reblog_privacy_unlisted_description">Ai cũng thấy, nhưng không hiện trên bảng tin</string>
     <string name="confirm_dismiss_poll">Hủy bỏ cuộc bình chọn?</string>
+    <string name="edit_image_flip">Lật</string>
+    <string name="edit_image_flip_vertically">Lật theo chiều dọc</string>
+    <string name="edit_image_rotate">Xoay</string>
+    <string name="edit_image_flip_horizontally">Lật theo chiều ngang</string>
+    <string name="report_problem_with_post">Tút này có vấn đề gì?</string>
+    <string name="report_category_spam_title">Đây là spam</string>
+    <string name="report_category_legal_description">Vi phạm pháp luật ở nơi đặt máy chủ hoặc nước bạn</string>
+    <string name="report_category_legal_title">Vi phạm pháp luật</string>
+    <string name="report_category_violation_description">Bạn nhận thấy nó vi phạm nội quy máy chủ</string>
+    <string name="report_category_violation_title">Vi phạm nội quy máy chủ</string>
+    <string name="report_category_other_title">Lý do khác</string>
+    <string name="report_which_rules_violated">Những nội quy nào vi phạm? Hãy chọn tất cả các mục phù hợp.</string>
+    <string name="report_category_spam_description">Liên kết độc hại, giả tương tác hoặc trả lời lặp đi lặp lại</string>
+    <string name="report_category_other_description">Vấn đề không thuộc những mục trên</string>
 </resources>

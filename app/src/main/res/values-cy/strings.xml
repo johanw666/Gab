@@ -826,4 +826,14 @@
     <string name="edit_image_flip_horizontally">Fflipio\'n llorweddol</string>
     <string name="edit_image_flip">Fflipio</string>
     <string name="edit_image_flip_vertically">Fflipio\'n fertigol</string>
+    <string name="report_category_legal_title">Mae\'n anghyfreithlon</string>
+    <string name="report_category_spam_title">Mae\'n sbam</string>
+    <string name="report_problem_with_post">Beth ydy\'r broblem gyda\'r neges hon?</string>
+    <string name="report_category_violation_title">Mae\'n torri rheolau\'r gweinydd</string>
+    <string name="report_category_violation_description">Rydych chi\'n ymwybodol ei bod hi\'n torri rheolau penodol</string>
+    <string name="report_category_other_description">Nid yw\'r broblem yn addas mewn categorïau eraill</string>
+    <string name="report_category_other_title">Mae\'n rhywbeth arall</string>
+    <string name="report_which_rules_violated">Pa reol sy\'n cael ei thorri? Dewiswch unrhyw rheolau perthnasol.</string>
+    <string name="report_category_spam_description">Dolennau niweidiol, negesoun ffug, neu ymatebion ailadroddol</string>
+    <string name="report_category_legal_description">Rydych chi\'n credu ei bod hi\'n torri cyfraith eich gwlad neu gyfraith gwlad y gweinydd</string>
 </resources>
