@@ -28,6 +28,11 @@ steps:
       ANDROID_PUBLISHER_CREDENTIALS:
         from_secret: ANDROID_PUBLISHER_CREDENTIALS
     commands:
+      # create changelog file
+      - mkdir -p app/src/blueRelease/play/release-notes/en-US
+      - cp $(find fastlane/metadata/android/en-US/changelogs | sort -n -k6 -t/ | tail -n 1) app/src/blueRelease/play/release-notes/en-US/default.txt
+      # prepare keystore
       - echo $KEYSTORE | base64 -d > app/Tusky.jks
+      # build and upload
       - export GRADLE_USER_HOME=$PWD/.gradle
       - ./gradlew app:bundleBlueRelease app:publishBlueReleaseBundle
