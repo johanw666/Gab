@@ -346,7 +346,7 @@
             android:layout_marginEnd="4dp"
             android:contentDescription="@string/action_content_warning"
             android:padding="4dp"
-            app:srcCompat="@drawable/ic_feedback_24dp_filled"
+            app:srcCompat="@drawable/ic_feedback_24dp"
             app:tooltipText="@string/action_content_warning" />
 
         <ImageButton

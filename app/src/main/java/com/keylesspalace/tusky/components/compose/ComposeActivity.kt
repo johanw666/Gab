@@ -1197,10 +1197,12 @@ class ComposeActivity :
                 binding.composeContentWarningField.text.length
             )
             binding.composeContentWarningField.requestFocus()
+            binding.composeContentWarningButton.setImageResource(R.drawable.ic_feedback_24dp_filled)
             materialR.attr.colorPrimary
         } else {
             binding.composeContentWarningBar.hide()
             binding.composeEditField.requestFocus()
+            binding.composeContentWarningButton.setImageResource(R.drawable.ic_feedback_24dp)
             android.R.attr.textColorTertiary
         }
         binding.composeContentWarningButton.drawable.setTint(
