@@ -42,8 +42,10 @@ import com.keylesspalace.tusky.usecase.TimelineCases
 import com.keylesspalace.tusky.util.toViewData
 import com.keylesspalace.tusky.viewdata.StatusViewData
 import com.keylesspalace.tusky.viewdata.TranslationViewData
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.async
 import kotlinx.coroutines.channels.BufferOverflow
@@ -56,19 +58,20 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-@HiltViewModel
-class ViewThreadViewModel @Inject constructor(
+@HiltViewModel(assistedFactory = ViewThreadViewModel.Factory::class)
+class ViewThreadViewModel @AssistedInject constructor(
     private val api: MastodonApi,
     private val filterModel: FilterModel,
     private val timelineCases: TimelineCases,
     private val db: AppDatabase,
     eventHub: EventHub,
     accountManager: AccountManager,
+    @Assisted("threadId") private val threadId: String
 ) : ViewModel() {
 
     private val activeAccount = accountManager.activeAccount!!
 
-    private val _uiState = MutableStateFlow(ThreadUiState.Loading as ThreadUiState)
+    private val _uiState: MutableStateFlow<ThreadUiState> = MutableStateFlow(ThreadUiState.Loading)
     val uiState: Flow<ThreadUiState> = _uiState.asStateFlow()
 
     private val _errors = MutableSharedFlow<Throwable>(
@@ -95,17 +98,40 @@ class ViewThreadViewModel @Inject constructor(
                     }
                 }
         }
+        loadThread()
     }
 
-    fun loadThread(id: String) {
+    fun retry() {
         _uiState.value = ThreadUiState.Loading
+        loadThread()
+    }
 
+    fun refresh() {
+        var refreshable = false
+        _uiState.update { uiState ->
+            if (uiState is ThreadUiState.Success) {
+                refreshable = true
+                ThreadUiState.Refreshing(
+                    statusViewData = uiState.statusViewData,
+                    revealButton = uiState.revealButton,
+                    detailedStatusPosition = uiState.detailedStatusPosition
+                )
+            } else {
+                uiState
+            }
+        }
+        if (refreshable) {
+            loadThread()
+        }
+    }
+
+    private fun loadThread() {
         viewModelScope.launch {
-            Log.d(TAG, "Finding status with: $id")
+            Log.d(TAG, "Finding status with: $threadId")
             val filterCall = async { filterModel.init(Filter.Kind.THREAD) }
 
-            val contextCall = async { api.statusContext(id) }
-            val statusAndAccount = db.timelineStatusDao().getStatusWithAccount(activeAccount.id, id)
+            val contextCall = async { api.statusContext(threadId) }
+            val statusAndAccount = db.timelineStatusDao().getStatusWithAccount(activeAccount.id, threadId)
 
             var detailedStatus = if (statusAndAccount != null) {
                 Log.d(TAG, "Loaded status from local timeline")
@@ -115,12 +141,13 @@ class ViewThreadViewModel @Inject constructor(
                     isShowingContent = statusAndAccount.first.contentShowing,
                     isCollapsed = statusAndAccount.first.contentCollapsed,
                     isDetailed = true,
-                    // NOTE repliedToAccount is null here: this avoids showing "in reply to" over every post
+                    // don't show "in reply to" over the post
+                    repliedToAccount = null,
                     translation = null
                 )
             } else {
                 Log.d(TAG, "Loaded status from network")
-                val result = api.status(id).getOrElse { exception ->
+                val result = api.status(threadId).getOrElse { exception ->
                     _uiState.value = ThreadUiState.Error(exception)
                     return@launch
                 }
@@ -137,7 +164,7 @@ class ViewThreadViewModel @Inject constructor(
             // for the status. Ignore errors, the user still has a functioning UI if the fetch
             // failed. Update the database when the fetch was successful.
             if (statusAndAccount != null) {
-                api.status(id).onSuccess { result ->
+                api.status(threadId).onSuccess { result ->
                     db.timelineStatusDao().update(tuskyAccountId = activeAccount.id, status = result)
                     detailedStatus = result.toViewData(isDetailed = true)
                 }
@@ -167,16 +194,6 @@ class ViewThreadViewModel @Inject constructor(
                 )
             })
         }
-    }
-
-    fun retry(id: String) {
-        _uiState.value = ThreadUiState.Loading
-        loadThread(id)
-    }
-
-    fun refresh(id: String) {
-        _uiState.value = ThreadUiState.Refreshing
-        loadThread(id)
     }
 
     fun detailedStatus(): StatusViewData.Concrete? {
@@ -429,7 +446,7 @@ class ViewThreadViewModel @Inject constructor(
     }
 
     private fun Status.toViewData(isDetailed: Boolean = false): StatusViewData.Concrete {
-        val oldStatus = (_uiState.value as? ThreadUiState.Success)?.statusViewData?.find {
+        val oldStatus = _uiState.value.statusViewData()?.find {
             it.id == this.id
         }
         return toViewData(
@@ -482,20 +499,33 @@ class ViewThreadViewModel @Inject constructor(
         }
     }
 
+    @AssistedFactory
+    interface Factory {
+        fun create(
+            @Assisted("threadId") threadId: String
+        ): ViewThreadViewModel
+    }
+
     companion object {
         private const val TAG = "ViewThreadViewModel"
     }
 }
 
 sealed interface ThreadUiState {
+
+    /** returns this state's viewData, if available */
+    fun statusViewData(): List<StatusViewData.Concrete>? = null
+
     /** The initial load of the detailed status for this thread */
     data object Loading : ThreadUiState
 
     /** Loading the detailed status has completed, now loading ancestors/descendants */
     data class LoadingThread(
-        val statusViewDatum: StatusViewData.Concrete?,
+        val statusViewDatum: StatusViewData.Concrete,
         val revealButton: RevealButtonState
-    ) : ThreadUiState
+    ) : ThreadUiState {
+        override fun statusViewData() = listOf(statusViewDatum)
+    }
 
     /** An error occurred at any point */
     class Error(val throwable: Throwable) : ThreadUiState
@@ -505,10 +535,18 @@ sealed interface ThreadUiState {
         val statusViewData: List<StatusViewData.Concrete>,
         val revealButton: RevealButtonState,
         val detailedStatusPosition: Int
-    ) : ThreadUiState
+    ) : ThreadUiState {
+        override fun statusViewData() = statusViewData
+    }
 
     /** Refreshing the thread with a swipe */
-    data object Refreshing : ThreadUiState
+    data class Refreshing(
+        val statusViewData: List<StatusViewData.Concrete>,
+        val revealButton: RevealButtonState,
+        val detailedStatusPosition: Int
+    ) : ThreadUiState {
+        override fun statusViewData() = statusViewData
+    }
 }
 
 enum class RevealButtonState {

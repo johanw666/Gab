@@ -61,6 +61,7 @@ import com.keylesspalace.tusky.view.ConfirmationBottomSheet.Companion.confirmReb
 import com.keylesspalace.tusky.viewdata.AttachmentViewData
 import com.keylesspalace.tusky.viewdata.StatusViewData
 import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.lifecycle.withCreationCallback
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.awaitCancellation
@@ -80,7 +81,15 @@ class ViewThreadFragment :
     @Inject
     lateinit var draftsAlert: DraftsAlert
 
-    private val viewModel: ViewThreadViewModel by viewModels()
+    private val viewModel: ViewThreadViewModel by viewModels(
+        extrasProducer = {
+            defaultViewModelCreationExtras.withCreationCallback<ViewThreadViewModel.Factory> { factory ->
+                factory.create(
+                    threadId = thisThreadsStatusId,
+                )
+            }
+        }
+    )
 
     private val binding by viewBinding(FragmentViewThreadBinding::bind)
 
@@ -209,7 +218,7 @@ class ViewThreadFragment :
 
                         binding.statusView.setup(
                             uiState.throwable
-                        ) { viewModel.retry(thisThreadsStatusId) }
+                        ) { viewModel.retry() }
                     }
 
                     is ThreadUiState.Success -> {
@@ -252,7 +261,7 @@ class ViewThreadFragment :
                 Log.w(TAG, "failed to load status context", throwable)
                 Snackbar.make(binding.root, R.string.error_generic, Snackbar.LENGTH_SHORT)
                     .setAction(R.string.action_retry) {
-                        viewModel.retry(thisThreadsStatusId)
+                        viewModel.retry()
                     }
                     .show()
             }
@@ -261,8 +270,6 @@ class ViewThreadFragment :
         updateRelativeTimePeriodically(preferences, adapter)
 
         draftsAlert.observeInContext(requireActivity(), true)
-
-        viewModel.loadThread(thisThreadsStatusId)
     }
 
     override fun onDestroyView() {
@@ -329,7 +336,7 @@ class ViewThreadFragment :
         }
 
     override fun onRefresh() {
-        viewModel.refresh(thisThreadsStatusId)
+        viewModel.refresh()
     }
 
     override fun onReply(viewData: StatusViewData.Concrete) {

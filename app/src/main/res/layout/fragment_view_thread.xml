@@ -4,49 +4,45 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
+    <com.keylesspalace.tusky.view.TuskySwipeRefreshLayout
+        android:id="@+id/swipeRefreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
-        <com.google.android.material.progressindicator.LinearProgressIndicator
-            android:id="@+id/threadProgressBar"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:contentDescription="@string/a11y_label_loading_thread"
-            android:indeterminate="true"
-            android:visibility="gone" />
+            android:layout_height="match_parent">
 
-        <com.keylesspalace.tusky.view.TuskySwipeRefreshLayout
-            android:id="@+id/swipeRefreshLayout"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
-
-            <FrameLayout
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:background="?android:attr/colorBackground"
+                android:clipToPadding="false"
+                android:paddingBottom="@dimen/recyclerview_bottom_padding_no_actionbutton"
+                android:scrollbarStyle="outsideOverlay"
+                android:scrollbars="vertical" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerView"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="?android:attr/colorBackground"
-                    android:clipToPadding="false"
-                    android:paddingBottom="@dimen/recyclerview_bottom_padding_no_actionbutton"
-                    android:scrollbarStyle="outsideOverlay"
-                    android:scrollbars="vertical" />
+            <com.keylesspalace.tusky.view.BackgroundMessageView
+                android:id="@+id/statusView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:visibility="gone" />
 
-                <com.keylesspalace.tusky.view.BackgroundMessageView
-                    android:id="@+id/statusView"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:visibility="gone" />
-            </FrameLayout>
-        </com.keylesspalace.tusky.view.TuskySwipeRefreshLayout>
-    </LinearLayout>
+        </FrameLayout>
+
+    </com.keylesspalace.tusky.view.TuskySwipeRefreshLayout>
+
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id="@+id/threadProgressBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:contentDescription="@string/a11y_label_loading_thread"
+        android:indeterminate="true"
+        android:visibility="gone" />
 
     <com.google.android.material.progressindicator.CircularProgressIndicator
         android:id="@+id/initialProgressBar"
