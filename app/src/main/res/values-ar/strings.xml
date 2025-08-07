@@ -202,10 +202,10 @@
     <plurals name="notification_title_summary">
         <item quantity="zero">%1$d تفاعل جديد</item>
         <item quantity="one">%1$d تفاعلات جديدة</item>
-        <item quantity="two"></item>
-        <item quantity="few"></item>
-        <item quantity="many"></item>
-        <item quantity="other"></item>
+        <item quantity="two"/>
+        <item quantity="few"/>
+        <item quantity="many"/>
+        <item quantity="other"/>
     </plurals>
     <string name="description_account_locked">حساب مقفل</string>
     <string name="about_title_activity">حول</string>
@@ -265,10 +265,10 @@
     <plurals name="hint_describe_for_visually_impaired">
         <item quantity="zero">وصف المحتويات لضعاف البصر (%1$d حرف متبقٍ)</item>
         <item quantity="one">وصف المحتويات لضعاف البصر (%1$d حرفاً متبقياً)</item>
-        <item quantity="two"></item>
-        <item quantity="few"></item>
-        <item quantity="many"></item>
-        <item quantity="other"></item>
+        <item quantity="two"/>
+        <item quantity="few"/>
+        <item quantity="many"/>
+        <item quantity="other"/>
     </plurals>
     <string name="action_set_caption">تعيين وصف</string>
     <string name="action_remove">إزالة</string>
@@ -348,61 +348,61 @@
     <plurals name="poll_info_votes">
         <item quantity="zero">%1$s صوت</item>
         <item quantity="one">%1$s أصوات</item>
-        <item quantity="two"></item>
-        <item quantity="few"></item>
-        <item quantity="many"></item>
-        <item quantity="other"></item>
+        <item quantity="two"/>
+        <item quantity="few"/>
+        <item quantity="many"/>
+        <item quantity="other"/>
     </plurals>
     <string name="poll_ended_voted">انتهى استطلاع رأي شاركت فيه</string>
     <string name="poll_ended_created">انتهى استطلاع رأي قمت بإنشائه</string>
     <plurals name="favs">
         <item quantity="zero">%1$s مفضلة</item>
         <item quantity="one">%1$s مفضلات</item>
-        <item quantity="two"></item>
-        <item quantity="few"></item>
-        <item quantity="many"></item>
-        <item quantity="other"></item>
+        <item quantity="two"/>
+        <item quantity="few"/>
+        <item quantity="many"/>
+        <item quantity="other"/>
     </plurals>
     <plurals name="reblogs">
-        <item quantity="zero">%1$s إعادة نشر</item>
-        <item quantity="one">%1$s إعادات نشر</item>
-        <item quantity="two"></item>
-        <item quantity="few"></item>
-        <item quantity="many"></item>
-        <item quantity="other"></item>
+        <item quantity="zero">لا إعادة نشر</item>
+        <item quantity="one">إعادة نشر واحدة</item>
+        <item quantity="two">أعيد نشره مرّتان</item>
+        <item quantity="few">%1$s إعادات نشر</item>
+        <item quantity="many">%1$s إعادة نشر</item>
+        <item quantity="other">%1$s إعادة نشر</item>
     </plurals>
     <string name="pref_title_bot_overlay">إظهار مؤشر الروبوتات</string>
     <plurals name="poll_timespan_days">
         <item quantity="zero">يوم واحد متبقٍ</item>
         <item quantity="one">%1$d أيام متبقية</item>
-        <item quantity="two"></item>
-        <item quantity="few"></item>
-        <item quantity="many"></item>
-        <item quantity="other"></item>
+        <item quantity="two"/>
+        <item quantity="few"/>
+        <item quantity="many"/>
+        <item quantity="other"/>
     </plurals>
     <plurals name="poll_timespan_hours">
         <item quantity="zero">ساعة واحدة متبقية</item>
         <item quantity="one">%1$d ساعات متبقية</item>
-        <item quantity="two"></item>
-        <item quantity="few"></item>
-        <item quantity="many"></item>
-        <item quantity="other"></item>
+        <item quantity="two"/>
+        <item quantity="few"/>
+        <item quantity="many"/>
+        <item quantity="other"/>
     </plurals>
     <plurals name="poll_timespan_minutes">
         <item quantity="zero">دقيقة واحدة متبقية</item>
         <item quantity="one">%1$d دقائق متبقية</item>
-        <item quantity="two"></item>
-        <item quantity="few"></item>
-        <item quantity="many"></item>
-        <item quantity="other"></item>
+        <item quantity="two"/>
+        <item quantity="few"/>
+        <item quantity="many"/>
+        <item quantity="other"/>
     </plurals>
     <plurals name="poll_timespan_seconds">
         <item quantity="zero">ثانية واحدة متبقية</item>
         <item quantity="one">%1$d ثوانٍ متبقية</item>
-        <item quantity="two"></item>
-        <item quantity="few"></item>
-        <item quantity="many"></item>
-        <item quantity="other"></item>
+        <item quantity="two"/>
+        <item quantity="few"/>
+        <item quantity="many"/>
+        <item quantity="other"/>
     </plurals>
     <string name="compose_preview_image_description">إجراءات للصورة %1$s</string>
     <string name="caption_notoemoji">مجموعة رموز جوجل التعبيرية الحالية</string>
@@ -465,10 +465,10 @@
     <plurals name="poll_info_people">
         <item quantity="zero">%1$s شخص</item>
         <item quantity="one">%1$s أشخاص</item>
-        <item quantity="two"></item>
-        <item quantity="few"></item>
-        <item quantity="many"></item>
-        <item quantity="other"></item>
+        <item quantity="two"/>
+        <item quantity="few"/>
+        <item quantity="many"/>
+        <item quantity="other"/>
     </plurals>
     <string name="notification_follow_request_description">إشعارات حول طلبات المتابعة</string>
     <string name="notification_follow_request_name">طلبات المتابعة</string>
@@ -555,10 +555,10 @@
     <plurals name="error_upload_max_media_reached">
         <item quantity="zero">لا يمكنك رفع أكثر من %1$d مرفق وسائط.</item>
         <item quantity="one">لا يمكنك رفع أكثر من %1$d مرفقات وسائط.</item>
-        <item quantity="two"></item>
-        <item quantity="few"></item>
-        <item quantity="many"></item>
-        <item quantity="other"></item>
+        <item quantity="two"/>
+        <item quantity="few"/>
+        <item quantity="many"/>
+        <item quantity="other"/>
     </plurals>
     <string name="saving_draft">جارٍ حفظ المسودة…</string>
     <string name="instance_rule_title">قواعد %1$s</string>
@@ -792,10 +792,10 @@
     <plurals name="action_post_failed_detail">
         <item quantity="zero">فشل منشورك في الرفع وتم حفظه في المسودات.\n\nإما تعذر الاتصال بالخادم، أو رفض المنشور.</item>
         <item quantity="one">فشلت منشوراتك في الرفع وتم حفظها في المسودات.\n\nإما تعذر الاتصال بالخادم، أو رفض المنشورات.</item>
-        <item quantity="two"></item>
-        <item quantity="few"></item>
-        <item quantity="many"></item>
-        <item quantity="other"></item>
+        <item quantity="two"/>
+        <item quantity="few"/>
+        <item quantity="many"/>
+        <item quantity="other"/>
     </plurals>
     <string name="follow_hashtag_success">تمت متابعة الوسم %1$s</string>
     <string name="notification_severed_relationship_name">اتصالات مفقودة</string>
@@ -805,19 +805,19 @@
     <plurals name="accounts">
         <item quantity="zero">%1$s حساب</item>
         <item quantity="one">%1$s حسابات</item>
-        <item quantity="two"></item>
-        <item quantity="few"></item>
-        <item quantity="many"></item>
-        <item quantity="other"></item>
+        <item quantity="two"/>
+        <item quantity="few"/>
+        <item quantity="many"/>
+        <item quantity="other"/>
     </plurals>
     <string name="moderation_warning_action_disable">تم تعطيل حسابك.</string>
     <plurals name="media_attachments">
         <item quantity="zero">%1$s مرفق وسائط</item>
         <item quantity="one">%1$s مرفقات وسائط</item>
-        <item quantity="two"></item>
-        <item quantity="few"></item>
-        <item quantity="many"></item>
-        <item quantity="other"></item>
+        <item quantity="two"/>
+        <item quantity="few"/>
+        <item quantity="many"/>
+        <item quantity="other"/>
     </plurals>
     <string name="block_failure">فشل حظر %1$s: %2$s</string>
     <string name="filter_action_blur">تمويه</string>
