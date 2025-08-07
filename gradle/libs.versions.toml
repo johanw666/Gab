@@ -4,6 +4,7 @@ androidx-activity = "1.10.1"
 androidx-appcompat = "1.7.1"
 androidx-browser = "1.8.0"
 androidx-cardview = "1.0.0"
+androidx-compose-bom = "2025.06.01"
 androidx-constraintlayout = "2.2.1"
 androidx-core = "1.16.0"
 androidx-drawerlayout = "1.2.0"
@@ -52,6 +53,7 @@ xmlwriter = "1.0.4"
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 google-ksp = "com.google.devtools.ksp:2.2.0-2.0.2"
 hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
@@ -63,9 +65,14 @@ play-publisher = "com.github.triplet.play:3.12.1"
 [libraries]
 android-material = { module = "com.google.android.material:material", version.ref = "material" }
 androidx-activity = { module = "androidx.activity:activity", version.ref = "androidx-activity" }
+androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activity" }
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "androidx-appcompat" }
 androidx-browser = { module = "androidx.browser:browser", version.ref = "androidx-browser" }
 androidx-cardview = { module = "androidx.cardview:cardview", version.ref = "androidx-cardview" }
+androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "androidx-compose-bom"}
+androidx-compose-material = { group = "androidx.compose.material3", name = "material3" }
+androidx-compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
+androidx-compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
 androidx-constraintlayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "androidx-constraintlayout" }
 androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "androidx-core" }
 androidx-core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "androidx-splashscreen" }
@@ -79,6 +86,7 @@ androidx-fragment-ktx = { module = "androidx.fragment:fragment-ktx", version.ref
 androidx-hilt-compiler = { module = "androidx.hilt:hilt-compiler", version.ref = "androidx-hilt" }
 androidx-hilt-work = { module = "androidx.hilt:hilt-work", version.ref = "androidx-hilt" }
 androidx-lifecycle-viewmodel-ktx = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "androidx-lifecycle" }
+androidx-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "androidx-lifecycle" }
 androidx-media3-exoplayer = { module = "androidx.media3:media3-exoplayer", version.ref = "androidx-media3" }
 androidx-media3-datasource-okhttp = { module = "androidx.media3:media3-datasource-okhttp", version.ref = "androidx-media3" }
 androidx-media3-ui = { module = "androidx.media3:media3-ui", version.ref = "androidx-media3" }
@@ -134,9 +142,9 @@ xmlwriter = { module = "org.pageseeder.xmlwriter:pso-xmlwriter", version.ref = "
 [bundles]
 androidx = ["androidx-core-ktx", "androidx-appcompat", "androidx-fragment-ktx", "androidx-browser", "androidx-swiperefreshlayout",
     "androidx-recyclerview", "androidx-exifinterface", "androidx-cardview", "androidx-preference-ktx", "androidx-sharetarget",
-    "androidx-emoji2-core", "androidx-emoji2-views-core", "androidx-emoji2-view-helper", "androidx-lifecycle-viewmodel-ktx",
+    "androidx-emoji2-core", "androidx-emoji2-views-core", "androidx-emoji2-view-helper", "androidx-lifecycle-viewmodel-ktx", "androidx-lifecycle-viewmodel-compose",
     "androidx-constraintlayout", "androidx-paging-runtime-ktx", "androidx-viewpager2", "androidx-work-runtime-ktx",
-    "androidx-core-splashscreen", "androidx-activity", "androidx-media3-exoplayer", "androidx-media3-datasource-okhttp",
+    "androidx-core-splashscreen", "androidx-activity", "androidx-activity-compose", "androidx-media3-exoplayer", "androidx-media3-datasource-okhttp",
     "androidx-media3-ui", "androidx-drawerlayout"]
 filemojicompat = ["filemojicompat-core", "filemojicompat-ui", "filemojicompat-defaults"]
 glide = ["glide-core", "glide-okhttp3-integration", "glide-animation-plugin"]

@@ -11,6 +11,8 @@ enum class AppTheme(val value: String) {
     companion object {
         fun stringValues() = entries.map { it.value }.toTypedArray()
 
+        fun of(value: String) = entries.find { it.value == value } ?: DEFAULT
+
         @JvmField
         val DEFAULT = AUTO_SYSTEM
     }
