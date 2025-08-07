@@ -43,7 +43,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.keylesspalace.tusky.MainActivity.Companion.redirectIntent
 import com.keylesspalace.tusky.adapter.AccountSelectionAdapter
 import com.keylesspalace.tusky.components.login.LoginActivity
-import com.keylesspalace.tusky.components.login.LoginActivity.Companion.getIntent
+import com.keylesspalace.tusky.components.login.LoginActivity.Companion.newIntent
 import com.keylesspalace.tusky.db.AccountManager
 import com.keylesspalace.tusky.db.entity.AccountEntity
 import com.keylesspalace.tusky.di.PreferencesEntryPoint
@@ -220,7 +220,7 @@ abstract class BaseActivity : AppCompatActivity() {
         val currentAccounts = accountManager.accounts
 
         if (currentAccounts.isEmpty()) {
-            val intent = getIntent(this@BaseActivity, LoginActivity.MODE_DEFAULT)
+            val intent = newIntent(this@BaseActivity, LoginActivity.MODE_DEFAULT)
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
             startActivity(intent)
             finish()

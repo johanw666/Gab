@@ -121,11 +121,20 @@ class AccountManager @Inject constructor(
                 clientId = clientId,
                 clientSecret = clientSecret,
                 oauthScopes = oauthScopes,
-                isActive = true,
-                accountId = newAccount.id
+                isActive = true
             )
-        }
-        updateAccount(newAccountEntity, newAccount)
+        }.copy(
+            username = newAccount.username,
+            displayName = newAccount.name,
+            profilePictureUrl = newAccount.avatar,
+            profileHeaderUrl = newAccount.header,
+            defaultPostPrivacy = newAccount.source?.privacy ?: Status.Visibility.PUBLIC,
+            defaultPostLanguage = newAccount.source?.language.orEmpty(),
+            defaultMediaSensitivity = newAccount.source?.sensitive == true,
+            emojis = newAccount.emojis,
+            locked = newAccount.locked
+        )
+        accountDao.insertOrReplace(newAccountEntity)
     }
 
     /**

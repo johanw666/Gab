@@ -41,6 +41,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import retrofit2.HttpException
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
@@ -80,6 +81,9 @@ class MainViewModel @Inject constructor(
         .map { account -> account?.hasDirectMessageBadge == true }
         .stateIn(viewModelScope, SharingStarted.Eagerly, false)
 
+    private val _unauthorized: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    val unauthorized: StateFlow<Boolean> = _unauthorized.asStateFlow()
+
     init {
         loadAccountData()
         fetchAnnouncements()
@@ -96,6 +100,10 @@ class MainViewModel @Inject constructor(
                 },
                 { throwable ->
                     Log.e(TAG, "Failed to fetch user info.", throwable)
+
+                    if (throwable is HttpException && throwable.code() == 401) {
+                        _unauthorized.value = true
+                    }
                 }
             )
         }

@@ -132,6 +132,8 @@
     <string name="action_browser_login">Login with Browser</string>
     <string name="action_logout">Log out</string>
     <string name="action_logout_confirm">Are you sure you want to log out of %1$s? This will delete all local data of the account, including drafts and preferences.</string>
+    <string name="action_remove_account">Remove account</string>
+    <string name="action_remove_account_confirm">Are you sure you want to remove the account %1$s from Tusky? This will delete all local data of the account, including drafts and preferences.</string>
     <string name="action_post_failed">Upload failed</string>
     <plurals name="action_post_failed_detail">
         <item quantity="one">Your post failed to upload and has been saved to drafts.\n\nEither the server could not be contacted, or it rejected the post.</item>
@@ -948,5 +950,9 @@
     <string name="report_category_violation_title">It violates server rules</string>
     <string name="report_category_other_description">The issue does not fit into other categories</string>
     <string name="report_category_other_title">It\'s something else</string>
+
+    <string name="action_login_again">Login again</string>
+    <string name="account_disconnected_title">Account disconnected</string>
+    <string name="account_disconnected_message">Tusky\'s login for %1$s is no longer valid. This can happen because you changed your password or revoked access for Tusky. Please log in again.</string>
 
 </resources>

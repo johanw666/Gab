@@ -341,6 +341,10 @@ class MainActivity : BottomSheetActivity(), ActionButtonActivity, MenuProvider {
             }
         }
 
+        lifecycleScope.launch {
+            viewModel.unauthorized.collect(::showUnauthorizedWarning)
+        }
+
         onBackPressedDispatcher.addCallback(this@MainActivity, onBackPressedCallback)
 
         // "Post failed" dialog should display in this activity
@@ -442,6 +446,21 @@ class MainActivity : BottomSheetActivity(), ActionButtonActivity, MenuProvider {
 
     private fun updateDirectMessageBadge(showBadge: Boolean) {
         directMessageTab?.badge?.isVisible = showBadge
+    }
+
+    private fun showUnauthorizedWarning(unauthorized: Boolean) {
+        if (unauthorized) {
+            MaterialAlertDialogBuilder(this)
+                .setTitle(R.string.account_disconnected_title)
+                .setMessage(getString(R.string.account_disconnected_message, activeAccount.fullName))
+                .setNeutralButton(R.string.action_remove_account) { _, _ ->
+                    logout(true)
+                }
+                .setPositiveButton(R.string.action_login_again) { _, _ ->
+                    startActivity(LoginActivity.newIntent(this, LoginActivity.MODE_RELOGIN))
+                }
+                .show()
+        }
     }
 
     override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
@@ -720,7 +739,7 @@ class MainActivity : BottomSheetActivity(), ActionButtonActivity, MenuProvider {
                 secondaryDrawerItem {
                     nameRes = R.string.action_logout
                     iconRes = R.drawable.ic_logout_24dp
-                    onClick = ::logout
+                    onClick = { logout(false) }
                 }
             )
 
@@ -897,7 +916,7 @@ class MainActivity : BottomSheetActivity(), ActionButtonActivity, MenuProvider {
         // open LoginActivity to add new account
         if (profile.identifier == DRAWER_ITEM_ADD_ACCOUNT) {
             startActivityWithSlideInAnimation(
-                LoginActivity.getIntent(this, LoginActivity.MODE_ADDITIONAL_LOGIN)
+                LoginActivity.newIntent(this, LoginActivity.MODE_ADDITIONAL_LOGIN)
             )
             return false
         }
@@ -923,10 +942,22 @@ class MainActivity : BottomSheetActivity(), ActionButtonActivity, MenuProvider {
         finish()
     }
 
-    private fun logout() {
+    private fun logout(unauthorized: Boolean) {
+        val title = if (unauthorized) {
+            R.string.action_remove_account
+        } else {
+            R.string.action_logout
+        }
+
+        val message = if (unauthorized) {
+            getString(R.string.action_remove_account_confirm, activeAccount.fullName)
+        } else {
+            getString(R.string.action_logout_confirm, activeAccount.fullName)
+        }
+
         MaterialAlertDialogBuilder(this)
-            .setTitle(R.string.action_logout)
-            .setMessage(getString(R.string.action_logout_confirm, activeAccount.fullName))
+            .setTitle(title)
+            .setMessage(message)
             .setPositiveButton(android.R.string.ok) { _: DialogInterface?, _: Int ->
                 binding.appBar.hide()
                 binding.viewPager.hide()
@@ -939,13 +970,17 @@ class MainActivity : BottomSheetActivity(), ActionButtonActivity, MenuProvider {
                     val intent = if (otherAccountAvailable) {
                         Intent(this@MainActivity, MainActivity::class.java)
                     } else {
-                        LoginActivity.getIntent(this@MainActivity, LoginActivity.MODE_DEFAULT)
+                        LoginActivity.newIntent(this@MainActivity, LoginActivity.MODE_DEFAULT)
                     }
                     startActivity(intent)
                     finish()
                 }
             }
-            .setNegativeButton(android.R.string.cancel, null)
+            .setNegativeButton(android.R.string.cancel) { _, _ ->
+                if (unauthorized) {
+                    showUnauthorizedWarning(true)
+                }
+            }
             .show()
     }
 

@@ -88,7 +88,7 @@ class LoginActivity : BaseActivity() {
 
         if (savedInstanceState == null &&
             BuildConfig.CUSTOM_INSTANCE.isNotBlank() &&
-            !isAdditionalLogin()
+            !isAdditionalLogin() && !isRelogin()
         ) {
             binding.domainEditText.setText(BuildConfig.CUSTOM_INSTANCE)
             binding.domainEditText.setSelection(BuildConfig.CUSTOM_INSTANCE.length)
@@ -99,6 +99,11 @@ class LoginActivity : BaseActivity() {
                 .load(BuildConfig.CUSTOM_LOGO_URL)
                 .placeholder(null)
                 .into(binding.loginLogo)
+        }
+
+        if (isRelogin()) {
+            binding.domainEditText.setText(accountManager.activeAccount!!.domain)
+            binding.domainEditText.isEnabled = false
         }
 
         binding.loginButton.setOnClickListener { onLoginClick(true) }
@@ -113,7 +118,7 @@ class LoginActivity : BaseActivity() {
         }
 
         setSupportActionBar(binding.toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(isAdditionalLogin())
+        supportActionBar?.setDisplayHomeAsUpEnabled(isAdditionalLogin() || isRelogin())
         supportActionBar?.setDisplayShowTitleEnabled(false)
     }
 
@@ -319,6 +324,10 @@ class LoginActivity : BaseActivity() {
         return intent.getIntExtra(LOGIN_MODE, MODE_DEFAULT) == MODE_ADDITIONAL_LOGIN
     }
 
+    private fun isRelogin(): Boolean {
+        return intent.getIntExtra(LOGIN_MODE, MODE_DEFAULT) == MODE_RELOGIN
+    }
+
     companion object {
         private const val TAG = "LoginActivity" // logging tag
         private const val OAUTH_SCOPES = "read write follow push"
@@ -329,9 +338,9 @@ class LoginActivity : BaseActivity() {
 
         const val MODE_DEFAULT = 0
         const val MODE_ADDITIONAL_LOGIN = 1
+        const val MODE_RELOGIN = 2
 
-        @JvmStatic
-        fun getIntent(context: Context, mode: Int): Intent {
+        fun newIntent(context: Context, mode: Int): Intent {
             val loginIntent = Intent(context, LoginActivity::class.java)
             loginIntent.putExtra(LOGIN_MODE, mode)
             return loginIntent
