@@ -170,6 +170,7 @@ class ComposeActivity :
     private val binding by viewBinding(ActivityComposeBinding::inflate)
 
     private var maxUploadMediaNumber = InstanceInfoRepository.DEFAULT_MAX_MEDIA_ATTACHMENTS
+    private var mediaDescriptionLimit = InstanceInfoRepository.DEFAULT_MEDIA_DESCRIPTION_LIMIT
 
     private val takePictureLauncher =
         registerForActivityResult(ActivityResultContracts.TakePicture()) { success ->
@@ -294,7 +295,8 @@ class ComposeActivity :
                 CaptionDialog.newInstance(
                     item.localId,
                     item.description,
-                    item.uri
+                    item.uri,
+                    mediaDescriptionLimit
                 ).show(supportFragmentManager, "caption_dialog")
             },
             onAddFocus = { item ->
@@ -503,6 +505,7 @@ class ComposeActivity :
                 maximumTootCharacters = instanceData.maxChars
                 charactersReservedPerUrl = instanceData.charactersReservedPerUrl
                 maxUploadMediaNumber = instanceData.maxMediaAttachments
+                mediaDescriptionLimit = instanceData.mediaDescriptionLimit
                 updateVisibleCharactersLeft()
             }
         }

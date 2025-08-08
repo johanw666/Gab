@@ -26,6 +26,7 @@ data class InstanceInfo(
     val imageSizeLimit: Int,
     val imageMatrixLimit: Int,
     val maxMediaAttachments: Int,
+    val mediaDescriptionLimit: Int,
     val maxFields: Int,
     val maxFieldNameLength: Int?,
     val maxFieldValueLength: Int?,

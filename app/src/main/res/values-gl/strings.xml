@@ -249,10 +249,7 @@
     <string name="lock_account_label">Bloquear conta</string>
     <string name="action_remove">Retirar</string>
     <string name="action_set_caption">Definir descrición</string>
-    <plurals name="hint_describe_for_visually_impaired">
-        <item quantity="one">Describe para persoas con deficiencias visuais (límite %1$d caracter)</item>
-        <item quantity="other">Describe para persoas con deficiencias visuais (límite %1$d caracteres)</item>
-    </plurals>
+    <string name="hint_describe_for_visually_impaired">Describe para persoas con deficiencias visuais</string>
     <string name="compose_active_account_description">Publicar como %1$s</string>
     <string name="action_remove_from_list">Retirar conta da lista</string>
     <string name="action_add_to_list">Engadir conta á lista</string>

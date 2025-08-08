@@ -335,12 +335,7 @@
     <string name="license_cc_by_sa_4">CC-BY-SA 4.0</string>
     <string name="filter_expiration_format">%1$s (%2$s)</string>
     <string name="action_add_to_list">Дадаць уліковы запіс у спіс</string>
-    <plurals name="hint_describe_for_visually_impaired">
-        <item quantity="one">Апісанне змесціва для людзей з дэфектам зроку (ліміт у %1$d сімвал)</item>
-        <item quantity="few">Апісанне змесціва для людзей з дэфектам зроку (ліміт у %1$d сімвалы)</item>
-        <item quantity="many">Апісанне змесціва для людзей з дэфектам зроку (ліміт у %1$d сімвалаў)</item>
-        <item quantity="other">Апісанне змесціва для людзей з дэфектам зроку (ліміт у %1$d сімвалаў)</item>
-    </plurals>
+    <string name="hint_describe_for_visually_impaired">Апісанне змесціва для людзей з дэфектам зроку</string>
     <string name="compose_save_draft_loses_media">Захаваць чарнавік? (Далучэнні будуць запампаваныя зноў, калі Вы аднавіце чарнавік.)</string>
     <string name="performing_lookup_title">Выконваю пошук…</string>
     <string name="caption_notoemoji">Бягучы набор эмодзі ад Google</string>

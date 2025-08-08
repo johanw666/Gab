@@ -309,11 +309,7 @@
     <string name="action_add_to_list">Adicionar conta à lista</string>
     <string name="action_remove_from_list">Remover conta da lista</string>
     <string name="compose_active_account_description">Publicar com a conta %1$s</string>
-    <plurals name="hint_describe_for_visually_impaired">
-        <item quantity="one">Descrição para deficientes visuais (até %1$d caractere)</item>
-        <item quantity="many">Descrição para deficientes visuais (até %1$d caracteres)</item>
-        <item quantity="other">Descrição para deficientes visuais (até %1$d caracteres)</item>
-    </plurals>
+    <string name="hint_describe_for_visually_impaired">Descrição para deficientes visuais</string>
     <string name="action_set_caption">Escrever descrição</string>
     <string name="action_remove">Remover</string>
     <string name="lock_account_label">Proteger conta</string>

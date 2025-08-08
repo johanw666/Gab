@@ -213,10 +213,7 @@
     <string name="action_lists">سیاهه‌ها</string>
     <string name="title_lists">سیاهه‌ها</string>
     <string name="compose_active_account_description">فرستادن از طرف %1$s</string>
-    <plurals name="hint_describe_for_visually_impaired">
-        <item quantity="one">توصیف محتوا برای کم‌بینایان (کران %1$d نویسه)</item>
-        <item quantity="other">توصیف محتوا برای کم‌بینایان (کران %1$d نویسه)</item>
-    </plurals>
+    <string name="hint_describe_for_visually_impaired">توصیف محتوا برای کم‌بینایان</string>
     <string name="action_set_caption">تنظیم عنوان</string>
     <string name="action_remove">برداشتن</string>
     <string name="lock_account_label">قفل حساب</string>

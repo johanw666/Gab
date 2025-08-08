@@ -21,12 +21,12 @@ import android.graphics.drawable.Animatable
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
-import android.text.InputFilter
 import android.view.View
 import android.view.WindowManager
 import android.widget.LinearLayout
 import androidx.appcompat.app.AlertDialog
 import androidx.core.os.bundleOf
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.DialogFragment
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.DownsampleStrategy
@@ -34,12 +34,10 @@ import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.keylesspalace.tusky.R
+import com.keylesspalace.tusky.components.instanceinfo.InstanceInfoRepository.Companion.DEFAULT_MEDIA_DESCRIPTION_LIMIT
 import com.keylesspalace.tusky.databinding.DialogImageDescriptionBinding
 import com.keylesspalace.tusky.util.getParcelableCompat
 import com.keylesspalace.tusky.util.hide
-
-// https://github.com/tootsuite/mastodon/blob/c6904c0d3766a2ea8a81ab025c127169ecb51373/app/models/media_attachment.rb#L32
-private const val MEDIA_DESCRIPTION_CHARACTER_LIMIT = 1500
 
 class CaptionDialog : DialogFragment() {
     private lateinit var listener: Listener
@@ -74,16 +72,15 @@ class CaptionDialog : DialogFragment() {
             imageDescriptionText.setSelection(imageDescriptionText.length())
         }
 
-        binding.imageDescriptionText.hint = resources.getQuantityString(
-            R.plurals.hint_describe_for_visually_impaired,
-            MEDIA_DESCRIPTION_CHARACTER_LIMIT,
-            MEDIA_DESCRIPTION_CHARACTER_LIMIT
-        )
-        binding.imageDescriptionText.filters = arrayOf(InputFilter.LengthFilter(MEDIA_DESCRIPTION_CHARACTER_LIMIT))
+        binding.imageDescriptionText.hint = getString(R.string.hint_describe_for_visually_impaired)
+
         binding.imageDescriptionText.setText(arguments?.getString(EXISTING_DESCRIPTION_ARG))
+
         savedInstanceState?.getCharSequence(DESCRIPTION_KEY)?.let {
             binding.imageDescriptionText.setText(it)
         }
+        val descriptionLimit = arguments?.getInt(DESCRIPTION_LIMIT_ARG) ?: DEFAULT_MEDIA_DESCRIPTION_LIMIT
+        binding.imageDescriptionLayout.counterMaxLength = descriptionLimit
 
         isCancelable = false
         dialog?.setCanceledOnTouchOutside(false) // Dialog is full screen anyway. But without this, taps in navbar while keyboard is up can dismiss the dialog.
@@ -133,6 +130,10 @@ class CaptionDialog : DialogFragment() {
 
     override fun onStart() {
         super.onStart()
+        val descriptionLimit = arguments?.getInt(DESCRIPTION_LIMIT_ARG) ?: DEFAULT_MEDIA_DESCRIPTION_LIMIT
+        binding.imageDescriptionText.doOnTextChanged { newText, _, _, _, ->
+            (dialog as AlertDialog?)?.getButton(AlertDialog.BUTTON_POSITIVE)?.isEnabled = (newText?.length ?: 0) <= descriptionLimit
+        }
         dialog?.apply {
             window?.setLayout(
                 LinearLayout.LayoutParams.MATCH_PARENT,
@@ -176,12 +177,18 @@ class CaptionDialog : DialogFragment() {
     }
 
     companion object {
-        fun newInstance(localId: Int, existingDescription: String?, previewUri: Uri) =
+        fun newInstance(
+            localId: Int,
+            existingDescription: String?,
+            previewUri: Uri,
+            descriptionLimit: Int
+        ) =
             CaptionDialog().apply {
                 arguments = bundleOf(
                     LOCAL_ID_ARG to localId,
                     EXISTING_DESCRIPTION_ARG to existingDescription,
-                    PREVIEW_URI_ARG to previewUri
+                    PREVIEW_URI_ARG to previewUri,
+                    DESCRIPTION_LIMIT_ARG to descriptionLimit
                 )
             }
 
@@ -189,5 +196,6 @@ class CaptionDialog : DialogFragment() {
         private const val EXISTING_DESCRIPTION_ARG = "existing_description"
         private const val PREVIEW_URI_ARG = "preview_uri"
         private const val LOCAL_ID_ARG = "local_id"
+        private const val DESCRIPTION_LIMIT_ARG = "description_limit"
     }
 }

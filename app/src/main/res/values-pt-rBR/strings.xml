@@ -308,11 +308,7 @@
     <string name="hint_search_people_list">Pesquisar pessoas que você segue</string>
     <string name="action_add_to_list">Adicionar conta à lista</string>
     <string name="action_remove_from_list">Remover conta da lista</string>
-    <plurals name="hint_describe_for_visually_impaired">
-        <item quantity="one">Descreva os conteúdos para deficientes visuais (até %1$d caractere)</item>
-        <item quantity="many">Descreva os conteúdos para deficientes visuais (até %1$d caracteres)</item>
-        <item quantity="other">Descreva os conteúdos para deficientes visuais (até %1$d caracteres)</item>
-    </plurals>
+    <string name="hint_describe_for_visually_impaired">Descreva os conteúdos para deficientes visuais</string>
     <string name="license_cc_by_4">CC-BY 4.0</string>
     <string name="license_cc_by_sa_4">CC-BY-SA 4.0</string>
     <string name="label_remote_account">As informações abaixo podem refletir incompletamente o perfil do usuário. Toque aqui para abrir o perfil completo no navegador.</string>

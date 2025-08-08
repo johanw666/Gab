@@ -288,12 +288,7 @@
     <string name="action_add_to_list">Добавить аккаунт в список</string>
     <string name="action_remove_from_list">Удалить аккаунт из списка</string>
     <string name="compose_active_account_description">Отправить как %1$s</string>
-    <plurals name="hint_describe_for_visually_impaired">
-        <item quantity="one">Опишите материал для слабовидящих людей (ограничение в %1$d символ)</item>
-        <item quantity="few">Опишите материал для слабовидящих людей (ограничение в %1$d символа)</item>
-        <item quantity="many">Опишите материал для слабовидящих людей (ограничение в %1$d символов)</item>
-        <item quantity="other">Опишите материал для слабовидящих людей (ограничение в %1$d символов)</item>
-    </plurals>
+    <string name="hint_describe_for_visually_impaired">Опишите материал для слабовидящих людей</string>
     <string name="action_set_caption">Добавить подпись</string>
     <string name="action_remove">Удалить</string>
     <string name="lock_account_label">Закрыть аккаунт</string>

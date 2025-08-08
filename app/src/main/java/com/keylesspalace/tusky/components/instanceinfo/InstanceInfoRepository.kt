@@ -141,6 +141,8 @@ class InstanceInfoRepository @Inject constructor(
         imageMatrixLimit = this?.imageMatrixLimit ?: DEFAULT_IMAGE_MATRIX_LIMIT,
         maxMediaAttachments = this?.maxMediaAttachments
             ?: DEFAULT_MAX_MEDIA_ATTACHMENTS,
+        mediaDescriptionLimit = this?.mediaDescriptionLimit
+            ?: DEFAULT_MEDIA_DESCRIPTION_LIMIT,
         maxFields = this?.maxFields ?: DEFAULT_MAX_ACCOUNT_FIELDS,
         maxFieldNameLength = this?.maxFieldNameLength,
         maxFieldValueLength = this?.maxFieldValueLength,
@@ -172,6 +174,8 @@ class InstanceInfoRepository @Inject constructor(
             ?: DEFAULT_IMAGE_MATRIX_LIMIT,
         maxMediaAttachments = this.configuration?.statuses?.maxMediaAttachments
             ?: DEFAULT_MAX_MEDIA_ATTACHMENTS,
+        mediaDescriptionLimit = this.configuration?.mediaAttachments?.descriptionLimit
+            ?: DEFAULT_MEDIA_DESCRIPTION_LIMIT,
         maxFields = this.configuration?.accounts?.maxProfileFields ?: this.pleroma?.metadata?.fieldLimits?.maxFields,
         maxFieldNameLength = this.pleroma?.metadata?.fieldLimits?.nameLength,
         maxFieldValueLength = this.pleroma?.metadata?.fieldLimits?.valueLength,
@@ -202,6 +206,7 @@ class InstanceInfoRepository @Inject constructor(
             imageMatrixLimit = this.configuration?.mediaAttachments?.imageMatrixLimit,
             maxMediaAttachments = this.configuration?.statuses?.maxMediaAttachments
                 ?: this.maxMediaAttachments,
+            mediaDescriptionLimit = DEFAULT_MEDIA_DESCRIPTION_LIMIT,
             maxFields = this.pleroma?.metadata?.fieldLimits?.maxFields,
             maxFieldNameLength = this.pleroma?.metadata?.fieldLimits?.nameLength,
             maxFieldValueLength = this.pleroma?.metadata?.fieldLimits?.valueLength,
@@ -225,6 +230,9 @@ class InstanceInfoRepository @Inject constructor(
         private const val DEFAULT_VIDEO_SIZE_LIMIT = 41943040 // 40MiB
         private const val DEFAULT_IMAGE_SIZE_LIMIT = 10485760 // 10MiB
         private const val DEFAULT_IMAGE_MATRIX_LIMIT = 16777216 // 4096^2 Pixels
+
+        // https://github.com/mastodon/mastodon/blob/ac59772dc6cda646258e61debfd792f9057c1c39/app/models/media_attachment.rb#L40
+        const val DEFAULT_MEDIA_DESCRIPTION_LIMIT = 1500
 
         // Mastodon only counts URLs as this long in terms of status character limits
         const val DEFAULT_CHARACTERS_RESERVED_PER_URL = 23

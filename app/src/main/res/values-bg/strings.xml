@@ -130,10 +130,7 @@
     <string name="lock_account_label">Заключване на акаунт</string>
     <string name="action_remove">Премахване</string>
     <string name="action_set_caption">Задаване на надпис</string>
-    <plurals name="hint_describe_for_visually_impaired">
-        <item quantity="one">Опишете за хора със зрителни увреждания (ограничение до %1$d знак)</item>
-        <item quantity="other">Опишете за хора със зрителни увреждания (ограничение до %1$d знака)</item>
-    </plurals>
+    <string name="hint_describe_for_visually_impaired">Опишете за хора със зрителни увреждания</string>
     <string name="compose_active_account_description">Публикуване като %1$s</string>
     <string name="action_remove_from_list">Премахване на акаунт от списъка</string>
     <string name="action_add_to_list">Добавяне на акаунт към списъка</string>

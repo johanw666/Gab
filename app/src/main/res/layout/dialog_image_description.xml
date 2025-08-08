@@ -18,6 +18,7 @@
         android:contentDescription="@string/post_media_image" />
 
     <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/imageDescriptionLayout"
         style="@style/TuskyTextInput"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -25,7 +26,9 @@
         android:layout_marginTop="?dialogPreferredPadding"
         android:layout_marginEnd="?dialogPreferredPadding"
         android:layout_weight="1"
-        app:counterEnabled="false"
+        app:boxStrokeErrorColor="@color/warning_color"
+        app:counterEnabled="true"
+        app:counterOverflowTextColor="@color/warning_color"
         app:counterTextColor="?android:textColorTertiary"
         app:hintEnabled="false">
 
@@ -33,6 +36,7 @@
             android:id="@+id/imageDescriptionText"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             android:gravity="start"
             android:importantForAutofill="no"
             android:inputType="textCapSentences|textMultiLine|textAutoCorrect"

@@ -262,14 +262,7 @@
     <string name="action_add_to_list">إضافة حساب إلى القائمة</string>
     <string name="action_remove_from_list">إزالة حساب من القائمة</string>
     <string name="compose_active_account_description">تنشر كـ %1$s</string>
-    <plurals name="hint_describe_for_visually_impaired">
-        <item quantity="zero">وصف المحتويات لضعاف البصر (%1$d حرف متبقٍ)</item>
-        <item quantity="one">وصف المحتويات لضعاف البصر (%1$d حرفاً متبقياً)</item>
-        <item quantity="two"/>
-        <item quantity="few"/>
-        <item quantity="many"/>
-        <item quantity="other"/>
-    </plurals>
+    <string name="hint_describe_for_visually_impaired">وصف المحتويات لضعاف البصر</string>
     <string name="action_set_caption">تعيين وصف</string>
     <string name="action_remove">إزالة</string>
     <string name="lock_account_label">قفل الحساب</string>

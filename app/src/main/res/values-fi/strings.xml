@@ -210,10 +210,7 @@
     <string name="action_open_reblogged_by">Näytä jaot</string>
     <string name="action_show_reblogs">Näytä jaetut julkaisut</string>
     <string name="notification_summary_large">%1$s, %2$s, %3$s ja %4$d muuta</string>
-    <plurals name="hint_describe_for_visually_impaired">
-        <item quantity="one">Kuvaa näkövammaisille \n(enintään %1$d merkkiä)</item>
-        <item quantity="other"/>
-    </plurals>
+    <string name="hint_describe_for_visually_impaired">Kuvaa näkövammaisille</string>
     <string name="pick_hashtag_hint">Aihetunniste ilman #-merkkiä</string>
     <string name="title_domain_mutes">Piilotetus verkkonimet</string>
     <string name="action_share_as">Jaa…</string>

@@ -231,11 +231,7 @@
     <string name="action_lists">Listas</string>
     <string name="title_lists">Listas</string>
     <string name="compose_active_account_description">Publicar como %1$s</string>
-    <plurals name="hint_describe_for_visually_impaired">
-        <item quantity="one">Descripción para personas con problemas de visión (límite de %1$d caracteres)</item>
-        <item quantity="many">Descripción para personas con problemas de visión (límite de %1$d caracteres)</item>
-        <item quantity="other">Descripción para personas con problemas de visión (límite de %1$d caracteres)</item>
-    </plurals>
+    <string name="hint_describe_for_visually_impaired">Descripción para personas con problemas de visión</string>
     <string name="action_set_caption">Añadir leyenda</string>
     <string name="action_remove">Eliminar</string>
     <string name="lock_account_label">Proteger cuenta</string>

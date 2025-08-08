@@ -216,10 +216,7 @@
     <string name="action_lists">Zerrendak</string>
     <string name="title_lists">Zerrendak</string>
     <string name="compose_active_account_description">%1$s kontuarekin tut egiten</string>
-    <plurals name="hint_describe_for_visually_impaired">
-        <item quantity="one"/>
-        <item quantity="other">Ikusmen urritasuna dutenentzat deskribapena \n(%1$d karaktereko muga)</item>
-    </plurals>
+    <string name="hint_describe_for_visually_impaired">Ikusmen urritasuna dutenentzat deskribapena</string>
     <string name="action_set_caption">Gehitu deskribapena</string>
     <string name="action_remove">Ezabatu</string>
     <string name="lock_account_label">Blokeatu kontua</string>

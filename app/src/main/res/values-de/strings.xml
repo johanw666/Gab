@@ -243,10 +243,7 @@
     <string name="action_delete_list">Liste löschen</string>
     <string name="action_add_to_list">Konto zur Liste hinzufügen</string>
     <string name="compose_active_account_description">Veröffentlichen als %1$s</string>
-    <plurals name="hint_describe_for_visually_impaired">
-        <item quantity="one">Inhalt für Menschen mit Sehbehinderung beschreiben (%1$d Zeichen)</item>
-        <item quantity="other">Inhalte für Menschen mit Sehbehinderung beschreiben (%1$d Zeichen)</item>
-    </plurals>
+    <string name="hint_describe_for_visually_impaired">Beschreibe den Inhalt für Menschen mit Sehbehinderung</string>
     <string name="action_set_caption">Beschreibung eingeben</string>
     <string name="action_remove">Entfernen</string>
     <string name="lock_account_label">Geschütztes Profil</string>

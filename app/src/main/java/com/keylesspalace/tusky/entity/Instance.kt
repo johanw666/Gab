@@ -79,7 +79,8 @@ data class Instance(
             @Json(name = "image_matrix_limit") val imagePixelCountLimit: Long? = null,
             @Json(name = "video_size_limit") val videoSizeLimitBytes: Long? = null,
             @Json(name = "video_matrix_limit") val videoPixelCountLimit: Long? = null,
-            @Json(name = "video_frame_rate_limit") val videoFrameRateLimit: Int? = null
+            @Json(name = "video_frame_rate_limit") val videoFrameRateLimit: Int? = null,
+            @Json(name = "description_limit") val descriptionLimit: Int? = null
         )
 
         @JsonClass(generateAdapter = true)

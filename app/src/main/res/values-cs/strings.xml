@@ -263,11 +263,7 @@
     <string name="action_add_to_list">Přidat účet na seznam</string>
     <string name="action_remove_from_list">Odstranit účet ze seznamu</string>
     <string name="compose_active_account_description">Píšete jako %1$s</string>
-    <plurals name="hint_describe_for_visually_impaired">
-        <item quantity="one">Popis pro zrakově postižené \n(limit %1$d znak)</item>
-        <item quantity="few">Popis pro zrakově postižené \n(limit %1$d znaky)</item>
-        <item quantity="other">Popis pro zrakově postižené \n(limit %1$d znaků)</item>
-    </plurals>
+    <string name="hint_describe_for_visually_impaired">Popis pro zrakově postižené \n(limit %1$d znak)</string>
     <string name="action_set_caption">Nastavit popisek</string>
     <string name="action_remove">Odstranit</string>
     <string name="lock_account_label">Uzamknout účet</string>

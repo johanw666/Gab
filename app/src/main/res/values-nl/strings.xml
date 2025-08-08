@@ -243,10 +243,7 @@
     <string name="action_lists">Lijsten</string>
     <string name="title_lists">Lijsten</string>
     <string name="compose_active_account_description">Berichten plaatsen als %1$s</string>
-    <plurals name="hint_describe_for_visually_impaired">
-        <item quantity="one">Beschrijf inhoud voor iemand met een visuele beperking (tekenlimiet is %1$d)</item>
-        <item quantity="other">Beschrijf inhoud voor mensen met een visuele beperking (tekenlimiet is %1$d)</item>
-    </plurals>
+    <string name="hint_describe_for_visually_impaired">Beschrijf inhoud voor iemand met een visuele beperking</string>
     <string name="action_set_caption">Beschrijving toevoegen</string>
     <string name="action_remove">Verwijderen</string>
     <string name="lock_account_label">Account besloten maken</string>

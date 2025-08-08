@@ -316,10 +316,7 @@
     <string name="action_add_to_list">Fiók hozzáadása a listához</string>
     <string name="action_remove_from_list">Fiók eltávolítása a listából</string>
     <string name="compose_active_account_description">Bejegyzés mint %1$s</string>
-    <plurals name="hint_describe_for_visually_impaired">
-        <item quantity="one">Tartalom leírása látássérültek számára (%1$d karakteres korlát)</item>
-        <item quantity="other">Tartalom leírása látássérültek számára (%1$d karakteres korlát)</item>
-    </plurals>
+    <string name="hint_describe_for_visually_impaired">Tartalom leírása látássérültek számára</string>
     <string name="action_set_caption">Cím beállítása</string>
     <string name="lock_account_label_description">Minden követődet külön engedélyezned kell</string>
     <string name="expand_collapse_all_posts">Összes bejegyzés kibontása/összecsukása</string>

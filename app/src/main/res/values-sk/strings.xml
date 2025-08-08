@@ -349,11 +349,7 @@
     <string name="pref_title_show_boosts">Zobraziť boosty</string>
     <string name="pref_title_show_replies">Zobraziť odpovede</string>
     <string name="pref_title_show_media_preview">Sťahovať náhľady médií</string>
-    <plurals name="hint_describe_for_visually_impaired">
-        <item quantity="one">Popis pre zrakovo postihnutých \n(limit %1$d znak)</item>
-        <item quantity="few">Popis pre zrakovo postihnutých \n(limit %1$d znaky)</item>
-        <item quantity="other">Popis pre zrakovo postihnutých \n(limit %1$d znakov)</item>
-    </plurals>
+    <string name="hint_describe_for_visually_impaired">Popis pre zrakovo postihnutých</string>
     <string name="pref_failed_to_sync">Nepodarilo sa synchronizovať nastavenie</string>
     <string name="post_privacy_followers_only">Len pre sledovateľov</string>
     <string name="pref_main_nav_position_option_top">Hore</string>
