@@ -829,4 +829,9 @@
     <string name="report_which_rules_violated">Pa reol sy\'n cael ei thorri? Dewiswch unrhyw rheolau perthnasol.</string>
     <string name="report_category_spam_description">Dolennau niweidiol, negesoun ffug, neu ymatebion ailadroddol</string>
     <string name="report_category_legal_description">Rydych chi\'n credu ei bod hi\'n torri cyfraith eich gwlad neu gyfraith gwlad y gweinydd</string>
+    <string name="action_remove_account">Tynnu cyfrif</string>
+    <string name="action_remove_account_confirm">Ydych chi\'n siŵr eich bod am tynnu\'r cyfrif $s o Tusky? Bydd hyn yn dileu holl ddata lleol y cyfrif, gan gynnwys drafftiau a dewisiadau.</string>
+    <string name="action_login_again">Mewngofnodi eto</string>
+    <string name="account_disconnected_title">Cyfrif wedi\'i ddatgysylltu</string>
+    <string name="account_disconnected_message">Nid yw data mewngofnodi Tusky ar gyfer %1$s yn ddilys bellach. Gall hyn ddigwydd oherwydd eich bod chi wedi newid eich cyfrinair neu wedi dirymu mynediad i Tusky. Mewngofnodwch eto.</string>
 </resources>
