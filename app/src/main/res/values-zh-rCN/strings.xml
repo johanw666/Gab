@@ -766,4 +766,9 @@
     <string name="report_category_violation_title">它违反了服务器规则</string>
     <string name="report_category_other_description">该问题无法归入其他类别</string>
     <string name="report_category_other_title">別的什么</string>
+    <string name="action_remove_account_confirm">确定要从 Tusky 删除账户 %1$s 吗？这会删除账户的所有本地数据，包括草稿和首选项。</string>
+    <string name="action_login_again">再次登录</string>
+    <string name="account_disconnected_title">已断开账户</string>
+    <string name="account_disconnected_message">%1$s 的 Tusky 登录不再有效。原因可能是更改了密码或撤销了 Tusky 的访问权限。请再次登录。</string>
+    <string name="action_remove_account">删除账户</string>
 </resources>
