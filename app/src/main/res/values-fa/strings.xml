@@ -337,7 +337,7 @@
     <string name="description_post_reblogged">تقویت شده</string>
     <string name="description_post_favourited">برگزیده</string>
     <string name="description_visibility_public">عمومی</string>
-    <string name="description_visibility_unlisted">سیاهه نشده</string>
+    <string name="description_visibility_unlisted">سیاهه نشده</string>
     <string name="description_visibility_private">پی‌گیران</string>
     <string name="description_visibility_direct">مستقیم</string>
     <string name="description_poll">نظرسنجی با گزینه‌ها: %1$s، %2$s، %3$s، %4$s؛ %5$s</string>
@@ -777,4 +777,9 @@
     <string name="report_category_violation_title">قواعد کارساز را نقض می‌کند</string>
     <string name="report_which_rules_violated">کدام قواعد نقض شده‌اند؟ همهٔ قواعد اعمالی را بگزینید.</string>
     <string name="report_category_spam_description">پیوندهای مضر، تأثیرگذاری قلابی یا پاسخ‌های تکراری</string>
+    <string name="action_remove_account">برداشتن حساب</string>
+    <string name="account_disconnected_title">حساب قطع شد</string>
+    <string name="action_login_again">ورود دوباره</string>
+    <string name="action_remove_account_confirm">مطمئنید که می‌خواهید حساب %1$s را از تاسکی بردارید؟ این کار همهٔ داده‌های محلی حساب از جمله پیش‌نویس‌ها و ترجیحات را حذف خواهد کرد.</string>
+    <string name="account_disconnected_message">ورود تاسکی برای %1$s دیگر معتبر نیست. این اتّفاق می‌تواند بر اثر تغییر گذرواژه‌تان یا ابطال دسترسی تاسکی بیفتد. لطفاً دوباره وارد شوید.</string>
 </resources>

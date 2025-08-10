@@ -762,4 +762,24 @@
     <string name="favourite_confirm">Diesen Beitrag favorisieren?</string>
     <string name="reblog_privacy_public_description">Alle können sehen dass du den Beitrag teilst</string>
     <string name="reblog_privacy_followers_only_description">Nur deine Follower können sehen dass du den Beitrag teilst</string>
+    <string name="action_remove_account">Account entfernen</string>
+    <string name="action_remove_account_confirm">Möchtest duden Account %1$s wirklich aus Tusky entfernen? Dadurch werden alle lokalen Daten des Profils, wie Entwürfe und Einstellungen, gelöscht.</string>
+    <string name="report_category_legal_description">Du glaubst, dass es gegen die Gesetze deines Landes oder des Landes des Servers verstößt</string>
+    <string name="report_category_other_description">Der Vorfall passt zu keiner dieser Kategorien</string>
+    <string name="confirm_dismiss_poll">Änderungen an der Umfrage verwerfen?</string>
+    <string name="edit_image_flip_horizontally">Horizontal spiegeln</string>
+    <string name="report_which_rules_violated">Welche Regeln werden verletzt? Wähle alle aus, die zutreffen.</string>
+    <string name="account_disconnected_message">Tuskys Zugang zu %1$s ist nicht mehr gültig. Das kann passieren wenn du dein Passwort geändert hast oder Tusky den Zugriff entzogen hast. Bitte logge dich erneut ein.</string>
+    <string name="edit_image_rotate">Rotieren</string>
+    <string name="edit_image_flip">Spiegeln</string>
+    <string name="edit_image_flip_vertically">Vertikal spiegeln</string>
+    <string name="report_problem_with_post">Was ist das Problem mit diesem Beitrag?</string>
+    <string name="report_category_spam_description">Bösartige Links, gefälschtes Engagement oder sich wiederholende Antworten</string>
+    <string name="report_category_spam_title">Das ist Spam</string>
+    <string name="report_category_legal_title">Das ist rechtswidrig</string>
+    <string name="report_category_violation_description">Du bist dir sicher, dass eine bestimmte Regel gebrochen wurde</string>
+    <string name="report_category_violation_title">Das verstößt gegen Serverregeln</string>
+    <string name="report_category_other_title">Es ist etwas anderes</string>
+    <string name="action_login_again">Erneut einloggen</string>
+    <string name="account_disconnected_title">Verbindung zum Account</string>
 </resources>

@@ -64,7 +64,7 @@
     <string name="dialog_download_image">Tải về</string>
     <string name="dialog_message_uploading_media">Đang tải…</string>
     <string name="dialog_title_finishing_media_upload">Đã tải xong tập tin</string>
-    <string name="dialog_whats_an_instance">Bạn phải nhập một tên miền. Ví dụ mastodon.social, icosahedron.website, social.tchncs.de và <a href="https://instances.social">vô số khác!</a> \u0020 \n \u0020 \nNếu chưa có tài khoản, bạn phải tạo tài khoản ở đó trước. \u0020 \n \u0020 \nMáy chủ, nói cách khác là một cộng đồng nơi mà bạn đăng ký tài khoản trên đó, nhưng bạn vẫn có thể dễ dàng giao tiếp và theo dõi mọi người trên các máy chủ khác. \u0020 \n \u0020 \nTham khảo <a href="https://joinmastodon.org">joinmastodon.org</a> \u0020</string>
+    <string name="dialog_whats_an_instance">Bạn phải nhập một tên miền. Ví dụ mastodon.social, icosahedron.website, social.tchncs.de và <a href="https://instances.social">vô số khác!</a> \n \u0020 \nNếu chưa có tài khoản, bạn phải tạo tài khoản ở đó trước. \u0020 \n \u0020 \nMáy chủ, nói cách khác là một cộng đồng nơi mà bạn đăng ký tài khoản trên đó, nhưng bạn vẫn có thể dễ dàng giao tiếp và theo dõi mọi người trên các máy chủ khác. \u0020 \n \u0020 \nTham khảo <a href="https://joinmastodon.org">joinmastodon.org</a></string>
     <string name="login_connection">Đang kết nối…</string>
     <string name="label_header">Ảnh bìa</string>
     <string name="label_avatar">Ảnh đại diện</string>
@@ -594,12 +594,12 @@
     <string name="filter_edit_keyword_title">Sửa từ</string>
     <string name="filter_description_format">%1$s: %2$s</string>
     <string name="pref_title_show_stat_inline">Hiện số tương tác tút</string>
-    <string name="help_empty_home">Đây là <b>bảng tin của bạn</b>. Nó sẽ hiện tút gần đây từ những người bạn theo dõi. \u0020 \n \u0020 \nĐể khám phá mọi người, bạn có thể xem qua ở các bảng tin khác. Ví dụ: {{group}} Bảng tin máy chủ của bạn. Hoặc bạn cũng có thể {{search}} tìm theo tên người dùng; ví dụ như Tusky.</string>
+    <string name="help_empty_home">Đây là <b>bảng tin của bạn</b>. Nó sẽ hiện tút gần đây từ những người bạn theo dõi. \n \u0020 \nĐể khám phá mọi người, bạn có thể xem qua ở các bảng tin khác. Ví dụ: {{group}} Bảng tin máy chủ của bạn. Hoặc bạn cũng có thể {{search}} tìm theo tên người dùng; ví dụ như Tusky.</string>
     <string name="post_media_image">Hình ảnh</string>
     <string name="select_list_manage">Quản lý danh sách</string>
     <string name="load_newest_notifications">Tải những thông báo mới nhất</string>
     <string name="compose_delete_draft">Xóa bản nháp?</string>
-    <string name="error_missing_edits">Máy chủ của bạn biết tút đã được sửa, nhưng không có bản sao của lần sửa, nên nó không thể hiện. \u0020 \n \u0020 \nĐây là <a href="https://github.com/mastodon/mastodon/issues/25398">Lỗi Mastodon #25398</a>.</string>
+    <string name="error_missing_edits">Máy chủ của bạn biết tút đã được sửa, nhưng không có bản sao của lần sửa, nên nó không thể hiện. \n \u0020 \nĐây là <a href="https://github.com/mastodon/mastodon/issues/25398">Lỗi Mastodon #25398</a>.</string>
     <string name="pref_ui_text_size">Cỡ chữ giao diện</string>
     <string name="notification_listenable_worker_name">Hoạt động chạy nền</string>
     <string name="notification_listenable_worker_description">Thông báo khi Tusky hoạt động ngầm</string>
@@ -617,8 +617,8 @@
     <string name="dialog_delete_filter_text">Xóa bộ lọc \'%1$s\'?</string>
     <string name="dialog_delete_filter_positive_action">Xóa</string>
     <string name="dialog_save_profile_changes_message">Bạn có chắc muốn lưu thay đổi?</string>
-    <string name="help_empty_conversations">Đây là <b>tin nhắn riêng</b>; đôi khi gọi là thảo luận hoặc nhắn riêng (DM). \u0020 \n \u0020 \nTin nhắn riêng được tạo bằng cách chọn tùy chọn kiểu tút {{public}} thành {{mail}} <i>Nhắn riêng</i> và có nhắc đến một người nào đó. \u0020 \n \u0020 \nVí dụ: bạn có thể xem hồ sơ của một người và nhấn vào nút {{edit}} và đổi kiểu tút. \u0020 \n \nLưu ý rằng tin nhắn trên Fediverse không được mã hóa đầu cuối. Không chia sẻ bất kỳ thông tin nhạy cảm nào.</string>
-    <string name="help_empty_lists">Đây là <b>danh sách</b>. Bạn có thể tạo nhiều danh sách riêng tư và thêm người dùng vào đó. \u0020 \u0020 \n \u0020 \u0020 \nChỉ những người BẠN ĐANG THEO DÕI mới có thể thêm vào danh sách. \u0020 \u0020 \n \u0020 \u0020 \nDanh sách có thể được sử dụng như một tab trong thiết lập {{manage_accounts}} Cá nhân {{chevron_right}} Xếp tab.</string>
+    <string name="help_empty_conversations">Đây là <b>tin nhắn riêng</b>; đôi khi gọi là thảo luận hoặc nhắn riêng (DM). \n \u0020 \nTin nhắn riêng được tạo bằng cách chọn tùy chọn kiểu tút {{public}} thành {{mail}} <i>Nhắn riêng</i> và có nhắc đến một người nào đó. \u0020 \n \u0020 \nVí dụ: bạn có thể xem hồ sơ của một người và nhấn vào nút {{edit}} và đổi kiểu tút. \u0020 \n \nLưu ý rằng tin nhắn trên Fediverse không được mã hóa đầu cuối. Không chia sẻ bất kỳ thông tin nhạy cảm nào.</string>
+    <string name="help_empty_lists">Đây là <b>danh sách</b>. Bạn có thể tạo nhiều danh sách riêng tư và thêm người dùng vào đó. \n \u0020 \u0020 \nChỉ những người BẠN ĐANG THEO DÕI mới có thể thêm vào danh sách. \u0020 \u0020 \n \u0020 \u0020 \nDanh sách có thể được sử dụng như một tab trong thiết lập {{manage_accounts}} Cá nhân {{chevron_right}} Xếp tab.</string>
     <string name="muting_hashtag_success_format">Đang ẩn hashtag #%1$s như một cảnh báo</string>
     <string name="unmuting_hashtag_success_format">Đang bỏ ẩn hashtag #%1$s</string>
     <string name="action_view_filter">Xem bộ lọc</string>
@@ -757,4 +757,9 @@
     <string name="report_which_rules_violated">Những nội quy nào vi phạm? Hãy chọn tất cả các mục phù hợp.</string>
     <string name="report_category_spam_description">Liên kết độc hại, giả tương tác hoặc trả lời lặp đi lặp lại</string>
     <string name="report_category_other_description">Vấn đề không thuộc những mục trên</string>
+    <string name="action_login_again">Đăng nhập lại</string>
+    <string name="action_remove_account">Gỡ tài khoản</string>
+    <string name="action_remove_account_confirm">Bạn có chắc muốn gỡ tài khoản %1$s khỏi Tusky? Thao tác này sẽ xóa toàn bộ dữ liệu cục bộ của tài khoản, bao gồm cả tút nháp và các thiết lập.</string>
+    <string name="account_disconnected_message">Thông tin đăng nhập %1$s trên Tusky không còn hiệu lực nữa. Điều này có thể xảy ra do bạn đã thay đổi mật khẩu hoặc thu hồi quyền truy cập Tusky. Vui lòng đăng nhập lại.</string>
+    <string name="account_disconnected_title">Tài khoản đã bị ngắt kết nối</string>
 </resources>
