@@ -984,7 +984,10 @@ public abstract class StatusBaseViewHolder<C extends ConcreteViewData> extends R
         String textString = context.getResources().getQuantityString(text, count, countString);
         SpannableStringBuilder sb = new SpannableStringBuilder(textString);
         int countIndex = textString.indexOf(countString);
-        sb.setSpan(new StyleSpan(Typeface.BOLD), countIndex, countIndex + countString.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        // there are translations that don't have a placeholder for some quantities
+        if (countIndex != -1) {
+            sb.setSpan(new StyleSpan(Typeface.BOLD), countIndex, countIndex + countString.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        }
         return sb;
     }
 
