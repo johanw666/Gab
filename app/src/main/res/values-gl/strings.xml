@@ -770,4 +770,9 @@
     <string name="report_which_rules_violated">Que normas se deixaron de atender? Elixe o que corresponda.</string>
     <string name="report_category_spam_description">Ligazóns maliciosas, suplantación, respostas repetitivas</string>
     <string name="report_category_other_description">O problema non se axusta ás outras categorías</string>
+    <string name="action_login_again">Volver a acceder</string>
+    <string name="account_disconnected_message">O acceso de %1$s con Tusky xa non é válido. Isto pode deberse a que cambiaches o contrasinal ou revogaches o acceso para Tusky. Volve a acceder.</string>
+    <string name="action_remove_account">Retirar conta</string>
+    <string name="action_remove_account_confirm">Tes certeza de querer retirar de Tusky a conta %1$s? Isto vai eliminar todos os datos locais da conta, incluíndo borradores e preferencias.</string>
+    <string name="account_disconnected_title">Conta desconectada</string>
 </resources>
