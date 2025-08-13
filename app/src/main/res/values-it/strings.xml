@@ -790,4 +790,9 @@
     <string name="report_category_other_title">È qualcos\'altro</string>
     <string name="report_which_rules_violated">Quale regola è stata violata? Seleziona quelle che si applicano.</string>
     <string name="report_category_spam_description">Link malevolo, finto coinvolgimento o risposte ripetitive</string>
+    <string name="action_login_again">Connetti di nuovo</string>
+    <string name="account_disconnected_message">Il login per %1$s non è più valido. Questo può capitare se hai modificato la password o hai revocato l\'accesso a Tusky. Per favore, effettua nuovamente il login.</string>
+    <string name="action_remove_account">Rimuovi account</string>
+    <string name="action_remove_account_confirm">Sei sicuro di voler rimuovere l\'account %1$s da Tusky? Questi cancellerà tutti i dati locali dell\'account, incluse bozze e preferenze.</string>
+    <string name="account_disconnected_title">Account disconnesso</string>
 </resources>
