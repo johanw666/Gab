@@ -15,6 +15,7 @@
 
 package com.keylesspalace.tusky.db.entity
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
@@ -83,5 +84,6 @@ data class TimelineStatusEntity(
     val pinned: Boolean,
     val card: PreviewCard?,
     val language: String?,
-    val filtered: List<FilterResult>
+    val filtered: List<FilterResult>,
+    @ColumnInfo(defaultValue = "true") val filterActive: Boolean
 )

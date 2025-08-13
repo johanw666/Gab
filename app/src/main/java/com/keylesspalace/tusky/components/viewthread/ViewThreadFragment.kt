@@ -504,8 +504,8 @@ class ViewThreadFragment :
         }
     }
 
-    override fun clearWarningAction(viewData: StatusViewData.Concrete) {
-        viewModel.clearWarning(viewData)
+    override fun changeFilter(filtered: Boolean, viewData: StatusViewData.Concrete) {
+        viewModel.changeFilter(filtered, viewData)
     }
 
     companion object {

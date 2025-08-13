@@ -97,7 +97,8 @@ fun fakeStatusViewData(
     isExpanded = isExpanded,
     isShowingContent = isShowingContent,
     isCollapsed = isCollapsed,
-    isDetailed = isDetailed
+    isDetailed = isDetailed,
+    filterActive = true
 )
 
 fun fakeHomeTimelineData(
@@ -121,7 +122,8 @@ fun fakeHomeTimelineData(
             tuskyAccountId = tuskyAccountId,
             expanded = expanded,
             contentShowing = false,
-            contentCollapsed = true
+            contentCollapsed = true,
+            filterActive = true
         ),
         account = mockedStatus.account.toEntity(
             tuskyAccountId = tuskyAccountId,

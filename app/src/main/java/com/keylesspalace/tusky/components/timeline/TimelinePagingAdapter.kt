@@ -29,7 +29,6 @@ import com.keylesspalace.tusky.adapter.StatusViewHolder
 import com.keylesspalace.tusky.databinding.ItemLoadMoreBinding
 import com.keylesspalace.tusky.databinding.ItemPlaceholderBinding
 import com.keylesspalace.tusky.databinding.ItemStatusFilteredBinding
-import com.keylesspalace.tusky.entity.Filter
 import com.keylesspalace.tusky.interfaces.LoadMoreActionListener
 import com.keylesspalace.tusky.interfaces.StatusActionListener
 import com.keylesspalace.tusky.util.StatusDisplayOptions
@@ -94,7 +93,7 @@ class TimelinePagingAdapter(
             val holder = viewHolder as LoadMoreViewHolder<StatusViewData.LoadMore>
             holder.setup(viewData)
         } else if (viewData is StatusViewData.Concrete) {
-            if (viewData.filter?.action == Filter.Action.WARN) {
+            if (viewData.isFilterWarn) {
                 val holder = viewHolder as FilteredStatusViewHolder<StatusViewData.Concrete>
                 holder.bind(viewData)
             } else {
@@ -112,12 +111,13 @@ class TimelinePagingAdapter(
 
     override fun getItemViewType(position: Int): Int {
         val viewData = getItem(position)
-        return when {
+        val t = when {
             viewData == null -> VIEW_TYPE_PLACEHOLDER
             viewData is StatusViewData.LoadMore -> VIEW_TYPE_LOAD_MORE
-            viewData.filter?.action == Filter.Action.WARN -> VIEW_TYPE_STATUS_FILTERED
+            viewData is StatusViewData.Concrete && viewData.isFilterWarn -> VIEW_TYPE_STATUS_FILTERED
             else -> VIEW_TYPE_STATUS
         }
+        return t
     }
 
     companion object {

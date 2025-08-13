@@ -52,6 +52,7 @@ import com.keylesspalace.tusky.components.report.ReportActivity.Companion.getInt
 import com.keylesspalace.tusky.db.AccountManager
 import com.keylesspalace.tusky.db.entity.AccountEntity
 import com.keylesspalace.tusky.entity.Attachment
+import com.keylesspalace.tusky.entity.Filter
 import com.keylesspalace.tusky.entity.Status
 import com.keylesspalace.tusky.entity.Translation
 import com.keylesspalace.tusky.interfaces.AccountSelectionListener
@@ -78,6 +79,7 @@ import kotlinx.coroutines.launch
 abstract class SFragment<C : ConcreteViewData>(@LayoutRes contentLayoutId: Int) : Fragment(contentLayoutId) {
     protected abstract fun removeItem(viewData: C)
     protected abstract fun onReblog(viewData: C, reblog: Boolean, visibility: Status.Visibility?, button: SparkButton?)
+    protected abstract fun changeFilter(filtered: Boolean, viewData: C)
 
     /** `null` if translation is not supported on this screen */
     protected abstract val onMoreTranslate: ((translate: Boolean, viewData: C) -> Unit)?
@@ -191,7 +193,7 @@ abstract class SFragment<C : ConcreteViewData>(@LayoutRes contentLayoutId: Int) 
         val accountUsername = actionableStatus.account.username
         val statusUrl = actionableStatus.url
         val activeAccount = accountManager.activeAccount
-        var loggedInAccountId: String? = activeAccount?.accountId
+        val loggedInAccountId: String? = activeAccount?.accountId
 
         val popup = PopupMenu(requireContext(), view)
         // Give a different menu depending on whether this is the user's own toot or not.
@@ -222,6 +224,8 @@ abstract class SFragment<C : ConcreteViewData>(@LayoutRes contentLayoutId: Int) 
             popup.inflate(R.menu.status_more)
             popup.menu.findItem(R.id.status_download_media).isVisible =
                 status.attachments.isNotEmpty()
+            popup.menu.findItem(R.id.status_rehide).isVisible =
+                !viewData.viewData.filterActive && viewData.viewData.filter?.action == Filter.Action.WARN
         }
         val menu = popup.menu
         val openAsItem = menu.findItem(R.id.status_open_as)
@@ -368,6 +372,10 @@ abstract class SFragment<C : ConcreteViewData>(@LayoutRes contentLayoutId: Int) 
 
                 R.id.status_translate -> {
                     onMoreTranslate?.invoke(translation == null, viewData)
+                }
+
+                R.id.status_rehide -> {
+                    changeFilter(true, viewData)
                 }
             }
             false

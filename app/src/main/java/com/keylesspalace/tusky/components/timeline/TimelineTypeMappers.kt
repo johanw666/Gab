@@ -19,6 +19,7 @@ import com.keylesspalace.tusky.db.entity.HomeTimelineData
 import com.keylesspalace.tusky.db.entity.HomeTimelineEntity
 import com.keylesspalace.tusky.db.entity.TimelineAccountEntity
 import com.keylesspalace.tusky.db.entity.TimelineStatusEntity
+import com.keylesspalace.tusky.entity.Filter
 import com.keylesspalace.tusky.entity.Status
 import com.keylesspalace.tusky.entity.TimelineAccount
 import com.keylesspalace.tusky.viewdata.StatusViewData
@@ -73,7 +74,8 @@ fun Status.toEntity(
     tuskyAccountId: Long,
     expanded: Boolean,
     contentShowing: Boolean,
-    contentCollapsed: Boolean
+    contentCollapsed: Boolean,
+    filterActive: Boolean
 ) = TimelineStatusEntity(
     serverId = id,
     url = actionableStatus.url,
@@ -106,7 +108,8 @@ fun Status.toEntity(
     card = actionableStatus.card,
     repliesCount = actionableStatus.repliesCount,
     language = actionableStatus.language,
-    filtered = actionableStatus.filtered.orEmpty()
+    filtered = actionableStatus.filtered.orEmpty(),
+    filterActive = filterActive
 )
 
 fun TimelineStatusEntity.toStatus(
@@ -198,5 +201,7 @@ fun HomeTimelineData.toViewData(
         isDetailed = isDetailed,
         repliedToAccount = repliedToAccount?.toAccount(),
         translation = translation,
+        filter = status.getApplicableFilter(Filter.Kind.HOME),
+        filterActive = this.status.filterActive
     )
 }

@@ -72,7 +72,7 @@ interface StatusActionListener<in C : ConcreteViewData> : LinkListener {
 
     fun onShowEdits(viewData: C) {}
 
-    fun clearWarningAction(viewData: C)
+    fun changeFilter(filtered: Boolean, viewData: C)
 
     fun onUntranslate(viewData: C)
 }

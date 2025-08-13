@@ -34,8 +34,6 @@ import com.keylesspalace.tusky.components.timeline.TimelineFragment
 import com.keylesspalace.tusky.components.timeline.viewmodel.TimelineViewModel.Kind
 import com.keylesspalace.tusky.databinding.ActivityStatuslistBinding
 import com.keylesspalace.tusky.entity.Filter
-import com.keylesspalace.tusky.entity.FilterV1
-import com.keylesspalace.tusky.util.isHttpNotFound
 import com.keylesspalace.tusky.util.startActivityWithSlideInAnimation
 import com.keylesspalace.tusky.util.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -59,7 +57,6 @@ class StatusListActivity : BottomSheetActivity() {
     private var unmuteTagItem: MenuItem? = null
 
     /** The filter muting hashtag, null if unknown or hashtag is not filtered */
-    private var mutedFilterV1: FilterV1? = null
     private var mutedFilter: Filter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -209,21 +206,7 @@ class StatusListActivity : BottomSheetActivity() {
                     updateTagMuteState(mutedFilter != null)
                 },
                 { throwable ->
-                    if (throwable.isHttpNotFound()) {
-                        mastodonApi.getFiltersV1().fold(
-                            { filters ->
-                                mutedFilterV1 = filters.firstOrNull { filter ->
-                                    hashedTag == filter.phrase && filter.context.contains(Filter.Kind.HOME.kind)
-                                }
-                                updateTagMuteState(mutedFilterV1 != null)
-                            },
-                            { throwable2 ->
-                                Log.e(TAG, "Error getting filters: $throwable2")
-                            }
-                        )
-                    } else {
-                        Log.e(TAG, "Error getting filters: $throwable")
-                    }
+                    Log.e(TAG, "Error getting filters: $throwable")
                 }
             )
         }
@@ -276,36 +259,12 @@ class StatusListActivity : BottomSheetActivity() {
                     }
                 },
                 { throwable ->
-                    if (throwable.isHttpNotFound()) {
-                        mastodonApi.createFilterV1(
-                            hashedTag,
-                            listOf(Filter.Kind.HOME.kind),
-                            irreversible = false,
-                            wholeWord = true,
-                            expiresIn = FilterExpiration.never
-                        ).fold(
-                            { filter ->
-                                mutedFilterV1 = filter
-                                eventHub.dispatch(FilterUpdatedEvent(filter.context.map { Filter.Kind.valueOf(it) }))
-                                filterCreateSuccess = true
-                            },
-                            { throwable2 ->
-                                Snackbar.make(
-                                    binding.root,
-                                    getString(R.string.error_muting_hashtag_format, tag),
-                                    Snackbar.LENGTH_SHORT
-                                ).show()
-                                Log.e(TAG, "Failed to mute #$tag", throwable2)
-                            }
-                        )
-                    } else {
-                        Snackbar.make(
-                            binding.root,
-                            getString(R.string.error_muting_hashtag_format, tag),
-                            Snackbar.LENGTH_SHORT
-                        ).show()
-                        Log.e(TAG, "Failed to mute #$tag", throwable)
-                    }
+                    Snackbar.make(
+                        binding.root,
+                        getString(R.string.error_muting_hashtag_format, tag),
+                        Snackbar.LENGTH_SHORT
+                    ).show()
+                    Log.e(TAG, "Failed to mute #$tag", throwable)
                 }
             )
 
@@ -349,22 +308,6 @@ class StatusListActivity : BottomSheetActivity() {
                 } else {
                     mastodonApi.deleteFilter(filter.id)
                 }
-            } else if (mutedFilterV1 != null) {
-                mutedFilterV1?.let { filter ->
-                    if (filter.context.size > 1) {
-                        // This filter exists in multiple contexts, just remove the home context
-                        mastodonApi.updateFilterV1(
-                            id = filter.id,
-                            phrase = filter.phrase,
-                            context = filter.context.filterNot { it == Filter.Kind.HOME.kind },
-                            irreversible = null,
-                            wholeWord = null,
-                            expiresIn = FilterExpiration.never
-                        )
-                    } else {
-                        mastodonApi.deleteFilterV1(filter.id)
-                    }
-                }
             } else {
                 null
             }
@@ -373,7 +316,6 @@ class StatusListActivity : BottomSheetActivity() {
                 {
                     updateTagMuteState(false)
                     eventHub.dispatch(FilterUpdatedEvent(listOf(Filter.Kind.HOME)))
-                    mutedFilterV1 = null
                     mutedFilter = null
 
                     Snackbar.make(

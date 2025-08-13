@@ -8,7 +8,6 @@ import androidx.test.platform.app.InstrumentationRegistry
 import at.connyduck.calladapter.networkresult.NetworkResult
 import com.keylesspalace.tusky.appstore.EventHub
 import com.keylesspalace.tusky.appstore.StatusChangedEvent
-import com.keylesspalace.tusky.components.instanceinfo.InstanceInfoRepository
 import com.keylesspalace.tusky.components.timeline.fakeAccount
 import com.keylesspalace.tusky.components.timeline.fakeStatus
 import com.keylesspalace.tusky.components.timeline.fakeStatusViewData
@@ -19,7 +18,6 @@ import com.keylesspalace.tusky.db.Converters
 import com.keylesspalace.tusky.db.entity.AccountEntity
 import com.keylesspalace.tusky.di.NetworkModule
 import com.keylesspalace.tusky.entity.StatusContext
-import com.keylesspalace.tusky.network.FilterModel
 import com.keylesspalace.tusky.network.MastodonApi
 import com.keylesspalace.tusky.usecase.TimelineCases
 import java.io.IOException
@@ -82,10 +80,6 @@ class ViewThreadViewModelTest {
     suspend fun setup(dbInit: suspend () -> Unit = {}) {
         shadowOf(getMainLooper()).idle()
 
-        val instanceInfoRepo: InstanceInfoRepository = mock {
-            onBlocking { isFilterV2Supported() } doReturn false
-        }
-        val filterModel = FilterModel(instanceInfoRepo, api)
         val timelineCases = TimelineCases(api, eventHub)
         val accountManager: AccountManager = mock {
             on { activeAccount } doReturn AccountEntity(
@@ -105,7 +99,7 @@ class ViewThreadViewModelTest {
 
         dbInit()
 
-        viewModel = ViewThreadViewModel(api, filterModel, timelineCases, db, eventHub, accountManager, threadId)
+        viewModel = ViewThreadViewModel(api, timelineCases, db, eventHub, accountManager, threadId)
     }
 
     @After
@@ -361,7 +355,7 @@ class ViewThreadViewModelTest {
 
         setup {
             db.timelineAccountDao().insert(fakeAccount().toEntity(1))
-            db.timelineStatusDao().insert(fakeStatus(id = threadId).toEntity(1, expanded = true, contentShowing = true, contentCollapsed = false))
+            db.timelineStatusDao().insert(fakeStatus(id = threadId).toEntity(1, expanded = true, contentShowing = true, contentCollapsed = false, filterActive = true))
         }
 
         assertEquals(

@@ -50,7 +50,6 @@ sealed interface TranslationViewData {
  */
 sealed class StatusViewData {
     abstract val id: String
-    var filter: Filter? = null
 
     data class Concrete(
         val status: Status,
@@ -66,6 +65,8 @@ sealed class StatusViewData {
         val isDetailed: Boolean = false,
         val repliedToAccount: TimelineAccount? = null,
         val translation: TranslationViewData? = null,
+        val filter: Filter? = null,
+        val filterActive: Boolean
     ) : StatusViewData(), ConcreteViewData {
         override val id: String
             get() = status.id
@@ -123,6 +124,12 @@ sealed class StatusViewData {
 
         val isSelfReply: Boolean
             get() = status.inReplyToAccountId == status.account.id
+
+        val isFilterWarn: Boolean
+            get() = filterActive && filter?.action == Filter.Action.WARN
+
+        val isFilterHide: Boolean
+            get() = filter?.action == Filter.Action.HIDE
 
         /** Helper for Java */
         fun copyWithCollapsed(isCollapsed: Boolean): Concrete {

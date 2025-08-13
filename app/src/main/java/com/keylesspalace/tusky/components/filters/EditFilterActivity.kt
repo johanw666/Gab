@@ -26,52 +26,49 @@ import androidx.core.view.size
 import androidx.core.view.updatePadding
 import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.lifecycleScope
-import at.connyduck.calladapter.networkresult.fold
 import com.google.android.material.chip.Chip
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.materialswitch.MaterialSwitch
+import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import com.keylesspalace.tusky.BaseActivity
 import com.keylesspalace.tusky.R
-import com.keylesspalace.tusky.appstore.EventHub
-import com.keylesspalace.tusky.appstore.FilterUpdatedEvent
 import com.keylesspalace.tusky.components.instanceinfo.InstanceInfoRepository
 import com.keylesspalace.tusky.databinding.ActivityEditFilterBinding
 import com.keylesspalace.tusky.databinding.DialogFilterBinding
 import com.keylesspalace.tusky.entity.Filter
 import com.keylesspalace.tusky.entity.FilterKeyword
-import com.keylesspalace.tusky.network.MastodonApi
 import com.keylesspalace.tusky.util.getParcelableExtraCompat
-import com.keylesspalace.tusky.util.isHttpNotFound
 import com.keylesspalace.tusky.util.viewBinding
 import com.keylesspalace.tusky.util.visible
 import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.lifecycle.withCreationCallback
 import javax.inject.Inject
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class EditFilterActivity : BaseActivity() {
-    @Inject
-    lateinit var api: MastodonApi
-
-    @Inject
-    lateinit var eventHub: EventHub
 
     @Inject
     lateinit var instanceInfoRepository: InstanceInfoRepository
 
     private val binding by viewBinding(ActivityEditFilterBinding::inflate)
-    private val viewModel: EditFilterViewModel by viewModels()
 
-    private lateinit var filter: Filter
-    private var originalFilter: Filter? = null
+    private val viewModel: EditFilterViewModel by viewModels(
+        extrasProducer = {
+            defaultViewModelCreationExtras.withCreationCallback<EditFilterViewModel.Factory> { factory ->
+                factory.create(
+                    originalFilter = intent.getParcelableExtraCompat(FILTER_TO_EDIT),
+                )
+            }
+        }
+    )
+
     private lateinit var contextSwitches: Map<MaterialSwitch, Filter.Kind>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        originalFilter = intent.getParcelableExtraCompat(FILTER_TO_EDIT)
-        filter = originalFilter ?: Filter(context = emptyList(), action = Filter.Action.WARN)
         binding.apply {
             contextSwitches = mapOf(
                 filterContextHome to Filter.Kind.HOME,
@@ -91,7 +88,7 @@ class EditFilterActivity : BaseActivity() {
         }
 
         setTitle(
-            if (originalFilter == null) {
+            if (viewModel.originalFilter == null) {
                 R.string.filter_addition_title
             } else {
                 R.string.filter_edit_title
@@ -105,13 +102,17 @@ class EditFilterActivity : BaseActivity() {
         }
 
         binding.actionChip.setOnClickListener { showAddKeywordDialog() }
-        binding.filterSaveButton.setOnClickListener { saveChanges() }
+        binding.filterSaveButton.setOnClickListener {
+            viewModel.saveChanges()
+        }
         binding.filterDeleteButton.setOnClickListener {
             lifecycleScope.launch {
-                if (showDeleteFilterDialog(filter.title) == BUTTON_POSITIVE) deleteFilter()
+                if (showDeleteFilterDialog(viewModel.title.value) == BUTTON_POSITIVE) {
+                    viewModel.deleteFilter()
+                }
             }
         }
-        binding.filterDeleteButton.visible(originalFilter != null)
+        binding.filterDeleteButton.visible(viewModel.originalFilter != null)
 
         for (switch in contextSwitches.keys) {
             switch.setOnCheckedChangeListener { _, isChecked ->
@@ -142,7 +143,7 @@ class EditFilterActivity : BaseActivity() {
         }
         binding.filterDurationDropDown.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
             viewModel.setDuration(
-                if (originalFilter?.expiresAt == null) {
+                if (viewModel.originalFilter?.expiresAt == null) {
                     position
                 } else {
                     position - 1
@@ -151,11 +152,11 @@ class EditFilterActivity : BaseActivity() {
         }
         validateSaveButton()
 
-        if (originalFilter == null) {
+        if (viewModel.originalFilter == null) {
             binding.filterActionWarn.isChecked = true
             initializeDurationDropDown(false)
         } else {
-            loadFilter()
+            initializeDurationDropDown(withNoChange = viewModel.originalFilter?.expiresAt != null)
         }
         observeModel()
     }
@@ -191,12 +192,50 @@ class EditFilterActivity : BaseActivity() {
                 }
             }
         }
+        lifecycleScope.launch {
+            viewModel.state.collect { state ->
+                when (state) {
+                    EditFilterViewModel.State.Ready -> {
+                        setLoading(false)
+                    }
+                    EditFilterViewModel.State.DeletingFailed -> {
+                        setLoading(false)
+                        Snackbar.make(
+                            binding.root,
+                            getString(R.string.error_deleting_filter, viewModel.title.value),
+                            Snackbar.LENGTH_SHORT
+                        ).addCallback(object : BaseTransientBottomBar.BaseCallback<Snackbar>() {
+                            override fun onDismissed(transientBottomBar: Snackbar, eventType: Int) {
+                                viewModel.clearError()
+                            }
+                        }).show()
+                    }
+                    EditFilterViewModel.State.Finished -> finish()
+                    EditFilterViewModel.State.Loading -> {
+                        setLoading(true)
+                    }
+
+                    EditFilterViewModel.State.SavingFailed -> {
+                        setLoading(false)
+                        Snackbar.make(
+                            binding.root,
+                            getString(R.string.error_saving_filter, viewModel.title.value),
+                            Snackbar.LENGTH_SHORT
+                        ).addCallback(object : BaseTransientBottomBar.BaseCallback<Snackbar>() {
+                            override fun onDismissed(transientBottomBar: Snackbar, eventType: Int) {
+                                viewModel.clearError()
+                            }
+                        }).show()
+                    }
+                }
+            }
+        }
     }
 
-    // Populate the UI from the filter's members
-    private fun loadFilter() {
-        viewModel.load(filter)
-        initializeDurationDropDown(withNoChange = filter.expiresAt != null)
+    private fun setLoading(loading: Boolean) {
+        binding.filterDeleteButton.isEnabled = !loading
+        binding.filterSaveButton.isEnabled = !loading && viewModel.validate()
+        binding.filterProgressIndicator.visible(loading)
     }
 
     private fun initializeDurationDropDown(withNoChange: Boolean) {
@@ -240,7 +279,6 @@ class EditFilterActivity : BaseActivity() {
             binding.keywordChips.removeViewAt(newKeywords.size)
         }
 
-        filter = filter.copy(keywords = newKeywords)
         validateSaveButton()
     }
 
@@ -298,61 +336,6 @@ class EditFilterActivity : BaseActivity() {
 
     private fun validateSaveButton() {
         binding.filterSaveButton.isEnabled = viewModel.validate()
-    }
-
-    private fun saveChanges() {
-        // TODO use a progress bar here (see EditProfileActivity/activity_edit_profile.xml for example)?
-
-        lifecycleScope.launch {
-            if (viewModel.saveChanges(this@EditFilterActivity)) {
-                finish()
-                // Possibly affected contexts: any context affected by the original filter OR any context affected by the updated filter
-                val affectedContexts = viewModel.contexts.value
-                    .union(originalFilter?.context.orEmpty())
-                    .distinct()
-                eventHub.dispatch(FilterUpdatedEvent(affectedContexts))
-            } else {
-                Snackbar.make(
-                    binding.root,
-                    getString(R.string.error_saving_filter, viewModel.title.value),
-                    Snackbar.LENGTH_SHORT
-                ).show()
-            }
-        }
-    }
-
-    private fun deleteFilter() {
-        originalFilter?.let { filter ->
-            lifecycleScope.launch {
-                api.deleteFilter(filter.id).fold(
-                    {
-                        finish()
-                    },
-                    { throwable ->
-                        if (throwable.isHttpNotFound()) {
-                            api.deleteFilterV1(filter.id).fold(
-                                {
-                                    finish()
-                                },
-                                {
-                                    Snackbar.make(
-                                        binding.root,
-                                        getString(R.string.error_deleting_filter, filter.title),
-                                        Snackbar.LENGTH_SHORT
-                                    ).show()
-                                }
-                            )
-                        } else {
-                            Snackbar.make(
-                                binding.root,
-                                getString(R.string.error_deleting_filter, filter.title),
-                                Snackbar.LENGTH_SHORT
-                            ).show()
-                        }
-                    }
-                )
-            }
-        }
     }
 
     companion object {

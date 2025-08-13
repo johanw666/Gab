@@ -16,6 +16,7 @@
 package com.keylesspalace.tusky.ui
 
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Typography
 import androidx.compose.material3.darkColorScheme
@@ -76,7 +77,7 @@ private val LightColorScheme = lightColorScheme(
 
 private val DarkColorScheme = darkColorScheme(
     primary = tuskyBlueLight,
-    onPrimary = tuskyGrey90,
+    onPrimary = tuskyGrey10,
     secondary = tuskyBlueLight,
     onSecondary = tuskyGrey90,
     surface = tuskyGrey30,
@@ -133,6 +134,18 @@ fun TuskyTheme(
         )
     }
 }
+
+val ColorScheme.primaryTextColor: Color
+    @Composable
+    get() = if (isSystemInDarkTheme()) Color.White else tuskyGrey10
+
+val ColorScheme.secondaryTextColor: Color
+    @Composable
+    get() = if (isSystemInDarkTheme()) tuskyGrey90 else tuskyGrey20
+
+val ColorScheme.tertiaryTextColor: Color
+    @Composable
+    get() = if (isSystemInDarkTheme()) tuskyGrey70 else tuskyGrey30
 
 // for use in Previews, doesn't support the black theme or provide LocalPreferences
 @Composable

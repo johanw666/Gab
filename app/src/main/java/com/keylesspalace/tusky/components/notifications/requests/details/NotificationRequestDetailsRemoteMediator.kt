@@ -74,7 +74,7 @@ class NotificationRequestDetailsRemoteMediator(
                 isShowingContent = notification.status?.shouldShowContent(alwaysShowSensitiveMedia, Filter.Kind.NOTIFICATIONS) ?: true,
                 isExpanded = alwaysOpenSpoiler,
                 isCollapsed = true,
-                filter = notification.status?.getApplicableFilter(Filter.Kind.NOTIFICATIONS),
+                filterKind = Filter.Kind.NOTIFICATIONS,
             )
         }
 

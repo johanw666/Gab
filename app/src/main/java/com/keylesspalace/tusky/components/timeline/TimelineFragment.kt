@@ -469,9 +469,9 @@ class TimelineFragment :
         viewModel.showPollResults(status)
     }
 
-    override fun clearWarningAction(viewData: StatusViewData.Concrete) {
+    override fun changeFilter(filtered: Boolean, viewData: StatusViewData.Concrete) {
         val status = viewData.asStatusOrNull() ?: return
-        viewModel.clearWarning(status)
+        viewModel.changeFilter(filtered, status)
     }
 
     override fun onMore(viewData: StatusViewData.Concrete, view: View) {

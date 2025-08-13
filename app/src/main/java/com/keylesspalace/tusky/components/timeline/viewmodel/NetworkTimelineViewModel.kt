@@ -38,10 +38,8 @@ import com.keylesspalace.tusky.appstore.StatusDeletedEvent
 import com.keylesspalace.tusky.appstore.UnfollowEvent
 import com.keylesspalace.tusky.components.timeline.util.ifExpected
 import com.keylesspalace.tusky.db.AccountManager
-import com.keylesspalace.tusky.entity.Filter
 import com.keylesspalace.tusky.entity.Poll
 import com.keylesspalace.tusky.entity.Status
-import com.keylesspalace.tusky.network.FilterModel
 import com.keylesspalace.tusky.network.MastodonApi
 import com.keylesspalace.tusky.usecase.TimelineCases
 import com.keylesspalace.tusky.util.getDomain
@@ -71,13 +69,11 @@ class NetworkTimelineViewModel @Inject constructor(
     eventHub: EventHub,
     accountManager: AccountManager,
     sharedPreferences: SharedPreferences,
-    filterModel: FilterModel
 ) : TimelineViewModel(
     timelineCases,
     eventHub,
     accountManager,
-    sharedPreferences,
-    filterModel
+    sharedPreferences
 ) {
 
     var currentSource: NetworkTimelinePagingSource? = null
@@ -102,7 +98,7 @@ class NetworkTimelineViewModel @Inject constructor(
     ).flow
         .map { pagingData ->
             pagingData.filter(Dispatchers.Default.asExecutor()) { statusViewData ->
-                shouldFilterStatus(statusViewData)?.action != Filter.Action.HIDE
+                !shouldHideStatus(statusViewData)
             }
         }
         .flowOn(Dispatchers.Default)
@@ -224,7 +220,8 @@ class NetworkTimelineViewModel @Inject constructor(
                         isShowingContent = status.shouldShowContent(activeAccount.alwaysShowSensitiveMedia, kind.toFilterKind()),
                         isExpanded = activeAccount.alwaysOpenSpoiler,
                         isCollapsed = true,
-                        filter = status.getApplicableFilter(kind.toFilterKind()),
+                        filterKind = kind.toFilterKind(),
+                        filterActive = true
                     )
                 }.toMutableList()
 
@@ -314,10 +311,8 @@ class NetworkTimelineViewModel @Inject constructor(
         currentSource?.invalidate()
     }
 
-    override fun clearWarning(status: StatusViewData.Concrete) {
-        updateStatusByActionableId(status.actionableId) {
-            it.copy(filtered = emptyList())
-        }
+    override fun changeFilter(filtered: Boolean, status: StatusViewData.Concrete) {
+        status.copy(filterActive = filtered).update()
     }
 
     override fun saveReadingPosition(statusId: String) {

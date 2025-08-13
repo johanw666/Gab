@@ -36,7 +36,6 @@ import com.keylesspalace.tusky.db.AccountManager
 import com.keylesspalace.tusky.db.AppDatabase
 import com.keylesspalace.tusky.entity.Filter
 import com.keylesspalace.tusky.entity.Status
-import com.keylesspalace.tusky.network.FilterModel
 import com.keylesspalace.tusky.network.MastodonApi
 import com.keylesspalace.tusky.usecase.TimelineCases
 import com.keylesspalace.tusky.util.toViewData
@@ -61,7 +60,6 @@ import kotlinx.coroutines.launch
 @HiltViewModel(assistedFactory = ViewThreadViewModel.Factory::class)
 class ViewThreadViewModel @AssistedInject constructor(
     private val api: MastodonApi,
-    private val filterModel: FilterModel,
     private val timelineCases: TimelineCases,
     private val db: AppDatabase,
     eventHub: EventHub,
@@ -128,7 +126,6 @@ class ViewThreadViewModel @AssistedInject constructor(
     private fun loadThread() {
         viewModelScope.launch {
             Log.d(TAG, "Finding status with: $threadId")
-            val filterCall = async { filterModel.init(Filter.Kind.THREAD) }
 
             val contextCall = async { api.statusContext(threadId) }
             val statusAndAccount = db.timelineStatusDao().getStatusWithAccount(activeAccount.id, threadId)
@@ -143,7 +140,8 @@ class ViewThreadViewModel @AssistedInject constructor(
                     isDetailed = true,
                     // don't show "in reply to" over the post
                     repliedToAccount = null,
-                    translation = null
+                    translation = null,
+                    filterActive = true
                 )
             } else {
                 Log.d(TAG, "Loaded status from network")
@@ -170,7 +168,6 @@ class ViewThreadViewModel @AssistedInject constructor(
                 }
             }
 
-            filterCall.await() // make sure FilterModel is initialized before using it
             val contextResult = contextCall.await()
 
             contextResult.fold({ statusContext ->
@@ -329,7 +326,8 @@ class ViewThreadViewModel @AssistedInject constructor(
                 isCollapsed = viewData.isCollapsed,
                 isDetailed = viewData.isDetailed,
                 translation = viewData.translation,
-                filter = viewData.filter,
+                filterKind = Filter.Kind.THREAD,
+                filterActive = viewData.filterActive
             )
         }
     }
@@ -439,8 +437,7 @@ class ViewThreadViewModel @AssistedInject constructor(
             if (status.isDetailed || status.status.account.id == activeAccount.accountId) {
                 true
             } else {
-                status.filter = filterModel.shouldFilterStatus(status.status)
-                status.filter?.action != Filter.Action.HIDE
+                !status.isFilterHide
             }
         }
     }
@@ -454,7 +451,8 @@ class ViewThreadViewModel @AssistedInject constructor(
             isExpanded = oldStatus?.isExpanded ?: alwaysOpenSpoiler,
             isCollapsed = oldStatus?.isCollapsed ?: !isDetailed,
             isDetailed = oldStatus?.isDetailed ?: isDetailed,
-            filter = oldStatus?.filter ?: actionableStatus.getApplicableFilter(Filter.Kind.THREAD),
+            filterKind = Filter.Kind.THREAD,
+            filterActive = oldStatus?.filterActive ?: true
         )
     }
 
@@ -493,9 +491,11 @@ class ViewThreadViewModel @AssistedInject constructor(
         }
     }
 
-    fun clearWarning(viewData: StatusViewData.Concrete) {
-        updateStatus(viewData.id) { status ->
-            status.copy(filtered = emptyList())
+    fun changeFilter(filtered: Boolean, viewData: StatusViewData.Concrete) {
+        updateStatusViewData(viewData.id) { viewData ->
+            viewData.copy(
+                filterActive = filtered
+            )
         }
     }
 

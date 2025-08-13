@@ -48,8 +48,9 @@ fun Status.toViewData(
     isExpanded: Boolean,
     isCollapsed: Boolean,
     isDetailed: Boolean = false,
-    filter: Filter?,
+    filterKind: Filter.Kind,
     translation: TranslationViewData? = null,
+    filterActive: Boolean
 ) = StatusViewData.Concrete(
     status = this,
     isShowingContent = isShowingContent,
@@ -57,7 +58,9 @@ fun Status.toViewData(
     isExpanded = isExpanded,
     isDetailed = isDetailed,
     translation = translation,
-).apply { this.filter = filter }
+    filter = this.getApplicableFilter(filterKind),
+    filterActive = filterActive
+)
 
 fun List<TrendingTag>.toViewData(): List<TrendingViewData.Tag> {
     val maxTrendingValue = flatMap { tag -> tag.history }

@@ -266,7 +266,7 @@ class NotificationRequestDetailsFragment :
         viewModel.showPollResults(status)
     }
 
-    override fun clearWarningAction(viewData: NotificationViewData.Concrete) {
+    override fun changeFilter(filtered: Boolean, viewData: NotificationViewData.Concrete) {
         // not applicable here
     }
 

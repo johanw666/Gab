@@ -46,7 +46,6 @@ import com.keylesspalace.tusky.db.entity.NotificationPolicyEntity
 import com.keylesspalace.tusky.entity.Filter
 import com.keylesspalace.tusky.entity.Notification
 import com.keylesspalace.tusky.entity.Status
-import com.keylesspalace.tusky.network.FilterModel
 import com.keylesspalace.tusky.network.MastodonApi
 import com.keylesspalace.tusky.settings.PrefKeys
 import com.keylesspalace.tusky.usecase.NotificationPolicyUsecase
@@ -78,7 +77,6 @@ class NotificationsViewModel @Inject constructor(
     eventHub: EventHub,
     private val accountManager: AccountManager,
     private val preferences: SharedPreferences,
-    private val filterModel: FilterModel,
     private val db: AppDatabase,
     private val notificationPolicyUsecase: NotificationPolicyUsecase
 ) : ViewModel() {
@@ -117,7 +115,7 @@ class NotificationsViewModel @Inject constructor(
                     val translation = translations[notification.status?.serverId]
                     notification.toViewData(translation = translation)
                 }.filter { notificationViewData ->
-                    shouldFilterStatus(notificationViewData)?.action != Filter.Action.HIDE
+                    !shouldHideStatus(notificationViewData)
                 }
             }
     }
@@ -132,15 +130,8 @@ class NotificationsViewModel @Inject constructor(
                     onPreferenceChanged(event.preferenceKey)
                 }
                 if (event is FilterUpdatedEvent && event.filterContext.contains(Filter.Kind.NOTIFICATIONS)) {
-                    filterModel.init(Filter.Kind.NOTIFICATIONS)
                     refreshTrigger.value += 1
                 }
-            }
-        }
-        viewModelScope.launch {
-            val needsRefresh = filterModel.init(Filter.Kind.NOTIFICATIONS)
-            if (needsRefresh) {
-                refreshTrigger.value++
             }
         }
         loadNotificationPolicy()
@@ -165,21 +156,19 @@ class NotificationsViewModel @Inject constructor(
         }
     }
 
-    private fun shouldFilterStatus(notificationViewData: NotificationViewData): Filter? {
+    private fun shouldHideStatus(notificationViewData: NotificationViewData): Boolean {
         return when ((notificationViewData as? NotificationViewData.Concrete)?.type) {
             Notification.Type.Mention, Notification.Type.Poll, Notification.Type.Status, Notification.Type.Update -> {
                 val account = activeAccountFlow.value
                 notificationViewData.statusViewData?.let { statusViewData ->
                     if (statusViewData.status.account.id == account?.accountId) {
-                        return null
+                        return false
                     }
-                    statusViewData.filter = filterModel.shouldFilterStatus(statusViewData.actionable)
-                    return statusViewData.filter
+                    return statusViewData.isFilterHide
                 }
-                null
+                false
             }
-
-            else -> null
+            else -> false
         }
     }
 
@@ -272,9 +261,9 @@ class NotificationsViewModel @Inject constructor(
         }
     }
 
-    fun clearWarning(status: StatusViewData.Concrete) {
+    fun changeFilter(filtered: Boolean, status: StatusViewData.Concrete) {
         viewModelScope.launch {
-            db.timelineStatusDao().clearWarning(accountId, status.actionableId)
+            db.timelineStatusDao().changeFilter(accountId, status.actionableId, filtered)
         }
     }
 
@@ -379,7 +368,8 @@ class NotificationsViewModel @Inject constructor(
                                     tuskyAccountId = accountId,
                                     expanded = account.alwaysOpenSpoiler,
                                     contentShowing = account.alwaysShowSensitiveMedia || !status.sensitive,
-                                    contentCollapsed = true
+                                    contentCollapsed = true,
+                                    filterActive = true
                                 )
                             )
                         }

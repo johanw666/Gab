@@ -414,9 +414,9 @@ class NotificationsFragment :
         viewModel.showPollResults(status)
     }
 
-    override fun clearWarningAction(viewData: NotificationViewData.Concrete) {
+    override fun changeFilter(filtered: Boolean, viewData: NotificationViewData.Concrete) {
         val status = viewData.asStatusOrNull() ?: return
-        viewModel.clearWarning(status)
+        viewModel.changeFilter(filtered, status)
     }
 
     override fun onMore(viewData: NotificationViewData.Concrete, view: View) {

@@ -44,9 +44,6 @@ data class InstanceEntity(
     val maxFieldValueLength: Int?,
     val translationEnabled: Boolean?,
     val mastodonApiVersion: Int?,
-
-    // ToDo: Remove this again when filter v1 support is dropped
-    @ColumnInfo(defaultValue = "false") val filterV2Supported: Boolean = false,
     val vapidKey: String?
 )
 

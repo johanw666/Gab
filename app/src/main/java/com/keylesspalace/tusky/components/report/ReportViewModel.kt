@@ -27,6 +27,7 @@ import com.keylesspalace.tusky.appstore.EventHub
 import com.keylesspalace.tusky.appstore.MuteEvent
 import com.keylesspalace.tusky.components.report.adapter.StatusesPagingSource
 import com.keylesspalace.tusky.components.report.model.StatusViewState
+import com.keylesspalace.tusky.entity.Filter
 import com.keylesspalace.tusky.entity.Instance
 import com.keylesspalace.tusky.entity.Relationship
 import com.keylesspalace.tusky.entity.Status
@@ -98,7 +99,7 @@ class ReportViewModel @AssistedInject constructor(
         .map { pagingData ->
             /* TODO: refactor reports to use the isShowingContent / isExpanded / isCollapsed attributes from StatusViewData.Concrete
              instead of StatusViewState */
-            pagingData.map { status -> status.toViewData(false, false, false, filter = null) }
+            pagingData.map { status -> status.toViewData(false, false, false, filterKind = Filter.Kind.PUBLIC, filterActive = true) }
         }
         .cachedIn(viewModelScope)
 

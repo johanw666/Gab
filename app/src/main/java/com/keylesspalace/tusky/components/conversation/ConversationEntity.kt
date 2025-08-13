@@ -137,7 +137,8 @@ data class ConversationStatusEntity(
             ),
             isExpanded = expanded,
             isShowingContent = showingHiddenContent,
-            isCollapsed = collapsed
+            isCollapsed = collapsed,
+            filterActive = true
         )
     }
 }

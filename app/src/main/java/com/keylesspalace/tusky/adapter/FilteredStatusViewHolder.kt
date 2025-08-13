@@ -42,7 +42,7 @@ open class FilteredStatusViewHolder<in C : ConcreteViewData>(
             matchedFilterTitle
         )
         binding.statusFilterShowAnyway.setOnClickListener {
-            listener.clearWarningAction(viewData)
+            listener.changeFilter(false, viewData)
         }
     }
 }

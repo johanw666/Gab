@@ -254,7 +254,8 @@ class SearchStatusesFragment :
         viewModel.showPollResults(viewData)
     }
 
-    override fun clearWarningAction(viewData: StatusViewData.Concrete) {}
+    override fun changeFilter(filtered: Boolean, viewData: StatusViewData.Concrete) {
+    }
 
     private fun removeItem(viewData: StatusViewData.Concrete, deleteMedia: Boolean) {
         viewModel.removeItem(viewData, deleteMedia)

@@ -74,7 +74,8 @@ class SearchViewModel @Inject constructor(
                     isShowingContent = status.shouldShowContent(alwaysShowSensitiveMedia, Filter.Kind.PUBLIC),
                     isExpanded = alwaysOpenSpoiler,
                     isCollapsed = true,
-                    filter = status.getApplicableFilter(Filter.Kind.PUBLIC),
+                    filterKind = Filter.Kind.PUBLIC,
+                    filterActive = true
                 )
             }.apply {
                 loadedStatuses.addAll(this)

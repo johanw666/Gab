@@ -30,7 +30,6 @@ import com.keylesspalace.tusky.components.timeline.util.ifExpected
 import com.keylesspalace.tusky.db.AccountManager
 import com.keylesspalace.tusky.entity.Filter
 import com.keylesspalace.tusky.entity.Status
-import com.keylesspalace.tusky.network.FilterModel
 import com.keylesspalace.tusky.settings.PrefKeys
 import com.keylesspalace.tusky.usecase.TimelineCases
 import com.keylesspalace.tusky.viewdata.StatusViewData
@@ -42,8 +41,7 @@ abstract class TimelineViewModel(
     protected val timelineCases: TimelineCases,
     private val eventHub: EventHub,
     val accountManager: AccountManager,
-    private val sharedPreferences: SharedPreferences,
-    private val filterModel: FilterModel
+    private val sharedPreferences: SharedPreferences
 ) : ViewModel() {
 
     val activeAccountFlow = accountManager.activeAccount(viewModelScope)
@@ -92,19 +90,11 @@ abstract class TimelineViewModel(
                         }
                         is FilterUpdatedEvent -> {
                             if (filterContextMatchesKind(this@TimelineViewModel.kind, event.filterContext)) {
-                                filterModel.init(kind.toFilterKind())
                                 invalidate()
                             }
                         }
                     }
                 }
-        }
-
-        viewModelScope.launch {
-            val needsRefresh = filterModel.init(kind.toFilterKind())
-            if (needsRefresh) {
-                fullReload()
-            }
         }
     }
 
@@ -170,7 +160,7 @@ abstract class TimelineViewModel(
 
     abstract fun fullReload()
 
-    abstract fun clearWarning(status: StatusViewData.Concrete)
+    abstract fun changeFilter(filtered: Boolean, status: StatusViewData.Concrete)
 
     /** Saves the user's reading position so it can be restored later */
     abstract fun saveReadingPosition(statusId: String)
@@ -178,19 +168,20 @@ abstract class TimelineViewModel(
     /** Triggered when currently displayed data must be reloaded. */
     protected abstract suspend fun invalidate()
 
-    protected fun shouldFilterStatus(statusViewData: StatusViewData): Filter? {
-        val status = statusViewData.asStatusOrNull()?.status ?: return null
+    protected fun shouldHideStatus(statusViewData: StatusViewData): Boolean {
+        val concrete = statusViewData.asStatusOrNull() ?: return false
+        val status = concrete.status
         return if (
             (status.isReply && filterRemoveReplies) ||
             (status.reblog != null && filterRemoveReblogs) ||
             (status.account.id == status.reblog?.account?.id && filterRemoveSelfReblogs)
         ) {
-            Filter(context = listOf(kind.toFilterKind()), action = Filter.Action.HIDE)
+            true
         } else if (status.actionableStatus.account.id == activeAccountFlow.value?.accountId) {
             // Mastodon filters don't apply for own posts
-            null
+            false
         } else {
-            filterModel.shouldFilterStatus(status.actionableStatus)
+            concrete.isFilterHide
         }
     }
 

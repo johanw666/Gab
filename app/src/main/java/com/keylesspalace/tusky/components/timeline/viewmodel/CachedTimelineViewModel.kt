@@ -40,8 +40,6 @@ import com.keylesspalace.tusky.db.AccountManager
 import com.keylesspalace.tusky.db.AppDatabase
 import com.keylesspalace.tusky.db.entity.HomeTimelineData
 import com.keylesspalace.tusky.db.entity.HomeTimelineEntity
-import com.keylesspalace.tusky.entity.Filter
-import com.keylesspalace.tusky.network.FilterModel
 import com.keylesspalace.tusky.network.MastodonApi
 import com.keylesspalace.tusky.usecase.TimelineCases
 import com.keylesspalace.tusky.viewdata.StatusViewData
@@ -65,14 +63,12 @@ class CachedTimelineViewModel @Inject constructor(
     eventHub: EventHub,
     accountManager: AccountManager,
     sharedPreferences: SharedPreferences,
-    filterModel: FilterModel,
     private val db: AppDatabase
 ) : TimelineViewModel(
     timelineCases,
     eventHub,
     accountManager,
-    sharedPreferences,
-    filterModel
+    sharedPreferences
 ) {
 
     private var currentPagingSource: PagingSource<Int, HomeTimelineData>? = null
@@ -100,14 +96,12 @@ class CachedTimelineViewModel @Inject constructor(
         .combine(translations) { pagingData, translations ->
             pagingData.map { timelineData ->
                 val translation = translations[timelineData.status?.serverId]
-                val viewData = timelineData.toViewData(
+                timelineData.toViewData(
                     isDetailed = false,
                     translation = translation
                 )
-                viewData.filter = shouldFilterStatus(viewData)
-                viewData
             }.filter { statusViewData ->
-                statusViewData.filter?.action != Filter.Action.HIDE
+                !shouldHideStatus(statusViewData)
             }
         }
         .flowOn(Dispatchers.Default)
@@ -133,9 +127,9 @@ class CachedTimelineViewModel @Inject constructor(
         }
     }
 
-    override fun clearWarning(status: StatusViewData.Concrete) {
+    override fun changeFilter(filtered: Boolean, status: StatusViewData.Concrete) {
         viewModelScope.launch {
-            db.timelineStatusDao().clearWarning(accountId, status.actionableId)
+            db.timelineStatusDao().changeFilter(accountId, status.actionableId, filtered)
         }
     }
 
@@ -211,6 +205,7 @@ class CachedTimelineViewModel @Inject constructor(
                                 expanded = account.alwaysOpenSpoiler,
                                 contentShowing = status.shouldShowContent(account.alwaysShowSensitiveMedia, kind.toFilterKind()),
                                 contentCollapsed = true,
+                                filterActive = true
                             )
                         )
                         timelineDao.insertHomeTimelineItem(

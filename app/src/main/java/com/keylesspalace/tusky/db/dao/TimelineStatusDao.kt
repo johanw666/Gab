@@ -233,9 +233,9 @@ AND tuskyAccountId = :tuskyAccountId
     abstract suspend fun deleteAllFromInstance(tuskyAccountId: Long, instanceDomain: String)
 
     @Query(
-        "UPDATE TimelineStatusEntity SET filtered = '[]' WHERE tuskyAccountId = :tuskyAccountId AND serverId = :statusId"
+        "UPDATE TimelineStatusEntity SET filterActive = :filtered WHERE tuskyAccountId = :tuskyAccountId AND serverId = :statusId"
     )
-    abstract suspend fun clearWarning(tuskyAccountId: Long, statusId: String): Int
+    abstract suspend fun changeFilter(tuskyAccountId: Long, statusId: String, filtered: Boolean): Int
 
     @Query(
         "SELECT id FROM HomeTimelineEntity WHERE tuskyAccountId = :tuskyAccountId ORDER BY LENGTH(id) DESC, id DESC LIMIT 1"

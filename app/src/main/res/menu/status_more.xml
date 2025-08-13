@@ -19,6 +19,9 @@
         android:id="@+id/status_translate"
         android:title="@string/action_translate" />
     <item
+        android:id="@+id/status_rehide"
+        android:title="@string/action_rehide_status" />
+    <item
         android:id="@+id/status_open_as"
         android:title="@string/action_open_as" />
     <item
@@ -27,7 +30,6 @@
     <item
         android:id="@+id/status_mute_conversation"
         android:title="@string/action_mute_conversation" />
-
     <group>
         <item
             android:id="@+id/status_mute"

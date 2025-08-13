@@ -62,7 +62,7 @@ fun Notification.toViewData(
     isShowingContent: Boolean,
     isExpanded: Boolean,
     isCollapsed: Boolean,
-    filter: Filter?,
+    filterKind: Filter.Kind,
 ): NotificationViewData.Concrete = NotificationViewData.Concrete(
     id = id,
     type = type,
@@ -71,7 +71,8 @@ fun Notification.toViewData(
         isShowingContent = isShowingContent,
         isExpanded = isExpanded,
         isCollapsed = isCollapsed,
-        filter = filter,
+        filterKind = filterKind,
+        filterActive = true
     ),
     report = report,
     moderationWarning = moderationWarning,
@@ -101,12 +102,15 @@ fun NotificationDataEntity.toViewData(
         type = type,
         account = account.toAccount(),
         statusViewData = if (status != null && statusAccount != null) {
+            val status = status.toStatus(statusAccount)
             StatusViewData.Concrete(
-                status = status.toStatus(statusAccount),
+                status = this.status.toStatus(statusAccount),
                 isExpanded = this.status.expanded,
                 isShowingContent = this.status.contentShowing,
                 isCollapsed = this.status.contentCollapsed,
-                translation = translation
+                translation = translation,
+                filter = status.getApplicableFilter(Filter.Kind.NOTIFICATIONS),
+                filterActive = this.status.filterActive
             )
         } else {
             null

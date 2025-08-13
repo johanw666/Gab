@@ -16,52 +16,57 @@
 package com.keylesspalace.tusky.components.filters
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import at.connyduck.calladapter.networkresult.fold
 import com.keylesspalace.tusky.R
+import com.keylesspalace.tusky.appstore.EventHub
+import com.keylesspalace.tusky.appstore.FilterUpdatedEvent
 import com.keylesspalace.tusky.entity.Filter
 import com.keylesspalace.tusky.entity.FilterKeyword
 import com.keylesspalace.tusky.network.MastodonApi
-import com.keylesspalace.tusky.util.isHttpNotFound
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.launch
 
-@HiltViewModel
-class EditFilterViewModel @Inject constructor(val api: MastodonApi) : ViewModel() {
-    private var originalFilter: Filter? = null
+@HiltViewModel(assistedFactory = EditFilterViewModel.Factory::class)
+class EditFilterViewModel @AssistedInject constructor(
+    private val api: MastodonApi,
+    private val eventHub: EventHub,
+    @ApplicationContext private val context: Context,
+    @Assisted("originalFilter") val originalFilter: Filter?
+) : ViewModel() {
 
-    private val _title = MutableStateFlow("")
+    private val _title: MutableStateFlow<String> = MutableStateFlow(originalFilter?.title.orEmpty())
     val title: StateFlow<String> = _title.asStateFlow()
 
-    private val _keywords = MutableStateFlow(listOf<FilterKeyword>())
+    private val _keywords: MutableStateFlow<List<FilterKeyword>> = MutableStateFlow(originalFilter?.keywords.orEmpty())
     val keywords: StateFlow<List<FilterKeyword>> = _keywords.asStateFlow()
 
-    private val _action = MutableStateFlow(Filter.Action.WARN)
+    private val _action: MutableStateFlow<Filter.Action> = MutableStateFlow(originalFilter?.action ?: Filter.Action.WARN)
     val action: StateFlow<Filter.Action> = _action.asStateFlow()
 
-    private val _duration = MutableStateFlow(0)
-    val duration: StateFlow<Int> = _duration.asStateFlow()
-
-    private val _contexts = MutableStateFlow(listOf<Filter.Kind>())
-    val contexts: StateFlow<List<Filter.Kind>> = _contexts.asStateFlow()
-
-    fun load(filter: Filter) {
-        originalFilter = filter
-        _title.value = filter.title
-        _keywords.value = filter.keywords
-        _action.value = filter.action
-        _duration.value = if (filter.expiresAt == null) {
+    private val _duration: MutableStateFlow<Int> = MutableStateFlow(
+        if (originalFilter?.expiresAt == null) {
             0
         } else {
             -1
         }
-        _contexts.value = filter.context
-    }
+    )
+    val duration: StateFlow<Int> = _duration.asStateFlow()
+
+    private val _contexts: MutableStateFlow<List<Filter.Kind>> = MutableStateFlow(originalFilter?.context.orEmpty())
+    val contexts: StateFlow<List<Filter.Kind>> = _contexts.asStateFlow()
+
+    private val _state: MutableStateFlow<State> = MutableStateFlow(State.Ready)
+    val state: StateFlow<State> = _state.asStateFlow()
 
     fun addKeyword(keyword: FilterKeyword) {
         _keywords.value += keyword
@@ -108,27 +113,60 @@ class EditFilterViewModel @Inject constructor(val api: MastodonApi) : ViewModel(
             _contexts.value.isNotEmpty()
     }
 
-    suspend fun saveChanges(context: Context): Boolean {
+    fun saveChanges() {
+        _state.value = State.Loading
+
         val contexts = _contexts.value
         val title = _title.value
         val durationIndex = _duration.value
         val action = _action.value
 
-        return withContext(viewModelScope.coroutineContext) {
-            originalFilter?.let { filter ->
-                updateFilter(filter, title, contexts, action, durationIndex, context)
-            } ?: createFilter(title, contexts, action, durationIndex, context)
+        viewModelScope.launch {
+            val success = originalFilter?.let { filter ->
+                updateFilter(filter, title, contexts, action, durationIndex)
+            } ?: createFilter(title, contexts, action, durationIndex)
+
+            if (success) {
+                val affectedContexts = contexts.union(originalFilter?.context.orEmpty())
+                    .distinct()
+                eventHub.dispatch(FilterUpdatedEvent(affectedContexts))
+                _state.value = State.Finished
+            } else {
+                _state.value = State.SavingFailed
+            }
         }
+    }
+
+    fun deleteFilter() {
+        originalFilter?.let { filter ->
+
+            _state.value = State.Loading
+
+            viewModelScope.launch {
+                api.deleteFilter(filter.id).fold(
+                    {
+                        _state.value = State.Finished
+                    },
+                    { throwable ->
+                        Log.w(TAG, "failed deleting filter", throwable)
+                        _state.value = State.DeletingFailed
+                    }
+                )
+            }
+        }
+    }
+
+    fun clearError() {
+        _state.value = State.Ready
     }
 
     private suspend fun createFilter(
         title: String,
         contexts: List<Filter.Kind>,
         action: Filter.Action,
-        durationIndex: Int,
-        context: Context
+        durationIndex: Int
     ): Boolean {
-        val expiration = getExpirationForDurationIndex(durationIndex, context)
+        val expiration = getExpirationForDurationIndex(durationIndex)
         api.createFilter(
             title = title,
             context = contexts,
@@ -146,11 +184,8 @@ class EditFilterViewModel @Inject constructor(val api: MastodonApi) : ViewModel(
                 }.none { it.isFailure }
             },
             { throwable ->
-                return (
-                    throwable.isHttpNotFound() &&
-                        // Endpoint not found, fall back to v1 api
-                        createFilterV1(contexts.map(Filter.Kind::kind), expiration)
-                    )
+                Log.w(TAG, "failed to create filter", throwable)
+                return false
             }
         )
     }
@@ -160,10 +195,9 @@ class EditFilterViewModel @Inject constructor(val api: MastodonApi) : ViewModel(
         title: String,
         contexts: List<Filter.Kind>,
         action: Filter.Action,
-        durationIndex: Int,
-        context: Context
+        durationIndex: Int
     ): Boolean {
-        val expiration = getExpirationForDurationIndex(durationIndex, context)
+        val expiration = getExpirationForDurationIndex(durationIndex)
         api.updateFilter(
             id = originalFilter.id,
             title = title,
@@ -187,60 +221,40 @@ class EditFilterViewModel @Inject constructor(val api: MastodonApi) : ViewModel(
                 return results.none { it.isFailure }
             },
             { throwable ->
-                if (throwable.isHttpNotFound()) {
-                    // Endpoint not found, fall back to v1 api
-                    if (updateFilterV1(contexts.map(Filter.Kind::kind), expiration)) {
-                        return true
-                    }
-                }
+                Log.w(TAG, "failed to update filter", throwable)
                 return false
             }
         )
     }
 
-    private suspend fun createFilterV1(context: List<String>, expiration: FilterExpiration?): Boolean {
-        return _keywords.value.map { keyword ->
-            api.createFilterV1(keyword.keyword, context, false, keyword.wholeWord, expiration)
-        }.none { it.isFailure }
+    // Mastodon *stores* the absolute date in the filter,
+    // but create/edit take a number of seconds (relative to the time the operation is posted)
+    private fun getExpirationForDurationIndex(index: Int): FilterExpiration? {
+        return when (index) {
+            -1 -> FilterExpiration.unchanged
+            0 -> FilterExpiration.never
+            else -> FilterExpiration.seconds(
+                context.resources.getIntArray(R.array.filter_duration_values)[index]
+            )
+        }
     }
 
-    private suspend fun updateFilterV1(context: List<String>, expiration: FilterExpiration?): Boolean {
-        val results = _keywords.value.map { keyword ->
-            if (originalFilter == null) {
-                api.createFilterV1(
-                    phrase = keyword.keyword,
-                    context = context,
-                    irreversible = false,
-                    wholeWord = keyword.wholeWord,
-                    expiresIn = expiration
-                )
-            } else {
-                api.updateFilterV1(
-                    id = originalFilter!!.id,
-                    phrase = keyword.keyword,
-                    context = context,
-                    irreversible = false,
-                    wholeWord = keyword.wholeWord,
-                    expiresIn = expiration
-                )
-            }
-        }
-        // Don't handle deleted keywords here because there's only one keyword per v1 filter anyway
+    sealed class State {
+        data object Ready : State()
+        data object SavingFailed : State()
+        data object DeletingFailed : State()
+        data object Loading : State()
+        data object Finished : State()
+    }
 
-        return results.none { it.isFailure }
+    @AssistedFactory
+    interface Factory {
+        fun create(
+            @Assisted("originalFilter") originalFilter: Filter?
+        ): EditFilterViewModel
     }
 
     companion object {
-        // Mastodon *stores* the absolute date in the filter,
-        // but create/edit take a number of seconds (relative to the time the operation is posted)
-        private fun getExpirationForDurationIndex(index: Int, context: Context): FilterExpiration? {
-            return when (index) {
-                -1 -> FilterExpiration.unchanged
-                0 -> FilterExpiration.never
-                else -> FilterExpiration.seconds(
-                    context.resources.getIntArray(R.array.filter_duration_values)[index]
-                )
-            }
-        }
+        private const val TAG = "EditFilterViewModel"
     }
 }

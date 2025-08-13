@@ -171,6 +171,7 @@ class NotificationsRemoteMediator(
                 val expanded = oldStatus?.expanded ?: activeAccount.alwaysOpenSpoiler
                 val contentShowing = oldStatus?.contentShowing ?: (activeAccount.alwaysShowSensitiveMedia || !status.sensitive)
                 val contentCollapsed = oldStatus?.contentCollapsed ?: true
+                val filterActive = oldStatus?.filterActive ?: true
 
                 val statusToInsert = status.reblog ?: status
                 accountDao.insert(statusToInsert.account.toEntity(activeAccount.id))
@@ -179,7 +180,8 @@ class NotificationsRemoteMediator(
                         tuskyAccountId = activeAccount.id,
                         expanded = expanded,
                         contentShowing = contentShowing,
-                        contentCollapsed = contentCollapsed
+                        contentCollapsed = contentCollapsed,
+                        filterActive = filterActive
                     )
                 )
             }

@@ -26,7 +26,6 @@ import com.keylesspalace.tusky.adapter.StatusBaseViewHolder
 import com.keylesspalace.tusky.adapter.StatusDetailedViewHolder
 import com.keylesspalace.tusky.adapter.StatusViewHolder
 import com.keylesspalace.tusky.databinding.ItemStatusFilteredBinding
-import com.keylesspalace.tusky.entity.Filter
 import com.keylesspalace.tusky.interfaces.StatusActionListener
 import com.keylesspalace.tusky.util.StatusDisplayOptions
 import com.keylesspalace.tusky.viewdata.StatusViewData
@@ -60,7 +59,7 @@ class ThreadAdapter(
 
     override fun onBindViewHolder(viewHolder: RecyclerView.ViewHolder, position: Int, payloads: List<Any>) {
         val viewData = getItem(position)
-        if (viewData.isDetailed || viewData.filter?.action != Filter.Action.WARN) {
+        if (viewData.isDetailed || !viewData.isFilterWarn) {
             (viewHolder as StatusBaseViewHolder<StatusViewData.Concrete>)
                 .setupWithStatus(viewData, statusActionListener, statusDisplayOptions, payloads, false)
         } else {
@@ -72,7 +71,7 @@ class ThreadAdapter(
         val viewData = getItem(position)
         return if (viewData.isDetailed) {
             VIEW_TYPE_STATUS_DETAILED
-        } else if (viewData.filter?.action == Filter.Action.WARN) {
+        } else if (viewData.isFilterWarn) {
             VIEW_TYPE_STATUS_FILTERED
         } else {
             VIEW_TYPE_STATUS

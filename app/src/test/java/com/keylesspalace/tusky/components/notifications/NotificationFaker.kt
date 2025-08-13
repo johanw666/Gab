@@ -57,7 +57,8 @@ fun Notification.toNotificationDataEntity(
         tuskyAccountId = tuskyAccountId,
         expanded = isStatusExpanded,
         contentShowing = isStatusContentShowing,
-        contentCollapsed = true
+        contentCollapsed = true,
+        filterActive = true
     ),
     statusAccount = status?.account?.toEntity(tuskyAccountId),
     report = report?.toEntity(tuskyAccountId),
@@ -107,7 +108,8 @@ suspend fun AppDatabase.insert(notifications: List<Notification>, tuskyAccountId
                     tuskyAccountId = tuskyAccountId,
                     expanded = false,
                     contentShowing = false,
-                    contentCollapsed = true
+                    contentCollapsed = true,
+                    filterActive = true
                 )
             )
         }

@@ -27,7 +27,6 @@ import com.keylesspalace.tusky.entity.DeletedStatus
 import com.keylesspalace.tusky.entity.Emoji
 import com.keylesspalace.tusky.entity.Filter
 import com.keylesspalace.tusky.entity.FilterKeyword
-import com.keylesspalace.tusky.entity.FilterV1
 import com.keylesspalace.tusky.entity.HashTag
 import com.keylesspalace.tusky.entity.Instance
 import com.keylesspalace.tusky.entity.InstanceV1
@@ -92,9 +91,6 @@ interface MastodonApi {
 
     @GET("api/v2/instance")
     suspend fun getInstance(): NetworkResult<Instance>
-
-    @GET("api/v1/filters")
-    suspend fun getFiltersV1(): NetworkResult<List<FilterV1>>
 
     @GET("api/v2/filters/{filterId}")
     suspend fun getFilter(@Path("filterId") filterId: String): NetworkResult<Filter>
@@ -531,30 +527,6 @@ interface MastodonApi {
 
     @DELETE("/api/v1/conversations/{id}")
     suspend fun deleteConversation(@Path("id") conversationId: String)
-
-    @FormUrlEncoded
-    @POST("api/v1/filters")
-    suspend fun createFilterV1(
-        @Field("phrase") phrase: String,
-        @Field("context[]") context: List<String>,
-        @Field("irreversible") irreversible: Boolean?,
-        @Field("whole_word") wholeWord: Boolean?,
-        @Field("expires_in") expiresIn: FilterExpiration?
-    ): NetworkResult<FilterV1>
-
-    @FormUrlEncoded
-    @PUT("api/v1/filters/{id}")
-    suspend fun updateFilterV1(
-        @Path("id") id: String,
-        @Field("phrase") phrase: String,
-        @Field("context[]") context: List<String>,
-        @Field("irreversible") irreversible: Boolean?,
-        @Field("whole_word") wholeWord: Boolean?,
-        @Field("expires_in") expiresIn: FilterExpiration?
-    ): NetworkResult<FilterV1>
-
-    @DELETE("api/v1/filters/{id}")
-    suspend fun deleteFilterV1(@Path("id") id: String): NetworkResult<Unit>
 
     @FormUrlEncoded
     @POST("api/v2/filters")

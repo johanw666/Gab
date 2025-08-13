@@ -36,7 +36,6 @@ import com.keylesspalace.tusky.databinding.ItemSeveredRelationshipNotificationBi
 import com.keylesspalace.tusky.databinding.ItemStatusFilteredBinding
 import com.keylesspalace.tusky.databinding.ItemStatusNotificationBinding
 import com.keylesspalace.tusky.databinding.ItemUnknownNotificationBinding
-import com.keylesspalace.tusky.entity.Filter
 import com.keylesspalace.tusky.entity.Notification
 import com.keylesspalace.tusky.interfaces.AccountActionListener
 import com.keylesspalace.tusky.interfaces.LoadMoreActionListener
@@ -88,13 +87,13 @@ class NotificationsPagingAdapter(
             is NotificationViewData.Concrete -> {
                 when (notification.type) {
                     Notification.Type.Mention,
-                    Notification.Type.Poll -> if (notification.statusViewData?.filter?.action == Filter.Action.WARN) {
+                    Notification.Type.Poll -> if (notification.statusViewData?.isFilterWarn == true) {
                         VIEW_TYPE_STATUS_FILTERED
                     } else {
                         VIEW_TYPE_STATUS
                     }
                     Notification.Type.Status,
-                    Notification.Type.Update -> if (notification.statusViewData?.filter?.action == Filter.Action.WARN) {
+                    Notification.Type.Update -> if (notification.statusViewData?.isFilterWarn == true) {
                         VIEW_TYPE_STATUS_FILTERED
                     } else {
                         VIEW_TYPE_STATUS_NOTIFICATION
@@ -146,7 +145,7 @@ class NotificationsPagingAdapter(
                 statusListener,
                 true
             )
-            VIEW_TYPE_LOAD_MORE -> LoadMoreViewHolder<NotificationViewData.LoadMore>(
+            VIEW_TYPE_LOAD_MORE -> LoadMoreViewHolder(
                 ItemLoadMoreBinding.inflate(inflater, parent, false),
                 loadMoreListener
             )

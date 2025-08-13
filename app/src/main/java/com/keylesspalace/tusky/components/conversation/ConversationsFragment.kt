@@ -335,8 +335,7 @@ class ConversationsFragment :
         viewModel.showPollResults(viewData)
     }
 
-    override fun clearWarningAction(viewData: ConversationViewData) {
-    }
+    override fun changeFilter(filtered: Boolean, viewData: ConversationViewData) { }
 
     override fun onReselect() {
         if (view != null) {
