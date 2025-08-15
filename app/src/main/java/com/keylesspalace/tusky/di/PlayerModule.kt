@@ -73,11 +73,13 @@ object PlayerModule {
         @ApplicationContext context: Context,
         audioSink: AudioSink
     ): RenderersFactory {
-        return RenderersFactory { eventHandler,
-                                  videoRendererEventListener,
-                                  audioRendererEventListener,
-                                  textRendererOutput,
-                                  metadataRendererOutput ->
+        return RenderersFactory {
+                eventHandler,
+                videoRendererEventListener,
+                audioRendererEventListener,
+                textRendererOutput,
+                metadataRendererOutput
+            ->
             arrayOf(
                 MediaCodecVideoRenderer.Builder(context)
                     .setMediaCodecSelector(MediaCodecSelector.DEFAULT)

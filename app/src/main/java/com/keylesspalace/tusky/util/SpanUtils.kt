@@ -121,7 +121,12 @@ fun addDrawables(text: CharSequence, color: Int, size: Int, context: Context): S
                 val drawable = AppCompatResources.getDrawable(context, icon)!!
                 drawable.setBounds(0, 0, size, size)
                 drawable.setTint(color)
-                builder.setSpan(ImageSpan(drawable, DynamicDrawableSpan.ALIGN_CENTER), index, index + iconName.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+                builder.setSpan(
+                    ImageSpan(drawable, DynamicDrawableSpan.ALIGN_CENTER),
+                    index,
+                    index + iconName.length,
+                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
                 index += iconName.length
             }
         }

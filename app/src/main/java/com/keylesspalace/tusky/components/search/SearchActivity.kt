@@ -67,8 +67,7 @@ class SearchActivity : BottomSheetActivity(), MenuProvider, SearchView.OnQueryTe
         val enableSwipeForTabs = preferences.getBoolean(PrefKeys.ENABLE_SWIPE_FOR_TABS, true)
         binding.pages.isUserInputEnabled = enableSwipeForTabs
 
-        TabLayoutMediator(binding.tabs, binding.pages) {
-                tab, position ->
+        TabLayoutMediator(binding.tabs, binding.pages) { tab, position ->
             tab.text = getPageTitle(position)
         }.attach()
     }

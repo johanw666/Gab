@@ -122,7 +122,11 @@ fun setClickableText(
  * @param trailingHashtagsFromContent The list of trailing hashtags scraped from the post content
  * @param listener to notify about particular spans that are clicked
  */
-private fun buildTrailingHashtagText(tagsFromServer: List<HashTag>?, trailingHashtagsFromContent: List<HashTag>, listener: LinkListener): SpannableStringBuilder {
+private fun buildTrailingHashtagText(
+    tagsFromServer: List<HashTag>?,
+    trailingHashtagsFromContent: List<HashTag>,
+    listener: LinkListener
+): SpannableStringBuilder {
     return SpannableStringBuilder().apply {
         // we apply the tags scraped from the content first to preserve the casing
         // (tags from the server are often downcased)

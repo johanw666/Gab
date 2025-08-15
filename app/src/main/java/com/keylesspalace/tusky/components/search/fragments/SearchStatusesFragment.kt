@@ -261,7 +261,12 @@ class SearchStatusesFragment :
         viewModel.removeItem(viewData, deleteMedia)
     }
 
-    override fun onReblog(viewData: StatusViewData.Concrete, reblog: Boolean, visibility: Status.Visibility?, button: SparkButton?) {
+    override fun onReblog(
+        viewData: StatusViewData.Concrete,
+        reblog: Boolean,
+        visibility: Status.Visibility?,
+        button: SparkButton?
+    ) {
         buttonToAnimate = button
 
         if (reblog && visibility == null) {

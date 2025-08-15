@@ -48,7 +48,9 @@ class ConfirmationBottomSheet : BottomSheetDialogFragment(R.layout.bottomsheet_c
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val mode: Mode = requireArguments().getSerializableCompat(ARG_MODE)!!
         if (mode == Mode.REBLOG) {
-            selectedOption = Status.Visibility.valueOf(prefs.getNonNullString(PrefKeys.REBLOG_PRIVACY, Status.Visibility.PUBLIC.name))
+            selectedOption = Status.Visibility.valueOf(
+                prefs.getNonNullString(PrefKeys.REBLOG_PRIVACY, Status.Visibility.PUBLIC.name)
+            )
 
             binding.confirmTextView.setText(R.string.reblog_confirm)
             binding.confirmTextView.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_repeat_24dp, 0, 0, 0)
@@ -97,7 +99,11 @@ class ConfirmationBottomSheet : BottomSheetDialogFragment(R.layout.bottomsheet_c
         }
     }
 
-    inner class OptionsAdapter(context: Context) : ArrayAdapter<Status.Visibility>(context, R.layout.item_reblog_option, reblogOptions) {
+    inner class OptionsAdapter(context: Context) : ArrayAdapter<Status.Visibility>(
+        context,
+        R.layout.item_reblog_option,
+        reblogOptions
+    ) {
         override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
             val item = getItem(position)
             val view: View = convertView ?: run {

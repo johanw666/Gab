@@ -262,8 +262,12 @@ class EditProfileViewModel @Inject constructor(
         val headerFile: File?,
         val avatarFile: File?
     ) {
-        fun hasChanges() = displayName != null || note != null || locked != null ||
-            avatarFile != null || headerFile != null || fields != null
+        fun hasChanges() = displayName != null ||
+            note != null ||
+            locked != null ||
+            avatarFile != null ||
+            headerFile != null ||
+            fields != null
     }
 
     companion object {

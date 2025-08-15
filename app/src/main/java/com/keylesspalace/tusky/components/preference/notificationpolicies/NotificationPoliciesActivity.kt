@@ -66,7 +66,10 @@ class NotificationPoliciesActivity : BaseActivity() {
                     is NotificationPolicyState.Loaded -> { }
 
                     NotificationPolicyState.Unsupported ->
-                        binding.messageView.setup(R.drawable.errorphant_error, R.string.notification_policies_not_supported) { viewModel.loadPolicy() }
+                        binding.messageView.setup(
+                            R.drawable.errorphant_error,
+                            R.string.notification_policies_not_supported
+                        ) { viewModel.loadPolicy() }
                 }
             }
         }

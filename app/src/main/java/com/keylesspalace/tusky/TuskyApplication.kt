@@ -89,7 +89,10 @@ class TuskyApplication : Application(), Configuration.Provider {
             if (oldVersion < 2025032401 && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 // delete old now unused notification channels
                 for (channel in notificationManager.notificationChannels) {
-                    if (channel.id.startsWith("CHANNEL_SIGN_UP") || channel.id.startsWith("CHANNEL_REPORT") || channel.id.startsWith("CHANNEL_BOOST")) {
+                    if (channel.id.startsWith("CHANNEL_SIGN_UP") ||
+                        channel.id.startsWith("CHANNEL_REPORT") ||
+                        channel.id.startsWith("CHANNEL_BOOST")
+                    ) {
                         notificationManager.deleteNotificationChannel(channel.id)
                     }
                 }

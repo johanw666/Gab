@@ -71,7 +71,12 @@ fun buildDescription(title: String, percent: Int, voted: Boolean, context: Conte
             val drawable = AppCompatResources.getDrawable(context, R.drawable.ic_check_circle_24dp)!!
             drawable.setBounds(0, 0, size, size)
             drawable.setTint(MaterialColors.getColor(textView, android.R.attr.textColorPrimary))
-            builder.setSpan(ImageSpan(drawable, DynamicDrawableSpan.ALIGN_CENTER), builder.length - 2, builder.length - 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+            builder.setSpan(
+                ImageSpan(drawable, DynamicDrawableSpan.ALIGN_CENTER),
+                builder.length - 2,
+                builder.length - 1,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
         }
     } else {
         builder.append(" ")

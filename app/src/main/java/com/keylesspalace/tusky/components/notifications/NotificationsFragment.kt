@@ -336,7 +336,12 @@ class NotificationsFragment :
         viewModel.remove(viewData.id)
     }
 
-    override fun onReblog(viewData: NotificationViewData.Concrete, reblog: Boolean, visibility: Status.Visibility?, button: SparkButton?) {
+    override fun onReblog(
+        viewData: NotificationViewData.Concrete,
+        reblog: Boolean,
+        visibility: Status.Visibility?,
+        button: SparkButton?
+    ) {
         val status = viewData.asStatusOrNull() ?: return
         buttonToAnimate = button
 

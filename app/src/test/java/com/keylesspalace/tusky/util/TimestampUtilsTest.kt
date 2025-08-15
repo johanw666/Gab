@@ -51,7 +51,10 @@ class TimestampUtilsTest {
         assertEquals("in 34m", getRelativeTimeSpanString(context, 37.minutes.inWholeMilliseconds, 3.minutes.inWholeMilliseconds))
         assertEquals("in 7h", getRelativeTimeSpanString(context, 10.hours.inWholeMilliseconds, 3.hours.inWholeMilliseconds))
         assertEquals("in 10d", getRelativeTimeSpanString(context, 10.days.inWholeMilliseconds, 0))
-        assertEquals("in 4y", getRelativeTimeSpanString(context, 800.days.inWholeMilliseconds + (4 * 365).days.inWholeMilliseconds, 800.days.inWholeMilliseconds))
+        assertEquals(
+            "in 4y",
+            getRelativeTimeSpanString(context, 800.days.inWholeMilliseconds + (4 * 365).days.inWholeMilliseconds, 800.days.inWholeMilliseconds)
+        )
     }
 
     @Test
@@ -60,7 +63,10 @@ class TimestampUtilsTest {
         assertEquals("34m", getRelativeTimeSpanString(context, 3.minutes.inWholeMilliseconds, 37.minutes.inWholeMilliseconds))
         assertEquals("7h", getRelativeTimeSpanString(context, 3.hours.inWholeMilliseconds, 10.hours.inWholeMilliseconds))
         assertEquals("10d", getRelativeTimeSpanString(context, 0, 10.days.inWholeMilliseconds))
-        assertEquals("4y", getRelativeTimeSpanString(context, 800.days.inWholeMilliseconds, 800.days.inWholeMilliseconds + (4 * 365).days.inWholeMilliseconds))
+        assertEquals(
+            "4y",
+            getRelativeTimeSpanString(context, 800.days.inWholeMilliseconds, 800.days.inWholeMilliseconds + (4 * 365).days.inWholeMilliseconds)
+        )
     }
 
     @Test
@@ -73,6 +79,9 @@ class TimestampUtilsTest {
         assertEquals("7 hours left", formatPollDuration(context, 10.hours.inWholeMilliseconds, 3.hours.inWholeMilliseconds))
         assertEquals("1 day left", formatPollDuration(context, 1.days.inWholeMilliseconds, 0))
         assertEquals("10 days left", formatPollDuration(context, 10.days.inWholeMilliseconds, 0))
-        assertEquals("1460 days left", formatPollDuration(context, 800.days.inWholeMilliseconds + (4 * 365).days.inWholeMilliseconds, 800.days.inWholeMilliseconds))
+        assertEquals(
+            "1460 days left",
+            formatPollDuration(context, 800.days.inWholeMilliseconds + (4 * 365).days.inWholeMilliseconds, 800.days.inWholeMilliseconds)
+        )
     }
 }

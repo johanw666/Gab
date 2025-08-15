@@ -131,7 +131,12 @@ AND
     @Query("SELECT id FROM NotificationEntity WHERE tuskyAccountId = :accountId ORDER BY LENGTH(id) DESC, id DESC LIMIT 1")
     abstract suspend fun getTopId(accountId: Long): String?
 
-    @Query("SELECT id FROM NotificationEntity WHERE tuskyAccountId = :accountId AND type IS NULL ORDER BY LENGTH(id) DESC, id DESC LIMIT 1")
+    @Query(
+        "SELECT id FROM NotificationEntity " +
+            "WHERE tuskyAccountId = :accountId " +
+            "AND type IS NULL " +
+            "ORDER BY LENGTH(id) DESC, id DESC LIMIT 1"
+    )
     abstract suspend fun getTopPlaceholderId(accountId: Long): String?
 
     /**
@@ -161,7 +166,9 @@ AND
      * Returns the id directly above [id], or null if [id] is the id of the top item
      */
     @Query(
-        "SELECT id FROM NotificationEntity WHERE tuskyAccountId = :tuskyAccountId AND (LENGTH(:id) < LENGTH(id) OR (LENGTH(:id) = LENGTH(id) AND :id < id)) ORDER BY LENGTH(id) ASC, id ASC LIMIT 1"
+        "SELECT id FROM NotificationEntity WHERE tuskyAccountId = :tuskyAccountId " +
+            "AND (LENGTH(:id) < LENGTH(id) OR (LENGTH(:id) = LENGTH(id) AND :id < id)) " +
+            "ORDER BY LENGTH(id) ASC, id ASC LIMIT 1"
     )
     abstract suspend fun getIdAbove(tuskyAccountId: Long, id: String): String?
 
@@ -169,7 +176,9 @@ AND
      * Returns the ID directly below [id], or null if [id] is the ID of the bottom item
      */
     @Query(
-        "SELECT id FROM NotificationEntity WHERE tuskyAccountId = :tuskyAccountId AND (LENGTH(:id) > LENGTH(id) OR (LENGTH(:id) = LENGTH(id) AND :id > id)) ORDER BY LENGTH(id) DESC, id DESC LIMIT 1"
+        "SELECT id FROM NotificationEntity WHERE tuskyAccountId = :tuskyAccountId " +
+            "AND (LENGTH(:id) > LENGTH(id) OR (LENGTH(:id) = LENGTH(id) AND :id > id)) " +
+            "ORDER BY LENGTH(id) DESC, id DESC LIMIT 1"
     )
     abstract suspend fun getIdBelow(tuskyAccountId: Long, id: String): String?
 }

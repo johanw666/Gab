@@ -134,7 +134,8 @@ class MainViewModel @Inject constructor(
                         if (event.accountId == activeAccount.accountId) {
                             val hasDirectMessageNotification =
                                 event.notifications.any {
-                                    it.type == Notification.Type.Mention && it.status?.visibility == Status.Visibility.DIRECT
+                                    it.type == Notification.Type.Mention &&
+                                        it.status?.visibility == Status.Visibility.DIRECT
                                 }
 
                             if (hasDirectMessageNotification) {

@@ -150,7 +150,8 @@ class AccountViewModel @Inject constructor(
 
     fun changeSubscribingState() {
         val relationship = _relationshipData.value?.data
-        if (relationship?.notifying == true || // Mastodon 3.3.0rc1
+        if (relationship?.notifying == true ||
+            // Mastodon 3.3.0rc1
             relationship?.subscribing == true // Pleroma
         ) {
             changeRelationship(RelationShipAction.UNSUBSCRIBE)

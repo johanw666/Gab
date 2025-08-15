@@ -16,7 +16,6 @@
 package com.keylesspalace.tusky.db
 
 import android.content.Context
-import android.content.DialogInterface
 import android.util.Log
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Lifecycle
@@ -71,13 +70,13 @@ class DraftsAlert @Inject constructor(
                                     .setMessage(
                                         context.resources.getQuantityString(R.plurals.action_post_failed_detail, count)
                                     )
-                                    .setPositiveButton(R.string.action_post_failed_show_drafts) { _: DialogInterface?, _: Int ->
+                                    .setPositiveButton(R.string.action_post_failed_show_drafts) { _, _ ->
                                         clearDraftsAlert(coroutineScope, activeAccountId) // User looked at drafts
 
                                         val intent = DraftsActivity.newIntent(context)
                                         context.startActivity(intent)
                                     }
-                                    .setNegativeButton(R.string.action_post_failed_do_nothing) { _: DialogInterface?, _: Int ->
+                                    .setNegativeButton(R.string.action_post_failed_do_nothing) { _, _ ->
                                         clearDraftsAlert(coroutineScope, activeAccountId) // User doesn't care
                                     }
                                     .show()

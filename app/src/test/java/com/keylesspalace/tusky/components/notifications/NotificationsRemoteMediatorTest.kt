@@ -85,7 +85,9 @@ class NotificationsRemoteMediatorTest {
             viewModel = mockViewModel(),
             accountManager = accountManager,
             api = mock {
-                onBlocking { notifications(anyOrNull(), anyOrNull(), anyOrNull(), anyOrNull(), anyOrNull(), anyOrNull()) } doReturn Response.error(500, "".toResponseBody())
+                onBlocking {
+                    notifications(anyOrNull(), anyOrNull(), anyOrNull(), anyOrNull(), anyOrNull(), anyOrNull())
+                } doReturn Response.error(500, "".toResponseBody())
             },
             db = db
         )

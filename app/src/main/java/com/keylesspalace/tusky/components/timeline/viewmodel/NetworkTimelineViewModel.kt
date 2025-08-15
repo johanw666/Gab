@@ -253,13 +253,11 @@ class NetworkTimelineViewModel @Inject constructor(
 
                         statusData.removeAll { status ->
                             when (status) {
-                                is StatusViewData.LoadMore -> lastId.isLessThan(status.id) && status.id.isLessThanOrEqual(
-                                    firstId
-                                )
+                                is StatusViewData.LoadMore -> lastId.isLessThan(status.id) &&
+                                    status.id.isLessThanOrEqual(firstId)
 
-                                is StatusViewData.Concrete -> lastId.isLessThan(status.id) && status.id.isLessThanOrEqual(
-                                    firstId
-                                )
+                                is StatusViewData.Concrete -> lastId.isLessThan(status.id) &&
+                                    status.id.isLessThanOrEqual(firstId)
                             }
                         }
                     } else {

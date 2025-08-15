@@ -99,7 +99,9 @@ class ReportViewModel @AssistedInject constructor(
         .map { pagingData ->
             /* TODO: refactor reports to use the isShowingContent / isExpanded / isCollapsed attributes from StatusViewData.Concrete
              instead of StatusViewState */
-            pagingData.map { status -> status.toViewData(false, false, false, filterKind = Filter.Kind.PUBLIC, filterActive = true) }
+            pagingData.map { status ->
+                status.toViewData(false, false, false, filterKind = Filter.Kind.PUBLIC, filterActive = true)
+            }
         }
         .cachedIn(viewModelScope)
 

@@ -253,7 +253,8 @@ class MediaUploader @Inject constructor(
             // Android's MIME type suggestions from file extensions is broken for at least
             // .m4a files. See https://github.com/tuskyapp/Tusky/issues/3189 for details.
             // Sniff the content of the file to determine the actual type.
-            if (mimeType != null && (
+            if (mimeType != null &&
+                (
                     mimeType.startsWith("audio/", ignoreCase = true) ||
                         mimeType.startsWith("video/", ignoreCase = true)
                     )
@@ -321,6 +322,9 @@ class MediaUploader @Inject constructor(
 
     private fun shouldResizeMedia(media: QueuedMedia, instanceInfo: InstanceInfo): Boolean {
         return media.type == QueuedMedia.Type.IMAGE &&
-            (media.mediaSize > instanceInfo.imageSizeLimit || getImageSquarePixels(context.contentResolver, media.uri) > instanceInfo.imageMatrixLimit)
+            (
+                media.mediaSize > instanceInfo.imageSizeLimit ||
+                    getImageSquarePixels(context.contentResolver, media.uri) > instanceInfo.imageMatrixLimit
+                )
     }
 }

@@ -93,7 +93,11 @@ class TimelineFragment :
     lateinit var preferences: SharedPreferences
 
     private val viewModel: TimelineViewModel by unsafeLazy {
-        val viewModelProvider = ViewModelProvider(viewModelStore, defaultViewModelProviderFactory, defaultViewModelCreationExtras)
+        val viewModelProvider = ViewModelProvider(
+            viewModelStore,
+            defaultViewModelProviderFactory,
+            defaultViewModelCreationExtras
+        )
         if (kind == TimelineViewModel.Kind.HOME) {
             viewModelProvider[CachedTimelineViewModel::class.java]
         } else {
@@ -406,7 +410,12 @@ class TimelineFragment :
         super.reply(viewData.status)
     }
 
-    override fun onReblog(viewData: StatusViewData.Concrete, reblog: Boolean, visibility: Status.Visibility?, button: SparkButton?) {
+    override fun onReblog(
+        viewData: StatusViewData.Concrete,
+        reblog: Boolean,
+        visibility: Status.Visibility?,
+        button: SparkButton?
+    ) {
         buttonToAnimate = button
 
         if (reblog && visibility == null) {
@@ -529,7 +538,8 @@ class TimelineFragment :
     }
 
     override fun onViewTag(tag: String) {
-        if (viewModel.kind == TimelineViewModel.Kind.TAG && viewModel.tags.size == 1 &&
+        if (viewModel.kind == TimelineViewModel.Kind.TAG &&
+            viewModel.tags.size == 1 &&
             viewModel.tags.contains(tag)
         ) {
             // If already viewing a tag page, then ignore any request to view that tag again.

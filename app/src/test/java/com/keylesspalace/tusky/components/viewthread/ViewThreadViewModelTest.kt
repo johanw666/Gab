@@ -194,7 +194,14 @@ class ViewThreadViewModelTest {
             ThreadUiState.Success(
                 statusViewData = listOf(
                     fakeStatusViewData(id = "1", spoilerText = "Test", isExpanded = true),
-                    fakeStatusViewData(id = threadId, inReplyToId = "1", inReplyToAccountId = "1", isDetailed = true, spoilerText = "Test", isExpanded = true),
+                    fakeStatusViewData(
+                        id = threadId,
+                        inReplyToId = "1",
+                        inReplyToAccountId = "1",
+                        isDetailed = true,
+                        spoilerText = "Test",
+                        isExpanded = true
+                    ),
                     fakeStatusViewData(id = "3", inReplyToId = threadId, inReplyToAccountId = "1", spoilerText = "Test", isExpanded = true)
                 ),
                 detailedStatusPosition = 1,
@@ -262,7 +269,14 @@ class ViewThreadViewModelTest {
             ThreadUiState.Success(
                 statusViewData = listOf(
                     fakeStatusViewData(id = "1", spoilerText = "Test"),
-                    fakeStatusViewData(id = threadId, inReplyToId = "1", inReplyToAccountId = "1", isDetailed = true, spoilerText = "Test", isExpanded = true),
+                    fakeStatusViewData(
+                        id = threadId,
+                        inReplyToId = "1",
+                        inReplyToAccountId = "1",
+                        isDetailed = true,
+                        spoilerText = "Test",
+                        isExpanded = true
+                    ),
                     fakeStatusViewData(id = "3", inReplyToId = threadId, inReplyToAccountId = "1", spoilerText = "Test")
                 ),
                 detailedStatusPosition = 1,
@@ -287,7 +301,14 @@ class ViewThreadViewModelTest {
             ThreadUiState.Success(
                 statusViewData = listOf(
                     fakeStatusViewData(id = "1", spoilerText = "Test"),
-                    fakeStatusViewData(id = threadId, inReplyToId = "1", inReplyToAccountId = "1", isDetailed = true, spoilerText = "Test", isCollapsed = true),
+                    fakeStatusViewData(
+                        id = threadId,
+                        inReplyToId = "1",
+                        inReplyToAccountId = "1",
+                        isDetailed = true,
+                        spoilerText = "Test",
+                        isCollapsed = true
+                    ),
                     fakeStatusViewData(id = "3", inReplyToId = threadId, inReplyToAccountId = "1", spoilerText = "Test")
                 ),
                 detailedStatusPosition = 1,
@@ -312,7 +333,14 @@ class ViewThreadViewModelTest {
             ThreadUiState.Success(
                 statusViewData = listOf(
                     fakeStatusViewData(id = "1", spoilerText = "Test"),
-                    fakeStatusViewData(id = threadId, inReplyToId = "1", inReplyToAccountId = "1", isDetailed = true, spoilerText = "Test", isShowingContent = true),
+                    fakeStatusViewData(
+                        id = threadId,
+                        inReplyToId = "1",
+                        inReplyToAccountId = "1",
+                        isDetailed = true,
+                        spoilerText = "Test",
+                        isShowingContent = true
+                    ),
                     fakeStatusViewData(id = "3", inReplyToId = threadId, inReplyToAccountId = "1", spoilerText = "Test")
                 ),
                 detailedStatusPosition = 1,
@@ -339,7 +367,14 @@ class ViewThreadViewModelTest {
             ThreadUiState.Success(
                 statusViewData = listOf(
                     fakeStatusViewData(id = "1", spoilerText = "Test"),
-                    fakeStatusViewData(id = threadId, inReplyToId = "1", inReplyToAccountId = "1", isDetailed = true, spoilerText = "Test", isExpanded = true),
+                    fakeStatusViewData(
+                        id = threadId,
+                        inReplyToId = "1",
+                        inReplyToAccountId = "1",
+                        isDetailed = true,
+                        spoilerText = "Test",
+                        isExpanded = true
+                    ),
                     fakeStatusViewData(id = "3", inReplyToId = threadId, inReplyToAccountId = "1", spoilerText = "Test")
                 ),
                 detailedStatusPosition = 1,
@@ -355,14 +390,24 @@ class ViewThreadViewModelTest {
 
         setup {
             db.timelineAccountDao().insert(fakeAccount().toEntity(1))
-            db.timelineStatusDao().insert(fakeStatus(id = threadId).toEntity(1, expanded = true, contentShowing = true, contentCollapsed = false, filterActive = true))
+            db.timelineStatusDao().insert(
+                fakeStatus(id = threadId).toEntity(1, expanded = true, contentShowing = true, contentCollapsed = false, filterActive = true)
+            )
         }
 
         assertEquals(
             ThreadUiState.Success(
                 statusViewData = listOf(
                     fakeStatusViewData(id = "1", spoilerText = "Test"),
-                    fakeStatusViewData(id = threadId, inReplyToId = "1", inReplyToAccountId = "1", isDetailed = true, spoilerText = "Test", isExpanded = true, isShowingContent = true),
+                    fakeStatusViewData(
+                        id = threadId,
+                        inReplyToId = "1",
+                        inReplyToAccountId = "1",
+                        isDetailed = true,
+                        spoilerText = "Test",
+                        isExpanded = true,
+                        isShowingContent = true
+                    ),
                     fakeStatusViewData(id = "3", inReplyToId = threadId, inReplyToAccountId = "1", spoilerText = "Test")
                 ),
                 detailedStatusPosition = 1,
@@ -374,7 +419,9 @@ class ViewThreadViewModelTest {
 
     private fun mockSuccessResponses() {
         api.stub {
-            onBlocking { status(threadId) } doReturn NetworkResult.success(fakeStatus(id = threadId, inReplyToId = "1", inReplyToAccountId = "1", spoilerText = "Test"))
+            onBlocking {
+                status(threadId)
+            } doReturn NetworkResult.success(fakeStatus(id = threadId, inReplyToId = "1", inReplyToAccountId = "1", spoilerText = "Test"))
             onBlocking { statusContext(threadId) } doReturn NetworkResult.success(
                 StatusContext(
                     ancestors = listOf(fakeStatus(id = "1", spoilerText = "Test")),

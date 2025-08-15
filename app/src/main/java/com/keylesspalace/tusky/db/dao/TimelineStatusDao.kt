@@ -233,17 +233,25 @@ AND tuskyAccountId = :tuskyAccountId
     abstract suspend fun deleteAllFromInstance(tuskyAccountId: Long, instanceDomain: String)
 
     @Query(
-        "UPDATE TimelineStatusEntity SET filterActive = :filtered WHERE tuskyAccountId = :tuskyAccountId AND serverId = :statusId"
+        "UPDATE TimelineStatusEntity " +
+            "SET filterActive = :filtered " +
+            "WHERE tuskyAccountId = :tuskyAccountId " +
+            "AND serverId = :statusId"
     )
     abstract suspend fun changeFilter(tuskyAccountId: Long, statusId: String, filtered: Boolean): Int
 
     @Query(
-        "SELECT id FROM HomeTimelineEntity WHERE tuskyAccountId = :tuskyAccountId ORDER BY LENGTH(id) DESC, id DESC LIMIT 1"
+        "SELECT id FROM HomeTimelineEntity " +
+            "WHERE tuskyAccountId = :tuskyAccountId " +
+            "ORDER BY LENGTH(id) DESC, id DESC LIMIT 1"
     )
     abstract suspend fun getTopId(tuskyAccountId: Long): String?
 
     @Query(
-        "SELECT id FROM HomeTimelineEntity WHERE tuskyAccountId = :tuskyAccountId AND statusId IS NULL ORDER BY LENGTH(id) DESC, id DESC LIMIT 1"
+        "SELECT id FROM HomeTimelineEntity " +
+            "WHERE tuskyAccountId = :tuskyAccountId " +
+            "AND statusId IS NULL " +
+            "ORDER BY LENGTH(id) DESC, id DESC LIMIT 1"
     )
     abstract suspend fun getTopPlaceholderId(tuskyAccountId: Long): String?
 
@@ -251,7 +259,9 @@ AND tuskyAccountId = :tuskyAccountId
      * Returns the id directly above [id], or null if [id] is the id of the top item
      */
     @Query(
-        "SELECT id FROM HomeTimelineEntity WHERE tuskyAccountId = :tuskyAccountId AND (LENGTH(:id) < LENGTH(id) OR (LENGTH(:id) = LENGTH(id) AND :id < id)) ORDER BY LENGTH(id) ASC, id ASC LIMIT 1"
+        "SELECT id FROM HomeTimelineEntity WHERE tuskyAccountId = :tuskyAccountId " +
+            "AND (LENGTH(:id) < LENGTH(id) OR (LENGTH(:id) = LENGTH(id) AND :id < id)) " +
+            "ORDER BY LENGTH(id) ASC, id ASC LIMIT 1"
     )
     abstract suspend fun getIdAbove(tuskyAccountId: Long, id: String): String?
 
@@ -259,7 +269,9 @@ AND tuskyAccountId = :tuskyAccountId
      * Returns the ID directly below [id], or null if [id] is the ID of the bottom item
      */
     @Query(
-        "SELECT id FROM HomeTimelineEntity WHERE tuskyAccountId = :tuskyAccountId AND (LENGTH(:id) > LENGTH(id) OR (LENGTH(:id) = LENGTH(id) AND :id > id)) ORDER BY LENGTH(id) DESC, id DESC LIMIT 1"
+        "SELECT id FROM HomeTimelineEntity WHERE tuskyAccountId = :tuskyAccountId " +
+            "AND (LENGTH(:id) > LENGTH(id) OR (LENGTH(:id) = LENGTH(id) AND :id > id)) " +
+            "ORDER BY LENGTH(id) DESC, id DESC LIMIT 1"
     )
     abstract suspend fun getIdBelow(tuskyAccountId: Long, id: String): String?
 
@@ -267,7 +279,9 @@ AND tuskyAccountId = :tuskyAccountId
      * Returns the id of the next placeholder after [id], or null if there is no placeholder.
      */
     @Query(
-        "SELECT id FROM HomeTimelineEntity WHERE tuskyAccountId = :tuskyAccountId AND statusId IS NULL AND (LENGTH(:id) > LENGTH(id) OR (LENGTH(:id) = LENGTH(id) AND :id > id)) ORDER BY LENGTH(id) DESC, id DESC LIMIT 1"
+        "SELECT id FROM HomeTimelineEntity WHERE tuskyAccountId = :tuskyAccountId " +
+            "AND statusId IS NULL AND (LENGTH(:id) > LENGTH(id) OR (LENGTH(:id) = LENGTH(id) AND :id > id)) " +
+            "ORDER BY LENGTH(id) DESC, id DESC LIMIT 1"
     )
     abstract suspend fun getNextPlaceholderIdAfter(tuskyAccountId: Long, id: String): String?
 
@@ -276,7 +290,9 @@ AND tuskyAccountId = :tuskyAccountId
 
     /** Developer tools: Find N most recent status IDs */
     @Query(
-        "SELECT id FROM HomeTimelineEntity WHERE tuskyAccountId = :tuskyAccountId ORDER BY LENGTH(id) DESC, id DESC LIMIT :count"
+        "SELECT id FROM HomeTimelineEntity " +
+            "WHERE tuskyAccountId = :tuskyAccountId " +
+            "ORDER BY LENGTH(id) DESC, id DESC LIMIT :count"
     )
     abstract suspend fun getMostRecentNStatusIds(tuskyAccountId: Long, count: Int): List<String>
 

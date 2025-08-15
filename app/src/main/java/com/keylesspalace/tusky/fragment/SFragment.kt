@@ -225,7 +225,8 @@ abstract class SFragment<C : ConcreteViewData>(@LayoutRes contentLayoutId: Int) 
             popup.menu.findItem(R.id.status_download_media).isVisible =
                 status.attachments.isNotEmpty()
             popup.menu.findItem(R.id.status_rehide).isVisible =
-                !viewData.viewData.filterActive && viewData.viewData.filter?.action == Filter.Action.WARN
+                !viewData.viewData.filterActive &&
+                viewData.viewData.filter?.action == Filter.Action.WARN
         }
         val menu = popup.menu
         val openAsItem = menu.findItem(R.id.status_open_as)

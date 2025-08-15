@@ -24,6 +24,13 @@ ktlint_standard_trailing-comma-on-declaration-site = disabled
 # Composable functions are allowed to start uppercase
 ktlint_function_naming_ignore_when_annotated_with=Composable
 
+# It is fine when a function body is just a return statement
+ktlint_standard_function-expression-body = disabled
+
+# Write functions and class signatures single or multiline, whatever
+ktlint_standard_function-signature = disabled
+ktlint_standard_class-signature = disabled
+
 max_line_length = off
 
 [*.{yml,yaml}]

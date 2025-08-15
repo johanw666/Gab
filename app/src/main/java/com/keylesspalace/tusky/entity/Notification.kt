@@ -106,7 +106,20 @@ data class Notification(
 /** this is not in a companion object so it gets initialized earlier,
  * otherwise it might get initialized when a subclass is loaded,
  * which leds to crash since those subclasses are referenced here */
-val visibleNotificationTypes = listOf(Mention, Reblog, Favourite, Follow, FollowRequest, Type.Poll, Type.Status, SignUp, Update, Type.Report, SeveredRelationship, ModerationWarning)
+val visibleNotificationTypes = listOf(
+    Mention,
+    Reblog,
+    Favourite,
+    Follow,
+    FollowRequest,
+    Type.Poll,
+    Type.Status,
+    SignUp,
+    Update,
+    Type.Report,
+    SeveredRelationship,
+    ModerationWarning
+)
 
 fun notificationTypeFromString(s: String): Type {
     return visibleNotificationTypes.firstOrNull { it.name == s.lowercase() } ?: Unknown(s)

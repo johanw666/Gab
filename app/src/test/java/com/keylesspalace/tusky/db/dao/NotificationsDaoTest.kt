@@ -125,8 +125,18 @@ class NotificationsDaoTest {
     fun deleteAllForInstance() = runTest {
         val redAccount = fakeNotification(id = "500", account = fakeAccount(id = "500", domain = "mastodon.red"))
         val blueAccount = fakeNotification(id = "501", account = fakeAccount(id = "501", domain = "mastodon.blue"))
-        val redStatus = fakeNotification(id = "502", account = fakeAccount(id = "502", domain = "mastodon.example"), status = fakeStatus(id = "502", domain = "mastodon.red", authorServerId = "502a"))
-        val blueStatus = fakeNotification(id = "503", account = fakeAccount(id = "503", domain = "mastodon.example"), status = fakeStatus(id = "503", domain = "mastodon.blue", authorServerId = "503a"))
+        val redStatus =
+            fakeNotification(
+                id = "502",
+                account = fakeAccount(id = "502", domain = "mastodon.example"),
+                status = fakeStatus(id = "502", domain = "mastodon.red", authorServerId = "502a")
+            )
+        val blueStatus =
+            fakeNotification(
+                id = "503",
+                account = fakeAccount(id = "503", domain = "mastodon.example"),
+                status = fakeStatus(id = "503", domain = "mastodon.blue", authorServerId = "503a")
+            )
 
         val redStatus2 = fakeNotification(id = "600", account = fakeAccount(id = "600", domain = "mastodon.red"))
 
@@ -206,8 +216,20 @@ class NotificationsDaoTest {
             // will be removed because it references a status by account 1
             fakeNotification(id = "2", account = fakeAccount(id = "2"), status = fakeStatus(id = "2", authorServerId = "1")),
             // will not be removed because they are admin notifications
-            fakeNotification(type = Notification.Type.Report, id = "3", account = fakeAccount(id = "3"), status = null, report = fakeReport(id = "1", targetAccount = fakeAccount(id = "1"))),
-            fakeNotification(type = Notification.Type.SignUp, id = "4", account = fakeAccount(id = "1"), status = null, report = fakeReport(id = "1", targetAccount = fakeAccount(id = "4"))),
+            fakeNotification(
+                type = Notification.Type.Report,
+                id = "3",
+                account = fakeAccount(id = "3"),
+                status = null,
+                report = fakeReport(id = "1", targetAccount = fakeAccount(id = "1"))
+            ),
+            fakeNotification(
+                type = Notification.Type.SignUp,
+                id = "4",
+                account = fakeAccount(id = "1"),
+                status = null,
+                report = fakeReport(id = "1", targetAccount = fakeAccount(id = "4"))
+            ),
             // will not be removed because it does not reference account 1
             fakeNotification(id = "5", account = fakeAccount(id = "5"), status = fakeStatus(id = "5", authorServerId = "100")),
             fakeNotification(type = Notification.Type.Follow, id = "6", account = fakeAccount(id = "1"), status = null)

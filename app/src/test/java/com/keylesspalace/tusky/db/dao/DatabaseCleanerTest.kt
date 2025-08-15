@@ -176,9 +176,19 @@ class DatabaseCleanerTest {
         db.insert(
             listOf(
                 fakeNotification(id = "1", account = fakeAccount(id = "n1"), status = fakeStatus(id = "n1")),
-                fakeNotification(id = "2", account = fakeAccount(id = "n2"), status = fakeStatus(id = "n2"), report = fakeReport(targetAccount = fakeAccount(id = "r1"))),
+                fakeNotification(
+                    id = "2",
+                    account = fakeAccount(id = "n2"),
+                    status = fakeStatus(id = "n2"),
+                    report = fakeReport(targetAccount = fakeAccount(id = "r1"))
+                ),
                 fakeNotification(id = "3", account = fakeAccount(id = "n3"), status = fakeStatus(id = "n3")),
-                fakeNotification(id = "4", account = fakeAccount(id = "n4"), status = fakeStatus(id = "n4"), report = fakeReport(id = "2", targetAccount = fakeAccount(id = "r2"))),
+                fakeNotification(
+                    id = "4",
+                    account = fakeAccount(id = "n4"),
+                    status = fakeStatus(id = "n4"),
+                    report = fakeReport(id = "2", targetAccount = fakeAccount(id = "r2"))
+                ),
                 fakeNotification(id = "5", account = fakeAccount(id = "n5"), status = fakeStatus(id = "n5")),
             ),
             tuskyAccountId = 1
@@ -188,7 +198,12 @@ class DatabaseCleanerTest {
                 fakeNotification(id = "1", account = fakeAccount(id = "n1"), status = fakeStatus(id = "n1")),
                 fakeNotification(id = "2", account = fakeAccount(id = "n2"), status = fakeStatus(id = "n2")),
                 fakeNotification(id = "3", account = fakeAccount(id = "n3"), status = fakeStatus(id = "n3")),
-                fakeNotification(id = "4", account = fakeAccount(id = "n4"), status = fakeStatus(id = "n4"), report = fakeReport(targetAccount = fakeAccount(id = "r1")))
+                fakeNotification(
+                    id = "4",
+                    account = fakeAccount(id = "n4"),
+                    status = fakeStatus(id = "n4"),
+                    report = fakeReport(targetAccount = fakeAccount(id = "r1"))
+                )
             ),
             tuskyAccountId = 2
         )

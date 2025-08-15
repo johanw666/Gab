@@ -101,7 +101,9 @@ object PrefKeys {
     const val NOTIFICATION_ALERT_VIBRATE = "notificationAlertVibrate"
     const val NOTIFICATION_ALERT_SOUND = "notificationAlertSound"
 
-    const val TAB_FILTER_HOME_REPLIES = "tabFilterHomeReplies_v2" // This was changed once to reset an unintentionally set default.
+    // This was changed once to reset an unintentionally set default.
+    const val TAB_FILTER_HOME_REPLIES = "tabFilterHomeReplies_v2"
+
     const val TAB_FILTER_HOME_BOOSTS = "tabFilterHomeBoosts"
     const val TAB_SHOW_HOME_SELF_BOOSTS = "tabShowHomeSelfBoosts"
 

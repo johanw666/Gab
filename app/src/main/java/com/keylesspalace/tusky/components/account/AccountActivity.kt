@@ -692,7 +692,8 @@ class AccountActivity : BottomSheetActivity(), ActionButtonActivity, MenuProvide
 
         // because subscribing is Pleroma extension, enable it __only__ when we have non-null subscribing field
         // it's also now supported in Mastodon 3.3.0rc but called notifying and use different API call
-        if (!viewModel.isSelf && followState == FollowState.FOLLOWING &&
+        if (!viewModel.isSelf &&
+            followState == FollowState.FOLLOWING &&
             (relation.subscribing != null || relation.notifying != null)
         ) {
             binding.accountSubscribeButton.show()

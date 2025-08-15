@@ -88,7 +88,8 @@ class LoginActivity : BaseActivity() {
 
         if (savedInstanceState == null &&
             BuildConfig.CUSTOM_INSTANCE.isNotBlank() &&
-            !isAdditionalLogin() && !isRelogin()
+            !isAdditionalLogin() &&
+            !isRelogin()
         ) {
             binding.domainEditText.setText(BuildConfig.CUSTOM_INSTANCE)
             binding.domainEditText.setSelection(BuildConfig.CUSTOM_INSTANCE.length)

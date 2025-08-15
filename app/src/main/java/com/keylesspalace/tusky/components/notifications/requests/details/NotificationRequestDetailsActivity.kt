@@ -80,7 +80,10 @@ class NotificationRequestDetailsActivity : BottomSheetActivity() {
 
         lifecycleScope.launch {
             viewModel.finish.collect { finishMode ->
-                setResult(RESULT_OK, Intent().apply { putExtra(EXTRA_NOTIFICATION_REQUEST_ID, intent.getStringExtra(EXTRA_NOTIFICATION_REQUEST_ID)!!) })
+                setResult(
+                    RESULT_OK,
+                    Intent().apply { putExtra(EXTRA_NOTIFICATION_REQUEST_ID, intent.getStringExtra(EXTRA_NOTIFICATION_REQUEST_ID)!!) }
+                )
                 finish()
             }
         }

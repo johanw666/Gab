@@ -374,7 +374,11 @@ class NotificationHelper @Inject constructor(
      *   - No need to change an existing single notification when there arrives another one of its group
      *   - Only the summary one will get announced
      */
-    private fun createSummaryNotification(account: AccountEntity, type: Notification.Type, additionalNotifications: List<Notification>): NotificationWithIdAndTag? {
+    private fun createSummaryNotification(
+        account: AccountEntity,
+        type: Notification.Type,
+        additionalNotifications: List<Notification>
+    ): NotificationWithIdAndTag? {
         val typeChannelId = getChannelId(account, type) ?: return null
 
         val summaryStackBuilder = TaskStackBuilder.create(context)
@@ -509,8 +513,13 @@ class NotificationHelper @Inject constructor(
         val alwaysOpenSpoiler = account.alwaysOpenSpoiler
 
         when (notification.type) {
-            Notification.Type.Follow, Notification.Type.FollowRequest, Notification.Type.SignUp -> return "@" + notification.account.username
-            Notification.Type.Mention, Notification.Type.Favourite, Notification.Type.Reblog, Notification.Type.Status -> return if (!notification.status?.spoilerText.isNullOrEmpty() && !alwaysOpenSpoiler) {
+            Notification.Type.Follow,
+            Notification.Type.FollowRequest,
+            Notification.Type.SignUp -> return "@" + notification.account.username
+            Notification.Type.Mention,
+            Notification.Type.Favourite,
+            Notification.Type.Reblog,
+            Notification.Type.Status -> return if (!notification.status?.spoilerText.isNullOrEmpty() && !alwaysOpenSpoiler) {
                 notification.status.spoilerText
             } else {
                 notification.status?.content?.parseAsMastodonHtml()?.toString()

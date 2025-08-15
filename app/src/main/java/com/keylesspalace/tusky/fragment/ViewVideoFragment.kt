@@ -239,7 +239,8 @@ class ViewVideoFragment : ViewMediaFragment() {
                                 // But media3 will have automatically hidden the video controls on suspend, so we need to match the description state.
                                 binding.videoView.showController()
                                 if (!pendingHideToolbar) {
-                                    suppressNextHideToolbar = true // The user most recently asked us to show the toolbar, so don't hide it when play starts.
+                                    // The user most recently asked us to show the toolbar, so don't hide it when play starts.
+                                    suppressNextHideToolbar = true
                                 }
                             } else {
                                 mediaActivity.onPhotoTap()

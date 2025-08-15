@@ -55,7 +55,11 @@ class ReportNotificationViewHolder(
                 view.context.getString(R.string.notification_header_report_format, "^1", "^2")
             view.text = TextUtils.expandTemplate(topText, reporterName, reporteeName)
         }
-        binding.notificationSummary.text = itemView.context.getString(R.string.notification_summary_report_format, getRelativeTimeSpanString(itemView.context, report.createdAt.time, System.currentTimeMillis()), report.statusIds?.size ?: 0)
+        binding.notificationSummary.text = itemView.context.getString(
+            R.string.notification_summary_report_format,
+            getRelativeTimeSpanString(itemView.context, report.createdAt.time, System.currentTimeMillis()),
+            report.statusIds?.size ?: 0
+        )
         binding.notificationCategory.text = getTranslatedCategory(itemView.context, report.category)
 
         loadAvatar(

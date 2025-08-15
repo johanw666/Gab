@@ -61,7 +61,8 @@ class NotificationPolicySummaryAdapter(
         state?.let { policyState ->
             val binding = holder.binding
             val context = holder.binding.root.context
-            binding.notificationPolicySummaryDescription.text = context.getString(R.string.notifications_from_people_you_may_know, policyState.pendingRequestsCount)
+            binding.notificationPolicySummaryDescription.text =
+                context.getString(R.string.notifications_from_people_you_may_know, policyState.pendingRequestsCount)
             binding.notificationPolicySummaryBadge.text = NumberFormat.getInstance().format(policyState.pendingNotificationsCount)
         }
     }

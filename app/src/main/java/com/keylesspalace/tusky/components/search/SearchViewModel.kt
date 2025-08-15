@@ -142,7 +142,11 @@ class SearchViewModel @Inject constructor(
         updateStatusViewData(statusViewData.copy(isExpanded = expanded))
     }
 
-    fun reblog(statusViewData: StatusViewData.Concrete, reblog: Boolean, visibility: Status.Visibility = Status.Visibility.PUBLIC) {
+    fun reblog(
+        statusViewData: StatusViewData.Concrete,
+        reblog: Boolean,
+        visibility: Status.Visibility = Status.Visibility.PUBLIC
+    ) {
         viewModelScope.launch {
             timelineCases.reblog(statusViewData.id, reblog, visibility).fold({
                 updateStatus(

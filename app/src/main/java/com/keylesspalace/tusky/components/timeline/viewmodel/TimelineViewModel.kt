@@ -98,7 +98,11 @@ abstract class TimelineViewModel(
         }
     }
 
-    fun reblog(reblog: Boolean, status: StatusViewData.Concrete, visibility: Status.Visibility = Status.Visibility.PUBLIC): Job = viewModelScope.launch {
+    fun reblog(
+        reblog: Boolean,
+        status: StatusViewData.Concrete,
+        visibility: Status.Visibility = Status.Visibility.PUBLIC
+    ): Job = viewModelScope.launch {
         try {
             timelineCases.reblog(status.actionableId, reblog, visibility).getOrThrow()
         } catch (t: Exception) {

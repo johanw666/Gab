@@ -194,7 +194,11 @@ class NotificationsViewModel @Inject constructor(
         }
     }
 
-    fun reblog(reblog: Boolean, status: StatusViewData.Concrete, visibility: Status.Visibility = Status.Visibility.PUBLIC): Job = viewModelScope.launch {
+    fun reblog(
+        reblog: Boolean,
+        status: StatusViewData.Concrete,
+        visibility: Status.Visibility = Status.Visibility.PUBLIC
+    ): Job = viewModelScope.launch {
         timelineCases.reblog(status.actionableId, reblog, visibility).onFailure { t ->
             ifExpected(t) {
                 Log.w(TAG, "Failed to reblog status " + status.actionableId, t)
