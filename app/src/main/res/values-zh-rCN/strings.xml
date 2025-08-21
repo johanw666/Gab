@@ -771,4 +771,7 @@
     <string name="account_disconnected_title">已断开账户</string>
     <string name="account_disconnected_message">%1$s 的 Tusky 登录不再有效。原因可能是更改了密码或撤销了 Tusky 的访问权限。请再次登录。</string>
     <string name="action_remove_account">删除账户</string>
+    <string name="message_filters_empty">没有过滤器。</string>
+    <string name="filter_context_home">首页和列表</string>
+    <string name="action_rehide_status">重新隐藏已过滤的状态</string>
 </resources>
