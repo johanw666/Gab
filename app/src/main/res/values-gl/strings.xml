@@ -775,4 +775,7 @@
     <string name="action_remove_account">Retirar conta</string>
     <string name="action_remove_account_confirm">Tes certeza de querer retirar de Tusky a conta %1$s? Isto vai eliminar todos os datos locais da conta, incluíndo borradores e preferencias.</string>
     <string name="account_disconnected_title">Conta desconectada</string>
+    <string name="action_rehide_status">Volver ocultar estados filtrados</string>
+    <string name="message_filters_empty">Non tes filtros.</string>
+    <string name="filter_context_home">Inicio e Listas</string>
 </resources>
