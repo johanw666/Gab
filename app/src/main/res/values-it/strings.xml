@@ -795,4 +795,7 @@
     <string name="action_remove_account">Rimuovi account</string>
     <string name="action_remove_account_confirm">Sei sicuro di voler rimuovere l\'account %1$s da Tusky? Questi cancellerà tutti i dati locali dell\'account, incluse bozze e preferenze.</string>
     <string name="account_disconnected_title">Account disconnesso</string>
+    <string name="message_filters_empty">Non hai filtri.</string>
+    <string name="action_rehide_status">Nascondi di nuovo i post filtrati</string>
+    <string name="filter_context_home">Home e liste</string>
 </resources>

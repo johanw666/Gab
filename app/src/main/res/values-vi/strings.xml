@@ -762,4 +762,7 @@
     <string name="action_remove_account_confirm">Bạn có chắc muốn gỡ tài khoản %1$s khỏi Tusky? Thao tác này sẽ xóa toàn bộ dữ liệu cục bộ của tài khoản, bao gồm cả tút nháp và các thiết lập.</string>
     <string name="account_disconnected_message">Thông tin đăng nhập %1$s trên Tusky không còn hiệu lực nữa. Điều này có thể xảy ra do bạn đã thay đổi mật khẩu hoặc thu hồi quyền truy cập Tusky. Vui lòng đăng nhập lại.</string>
     <string name="account_disconnected_title">Tài khoản đã bị ngắt kết nối</string>
+    <string name="action_rehide_status">Ẩn lại tút đã lọc</string>
+    <string name="filter_context_home">Trang chủ và Danh sách</string>
+    <string name="message_filters_empty">Bạn chưa có bộ lọc.</string>
 </resources>

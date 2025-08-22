@@ -782,4 +782,7 @@
     <string name="action_login_again">ورود دوباره</string>
     <string name="action_remove_account_confirm">مطمئنید که می‌خواهید حساب %1$s را از تاسکی بردارید؟ این کار همهٔ داده‌های محلی حساب از جمله پیش‌نویس‌ها و ترجیحات را حذف خواهد کرد.</string>
     <string name="account_disconnected_message">ورود تاسکی برای %1$s دیگر معتبر نیست. این اتّفاق می‌تواند بر اثر تغییر گذرواژه‌تان یا ابطال دسترسی تاسکی بیفتد. لطفاً دوباره وارد شوید.</string>
+    <string name="filter_context_home">خانه و سیاهه‌ها</string>
+    <string name="action_rehide_status">نهفتن دوبارهٔ فرستهٔ پالوده</string>
+    <string name="message_filters_empty">هیچ پالایه‌ای ندارید.</string>
 </resources>

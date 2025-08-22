@@ -782,4 +782,5 @@
     <string name="reblog_confirm">Поширити цей допис?</string>
     <string name="favourite_confirm">Додати допис до вподобань?</string>
     <string name="confirm_dismiss_poll">Відхилити зміни в опитуванні?</string>
+    <string name="action_remove_account">Вилучити обліковий запит</string>
 </resources>

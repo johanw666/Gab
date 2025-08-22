@@ -137,7 +137,7 @@
     <string name="label_header">Titelbild</string>
     <string name="link_whats_an_instance">Was ist eine Instanz?</string>
     <string name="login_connection">Wird verbunden …</string>
-    <string name="dialog_whats_an_instance">Die Adresse oder Domain einer Instanz kann hier eingegeben werden, wie z. B. mastodon.social, icosahedron.website, social.tchncs.de, oder<a href="https://instances.social">weitere!</a> \u0020 \n \u0020 \nWenn du bis jetzt kein Konto hast, kannst du hier den Namen einer Instanz eingeben und dort ein Konto einrichten. \u0020 \n \u0020 \nEine Instanz ist ein einzelner Ort, an dem dein Konto gehostet ist, aber du kannst dennoch mit anderen Leuten interagieren, als wärt ihr alle auf derselben Website. \u0020 \n \u0020 \nWeitere Informationen gibt es auf <a href="https://joinmastodon.org">joinmastodon.org</a>.</string>
+    <string name="dialog_whats_an_instance">Die Adresse oder Domain einer Instanz kann hier eingegeben werden, wie z. B. mastodon.social, icosahedron.website, social.tchncs.de, und <a href="https://instances.social">weitere!</a>\n\nWenn du bis jetzt kein Konto hast, kannst du hier den Namen einer Instanz, der du beitreten willst, eingeben und dort ein Konto einrichten.\n\nEine Instanz ist ein einzelner Ort, wo dein Konto gehostet ist, aber du kannst mit anderen Leuten ganz einfach interagieren, als wärt ihr alle auf derselben Webseite.\n\nWeitere Informationen gibt es auf <a href="https://joinmastodon.org">joinmastodon.org</a>.</string>
     <string name="dialog_title_finishing_media_upload">Hochladen der Datei wird abgeschlossen</string>
     <string name="dialog_message_uploading_media">Wird hochgeladen …</string>
     <string name="dialog_download_image">Herunterladen</string>
@@ -782,4 +782,7 @@
     <string name="report_category_other_title">Es ist etwas anderes</string>
     <string name="action_login_again">Erneut einloggen</string>
     <string name="account_disconnected_title">Verbindung zum Account</string>
+    <string name="message_filters_empty">Du hast keine Filter.</string>
+    <string name="filter_context_home">Startseite und Listen</string>
+    <string name="action_rehide_status">Beitrag wieder verstecken</string>
 </resources>

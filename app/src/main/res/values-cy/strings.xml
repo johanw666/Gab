@@ -834,4 +834,7 @@
     <string name="action_login_again">Mewngofnodi eto</string>
     <string name="account_disconnected_title">Cyfrif wedi\'i ddatgysylltu</string>
     <string name="account_disconnected_message">Nid yw data mewngofnodi Tusky ar gyfer %1$s yn ddilys bellach. Gall hyn ddigwydd oherwydd eich bod chi wedi newid eich cyfrinair neu wedi dirymu mynediad i Tusky. Mewngofnodwch eto.</string>
+    <string name="filter_context_home">Cartref a Rhestrau</string>
+    <string name="action_rehide_status">Ail-guddio statws wedi\'i hidlo</string>
+    <string name="message_filters_empty">Nid oes gennych hidlyddion.</string>
 </resources>
