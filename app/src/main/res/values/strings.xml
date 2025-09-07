@@ -956,5 +956,6 @@
     <string name="account_disconnected_message">Tusky\'s login for %1$s is no longer valid. This can happen because you changed your password or revoked access for Tusky. Please log in again.</string>
 
     <string name="filter_context_home">Home and Lists</string>
+    <string name="action_add_audio">Add audio</string>
 
 </resources>
