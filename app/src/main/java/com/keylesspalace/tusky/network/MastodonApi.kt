@@ -282,7 +282,7 @@ interface MastodonApi {
     suspend fun scheduledStatuses(
         @Query("limit") limit: Int? = null,
         @Query("max_id") maxId: String? = null
-    ): NetworkResult<List<ScheduledStatus>>
+    ): Response<List<ScheduledStatus>>
 
     @DELETE("api/v1/scheduled_statuses/{id}")
     suspend fun deleteScheduledStatus(

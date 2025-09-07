@@ -15,6 +15,8 @@
 
 package com.keylesspalace.tusky.components.conversation;
 
+import static com.keylesspalace.tusky.util.AttachmentHelper.hasPreviewableAttachment;
+
 import android.content.Context;
 import android.text.InputFilter;
 import android.text.TextUtils;

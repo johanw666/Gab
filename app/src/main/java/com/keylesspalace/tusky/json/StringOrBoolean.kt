@@ -1,4 +1,5 @@
-/* Copyright 2019 kyori19
+/*
+ * Copyright 2025 Tusky Contributors
  *
  * This file is a part of Tusky.
  *
@@ -11,18 +12,13 @@
  * Public License for more details.
  *
  * You should have received a copy of the GNU General Public License along with Tusky; if not,
- * see <http://www.gnu.org/licenses>. */
+ * see <http://www.gnu.org/licenses>.
+ */
 
-package com.keylesspalace.tusky.entity
+package com.keylesspalace.tusky.json
 
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
+import com.squareup.moshi.JsonQualifier
 
-@JsonClass(generateAdapter = true)
-data class StatusParams(
-    val text: String,
-    val sensitive: Boolean? = null,
-    val visibility: Status.Visibility,
-    @Json(name = "spoiler_text") val spoilerText: String? = null,
-    @Json(name = "in_reply_to_id") val inReplyToId: String? = null
-)
+@Retention(AnnotationRetention.RUNTIME)
+@JsonQualifier
+internal annotation class StringOrBoolean

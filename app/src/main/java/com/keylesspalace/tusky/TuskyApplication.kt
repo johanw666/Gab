@@ -17,6 +17,7 @@ package com.keylesspalace.tusky
 
 import android.app.Application
 import android.app.NotificationManager
+import android.content.Context
 import android.content.SharedPreferences
 import android.os.Build
 import android.util.Log
@@ -27,6 +28,9 @@ import androidx.work.Constraints
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
+import coil3.ImageLoader
+import coil3.SingletonImageLoader
+import coil3.network.okhttp.OkHttpNetworkFetcherFactory
 import com.keylesspalace.tusky.settings.AppTheme
 import com.keylesspalace.tusky.settings.NEW_INSTALL_SCHEMA_VERSION
 import com.keylesspalace.tusky.settings.PrefKeys
@@ -42,10 +46,14 @@ import de.c1710.filemojicompat_ui.helpers.EmojiPreference
 import java.security.Security
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
+import okhttp3.OkHttpClient
 import org.conscrypt.Conscrypt
 
 @HiltAndroidApp
-class TuskyApplication : Application(), Configuration.Provider {
+class TuskyApplication :
+    Application(),
+    Configuration.Provider,
+    SingletonImageLoader.Factory {
 
     @Inject
     lateinit var workerFactory: HiltWorkerFactory
@@ -58,6 +66,9 @@ class TuskyApplication : Application(), Configuration.Provider {
 
     @Inject
     lateinit var notificationManager: NotificationManager
+
+    @Inject
+    lateinit var okHttpClient: OkHttpClient
 
     override fun onCreate() {
         // Uncomment me to get StrictMode violation logs
@@ -127,6 +138,18 @@ class TuskyApplication : Application(), Configuration.Provider {
         get() = Configuration.Builder()
             .setWorkerFactory(workerFactory)
             .build()
+
+    override fun newImageLoader(context: Context): ImageLoader {
+        return ImageLoader.Builder(context)
+            .components {
+                add(
+                    OkHttpNetworkFetcherFactory(
+                        callFactory = okHttpClient
+                    )
+                )
+            }
+            .build()
+    }
 
     private fun upgradeSharedPreferences(oldVersion: Int, newVersion: Int) {
         Log.d(TAG, "Upgrading shared preferences: $oldVersion -> $newVersion")

@@ -16,12 +16,14 @@
 package com.keylesspalace.tusky.entity
 
 import android.os.Parcelable
+import androidx.compose.runtime.Stable
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import kotlinx.parcelize.Parcelize
 
 @JsonClass(generateAdapter = true)
 @Parcelize
+@Stable
 data class Attachment(
     val id: String,
     val url: String,
@@ -61,6 +63,7 @@ data class Attachment(
      */
     @JsonClass(generateAdapter = true)
     @Parcelize
+    @Stable
     data class MetaData(
         val focus: Focus? = null,
         val duration: Float? = null,
@@ -76,6 +79,7 @@ data class Attachment(
      */
     @JsonClass(generateAdapter = true)
     @Parcelize
+    @Stable
     data class Focus(
         val x: Float?,
         val y: Float?
@@ -88,9 +92,11 @@ data class Attachment(
      */
     @JsonClass(generateAdapter = true)
     @Parcelize
+    @Stable
     data class Size(
         val width: Int = 0,
         val height: Int = 0,
-        val aspect: Double = 0.0
+        val aspect: Float = 0.0f,
+        val duration: Float = 0.0f
     ) : Parcelable
 }

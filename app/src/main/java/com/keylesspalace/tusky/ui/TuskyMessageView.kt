@@ -16,10 +16,12 @@
 package com.keylesspalace.tusky.ui
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -29,6 +31,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.keylesspalace.tusky.R
@@ -80,8 +83,8 @@ fun TuskyMessageView(
 fun TuskyMessageView(
     message: String,
     mode: MessageViewMode,
-    onRetry: (() -> Unit)?,
     modifier: Modifier = Modifier,
+    onRetry: (() -> Unit)? = null,
 ) {
     val image = when (mode) {
         MessageViewMode.EMPTY -> R.drawable.elephant_friend_empty
@@ -102,6 +105,7 @@ fun TuskyMessageView(
             text = message,
             fontSize = 16.sp,
             textAlign = TextAlign.Center,
+            color = tuskyColors.primaryTextColor,
             modifier = Modifier.padding(
                 start = 16.dp,
                 top = 16.dp,
@@ -117,5 +121,20 @@ fun TuskyMessageView(
                 Text(stringResource(R.string.action_retry))
             }
         }
+    }
+}
+
+@PreviewLightDark
+@Composable
+fun TuskyMessageViewPreview() {
+    TuskyPreviewTheme {
+        TuskyMessageView(
+            message = "An error occurred.",
+            mode = MessageViewMode.ERROR_OTHER,
+            onRetry = {},
+            modifier = Modifier
+                .background(colorScheme.background)
+                .padding(16.dp)
+        )
     }
 }

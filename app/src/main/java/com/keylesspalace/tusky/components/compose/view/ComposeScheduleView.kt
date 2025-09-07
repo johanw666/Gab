@@ -52,12 +52,6 @@ class ComposeScheduleView
     private var listener: OnTimeSetListener? = null
     private var dateFormat = SimpleDateFormat.getDateInstance()
     private var timeFormat = SimpleDateFormat.getTimeInstance()
-    private var iso8601 = SimpleDateFormat(
-        "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",
-        Locale.getDefault()
-    ).apply {
-        timeZone = TimeZone.getTimeZone("UTC")
-    }
 
     /** The date/time the user has chosen to schedule the status, in UTC */
     private var scheduleDateTimeUtc: Calendar? = null
@@ -159,18 +153,8 @@ class ComposeScheduleView
         picker.show((context as AppCompatActivity).supportFragmentManager, "time_picker")
     }
 
-    fun getDateTime(scheduledAt: String?): Date? {
-        scheduledAt?.let {
-            try {
-                return iso8601.parse(it)
-            } catch (_: ParseException) {
-            }
-        }
-        return null
-    }
-
     fun setDateTime(scheduledAt: String?) {
-        val date = getDateTime(scheduledAt) ?: return
+        val date = parseDate(scheduledAt) ?: return
         initializeSuggestedTime()
         scheduleDateTimeUtc!!.time = date
         updateScheduleUi()
@@ -211,7 +195,7 @@ class ComposeScheduleView
     }
 
     val time: String?
-        get() = scheduleDateTimeUtc?.time?.let { iso8601.format(it) }
+        get() = formatDate(scheduleDateTimeUtc?.time)
 
     private fun initializeSuggestedTime() {
         if (scheduleDateTimeUtc == null) {
@@ -225,5 +209,24 @@ class ComposeScheduleView
         // Minimum is 5 minutes, pad 30 seconds for posting
         private const val MINIMUM_SCHEDULED_SECONDS = 330
         fun calendar(): Calendar = Calendar.getInstance(TimeZone.getDefault())
+
+        private var iso8601 = SimpleDateFormat(
+            "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",
+            Locale.getDefault()
+        ).apply {
+            timeZone = TimeZone.getTimeZone("UTC")
+        }
+
+        fun formatDate(date: Date?) = date?.let {
+            iso8601.format(it)
+        }
+
+        fun parseDate(iso8601String: String?) = iso8601String?.let {
+            try {
+                iso8601.parse(it)
+            } catch (_: ParseException) {
+                null
+            }
+        }
     }
 }

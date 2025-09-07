@@ -16,6 +16,7 @@
 package com.keylesspalace.tusky.entity
 
 import android.os.Parcelable
+import androidx.compose.runtime.Stable
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import kotlinx.parcelize.Parcelize
@@ -36,6 +37,7 @@ data class NewStatus(
 
 @JsonClass(generateAdapter = true)
 @Parcelize
+@Stable
 data class NewPoll(
     val options: List<String>,
     @Json(name = "expires_in") val expiresIn: Int,

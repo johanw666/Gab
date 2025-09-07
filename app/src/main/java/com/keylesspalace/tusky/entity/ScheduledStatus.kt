@@ -15,15 +15,33 @@
 
 package com.keylesspalace.tusky.entity
 
+import com.keylesspalace.tusky.json.StringOrBoolean
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import java.util.Date
 
 @JsonClass(generateAdapter = true)
 data class ScheduledStatus(
     val id: String,
-    @Json(name = "scheduled_at") val scheduledAt: String,
+    @Json(name = "scheduled_at") val scheduledAt: Date,
     val params: StatusParams,
-    @Json(name = "media_attachments") val mediaAttachments: List<Attachment>
+    @Json(name = "media_attachments")
+    val mediaAttachments: List<Attachment>
+)
+
+@JsonClass(generateAdapter = true)
+data class StatusParams(
+    val text: String,
+    // https://github.com/mastodon/mastodon/issues/24645 🙄
+    // null on GoToSocial
+    @StringOrBoolean val sensitive: Boolean?,
+    val visibility: Status.Visibility,
+    @Json(name = "spoiler_text") val spoilerText: String?,
+    @Json(name = "in_reply_to_id") val inReplyToId: String?,
+    val language: String,
+    // null on GoToSocial when there are no media attachments
+    @Json(name = "media_ids") val mediaIds: List<String>?,
+    val poll: NewPoll?
 )
 
 // minimal class to avoid json parsing errors with servers that don't support scheduling

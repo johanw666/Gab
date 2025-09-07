@@ -48,7 +48,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -72,9 +71,9 @@ import com.keylesspalace.tusky.entity.Filter
 import com.keylesspalace.tusky.ui.MessageViewMode
 import com.keylesspalace.tusky.ui.TuskyMessageView
 import com.keylesspalace.tusky.ui.TuskyPullToRefreshBox
+import com.keylesspalace.tusky.ui.TuskyTextButton
 import com.keylesspalace.tusky.ui.TuskyTheme
-import com.keylesspalace.tusky.ui.primaryTextColor
-import com.keylesspalace.tusky.ui.tertiaryTextColor
+import com.keylesspalace.tusky.ui.tuskyColors
 import com.keylesspalace.tusky.util.getRelativeTimeSpanString
 import com.keylesspalace.tusky.util.withSlideInAnimation
 import dagger.hilt.android.AndroidEntryPoint
@@ -212,23 +211,21 @@ class FiltersActivity : BaseActivity() {
                     showDeleteConfirmation = null
                 },
                 confirmButton = {
-                    TextButton(
+                    TuskyTextButton(
+                        text = stringResource(R.string.dialog_delete_filter_positive_action),
                         onClick = {
                             viewModel.deleteFilter(filterToDelete)
                             showDeleteConfirmation = null
                         }
-                    ) {
-                        Text(stringResource(R.string.dialog_delete_filter_positive_action))
-                    }
+                    )
                 },
                 dismissButton = {
-                    TextButton(
+                    TuskyTextButton(
+                        text = stringResource(android.R.string.cancel),
                         onClick = {
                             showDeleteConfirmation = null
                         }
-                    ) {
-                        Text(stringResource(android.R.string.cancel))
-                    }
+                    )
                 },
                 shape = RoundedCornerShape(16.dp),
                 containerColor = colorScheme.background,
@@ -272,13 +269,13 @@ class FiltersActivity : BaseActivity() {
                     Text(
                         text = title,
                         fontWeight = FontWeight.Medium,
-                        color = colorScheme.primaryTextColor,
+                        color = tuskyColors.primaryTextColor,
                         fontSize = 16.sp
                     )
                     Spacer(Modifier.height(4.dp))
                     Text(
                         text = description,
-                        color = colorScheme.tertiaryTextColor,
+                        color = tuskyColors.tertiaryTextColor,
                         fontSize = 14.sp
                     )
                 }

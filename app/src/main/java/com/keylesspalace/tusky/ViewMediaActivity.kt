@@ -169,7 +169,8 @@ class ViewMediaActivity :
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.view_media_toolbar, menu)
         // We don't support 'open status' from single image views
-        menu.findItem(R.id.action_open_status)?.isVisible = (attachments != null)
+        menu.findItem(R.id.action_open_status)?.isVisible =
+            (attachments != null && attachments?.all { attachment -> attachment.statusId != null && attachment.statusUrl != null } == true)
         return true
     }
 
@@ -242,9 +243,11 @@ class ViewMediaActivity :
 
     private fun onOpenStatus() {
         val attach = attachments!![binding.viewPager.currentItem]
-        startActivityWithSlideInAnimation(
-            ViewThreadActivity.startIntent(this, attach.statusId, attach.statusUrl)
-        )
+        if (attach.statusId != null && attach.statusUrl != null) {
+            startActivityWithSlideInAnimation(
+                ViewThreadActivity.startIntent(this, attach.statusId, attach.statusUrl)
+            )
+        }
     }
 
     private fun copyLink() {

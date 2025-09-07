@@ -1,5 +1,6 @@
 package com.keylesspalace.tusky.adapter;
 
+import static com.keylesspalace.tusky.util.AttachmentHelper.hasPreviewableAttachment;
 import static com.keylesspalace.tusky.viewdata.PollViewDataKt.buildDescription;
 
 import android.content.Context;
@@ -812,15 +813,6 @@ public abstract class StatusBaseViewHolder<C extends ConcreteViewData> extends R
             untranslateButton.setVisibility(View.GONE);
             untranslateButton.setOnClickListener(null);
         }
-    }
-
-    protected static boolean hasPreviewableAttachment(@NonNull List<Attachment> attachments) {
-        for (Attachment attachment : attachments) {
-            if (attachment.getType() == Attachment.Type.AUDIO || attachment.getType() == Attachment.Type.UNKNOWN) {
-                return false;
-            }
-        }
-        return true;
     }
 
     private void setDescriptionForStatus(@NonNull StatusViewData.Concrete status,

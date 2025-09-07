@@ -17,12 +17,15 @@ package com.keylesspalace.tusky.ui.preferences
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.ProvidableCompositionLocal
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.keylesspalace.tusky.db.entity.AccountEntity
 
-val LocalPreferences = compositionLocalOf { TuskyPreferences() }
+val LocalPreferences: ProvidableCompositionLocal<TuskyPreferences> = compositionLocalOf { TuskyPreferences() }
+val LocalAccount: ProvidableCompositionLocal<AccountEntity?> = compositionLocalOf { null }
 
 @Composable
 fun PreferencesProvider(
@@ -30,6 +33,9 @@ fun PreferencesProvider(
     content: @Composable () -> Unit
 ) {
     val preferences by viewModel.tuskyPreferences.collectAsState()
+    val account by viewModel.activeAccount.collectAsState()
 
-    CompositionLocalProvider(LocalPreferences provides preferences, content)
+    CompositionLocalProvider(LocalPreferences provides preferences) {
+        CompositionLocalProvider(LocalAccount provides account, content)
+    }
 }

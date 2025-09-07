@@ -207,6 +207,8 @@ dependencies {
     implementation libs.bundles.okhttp
     implementation libs.okio
 
+    implementation libs.bundles.coil
+
     implementation libs.conscrypt.android
 
     implementation libs.bundles.glide
@@ -240,4 +242,7 @@ dependencies {
     testImplementation libs.kotlinx.coroutines.test
     testImplementation libs.androidx.work.testing
     testImplementation libs.turbine
+
+    testImplementation libs.androidx.compose.test
+    debugImplementation libs.androidx.compose.test.manifest
 }

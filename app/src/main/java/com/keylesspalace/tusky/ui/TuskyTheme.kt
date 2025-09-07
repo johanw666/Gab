@@ -16,14 +16,16 @@
 package com.keylesspalace.tusky.ui
 
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.material3.ColorScheme
+import androidx.compose.material3.LocalMinimumInteractiveComponentSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Typography
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.sp
 import com.keylesspalace.tusky.settings.AppTheme
 import com.keylesspalace.tusky.ui.preferences.LocalPreferences
@@ -75,6 +77,14 @@ private val LightColorScheme = lightColorScheme(
     outlineVariant = tuskyGrey70,
 )
 
+private val LightTuskyColorScheme = TuskyColorScheme(
+    primaryTextColor = tuskyGrey10,
+    secondaryTextColor = tuskyGrey20,
+    tertiaryTextColor = tuskyGrey30,
+    backgroundAccent = tuskyGrey70,
+    windowBackground = tuskyGrey80
+)
+
 private val DarkColorScheme = darkColorScheme(
     primary = tuskyBlueLight,
     onPrimary = tuskyGrey10,
@@ -93,6 +103,14 @@ private val DarkColorScheme = darkColorScheme(
     outlineVariant = tuskyGrey40
 )
 
+private val DarkTuskyColorScheme = TuskyColorScheme(
+    primaryTextColor = Color.White,
+    secondaryTextColor = tuskyGrey90,
+    tertiaryTextColor = tuskyGrey70,
+    backgroundAccent = tuskyGrey40,
+    windowBackground = tuskyGrey10
+)
+
 private val BlackColorScheme = DarkColorScheme.copy(
     onPrimary = Color.Black,
     background = Color.Black,
@@ -103,6 +121,10 @@ private val BlackColorScheme = DarkColorScheme.copy(
     surfaceContainerHigh = tuskyGrey10,
     surfaceContainerHighest = tuskyGrey10,
     surfaceVariant = tuskyGrey10
+)
+
+private val BlackTuskyColorScheme = DarkTuskyColorScheme.copy(
+    windowBackground = Color.Black
 )
 
 private val TuskyTypography = Typography(
@@ -126,26 +148,26 @@ fun TuskyTheme(
                 DarkColorScheme
             }
         }
-
-        MaterialTheme(
-            colorScheme = colors,
-            typography = TuskyTypography,
-            content = content
-        )
+        val tuskyColors = if (!useDarkTheme) {
+            LightTuskyColorScheme
+        } else {
+            if (LocalPreferences.current.theme == AppTheme.BLACK) {
+                BlackTuskyColorScheme
+            } else {
+                DarkTuskyColorScheme
+            }
+        }
+        CompositionLocalProvider(LocalMinimumInteractiveComponentSize provides Dp.Unspecified) {
+            CompositionLocalProvider(TuskyColors provides tuskyColors) {
+                MaterialTheme(
+                    colorScheme = colors,
+                    typography = TuskyTypography,
+                    content = content
+                )
+            }
+        }
     }
 }
-
-val ColorScheme.primaryTextColor: Color
-    @Composable
-    get() = if (isSystemInDarkTheme()) Color.White else tuskyGrey10
-
-val ColorScheme.secondaryTextColor: Color
-    @Composable
-    get() = if (isSystemInDarkTheme()) tuskyGrey90 else tuskyGrey20
-
-val ColorScheme.tertiaryTextColor: Color
-    @Composable
-    get() = if (isSystemInDarkTheme()) tuskyGrey70 else tuskyGrey30
 
 // for use in Previews, doesn't support the black theme or provide LocalPreferences
 @Composable
@@ -158,9 +180,18 @@ fun TuskyPreviewTheme(
     } else {
         DarkColorScheme
     }
-    MaterialTheme(
-        colorScheme = colors,
-        typography = TuskyTypography,
-        content = content
-    )
+    val tuskyColors = if (!useDarkTheme) {
+        LightTuskyColorScheme
+    } else {
+        DarkTuskyColorScheme
+    }
+    CompositionLocalProvider(LocalMinimumInteractiveComponentSize provides Dp.Unspecified) {
+        CompositionLocalProvider(TuskyColors provides tuskyColors) {
+            MaterialTheme(
+                colorScheme = colors,
+                typography = TuskyTypography,
+                content = content
+            )
+        }
+    }
 }

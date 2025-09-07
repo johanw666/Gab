@@ -958,4 +958,27 @@
     <string name="filter_context_home">Home and Lists</string>
     <string name="action_add_audio">Add audio</string>
 
+    <plurals name="seconds">
+        <item quantity="one">%1$s second</item>
+        <item quantity="other">%1$s seconds</item>
+    </plurals>
+    <plurals name="minutes">
+        <item quantity="one">%1$s minute</item>
+        <item quantity="other">%1$s minutes</item>
+    </plurals>
+    <plurals name="hours">
+        <item quantity="one">%1$s hour</item>
+        <item quantity="other">%1$s hours</item>
+    </plurals>
+    <plurals name="days">
+        <item quantity="one">%1$s day</item>
+        <item quantity="other">%1$s days</item>
+    </plurals>
+
+    <!-- text shown above a scheduled post to indicate it is a reply -->
+    <string name="scheduled_post_reply">Reply</string>
+
+    <string name="scheduled_posts_not_supported">Your server %1$s does not support scheduled posts</string>
+
+    <string name="scheduled_post_deletion_error">Failed to delete scheduled post.</string>
 </resources>

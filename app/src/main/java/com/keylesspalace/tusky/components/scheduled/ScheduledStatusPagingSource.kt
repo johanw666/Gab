@@ -15,65 +15,21 @@
 
 package com.keylesspalace.tusky.components.scheduled
 
-import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import at.connyduck.calladapter.networkresult.getOrThrow
-import com.keylesspalace.tusky.entity.ScheduledStatus
-import com.keylesspalace.tusky.network.MastodonApi
-
-class ScheduledStatusPagingSourceFactory(
-    private val mastodonApi: MastodonApi
-) : () -> ScheduledStatusPagingSource {
-
-    private val scheduledTootsCache = mutableListOf<ScheduledStatus>()
-
-    private var pagingSource: ScheduledStatusPagingSource? = null
-
-    override fun invoke(): ScheduledStatusPagingSource {
-        return ScheduledStatusPagingSource(mastodonApi, scheduledTootsCache).also {
-            pagingSource = it
-        }
-    }
-
-    fun remove(status: ScheduledStatus) {
-        scheduledTootsCache.remove(status)
-        pagingSource?.invalidate()
-    }
-}
 
 class ScheduledStatusPagingSource(
-    private val mastodonApi: MastodonApi,
-    private val scheduledStatusesCache: MutableList<ScheduledStatus>
-) : PagingSource<String, ScheduledStatus>() {
+    private val viewModel: ScheduledStatusViewModel
+) : PagingSource<String, ScheduledStatusViewData>() {
 
-    override fun getRefreshKey(state: PagingState<String, ScheduledStatus>): String? {
-        return null
-    }
+    override fun getRefreshKey(state: PagingState<String, ScheduledStatusViewData>): String? = null
 
-    override suspend fun load(params: LoadParams<String>): LoadResult<String, ScheduledStatus> {
-        return if (params is LoadParams.Refresh && scheduledStatusesCache.isNotEmpty()) {
-            LoadResult.Page(
-                data = scheduledStatusesCache,
-                prevKey = null,
-                nextKey = scheduledStatusesCache.lastOrNull()?.id
-            )
+    override suspend fun load(params: LoadParams<String>): LoadResult<String, ScheduledStatusViewData> {
+        return if (params is LoadParams.Refresh) {
+            val list = viewModel.scheduledStatuses.toList()
+            LoadResult.Page(list, null, viewModel.nextKey)
         } else {
-            try {
-                val result = mastodonApi.scheduledStatuses(
-                    maxId = params.key,
-                    limit = params.loadSize
-                ).getOrThrow()
-
-                LoadResult.Page(
-                    data = result,
-                    prevKey = null,
-                    nextKey = result.lastOrNull()?.id
-                )
-            } catch (e: Exception) {
-                Log.w("ScheduledStatuses", "Error loading scheduled statuses", e)
-                LoadResult.Error(e)
-            }
+            LoadResult.Page(emptyList(), null, null)
         }
     }
 }

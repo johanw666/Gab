@@ -20,5 +20,7 @@ import com.keylesspalace.tusky.settings.AppTheme
 
 @Immutable
 data class TuskyPreferences(
-    val theme: AppTheme = AppTheme.DEFAULT
+    val theme: AppTheme = AppTheme.DEFAULT,
+
+    val useBlurhash: Boolean = false
 )

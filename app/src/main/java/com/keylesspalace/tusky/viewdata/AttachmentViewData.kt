@@ -23,8 +23,8 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class AttachmentViewData(
     val attachment: Attachment,
-    val statusId: String,
-    val statusUrl: String,
+    val statusId: String?,
+    val statusUrl: String?,
     val sensitive: Boolean,
     val isRevealed: Boolean
 ) : Parcelable {

@@ -85,6 +85,7 @@ import com.keylesspalace.tusky.components.compose.dialog.makeFocusDialog
 import com.keylesspalace.tusky.components.compose.dialog.showAddPollDialog
 import com.keylesspalace.tusky.components.compose.view.ComposeOptionsListener
 import com.keylesspalace.tusky.components.compose.view.ComposeScheduleView
+import com.keylesspalace.tusky.components.compose.view.ComposeScheduleView.Companion.parseDate
 import com.keylesspalace.tusky.components.editimage.EditImageContract
 import com.keylesspalace.tusky.components.editimage.EditImageOptions
 import com.keylesspalace.tusky.components.editimage.EditImageResult
@@ -1084,7 +1085,7 @@ class ComposeActivity :
 
     private fun verifyScheduledTime(): Boolean {
         return binding.composeScheduleView.verifyScheduledTime(
-            binding.composeScheduleView.getDateTime(viewModel.scheduledAt.value)
+            parseDate(viewModel.scheduledAt.value)
         )
     }
 

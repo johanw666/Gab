@@ -18,7 +18,9 @@ package com.keylesspalace.tusky.ui.preferences
 import android.content.SharedPreferences
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.keylesspalace.tusky.db.AccountManager
 import com.keylesspalace.tusky.settings.AppTheme
+import com.keylesspalace.tusky.settings.PrefKeys
 import com.keylesspalace.tusky.settings.PrefKeys.APP_THEME
 import com.keylesspalace.tusky.util.getNonNullString
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -31,8 +33,11 @@ import kotlinx.coroutines.flow.stateIn
 
 @HiltViewModel
 class PreferencesProviderViewModel @Inject constructor(
-    private val sharedPreferences: SharedPreferences
+    private val sharedPreferences: SharedPreferences,
+    accountManager: AccountManager,
 ) : ViewModel() {
+
+    val activeAccount = accountManager.activeAccount(viewModelScope)
 
     val tuskyPreferences: StateFlow<TuskyPreferences> = callbackFlow {
 
@@ -49,7 +54,8 @@ class PreferencesProviderViewModel @Inject constructor(
         val tuskyTheme = this.getNonNullString(APP_THEME, AppTheme.DEFAULT.value)
 
         return TuskyPreferences(
-            theme = AppTheme.of(tuskyTheme)
+            theme = AppTheme.of(tuskyTheme),
+            useBlurhash = this.getBoolean(PrefKeys.USE_BLURHASH, true)
         )
     }
 }

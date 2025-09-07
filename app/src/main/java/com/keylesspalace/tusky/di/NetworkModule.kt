@@ -27,6 +27,7 @@ import com.keylesspalace.tusky.entity.Notification
 import com.keylesspalace.tusky.entity.Status
 import com.keylesspalace.tusky.json.GuardedAdapter
 import com.keylesspalace.tusky.json.NotificationTypeAdapter
+import com.keylesspalace.tusky.json.StringOrBooleanAdapter
 import com.keylesspalace.tusky.network.MastodonApi
 import com.keylesspalace.tusky.network.MediaUploadApi
 import com.keylesspalace.tusky.network.apiForAccount
@@ -70,6 +71,7 @@ object NetworkModule {
     @Singleton
     fun providesMoshi(): Moshi = Moshi.Builder()
         .add(GuardedAdapter.ANNOTATION_FACTORY)
+        .add(StringOrBooleanAdapter.ANNOTATION_FACTORY)
         .add(Date::class.java, Rfc3339DateJsonAdapter())
         // Enum types with fallback value
         .add(
