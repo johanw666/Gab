@@ -16,8 +16,8 @@ package com.keylesspalace.tusky.view
 
 import android.content.Context
 import android.util.AttributeSet
+import androidx.appcompat.R as appcompatR
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.google.android.material.R as materialR
 import com.google.android.material.color.MaterialColors
 
 /**
@@ -31,7 +31,7 @@ class TuskySwipeRefreshLayout @JvmOverloads constructor(
 
     init {
         setColorSchemeColors(
-            MaterialColors.getColor(this, materialR.attr.colorPrimary)
+            MaterialColors.getColor(this, appcompatR.attr.colorPrimary)
         )
     }
 }

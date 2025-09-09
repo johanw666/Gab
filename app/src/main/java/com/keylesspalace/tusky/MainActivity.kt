@@ -43,6 +43,7 @@ import android.widget.ImageView
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
+import androidx.appcompat.R as appcompatR
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -708,7 +709,7 @@ class MainActivity : BottomSheetActivity(), ActionButtonActivity, MenuProvider {
                     }
                     badgeStyle = BadgeStyle().apply {
                         textColor = ColorHolder.fromColor(MaterialColors.getColor(binding.mainDrawer, materialR.attr.colorOnPrimary))
-                        color = ColorHolder.fromColor(MaterialColors.getColor(binding.mainDrawer, materialR.attr.colorPrimary))
+                        color = ColorHolder.fromColor(MaterialColors.getColor(binding.mainDrawer, appcompatR.attr.colorPrimary))
                     }
                 },
                 DividerDrawerItem(),
@@ -852,7 +853,7 @@ class MainActivity : BottomSheetActivity(), ActionButtonActivity, MenuProvider {
             if (tabs[position].id == DIRECT) {
                 val badge = tab.orCreateBadge
                 badge.isVisible = activeAccount.hasDirectMessageBadge
-                badge.backgroundColor = MaterialColors.getColor(binding.mainDrawer, materialR.attr.colorPrimary)
+                badge.backgroundColor = MaterialColors.getColor(binding.mainDrawer, appcompatR.attr.colorPrimary)
                 directMessageTab = tab
             }
         }.also { it.attach() }

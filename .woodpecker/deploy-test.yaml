@@ -16,7 +16,7 @@ steps:
       - chmod -R 777 .
 
   - name: Deploy
-    image: cimg/android:2025.04.1
+    image: cimg/android:2025.09.1
     environment:
       KEYSTORE:
         from_secret: KEYSTORE

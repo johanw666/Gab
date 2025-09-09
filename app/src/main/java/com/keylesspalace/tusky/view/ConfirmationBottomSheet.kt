@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter
 import android.widget.Filter
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
+import androidx.appcompat.R as appcompatR
 import androidx.core.content.edit
 import androidx.core.graphics.ColorUtils
 import androidx.core.graphics.drawable.toDrawable
@@ -55,7 +56,7 @@ class ConfirmationBottomSheet : BottomSheetDialogFragment(R.layout.bottomsheet_c
             binding.confirmTextView.setText(R.string.reblog_confirm)
             binding.confirmTextView.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_repeat_24dp, 0, 0, 0)
             binding.confirmTextView.compoundDrawableTintList = ColorStateList.valueOf(
-                MaterialColors.getColor(binding.confirmTextView, materialR.attr.colorPrimary)
+                MaterialColors.getColor(binding.confirmTextView, appcompatR.attr.colorPrimary)
             )
 
             binding.confirmButton.setText(R.string.action_reblog)

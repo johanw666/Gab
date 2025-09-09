@@ -22,6 +22,7 @@ import android.graphics.PorterDuff
 import android.graphics.PorterDuffXfermode
 import android.graphics.RectF
 import android.util.AttributeSet
+import androidx.appcompat.R as appcompatR
 import androidx.appcompat.content.res.AppCompatResources
 import at.connyduck.sparkbutton.helpers.Utils
 import com.google.android.material.R as materialR
@@ -39,7 +40,7 @@ class ProgressImageView
     private val progressRect = RectF()
     private val biggerRect = RectF()
     private val circlePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = MaterialColors.getColor(this@ProgressImageView, materialR.attr.colorPrimary)
+        color = MaterialColors.getColor(this@ProgressImageView, appcompatR.attr.colorPrimary)
         strokeWidth = Utils.dpToPx(context, 4).toFloat()
         style = Paint.Style.STROKE
     }
@@ -68,7 +69,7 @@ class ProgressImageView
     }
 
     fun setChecked(checked: Boolean) {
-        val backgroundColor = if (checked) materialR.attr.colorPrimary else android.R.attr.colorBackground
+        val backgroundColor = if (checked) appcompatR.attr.colorPrimary else android.R.attr.colorBackground
         val foregroundColor = if (checked) materialR.attr.colorOnPrimary else android.R.attr.textColorTertiary
         markBgPaint.color = MaterialColors.getColor(this, backgroundColor)
         captionDrawable.setTint(MaterialColors.getColor(this, foregroundColor))

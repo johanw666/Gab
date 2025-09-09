@@ -50,6 +50,7 @@ import androidx.annotation.AttrRes
 import androidx.annotation.ColorInt
 import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
+import androidx.appcompat.R as appcompatR
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.FileProvider
 import androidx.core.content.res.use
@@ -66,7 +67,6 @@ import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.transition.TransitionManager
-import com.google.android.material.R as materialR
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetBehavior.BottomSheetCallback
 import com.google.android.material.color.MaterialColors
@@ -830,12 +830,12 @@ class ComposeActivity :
             @AttrRes val color = if (contentWarningShown) {
                 binding.composeHideMediaButton.setImageResource(R.drawable.ic_visibility_off_24dp)
                 binding.composeHideMediaButton.isClickable = false
-                materialR.attr.colorPrimary
+                appcompatR.attr.colorPrimary
             } else {
                 binding.composeHideMediaButton.isClickable = true
                 if (markMediaSensitive) {
                     binding.composeHideMediaButton.setImageResource(R.drawable.ic_visibility_off_24dp)
-                    materialR.attr.colorPrimary
+                    appcompatR.attr.colorPrimary
                 } else {
                     binding.composeHideMediaButton.setImageResource(R.drawable.ic_visibility_24dp)
                     android.R.attr.textColorTertiary
@@ -866,7 +866,7 @@ class ComposeActivity :
                     if (binding.composeScheduleView.time == null) {
                         android.R.attr.textColorTertiary
                     } else {
-                        materialR.attr.colorPrimary
+                        appcompatR.attr.colorPrimary
                     }
                 )
             binding.composeScheduleButton.drawable.setTint(color)
@@ -1236,7 +1236,7 @@ class ComposeActivity :
             )
             binding.composeContentWarningField.requestFocus()
             binding.composeContentWarningButton.setImageResource(R.drawable.ic_feedback_24dp_filled)
-            materialR.attr.colorPrimary
+            appcompatR.attr.colorPrimary
         } else {
             binding.composeContentWarningBar.hide()
             binding.composeEditField.requestFocus()

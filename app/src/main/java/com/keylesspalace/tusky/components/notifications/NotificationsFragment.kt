@@ -27,6 +27,7 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.ListView
 import android.widget.PopupWindow
+import androidx.appcompat.R as appcompatR
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.viewModels
@@ -484,7 +485,7 @@ class NotificationsFragment :
         }
 
         val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_multiple_choice, notificationTypeList)
-        val window = PopupWindow(requireContext(), null, com.google.android.material.R.attr.listPopupWindowStyle)
+        val window = PopupWindow(requireContext(), null, appcompatR.attr.listPopupWindowStyle)
         val menuBinding = NotificationsFilterBinding.inflate(LayoutInflater.from(requireContext()), binding.root as ViewGroup, false)
 
         menuBinding.buttonApply.setOnClickListener {

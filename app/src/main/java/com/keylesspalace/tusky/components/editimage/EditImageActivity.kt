@@ -22,6 +22,7 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.ViewGroup
+import androidx.appcompat.R as appcompatR
 import androidx.core.content.IntentCompat
 import androidx.core.view.MenuProvider
 import androidx.core.view.ViewCompat
@@ -32,7 +33,6 @@ import androidx.core.view.updateLayoutParams
 import com.canhub.cropper.CropImageOptions
 import com.canhub.cropper.CropImageView
 import com.canhub.cropper.CropImageView.CropResult
-import com.google.android.material.R as materialR
 import com.google.android.material.color.MaterialColors
 import com.keylesspalace.tusky.BaseActivity
 import com.keylesspalace.tusky.R
@@ -72,7 +72,7 @@ class EditImageActivity :
 
         binding.cropImageView.setImageCropOptions(
             CropImageOptions(
-                progressBarColor = MaterialColors.getColor(binding.root, materialR.attr.colorPrimary),
+                progressBarColor = MaterialColors.getColor(binding.root, appcompatR.attr.colorPrimary),
                 initialCropWindowPaddingRatio = 0.075f,
             )
         )
