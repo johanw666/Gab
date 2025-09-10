@@ -117,6 +117,7 @@
         <item name="toolbarIconBackgroundColor">@color/toolbarIconBackgroundColor</item>
         <item name="placeholderColor">@color/placeholderColor</item>
 
+        <item name="android:textColorHighlight">@color/color_primary_transparent_50</item>
     </style>
 
     <style name="TuskyBlackThemeBase" parent="TuskyBaseTheme">
