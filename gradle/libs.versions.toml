@@ -31,6 +31,7 @@ diffx = "1.1.2"
 emoji2 = "1.5.0"
 filemoji-compat = "3.3.1"
 glide = "5.0.4"
+glide-compose = "1.0.0-beta07"
 glide-animation-plugin = "3.0.5"
 hilt = "2.57.1"
 kotlin = "2.2.10"
@@ -107,8 +108,6 @@ androidx-compose-test-manifest = { module = "androidx.compose.ui:ui-test-manifes
 androidx-viewpager2 = { module = "androidx.viewpager2:viewpager2", version.ref = "androidx-viewpager2" }
 androidx-work-runtime-ktx = { module = "androidx.work:work-runtime-ktx", version.ref = "androidx-work" }
 androidx-work-testing = { module = "androidx.work:work-testing", version.ref = "androidx-work" }
-coil-compose = { group = "io.coil-kt.coil3", name = "coil-compose", version.ref = "coil" }
-coil-okhttp = { group = "io.coil-kt.coil3", name = "coil-network-okhttp", version.ref = "coil" }
 conscrypt-android = { module = "org.conscrypt:conscrypt-android", version.ref = "conscrypt" }
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
 hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "hilt" }
@@ -120,6 +119,7 @@ glide-animation-plugin = { module = "com.github.penfeizhou.android.animation:gli
 glide-compiler = { module = "com.github.bumptech.glide:ksp", version.ref = "glide" }
 glide-core = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
 glide-okhttp3-integration = { module = "com.github.bumptech.glide:okhttp3-integration", version.ref = "glide" }
+glide-compose = { group = "com.github.bumptech.glide", name = "compose", version.ref = "glide-compose" }
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
 image-cropper = { module = "com.vanniktech:android-image-cropper", version.ref = "image-cropper" }
@@ -152,9 +152,8 @@ androidx = ["androidx-core-ktx", "androidx-appcompat", "androidx-fragment-ktx", 
     "androidx-constraintlayout", "androidx-paging-compose", "androidx-paging-runtime-ktx", "androidx-viewpager2", "androidx-work-runtime-ktx",
     "androidx-core-splashscreen", "androidx-activity", "androidx-activity-compose", "androidx-media3-exoplayer", "androidx-media3-datasource-okhttp",
     "androidx-media3-ui", "androidx-drawerlayout"]
-coil = ["coil-compose", "coil-okhttp"]
 filemojicompat = ["filemojicompat-core", "filemojicompat-ui", "filemojicompat-defaults"]
-glide = ["glide-core", "glide-okhttp3-integration", "glide-animation-plugin"]
+glide = ["glide-core", "glide-okhttp3-integration", "glide-animation-plugin", "glide-compose"]
 material-drawer = ["material-drawer-core", "material-drawer-iconics"]
 mockito = ["mockito-kotlin", "mockito-inline"]
 moshi = ["moshi-core", "moshi-adapters"]

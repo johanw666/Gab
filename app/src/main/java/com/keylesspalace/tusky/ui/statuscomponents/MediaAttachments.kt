@@ -17,6 +17,7 @@ package com.keylesspalace.tusky.ui.statuscomponents
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.content.res.Configuration.UI_MODE_TYPE_NORMAL
+import android.graphics.drawable.Drawable
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -44,9 +45,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.BiasAlignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.asImageBitmap
-import androidx.compose.ui.graphics.painter.BitmapPainter
-import androidx.compose.ui.graphics.painter.ColorPainter
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -55,7 +54,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil3.compose.AsyncImage
+import androidx.core.graphics.drawable.toDrawable
+import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
+import com.bumptech.glide.integration.compose.GlideImage
 import com.keylesspalace.tusky.R
 import com.keylesspalace.tusky.entity.Attachment
 import com.keylesspalace.tusky.ui.TuskyPreviewTheme
@@ -356,6 +357,7 @@ private fun AttachmentPreviewGrid(
     }
 }
 
+@OptIn(ExperimentalGlideComposeApi::class)
 @Composable
 private fun MediaItem(
     attachment: Attachment,
@@ -372,31 +374,32 @@ private fun MediaItem(
             }
     ) {
         val backgroundAccent = tuskyColors.backgroundAccent
+        val res = LocalContext.current.resources
 
         if (attachment.previewUrl != null) {
-            val placeholder = remember(attachment) {
+            val placeholderDrawable: Drawable = remember(attachment) {
                 if (showBlurhash && attachment.blurhash != null) {
                     // Render blurhashes in similar aspect ratio as the preview image.
                     // Otherwise they might get cropped differently and look very differently.
                     val aspectRatio = attachment.aspectRatio()
                     val height = sqrt(128 / aspectRatio).roundToInt().coerceIn(16, 256)
                     val width = (height * aspectRatio).roundToInt().coerceIn(16, 256)
-                    BlurHashDecoder.decode(attachment.blurhash, width, height, 1f)?.let { blurhashBitmap ->
-                        BitmapPainter(blurhashBitmap.asImageBitmap())
-                    } ?: ColorPainter(backgroundAccent)
+                    BlurHashDecoder.decode(attachment.blurhash, width, height, 1f)?.toDrawable(res)
+                        ?: backgroundAccent.toArgb().toDrawable()
                 } else {
-                    ColorPainter(backgroundAccent)
+                    backgroundAccent.toArgb().toDrawable()
                 }
             }
 
-            AsyncImage(
+            GlideImage(
                 model = if (showMedia) attachment.previewUrl else null,
                 contentDescription = attachment.description ?: stringResource(R.string.description_post_media_no_description_placeholder),
-                placeholder = placeholder,
-                error = placeholder,
                 contentScale = ContentScale.Crop,
                 alignment = attachment.meta?.focus.asAlignment(),
-                modifier = Modifier.fillMaxSize()
+                modifier = Modifier.fillMaxSize(),
+                requestBuilderTransform = { requestBuilder ->
+                    requestBuilder.placeholder(placeholderDrawable)
+                }
             )
         } else {
             if (showMedia) {
