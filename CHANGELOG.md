@@ -6,6 +6,25 @@
 
 ### Significant bug fixes
 
+## v31.0
+
+### New features and other improvements
+
+- The Scheduled Posts view has been improved, it now shows the full posts including all available metadata. https://codeberg.org/tusky/Tusky/pulls/5229
+- It is now possible to re-hide filtered posts with a new option in the three-dot-menu on posts. https://codeberg.org/tusky/Tusky/pulls/5215
+- Tusky now reads the character limit for media descriptions from the server instead of always defaulting to 1500. The limit is now shown in the media description dialog. https://codeberg.org/tusky/Tusky/pulls/5210
+- Tusky will now show an informational dialog when the active user is logged out. https://codeberg.org/tusky/Tusky/pulls/5211
+- There is now a separate option to pick audio files in the compose view, and most Androids will now show a better image picker https://codeberg.org/tusky/Tusky/issues/5216
+- The content warning icon in the compose view has now an active and an inactive variant https://codeberg.org/tusky/Tusky/pulls/5202
+
+### Significant bug fixes
+- Fixes a crash caused by incorrect handling of plurals in some languages https://codeberg.org/tusky/Tusky/issues/5216
+- Fixes a compatibility issue with GoToSocial's push notifications https://codeberg.org/tusky/Tusky/pulls/5236
+
+### Removed features
+
+- Tusky no longer supports the v1 filter api and will only use v2 going forward. If you are on a server that only supports v1, filtering will no longer work in Tusky. https://codeberg.org/tusky/Tusky/pulls/5215
+
 ## v30.0
 
 ### New features and other improvements

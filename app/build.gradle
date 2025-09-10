@@ -34,8 +34,8 @@ android {
         namespace "com.keylesspalace.tusky"
         minSdk 24
         targetSdk 36
-        versionCode 135
-        versionName "30.0"
+        versionCode 136
+        versionName "31.0 beta 01"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
 
