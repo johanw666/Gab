@@ -268,7 +268,7 @@
     <string name="filter_dialog_whole_word">Heil orð</string>
     <string name="filter_dialog_whole_word_description">Þegar stikkorð eða frasi er einungis tölur og bókstafir, verður það aðeins notað ef það samsvarar heilu orði</string>
     <string name="filter_add_description">Frasi sem á að sía</string>
-    <string name="add_account_name">Bæta við aðgang</string>
+    <string name="add_account_name">Bæta við aðgangi</string>
     <string name="add_account_description">Bæta við nýjum Mastodon-aðgangi</string>
     <string name="error_create_list">Ekki tókst að búa til lista</string>
     <string name="error_rename_list">Ekki tókst að uppfæra lista</string>
@@ -756,4 +756,46 @@
     <string name="reblog_confirm">Endurbirta þessa færslu?</string>
     <string name="favourite_confirm">Setja þessa færslu í eftirlæti?</string>
     <string name="confirm_dismiss_poll">Henda breytingum á könnun?</string>
+    <string name="message_filters_empty">Þú ert ekki með neinar virkar síur.</string>
+    <string name="action_rehide_status">Fela aftur síaða stöðu</string>
+    <string name="account_disconnected_message">Innskráning %1$s á Tusky er ekki lengur gild. Þetta getur gerst ef þú hefur breytt lykilorðinu þínu eða afturkallað aðgangsheimild fyrir Tusky. Skráðu þig inn aftur.</string>
+    <string name="report_which_rules_violated">Hvaða reglur er verið að brjóta? Veldu allt sem á við.</string>
+    <string name="report_category_spam_description">Meinlegir tenglar, fölsuð gagnvirkni eða síendurtekin svör</string>
+    <string name="action_remove_account">Fjarlægja notandaaðgang</string>
+    <string name="action_remove_account_confirm">Ertu viss um að þú viljir fjarlægja aðganginn %1$s úr Tusky? Þetta mun eyða öllum gögnum aðgangsins, að meðtöldum drögum og kjörstillingum.</string>
+    <string name="edit_image_rotate">Snúa</string>
+    <string name="edit_image_flip">Fletta</string>
+    <string name="edit_image_flip_horizontally">Fletta lárétt</string>
+    <string name="edit_image_flip_vertically">Fletta lóðrétt</string>
+    <string name="report_problem_with_post">Hvert er vandamálið með þessa færslu?</string>
+    <string name="report_category_spam_title">Þetta er ruslpóstur</string>
+    <string name="report_category_legal_title">Þetta er ólöglegt</string>
+    <string name="report_category_other_title">Það er eitthvað annað</string>
+    <string name="action_login_again">Skráðu inn aftur</string>
+    <string name="account_disconnected_title">Aðgangur ekki tengdur</string>
+    <string name="filter_context_home">Heima og listar</string>
+    <string name="report_category_legal_description">Þú heldur að þetta sé lögbrot í landinu þínu</string>
+    <string name="report_category_violation_description">Þú veist að þetta brýtur tilteknar reglur</string>
+    <string name="report_category_violation_title">Þetta brýtur reglur netþjónsins</string>
+    <string name="report_category_other_description">Þetta passar ekki í neina aðra flokka</string>
+    <plurals name="seconds">
+        <item quantity="one">%1$s sekúnda</item>
+        <item quantity="other">%1$s sekúndur</item>
+    </plurals>
+    <plurals name="hours">
+        <item quantity="one">%1$s klukkustund</item>
+        <item quantity="other">%1$s klukkustundir</item>
+    </plurals>
+    <plurals name="days">
+        <item quantity="one">%1$s dagur</item>
+        <item quantity="other">%1$s dagar</item>
+    </plurals>
+    <string name="scheduled_post_reply">Svara</string>
+    <string name="scheduled_post_deletion_error">Mistókst að eyða áætlaðri færslu.</string>
+    <string name="action_add_audio">Bæta við hljóði</string>
+    <plurals name="minutes">
+        <item quantity="one">%1$s mínúta</item>
+        <item quantity="other">%1$s mínútur</item>
+    </plurals>
+    <string name="scheduled_posts_not_supported">Netþjónninn þinn %1$s styður ekki áætlaðar færslur</string>
 </resources>
