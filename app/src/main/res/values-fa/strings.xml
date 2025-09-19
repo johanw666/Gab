@@ -785,4 +785,24 @@
     <string name="filter_context_home">خانه و سیاهه‌ها</string>
     <string name="action_rehide_status">نهفتن دوبارهٔ فرستهٔ پالوده</string>
     <string name="message_filters_empty">هیچ پالایه‌ای ندارید.</string>
+    <plurals name="minutes">
+        <item quantity="one">%1$s دقیقه</item>
+        <item quantity="other">%1$s دقیقه</item>
+    </plurals>
+    <plurals name="hours">
+        <item quantity="one">%1$s ساعت</item>
+        <item quantity="other">%1$s ساعت</item>
+    </plurals>
+    <plurals name="days">
+        <item quantity="one">%1$s روز</item>
+        <item quantity="other">%1$s روز</item>
+    </plurals>
+    <string name="scheduled_post_reply">پاسخ</string>
+    <string name="scheduled_posts_not_supported">کارسازتان %1$s از فرسته‌های زمان‌بسته پشتیبانی نمی‌کند</string>
+    <plurals name="seconds">
+        <item quantity="one">%1$s ثانیه</item>
+        <item quantity="other">%1$s ثانیه</item>
+    </plurals>
+    <string name="scheduled_post_deletion_error">شکست در حذف فرستهٔ زمان‌بسته.</string>
+    <string name="action_add_audio">افزودن صدا</string>
 </resources>
