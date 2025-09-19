@@ -580,7 +580,7 @@
     <string name="label_expires_after">만료 시간</string>
     <string name="duration_indefinite">만료되지 않음</string>
     <string name="pref_title_show_cards_in_timelines">타임라인에 링크 미리보기를 보이기</string>
-    <string name="pref_title_confirm_reblogs">부스트하기 전에 확인하기</string>
+    <string name="pref_title_confirm_reblogs">부스트 하기 전에 확인하기</string>
     <string name="pref_title_confirm_follows">팔로우 전에 확인하기</string>
     <string name="pref_title_hide_top_toolbar">상단 툴바의 제목 숨기기</string>
     <string name="pref_title_wellbeing_mode">웰빙</string>
