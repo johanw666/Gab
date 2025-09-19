@@ -778,4 +778,24 @@
     <string name="action_rehide_status">Volver ocultar estados filtrados</string>
     <string name="message_filters_empty">Non tes filtros.</string>
     <string name="filter_context_home">Inicio e Listas</string>
+    <plurals name="minutes">
+        <item quantity="one">%1$s minuto</item>
+        <item quantity="other">%1$s minutos</item>
+    </plurals>
+    <plurals name="hours">
+        <item quantity="one">%1$s hora</item>
+        <item quantity="other">%1$s horas</item>
+    </plurals>
+    <plurals name="days">
+        <item quantity="one">%1$s día</item>
+        <item quantity="other">%1$s días</item>
+    </plurals>
+    <string name="scheduled_post_reply">Resposta</string>
+    <string name="scheduled_post_deletion_error">Fallou a eliminación da publicación programada.</string>
+    <string name="action_add_audio">Engadir audio</string>
+    <plurals name="seconds">
+        <item quantity="one">%1$s segundo</item>
+        <item quantity="other">%1$s segundos</item>
+    </plurals>
+    <string name="scheduled_posts_not_supported">O teu servidor %1$s non é compatible coa programación de publicacións</string>
 </resources>
