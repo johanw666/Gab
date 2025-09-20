@@ -798,4 +798,28 @@
     <string name="message_filters_empty">Non hai filtri.</string>
     <string name="action_rehide_status">Nascondi di nuovo i post filtrati</string>
     <string name="filter_context_home">Home e liste</string>
+    <string name="scheduled_post_deletion_error">Cancellazione del post programmato fallita.</string>
+    <string name="action_add_audio">Aggiunti audio</string>
+    <plurals name="seconds">
+        <item quantity="one">%1$s secondo</item>
+        <item quantity="many">%1$s secondi</item>
+        <item quantity="other">%1$s secondi</item>
+    </plurals>
+    <plurals name="minutes">
+        <item quantity="one">%1$s minuto</item>
+        <item quantity="many">%1$s minuti</item>
+        <item quantity="other">%1$s minuti</item>
+    </plurals>
+    <plurals name="hours">
+        <item quantity="one">%1$s ora</item>
+        <item quantity="many">%1$s ore</item>
+        <item quantity="other">%1$s ore</item>
+    </plurals>
+    <plurals name="days">
+        <item quantity="one">%1$s giorno</item>
+        <item quantity="many">%1$s giorni</item>
+        <item quantity="other">%1$s giorni</item>
+    </plurals>
+    <string name="scheduled_post_reply">Risposta</string>
+    <string name="scheduled_posts_not_supported">Il tuo server %1$s non supporta i post programmati</string>
 </resources>

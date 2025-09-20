@@ -774,4 +774,20 @@
     <string name="message_filters_empty">没有过滤器。</string>
     <string name="filter_context_home">首页和列表</string>
     <string name="action_rehide_status">重新隐藏已过滤的状态</string>
+    <plurals name="seconds">
+        <item quantity="other">%1$s 秒</item>
+    </plurals>
+    <plurals name="minutes">
+        <item quantity="other">%1$s 分钟</item>
+    </plurals>
+    <plurals name="hours">
+        <item quantity="other">%1$s 小时</item>
+    </plurals>
+    <plurals name="days">
+        <item quantity="other">%1$s 天</item>
+    </plurals>
+    <string name="scheduled_posts_not_supported">你的服务器 %1$s 不支持定时嘟文</string>
+    <string name="scheduled_post_deletion_error">删除定时嘟文失败了。</string>
+    <string name="scheduled_post_reply">回复</string>
+    <string name="action_add_audio">添加音频</string>
 </resources>

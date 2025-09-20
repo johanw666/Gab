@@ -765,4 +765,20 @@
     <string name="action_rehide_status">Ẩn lại tút đã lọc</string>
     <string name="filter_context_home">Trang chủ và Danh sách</string>
     <string name="message_filters_empty">Bạn chưa có bộ lọc.</string>
+    <string name="action_add_audio">Thêm âm thanh</string>
+    <plurals name="seconds">
+        <item quantity="other">%1$s giây</item>
+    </plurals>
+    <plurals name="minutes">
+        <item quantity="other">%1$s phút</item>
+    </plurals>
+    <plurals name="hours">
+        <item quantity="other">%1$s giờ</item>
+    </plurals>
+    <plurals name="days">
+        <item quantity="other">%1$s ngày</item>
+    </plurals>
+    <string name="scheduled_post_reply">Trả lời</string>
+    <string name="scheduled_posts_not_supported">Máy chủ %1$s của bạn không hỗ trợ lên lịch đăng tút</string>
+    <string name="scheduled_post_deletion_error">Xóa tút đã lên lịch thất bại.</string>
 </resources>
