@@ -39,6 +39,7 @@ import at.connyduck.calladapter.networkresult.onFailure
 import at.connyduck.calladapter.networkresult.onSuccess
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.keylesspalace.tusky.BuildConfig
 import com.keylesspalace.tusky.MainActivity
 import com.keylesspalace.tusky.MainActivity.Companion.composeIntent
@@ -793,13 +794,22 @@ class NotificationHelper @Inject constructor(
                     override fun getDistributors(): List<String> =
                         UnifiedPush.getDistributors(activity)
 
-                    override fun register(instance: String) =
-                        UnifiedPush.register(
-                            activity,
-                            instance,
-                            messageForDistributor = account.fullName,
-                            vapid = vapid
-                        )
+                    override fun register(instance: String) {
+                        try {
+                            UnifiedPush.register(
+                                activity,
+                                instance,
+                                messageForDistributor = account.fullName,
+                                vapid = vapid
+                            )
+                        } catch (e: UnifiedPush.VapidNotValidException) {
+                            Log.w(TAG, "invalid vapid key $vapid", e)
+                            MaterialAlertDialogBuilder(activity)
+                                .setMessage(activity.getString(R.string.unified_push_error_no_vapid_key, account.domain))
+                                .setPositiveButton(R.string.action_dismiss, null)
+                                .show()
+                        }
+                    }
 
                     override fun saveDistributor(distributor: String) =
                         UnifiedPush.saveDistributor(activity, distributor)

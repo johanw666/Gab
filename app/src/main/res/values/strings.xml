@@ -981,4 +981,6 @@
     <string name="scheduled_posts_not_supported">Your server %1$s does not support scheduled posts</string>
 
     <string name="scheduled_post_deletion_error">Failed to delete scheduled post.</string>
+
+    <string name="unified_push_error_no_vapid_key">Failed setting up Unified Push: %1$s has invalid vapid key.</string>
 </resources>
