@@ -38,13 +38,9 @@ import android.widget.AdapterView
 import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.PopupMenu
-import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
-import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.activity.result.contract.ActivityResultContracts.PickMultipleVisualMedia
-import androidx.activity.result.contract.ActivityResultContracts.PickVisualMedia
 import androidx.activity.viewModels
 import androidx.annotation.AttrRes
 import androidx.annotation.ColorInt
@@ -101,7 +97,7 @@ import com.keylesspalace.tusky.settings.AppTheme
 import com.keylesspalace.tusky.settings.PrefKeys
 import com.keylesspalace.tusky.settings.PrefKeys.APP_THEME
 import com.keylesspalace.tusky.util.MentionSpan
-import com.keylesspalace.tusky.util.PickAudioFiles
+import com.keylesspalace.tusky.util.PickMediaFiles
 import com.keylesspalace.tusky.util.defaultFinders
 import com.keylesspalace.tusky.util.getInitialLanguages
 import com.keylesspalace.tusky.util.getLocaleList
@@ -183,10 +179,10 @@ class ComposeActivity :
                 viewModel.pickMedia(photoUploadUri!!)
             }
         }
-    private val pickAudioFilePermissionLauncher =
+    private val pickMediaFilePermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
             if (isGranted) {
-                pickAudioFileLauncher.launch(true)
+                pickMediaFileLauncher.launch(true)
             } else {
                 Snackbar.make(
                     binding.activityCompose,
@@ -200,7 +196,7 @@ class ComposeActivity :
                 }
             }
         }
-    private val pickAudioFileLauncher = registerForActivityResult(PickAudioFiles()) { uris ->
+    private val pickMediaFileLauncher = registerForActivityResult(PickMediaFiles()) { uris ->
         if (viewModel.media.value.size + uris.size > maxUploadMediaNumber) {
             Toast.makeText(
                 this,
@@ -218,13 +214,6 @@ class ComposeActivity :
                 }
             )
         }
-    }
-    private val pickMediaMediaPicker = registerForActivityResult(PickMultipleVisualMedia()) { uris ->
-        viewModel.pickMedia(
-            uris.map { uri ->
-                ComposeViewModel.MediaData(uri)
-            }
-        )
     }
 
     // Contract kicked off by editImageInQueue; expects viewModel.cropImageItemOld set
@@ -575,10 +564,7 @@ class ComposeActivity :
                     media.size < maxUploadMediaNumber &&
                     (media.isEmpty() || media.first().type == QueuedMedia.Type.IMAGE)
                 enableButton(binding.composeAddMediaButton, active, active)
-                enableTextViewButton(binding.addPollTextActionTextView, media.isEmpty())
-
-                val audioActive = media.isEmpty() || media.last().type == QueuedMedia.Type.AUDIO
-                enableTextViewButton(binding.actionAudioPick, audioActive)
+                enablePollButton(media.isEmpty())
             }.collect()
         }
 
@@ -661,7 +647,6 @@ class ComposeActivity :
 
         binding.actionPhotoTake.setOnClickListener { initiateCameraApp() }
         binding.actionPhotoPick.setOnClickListener { onMediaPick() }
-        binding.actionAudioPick.setOnClickListener { onAudioPick() }
         binding.addPollTextActionTextView.setOnClickListener { openPollDialog() }
 
         onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
@@ -968,29 +953,10 @@ class ComposeActivity :
     }
 
     private fun onMediaPick() {
-        pickMediaMediaPicker.launch(
-            PickVisualMediaRequest(
-                PickVisualMedia.ImageAndVideo,
-                maxUploadMediaNumber - viewModel.media.value.size
-            )
-        )
-        addMediaBehavior.setState(BottomSheetBehavior.STATE_HIDDEN)
-    }
-
-    private fun onAudioPick() {
-        for (medium in viewModel.media.value) {
-            if (medium.type == QueuedMedia.Type.AUDIO) {
-                continue
-            }
-
-            displayTransientMessage(R.string.error_media_upload_image_or_video)
-            return
-        }
-
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
-            pickAudioFilePermissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
+            pickMediaFilePermissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
         } else {
-            pickAudioFileLauncher.launch(true)
+            pickMediaFileLauncher.launch(true)
         }
         addMediaBehavior.setState(BottomSheetBehavior.STATE_HIDDEN)
     }
@@ -1182,18 +1148,18 @@ class ComposeActivity :
         )
     }
 
-    private fun enableTextViewButton(textView: TextView, enable: Boolean) {
-        textView.isEnabled = enable
+    private fun enablePollButton(enable: Boolean) {
+        binding.addPollTextActionTextView.isEnabled = enable
         val textColor = MaterialColors.getColor(
-            textView,
+            binding.addPollTextActionTextView,
             if (enable) {
                 android.R.attr.textColorTertiary
             } else {
                 R.attr.textColorDisabled
             }
         )
-        textView.setTextColor(textColor)
-        textView.compoundDrawablesRelative[0].setTint(textColor)
+        binding.addPollTextActionTextView.setTextColor(textColor)
+        binding.addPollTextActionTextView.compoundDrawablesRelative[0].setTint(textColor)
     }
 
     private fun editImageInQueue(item: QueuedMedia) {

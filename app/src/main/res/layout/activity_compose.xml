@@ -238,17 +238,6 @@
             app:drawableTint="?android:attr/textColorTertiary" />
 
         <TextView
-            android:id="@+id/actionAudioPick"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:drawablePadding="8dp"
-            android:padding="8dp"
-            android:text="@string/action_add_audio"
-            android:textSize="?attr/status_text_medium"
-            app:drawableStartCompat="@drawable/ic_music_box_24dp"
-            app:drawableTint="?android:attr/textColorTertiary" />
-
-        <TextView
             android:id="@+id/addPollTextActionTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
