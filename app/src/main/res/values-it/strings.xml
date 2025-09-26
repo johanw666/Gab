@@ -799,7 +799,6 @@
     <string name="action_rehide_status">Nascondi di nuovo i post filtrati</string>
     <string name="filter_context_home">Home e liste</string>
     <string name="scheduled_post_deletion_error">Cancellazione del post programmato fallita.</string>
-    <string name="action_add_audio">Aggiunti audio</string>
     <plurals name="seconds">
         <item quantity="one">%1$s secondo</item>
         <item quantity="many">%1$s secondi</item>
@@ -822,4 +821,5 @@
     </plurals>
     <string name="scheduled_post_reply">Risposta</string>
     <string name="scheduled_posts_not_supported">Il tuo server %1$s non supporta i post programmati</string>
+    <string name="unified_push_error_no_vapid_key">Impostazione Unified Push fallita: %1$s ha una chiave vapid invalida.</string>
 </resources>

@@ -792,10 +792,10 @@
     </plurals>
     <string name="scheduled_post_reply">Resposta</string>
     <string name="scheduled_post_deletion_error">Fallou a eliminación da publicación programada.</string>
-    <string name="action_add_audio">Engadir audio</string>
     <plurals name="seconds">
         <item quantity="one">%1$s segundo</item>
         <item quantity="other">%1$s segundos</item>
     </plurals>
     <string name="scheduled_posts_not_supported">O teu servidor %1$s non é compatible coa programación de publicacións</string>
+    <string name="unified_push_error_no_vapid_key">Fallo ao configurar Unified Puss: %1$s ten clave vapid non válida.</string>
 </resources>

@@ -785,7 +785,6 @@
     <string name="message_filters_empty">Du hast keine Filter.</string>
     <string name="filter_context_home">Startseite und Listen</string>
     <string name="action_rehide_status">Beitrag wieder verstecken</string>
-    <string name="action_add_audio">Audio hinzufügen</string>
     <plurals name="seconds">
         <item quantity="one">%1$s Sekunde</item>
         <item quantity="other">%1$s Sekunden</item>

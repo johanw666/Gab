@@ -789,5 +789,5 @@
     <string name="scheduled_posts_not_supported">你的服务器 %1$s 不支持定时嘟文</string>
     <string name="scheduled_post_deletion_error">删除定时嘟文失败了。</string>
     <string name="scheduled_post_reply">回复</string>
-    <string name="action_add_audio">添加音频</string>
+    <string name="unified_push_error_no_vapid_key">设置 Unified Push 失败：%1$s 有无效的 vapid 密钥。</string>
 </resources>

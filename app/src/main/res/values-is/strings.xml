@@ -792,7 +792,6 @@
     </plurals>
     <string name="scheduled_post_reply">Svara</string>
     <string name="scheduled_post_deletion_error">Mistókst að eyða áætlaðri færslu.</string>
-    <string name="action_add_audio">Bæta við hljóði</string>
     <plurals name="minutes">
         <item quantity="one">%1$s mínúta</item>
         <item quantity="other">%1$s mínútur</item>

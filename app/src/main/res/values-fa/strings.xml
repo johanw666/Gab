@@ -804,5 +804,5 @@
         <item quantity="other">%1$s ثانیه</item>
     </plurals>
     <string name="scheduled_post_deletion_error">شکست در حذف فرستهٔ زمان‌بسته.</string>
-    <string name="action_add_audio">افزودن صدا</string>
+    <string name="unified_push_error_no_vapid_key">شکست در برپا کردن یونیفاید پوش: %1$s کلید vapid نامعتبر دارد.</string>
 </resources>
