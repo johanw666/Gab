@@ -6,6 +6,13 @@
 
 ### Significant bug fixes
 
+## v31.1
+
+### Significant bug fixes
+
+- Reverted the new media picker introduced in v31.0, as it has less features. https://codeberg.org/tusky/Tusky/pulls/5251
+- Fixes an issue where Tusky would crash when trying to set up UnifiedPush with a server that has no vapid key configured. https://codeberg.org/tusky/Tusky/pulls/5250
+
 ## v31.0
 
 ### New features and other improvements
