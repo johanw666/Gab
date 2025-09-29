@@ -804,4 +804,5 @@
     <string name="scheduled_posts_not_supported">Dein Server %1$s unterstützt das Planen von Beiträgen nicht</string>
     <string name="scheduled_post_deletion_error">Fehler beim Löschen des geplanten Beitrags.</string>
     <string name="scheduled_post_reply">Antwort</string>
+    <string name="unified_push_error_no_vapid_key">Fehler beim Einrichten von Unified Push: %1$s hat einen ungültigen Vapid-Key.</string>
 </resources>
