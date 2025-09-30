@@ -780,4 +780,5 @@
     <string name="scheduled_post_reply">Trả lời</string>
     <string name="scheduled_posts_not_supported">Máy chủ %1$s của bạn không hỗ trợ lên lịch đăng tút</string>
     <string name="scheduled_post_deletion_error">Xóa tút đã lên lịch thất bại.</string>
+    <string name="unified_push_error_no_vapid_key">Thiết lập Unified Push thất bại: %1$s có khóa vapid không hợp lệ.</string>
 </resources>
