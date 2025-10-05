@@ -770,4 +770,20 @@
     <string name="poll">투표</string>
     <string name="list_reply_policy_label">다음에 대한 답글 표시</string>
     <string name="error_status_source_load">서버에서 게시물 출처를 불러오지 못했습니다.</string>
+    <plurals name="seconds">
+        <item quantity="other">%1$s초</item>
+    </plurals>
+    <plurals name="minutes">
+        <item quantity="other">%1$s분</item>
+    </plurals>
+    <plurals name="hours">
+        <item quantity="other">%1$s시간</item>
+    </plurals>
+    <plurals name="days">
+        <item quantity="other">%1$s일</item>
+    </plurals>
+    <string name="scheduled_post_reply">답글</string>
+    <string name="scheduled_post_deletion_error">예약된 게시물을 지우는 데 실패했습니다.</string>
+    <string name="unified_push_error_no_vapid_key">Unified Push를 설정하는 데 실패했습니다: %1$s는(은) 잘못된 vapid 키입니다.</string>
+    <string name="scheduled_posts_not_supported">당신의 서버 %1$s(은)는 예약 게시물을 지원하지 않습니다</string>
 </resources>
