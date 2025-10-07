@@ -837,4 +837,37 @@
     <string name="filter_context_home">Cartref a Rhestrau</string>
     <string name="action_rehide_status">Ail-guddio statws wedi\'i hidlo</string>
     <string name="message_filters_empty">Nid oes gennych hidlyddion.</string>
+    <plurals name="seconds">
+        <item quantity="zero">%1$s eiliadau</item>
+        <item quantity="one">%1$s eiliad</item>
+        <item quantity="two">%1$s eiliad</item>
+        <item quantity="few">%1$s eiliad</item>
+        <item quantity="many">%1$s eiliad</item>
+        <item quantity="other">%1$s eiliad</item>
+    </plurals>
+    <plurals name="minutes">
+        <item quantity="zero">%1$s munudau</item>
+        <item quantity="one">%1$s funud</item>
+        <item quantity="two">%1$s funud</item>
+        <item quantity="few">%1$s munud</item>
+        <item quantity="many">%1$s munud</item>
+        <item quantity="other">%1$s munud</item>
+    </plurals>
+    <plurals name="hours">
+        <item quantity="zero">%1$s oriau</item>
+        <item quantity="one">%1$s awr</item>
+        <item quantity="two">%1$s awr</item>
+        <item quantity="few">%1$s awr</item>
+        <item quantity="many">%1$s awr</item>
+        <item quantity="other">%1$s awr</item>
+    </plurals>
+    <plurals name="days">
+        <item quantity="zero">%1$s dyddiau</item>
+        <item quantity="one">%1$s dydd</item>
+        <item quantity="two">%1$s ddydd</item>
+        <item quantity="few">%1$s dydd</item>
+        <item quantity="many">%1$s dydd</item>
+        <item quantity="other">%1$s dydd</item>
+    </plurals>
+    <string name="scheduled_post_reply">Ymateb</string>
 </resources>
