@@ -186,7 +186,7 @@
     <string name="description_poll">Enquisa con opcións: %1$s, %2$s, %3$s, %4$s; %5$s</string>
     <string name="description_visibility_direct">Directa</string>
     <string name="description_visibility_private">Seguidoras</string>
-    <string name="description_visibility_unlisted">Limitada</string>
+    <string name="description_visibility_unlisted">Fóra das listas</string>
     <string name="description_visibility_public">Pública</string>
     <string name="description_post_bookmarked">Marcado</string>
     <string name="description_post_favourited">Favorecido</string>
@@ -333,7 +333,7 @@
     <string name="post_text_size_smallest">O máis pequeno</string>
     <string name="pref_post_text_size">Tamaño do texto do estado</string>
     <string name="post_privacy_followers_only">Só seguidoras</string>
-    <string name="post_privacy_unlisted">Limitada</string>
+    <string name="post_privacy_unlisted">Fóra das listas</string>
     <string name="post_privacy_public">Pública</string>
     <string name="pref_main_nav_position_option_bottom">Abaixo</string>
     <string name="pref_main_nav_position_option_top">Arriba</string>
