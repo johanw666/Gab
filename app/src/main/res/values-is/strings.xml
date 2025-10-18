@@ -117,7 +117,7 @@
     <string name="action_access_scheduled_posts">Áætlaðar færslur</string>
     <string name="action_toggle_visibility">Sýnileiki færslu</string>
     <string name="action_content_warning">Aðvörun vegna efnis</string>
-    <string name="action_emoji_keyboard">Lyklaborð með tjáningartáknum</string>
+    <string name="action_emoji_keyboard">Lyklaborð með lyndistáknum</string>
     <string name="action_schedule_post">Tímasetja færslu</string>
     <string name="action_reset_schedule">Frumstilla</string>
     <string name="action_add_tab">Bæta við flipa</string>
@@ -292,8 +292,8 @@
     <string name="send_post_notification_cancel_title">Aflýsti sendingu</string>
     <string name="send_post_notification_saved_content">Afrit af færslunni hefur verið vistað í drögunum þínum</string>
     <string name="action_compose_shortcut">Semja skilaboð</string>
-    <string name="error_no_custom_emojis">Tilvikið þitt %1$s er ekki með nein sérsniðin tjáningartákn</string>
-    <string name="emoji_style">Stíll tjáningartákna</string>
+    <string name="error_no_custom_emojis">Tilvikið þitt %1$s er ekki með nein sérsniðin lyndistákn</string>
+    <string name="emoji_style">Stíll lyndistákna</string>
     <string name="system_default">Sjálfgefið í kerfinu</string>
     <string name="download_fonts">Þú þarft fyrst að ná í þessi táknmyndasett</string>
     <string name="performing_lookup_title">Framkvæmi uppflettingu…</string>
@@ -444,7 +444,7 @@
     <string name="wellbeing_mode_notice">Sumar upplýsingar sem gætu haft áhrif á andlega vellíðan þína verða faldar. Þetta hefur áhrif á: \n \n - Eftirlæti/Endurbirtingar/Tilkynningar um fylgjendabeiðnir \n - Eftirlæti/Talningu á endurbirtingum færslna \n - Fylgjendur/Tölfræði færslna í notendasniðum \n \n Þetta hefur ekki áhrif á ýti-tilkynningar, en þú getur yfirfarið handvirkt kjörstillingar þínar varðandi tilkynningar.</string>
     <string name="action_unsubscribe_account">Segja upp áskrift</string>
     <string name="action_subscribe_account">Gerast áskrifandi</string>
-    <string name="pref_title_animate_custom_emojis">Hreyfa sérsniðin tjáningartákn</string>
+    <string name="pref_title_animate_custom_emojis">Hreyfa sérsniðin lyndistákn</string>
     <string name="drafts_post_reply_removed">Færslan sem þú gerðir drög að svari við hefur verið fjarlægð</string>
     <string name="draft_deleted">Eyddi drögum</string>
     <string name="drafts_failed_loading_reply">Mistókst að hlaða inn svarupplýsingum</string>
