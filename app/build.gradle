@@ -133,7 +133,8 @@ android {
         'LICENSE_UNICODE',
         'META-INF/androidx/**',
         'META-INF/NOTICE.md',
-        'DebugProbesKt.bin'
+        'DebugProbesKt.bin',
+        'META-INF/versions/9/OSGI-INF/MANIFEST.MF'
     ]
 
     bundle {

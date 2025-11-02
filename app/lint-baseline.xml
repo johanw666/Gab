@@ -597,4 +597,17 @@
             column="42"/>
     </issue>
 
+    <issue
+        id="InvalidPackage"
+        message="Invalid package reference in org.pageseeder.diffx:pso-diffx; not included in Android: `javax.xml.stream.events`. Referenced from `org.pageseeder.diffx.load.XMLEventLoader`.">
+        <location
+            file="$GRADLE_USER_HOME/caches/modules-2/files-2.1/org.pageseeder.diffx/pso-diffx/1.2.4/4dda34cd7861185f4693a24661fec7ed31b37861/pso-diffx-1.2.4.jar"/>
+    </issue>
+
+    <issue
+        id="InvalidPackage"
+        message="Invalid package reference in org.pageseeder.diffx:pso-diffx; not included in Android: `javax.xml.stream`. Referenced from `org.pageseeder.diffx.format.StrictXMLDiffOutput`.">
+        <location
+            file="$GRADLE_USER_HOME/caches/modules-2/files-2.1/org.pageseeder.diffx/pso-diffx/1.2.4/4dda34cd7861185f4693a24661fec7ed31b37861/pso-diffx-1.2.4.jar"/>
+    </issue>
 </issues>
