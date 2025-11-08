@@ -21,12 +21,18 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat.Type.systemBars
+import androidx.core.view.isVisible
+import androidx.core.view.updateLayoutParams
 import androidx.fragment.app.commit
 import androidx.lifecycle.lifecycleScope
 import at.connyduck.calladapter.networkresult.fold
 import com.google.android.material.snackbar.Snackbar
 import com.keylesspalace.tusky.appstore.EventHub
 import com.keylesspalace.tusky.appstore.FilterUpdatedEvent
+import com.keylesspalace.tusky.components.compose.ComposeActivity
 import com.keylesspalace.tusky.components.filters.EditFilterActivity
 import com.keylesspalace.tusky.components.filters.FilterExpiration
 import com.keylesspalace.tusky.components.filters.FiltersActivity
@@ -94,6 +100,20 @@ class StatusListActivity : BottomSheetActivity() {
                 replace(R.id.fragmentContainer, fragment)
             }
         }
+
+        binding.composeButton.isVisible = kind == Kind.TAG
+        binding.composeButton.setOnClickListener {
+            postToTag()
+        }
+        val fabMargin = resources.getDimensionPixelSize(R.dimen.fabMargin)
+        ViewCompat.setOnApplyWindowInsetsListener(binding.fragmentContainer) { _, insets ->
+            val systemBarsInsets = insets.getInsets(systemBars())
+            val bottomInsets = systemBarsInsets.bottom
+            binding.composeButton.updateLayoutParams<CoordinatorLayout.LayoutParams> {
+                bottomMargin = fabMargin + bottomInsets
+            }
+            insets
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -123,6 +143,15 @@ class StatusListActivity : BottomSheetActivity() {
         }
 
         return super.onCreateOptionsMenu(menu)
+    }
+
+    private fun postToTag() {
+        val options = ComposeActivity.ComposeOptions(
+            content = "#${hashtag}",
+            kind = ComposeActivity.ComposeKind.NEW
+        )
+        val intent = ComposeActivity.startIntent(this, options)
+        startActivity(intent)
     }
 
     private fun followTag(): Boolean {
