@@ -147,7 +147,7 @@ class StatusListActivity : BottomSheetActivity() {
 
     private fun postToTag() {
         val options = ComposeActivity.ComposeOptions(
-            content = "#${hashtag}",
+            content = "#$hashtag",
             kind = ComposeActivity.ComposeKind.NEW
         )
         val intent = ComposeActivity.startIntent(this, options)
