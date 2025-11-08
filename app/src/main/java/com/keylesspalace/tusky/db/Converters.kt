@@ -35,6 +35,7 @@ import com.keylesspalace.tusky.entity.RelationshipSeveranceEvent
 import com.keylesspalace.tusky.entity.Status
 import com.keylesspalace.tusky.entity.notificationTypeFromString
 import com.keylesspalace.tusky.settings.DefaultReplyVisibility
+import com.keylesspalace.tusky.settings.QuotePolicy
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.adapter
 import java.net.URLDecoder
@@ -280,7 +281,7 @@ class Converters @Inject constructor(
     }
 
     @TypeConverter
-    fun accountWarningToJson(notificationType: Notification.Type): String {
+    fun notificationTypeToJson(notificationType: Notification.Type): String {
         return notificationType.name
     }
 
@@ -288,4 +289,10 @@ class Converters @Inject constructor(
     fun jsonToNotificationType(notificationTypeJson: String): Notification.Type {
         return notificationTypeFromString(notificationTypeJson)
     }
+
+    @TypeConverter
+    fun quotePolicyToJson(quotePolicy: QuotePolicy) = quotePolicy.text
+
+    @TypeConverter
+    fun jsonToQuotePolicy(quotePolicyJson: String) = QuotePolicy.forValue(quotePolicyJson)
 }

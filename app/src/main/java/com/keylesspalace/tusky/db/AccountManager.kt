@@ -24,6 +24,7 @@ import com.keylesspalace.tusky.di.ApplicationScope
 import com.keylesspalace.tusky.entity.Account
 import com.keylesspalace.tusky.entity.Status
 import com.keylesspalace.tusky.settings.PrefKeys
+import com.keylesspalace.tusky.settings.QuotePolicy
 import java.util.Locale
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -131,6 +132,7 @@ class AccountManager @Inject constructor(
             defaultPostPrivacy = newAccount.source?.privacy ?: Status.Visibility.PUBLIC,
             defaultPostLanguage = newAccount.source?.language.orEmpty(),
             defaultMediaSensitivity = newAccount.source?.sensitive == true,
+            defaultQuotePolicy = newAccount.source?.quotePolicy ?: QuotePolicy.FOLLOWERS,
             emojis = newAccount.emojis,
             locked = newAccount.locked
         )
@@ -169,6 +171,7 @@ class AccountManager @Inject constructor(
             defaultPostPrivacy = account.source?.privacy ?: Status.Visibility.PUBLIC,
             defaultPostLanguage = account.source?.language.orEmpty(),
             defaultMediaSensitivity = account.source?.sensitive == true,
+            defaultQuotePolicy = account.source?.quotePolicy ?: QuotePolicy.FOLLOWERS,
             emojis = account.emojis,
             locked = account.locked
         )

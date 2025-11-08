@@ -27,6 +27,7 @@ import com.keylesspalace.tusky.defaultTabs
 import com.keylesspalace.tusky.entity.Emoji
 import com.keylesspalace.tusky.entity.Status
 import com.keylesspalace.tusky.settings.DefaultReplyVisibility
+import com.keylesspalace.tusky.settings.QuotePolicy
 
 @Entity(
     indices = [
@@ -69,6 +70,7 @@ data class AccountEntity(
     val defaultReplyPrivacy: DefaultReplyVisibility = DefaultReplyVisibility.MATCH_DEFAULT_POST_VISIBILITY,
     val defaultMediaSensitivity: Boolean = false,
     val defaultPostLanguage: String = "",
+    @ColumnInfo(defaultValue = "followers") val defaultQuotePolicy: QuotePolicy = QuotePolicy.FOLLOWERS,
     val alwaysShowSensitiveMedia: Boolean = false,
     /** True if content behind a content warning is shown by default */
     @ColumnInfo(defaultValue = "0")

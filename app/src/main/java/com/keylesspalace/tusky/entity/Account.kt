@@ -15,6 +15,7 @@
 
 package com.keylesspalace.tusky.entity
 
+import com.keylesspalace.tusky.settings.QuotePolicy
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import java.util.Date
@@ -62,7 +63,9 @@ data class AccountSource(
     val sensitive: Boolean? = null,
     val note: String? = null,
     val fields: List<StringField> = emptyList(),
-    val language: String? = null
+    val language: String? = null,
+    @Json(name = "quote_policy")
+    val quotePolicy: QuotePolicy = QuotePolicy.FOLLOWERS,
 )
 
 @JsonClass(generateAdapter = true)

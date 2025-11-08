@@ -42,6 +42,7 @@ import com.keylesspalace.tusky.network.MastodonApi
 import com.keylesspalace.tusky.settings.AccountPreferenceDataStore
 import com.keylesspalace.tusky.settings.DefaultReplyVisibility
 import com.keylesspalace.tusky.settings.PrefKeys
+import com.keylesspalace.tusky.settings.QuotePolicy
 import com.keylesspalace.tusky.settings.listPreference
 import com.keylesspalace.tusky.settings.makePreferenceScreen
 import com.keylesspalace.tusky.settings.preference
@@ -196,6 +197,23 @@ class AccountPreferencesFragment : BasePreferencesFragment() {
                 }
 
                 listPreference {
+                    setTitle(R.string.pref_default_quote_policy)
+                    setEntries(R.array.quote_policy_names)
+                    setEntryValues(R.array.quote_policy_values)
+                    key = PrefKeys.DEFAULT_QUOTE_POLICY
+                    setSummaryProvider { entry }
+                    val policy = accountManager.activeAccount?.defaultQuotePolicy ?: QuotePolicy.FOLLOWERS
+                    value = policy.text
+                    icon = getIconForQuotePolicy(policy)
+                    isPersistent = false // its saved to the account and shouldn't be in shared preferences
+                    setOnPreferenceChangeListener { _, newValue ->
+                        icon = getIconForQuotePolicy(QuotePolicy.forValue(newValue as String) ?: QuotePolicy.FOLLOWERS)
+                        syncWithServer(quotePolicy = newValue)
+                        true
+                    }
+                }
+
+                listPreference {
                     val locales =
                         getLocaleList(getInitialLanguages(null, accountManager.activeAccount))
                     setTitle(R.string.pref_default_post_language)
@@ -299,12 +317,13 @@ class AccountPreferencesFragment : BasePreferencesFragment() {
     private fun syncWithServer(
         visibility: String? = null,
         sensitive: Boolean? = null,
-        language: String? = null
+        language: String? = null,
+        quotePolicy: String? = null,
     ) {
         // TODO these could also be "datastore backed" preferences (a ServerPreferenceDataStore); follow-up of issue #3204
 
         viewLifecycleOwner.lifecycleScope.launch {
-            mastodonApi.accountUpdateSource(visibility, sensitive, language)
+            mastodonApi.accountUpdateSource(visibility, sensitive, language, quotePolicy)
                 .fold({ account: Account ->
                     accountManager.activeAccount?.let {
                         accountManager.updateAccount(it) {
@@ -312,7 +331,8 @@ class AccountPreferencesFragment : BasePreferencesFragment() {
                                 defaultPostPrivacy = account.source?.privacy
                                     ?: Status.Visibility.PUBLIC,
                                 defaultMediaSensitivity = account.source?.sensitive == true,
-                                defaultPostLanguage = language.orEmpty()
+                                defaultPostLanguage = language.orEmpty(),
+                                defaultQuotePolicy = quotePolicy?.let { QuotePolicy.forValue(it) } ?: QuotePolicy.FOLLOWERS,
                             )
                         }
                     }
@@ -340,6 +360,12 @@ class AccountPreferencesFragment : BasePreferencesFragment() {
         }
         return icon(iconRes)
     }
+
+    private fun getIconForQuotePolicy(policy: QuotePolicy) = when (policy) {
+        QuotePolicy.NOBODY -> R.drawable.ic_lock_24dp
+        QuotePolicy.PUBLIC -> R.drawable.ic_public_24dp
+        else -> R.drawable.ic_group_24dp
+    }.let { icon(it) }
 
     private fun getIconForSensitivity(sensitive: Boolean): Drawable? {
         return if (sensitive) {

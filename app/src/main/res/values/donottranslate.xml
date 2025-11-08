@@ -21,6 +21,12 @@
         <item>private</item>
     </string-array>
 
+    <string-array name="quote_policy_values">
+        <item>public</item>
+        <item>followers</item>
+        <item>nobody</item>
+    </string-array>
+
     <string-array name="reply_privacy_values">
         <item>match_default_post_visibility</item>
         <item>public</item>
