@@ -797,4 +797,5 @@
         <item quantity="other">%1$s mínútur</item>
     </plurals>
     <string name="scheduled_posts_not_supported">Netþjónninn þinn %1$s styður ekki áætlaðar færslur</string>
+    <string name="unified_push_error_no_vapid_key">Mistókst að setja upp Unified Push: %1$s er með ógildan \'vapid\'-lykil.</string>
 </resources>
