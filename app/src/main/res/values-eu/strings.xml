@@ -52,7 +52,7 @@
     <string name="action_favourite">Gogokoa</string>
     <string name="action_more">Gehiago</string>
     <string name="action_compose">Idatzi</string>
-    <string name="action_login">Tuskykin saioa hasi</string>
+    <string name="action_login">Gabkin saioa hasi</string>
     <string name="action_logout">Itxi saioa</string>
     <string name="action_logout_confirm">Ziur zaude %1$s saioa itxi nahi duzula? Horrek kontuaren datu lokal guztiak ezabatuko ditu, zirriborroak eta hobespenak barne.</string>
     <string name="action_follow">Jarraitu</string>
@@ -183,16 +183,16 @@
     </plurals>
     <string name="description_account_locked">Kontu babestua</string>
     <string name="about_title_activity">Honi buruz</string>
-    <string name="about_tusky_license">Tusky software libre eta kode askekoa da. \"GNU General Public License Version 3\" lizentziapean zabaldua. Lizentzia hontaz gehiago irakurtzeko: https://www.gnu.org/licenses/gpl-3.0.en.html</string>
+    <string name="about_tusky_license">Gab software libre eta kode askekoa da. \"GNU General Public License Version 3\" lizentziapean zabaldua. Lizentzia hontaz gehiago irakurtzeko: https://www.gnu.org/licenses/gpl-3.0.en.html</string>
     <!-- note to translators:
          * you should think of “free” as in “free speech,” not as in “free beer”.
            We sometimes call it “libre software,” borrowing the French or Spanish word for “free” as in freedom,
            to show we do not mean the software is gratis. Source: https://www.gnu.org/philosophy/free-sw.html
          * the url can be changed to link to the localized version of the license.
     -->
-    <string name="about_project_site">Proiektuaren webgunea: \nhttps://tusky.app</string>
-    <string name="about_bug_feature_request_site">Akatsen berri-emateak eta hobekuntza-eskariak: \n https://github.com/tuskyapp/Tusky/issues</string>
-    <string name="about_tusky_account">Tuskyren profila</string>
+    <string name="about_project_site">Proiektuaren webgunea: \nhttps://gab.com</string>
+    <string name="about_bug_feature_request_site">Akatsen berri-emateak eta hobekuntza-eskariak: \n https://github.com/Gabapp/Gab/issues</string>
+    <string name="about_tusky_account">Gabren profila</string>
     <string name="post_share_content">Partekatu tutaren edukia</string>
     <string name="post_share_link">Partekatu tutaren esteka</string>
     <string name="post_media_images">Irudiak</string>
@@ -247,7 +247,7 @@
     <string name="account_moved_description">%1$s hona mugitu da:</string>
     <string name="reblog_private">Bultzatu jatorrizko hartzaileei</string>
     <string name="unreblog_private">Kendu bultzada</string>
-    <string name="license_description">Tusky-k ondorengo software libreko proiektuetako kode eta baliabideak ditu:</string>
+    <string name="license_description">Gab-k ondorengo software libreko proiektuetako kode eta baliabideak ditu:</string>
     <string name="license_apache_2">Apache Lizentziapean (testua zerrendaren azpian)</string>
     <string name="profile_metadata_label">Profilaren metadatuak</string>
     <string name="profile_metadata_add">gehitu datuak</string>
@@ -298,10 +298,10 @@
     <string name="pref_title_animate_gif_avatars">GIF abatarrak animatu</string>
     <string name="notification_poll_name">Galdeketak</string>
     <string name="notification_poll_description">Bukatutako galdeketen jakinarazpenak</string>
-    <string name="about_tusky_version">Tusky %1$s</string>
+    <string name="about_tusky_version">Gab %1$s</string>
     <string name="action_hashtags">Traolak</string>
     <string name="title_hashtags_dialog">Traolak</string>
-    <string name="about_powered_by_tusky">Tusky-k sustatuta</string>
+    <string name="about_powered_by_tusky">Gab-k sustatuta</string>
     <string name="abbreviated_hours_ago">%1$dh</string>
     <string name="abbreviated_minutes_ago">%1$dm</string>
     <string name="abbreviated_seconds_ago">%1$ds</string>
