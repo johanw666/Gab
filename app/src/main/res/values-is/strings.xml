@@ -798,4 +798,8 @@
     </plurals>
     <string name="scheduled_posts_not_supported">Netþjónninn þinn %1$s styður ekki áætlaðar færslur</string>
     <string name="unified_push_error_no_vapid_key">Mistókst að setja upp Unified Push: %1$s er með ógildan \'vapid\'-lykil.</string>
+    <string name="quote_policy_public">Hver sem er</string>
+    <string name="quote_policy_followers">Einungis fylgjendur</string>
+    <string name="pref_default_quote_policy">Stefna varðandi tilvitnanir (samstillt við netþjón)</string>
+    <string name="quote_policy_nobody">Bara ég</string>
 </resources>

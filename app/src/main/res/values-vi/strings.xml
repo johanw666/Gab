@@ -781,4 +781,8 @@
     <string name="scheduled_posts_not_supported">Máy chủ %1$s của bạn không hỗ trợ lên lịch đăng tút</string>
     <string name="scheduled_post_deletion_error">Xóa tút đã lên lịch thất bại.</string>
     <string name="unified_push_error_no_vapid_key">Thiết lập Unified Push thất bại: %1$s có khóa vapid không hợp lệ.</string>
+    <string name="pref_default_quote_policy">Cho trích dẫn (mọi nơi)</string>
+    <string name="quote_policy_public">Bất cứ ai</string>
+    <string name="quote_policy_followers">Chỉ người theo dõi</string>
+    <string name="quote_policy_nobody">Chỉ mình tôi</string>
 </resources>
