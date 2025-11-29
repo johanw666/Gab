@@ -822,4 +822,8 @@
     <string name="scheduled_post_reply">Risposta</string>
     <string name="scheduled_posts_not_supported">Il tuo server %1$s non supporta i post programmati</string>
     <string name="unified_push_error_no_vapid_key">Impostazione Unified Push fallita: %1$s ha una chiave vapid invalida.</string>
+    <string name="pref_default_quote_policy">Policy delle citazioni (sincronizzato col server)</string>
+    <string name="quote_policy_nobody">Solo io</string>
+    <string name="quote_policy_followers">Solo chi mi segue</string>
+    <string name="quote_policy_public">Chiunque</string>
 </resources>
