@@ -790,4 +790,8 @@
     <string name="scheduled_post_deletion_error">删除定时嘟文失败了。</string>
     <string name="scheduled_post_reply">回复</string>
     <string name="unified_push_error_no_vapid_key">设置 Unified Push 失败：%1$s 有无效的 vapid 密钥。</string>
+    <string name="pref_default_quote_policy">引用政策（与服务器同步）</string>
+    <string name="quote_policy_followers">仅关注者</string>
+    <string name="quote_policy_nobody">只有我</string>
+    <string name="quote_policy_public">任何人</string>
 </resources>
