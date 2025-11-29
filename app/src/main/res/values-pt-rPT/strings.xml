@@ -783,4 +783,14 @@
     <string name="report_category_violation_title">Viola as regras do servidor</string>
     <string name="report_category_legal_description">Acredita que viola a legislação do seu país ou do país do servidor</string>
     <string name="report_category_other_description">O problema não se enquadra noutras categorias</string>
+    <string name="pref_default_quote_policy">Política de citação (sincronizada com o servidor)</string>
+    <string name="action_login_again">Iniciar sessão novamente</string>
+    <string name="action_remove_account_confirm">Tem a certeza de que pretende remover a conta %1$s do Tuky? Isto remove todos os dados da conta guardados no dispositivo, incluindo rascunhos e configurações.</string>
+    <string name="action_rehide_status">Esconder novamente estado filtrado</string>
+    <string name="quote_policy_public">Qualquer conta</string>
+    <string name="quote_policy_followers">Apenas seguidores</string>
+    <string name="quote_policy_nobody">Apenas eu</string>
+    <string name="message_filters_empty">Não tem filtros.</string>
+    <string name="account_disconnected_title">Conta desligada</string>
+    <string name="action_remove_account">Remover conta</string>
 </resources>
