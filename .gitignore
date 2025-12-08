@@ -6,6 +6,6 @@
 build
 /captures
 .externalNativeBuild
-app/release
-app-release.apk
+/app/blue/release
+/app/green/release
 .kotlin
