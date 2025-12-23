@@ -794,7 +794,7 @@
     </plurals>
     <string name="moderation_warning">Rydych wedi derbyn rhybudd gan gymedrolwr.</string>
     <string name="moderation_warning_action_delete_statuses">Mae rhai o\'ch negeseuon wedi\'u dileu.</string>
-    <string name="unknown_notification_type_explanation">Nid yw Tusky yn adnabod y math hwn o hysbysiad ac ni all ei ddangos i chi.Rhowch wybod hefyd i ddatblygwyr Tusky fel y gallant ychwanegu cefnogaeth ar gyfer y math hwn!</string>
+    <string name="unknown_notification_type_explanation">Nid yw Tusky yn adnabod y math hwn o hysbysiad ac ni all ei ddangos i chi. Rhowch wybod hefyd i ddatblygwyr Tusky fel y gallant ychwanegu cefnogaeth ar gyfer y math hwn!</string>
     <string name="unblock_success">Wedi dadrwystro %1$s</string>
     <string name="unmute_success">Wedi dad-dewi %1$s</string>
     <string name="block_failure">Wedi methu rhwystro %1$s: %2$s</string>
@@ -870,4 +870,11 @@
         <item quantity="other">%1$s dydd</item>
     </plurals>
     <string name="scheduled_post_reply">Ymateb</string>
+    <string name="scheduled_post_deletion_error">Wedi methu dileu\'r neges wedi\'i hamserlennu.</string>
+    <string name="pref_default_quote_policy">Polisi dyfynnu (bydd yn cael ei gydweddu gyda\'ch gweinydd)</string>
+    <string name="quote_policy_public">Unrhyw un</string>
+    <string name="quote_policy_followers">Dilynwyr yn unig</string>
+    <string name="quote_policy_nobody">Dim ond fi</string>
+    <string name="unified_push_error_no_vapid_key">Wedi methu sefydlu Unified Push: Mae allwedd vapid annilys gyda %1$s.</string>
+    <string name="scheduled_posts_not_supported">Na allwch chi ddefnyddio negeseuon wedi\'u hamserlennu ar eich gweinydd %1$s</string>
 </resources>
