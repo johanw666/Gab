@@ -30,7 +30,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
-import at.connyduck.sparkbutton.helpers.Utils
 import com.keylesspalace.tusky.R
 import com.keylesspalace.tusky.StatusListActivity
 import com.keylesspalace.tusky.components.trending.viewmodel.TrendingTagsViewModel
@@ -38,6 +37,7 @@ import com.keylesspalace.tusky.databinding.FragmentTrendingTagsBinding
 import com.keylesspalace.tusky.interfaces.ActionButtonActivity
 import com.keylesspalace.tusky.interfaces.RefreshableFragment
 import com.keylesspalace.tusky.interfaces.ReselectableFragment
+import com.keylesspalace.tusky.util.dpToPx
 import com.keylesspalace.tusky.util.ensureBottomPadding
 import com.keylesspalace.tusky.util.hide
 import com.keylesspalace.tusky.util.show
@@ -84,7 +84,7 @@ class TrendingTagsFragment :
                         if (getView() != null) {
                             binding.recyclerView.scrollBy(
                                 0,
-                                Utils.dpToPx(requireContext(), -30)
+                                dpToPx(requireContext(), -30)
                             )
                         }
                     }

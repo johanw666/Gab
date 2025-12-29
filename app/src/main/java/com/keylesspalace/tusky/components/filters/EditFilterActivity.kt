@@ -130,9 +130,6 @@ class EditFilterActivity : BaseActivity() {
             validateSaveButton()
         }
 
-        // blur filter is supported in mastodon api version 5+
-        val blurFilterSupported = instanceInfoRepository.cachedInstanceInfoOrFallback.mastodonApiVersion?.let { it >= 5 } == true
-        binding.filterActionBlur.visible(blurFilterSupported)
         binding.filterActionGroup.setOnCheckedChangeListener { _, checkedId ->
             val action = when (checkedId) {
                 R.id.filter_action_blur -> Filter.Action.BLUR

@@ -16,42 +16,42 @@
 package com.keylesspalace.tusky.components.viewthread
 
 import android.util.Log
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import at.connyduck.calladapter.networkresult.NetworkResult
 import at.connyduck.calladapter.networkresult.fold
 import at.connyduck.calladapter.networkresult.getOrElse
-import at.connyduck.calladapter.networkresult.getOrThrow
 import at.connyduck.calladapter.networkresult.map
 import at.connyduck.calladapter.networkresult.onFailure
 import at.connyduck.calladapter.networkresult.onSuccess
+import com.keylesspalace.tusky.R
 import com.keylesspalace.tusky.appstore.BlockEvent
 import com.keylesspalace.tusky.appstore.EventHub
+import com.keylesspalace.tusky.appstore.PollVoteEvent
 import com.keylesspalace.tusky.appstore.StatusChangedEvent
 import com.keylesspalace.tusky.appstore.StatusComposedEvent
 import com.keylesspalace.tusky.appstore.StatusDeletedEvent
 import com.keylesspalace.tusky.components.timeline.toStatus
-import com.keylesspalace.tusky.components.timeline.util.ifExpected
 import com.keylesspalace.tusky.db.AccountManager
 import com.keylesspalace.tusky.db.AppDatabase
 import com.keylesspalace.tusky.entity.Filter
+import com.keylesspalace.tusky.entity.Poll
 import com.keylesspalace.tusky.entity.Status
 import com.keylesspalace.tusky.network.MastodonApi
-import com.keylesspalace.tusky.usecase.TimelineCases
+import com.keylesspalace.tusky.ui.SnackbarError
 import com.keylesspalace.tusky.util.toViewData
 import com.keylesspalace.tusky.viewdata.StatusViewData
 import com.keylesspalace.tusky.viewdata.TranslationViewData
+import com.keylesspalace.tusky.viewmodel.StatusActionsViewModel
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Job
+import java.util.Locale
 import kotlinx.coroutines.async
-import kotlinx.coroutines.channels.BufferOverflow
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -60,26 +60,19 @@ import kotlinx.coroutines.launch
 @HiltViewModel(assistedFactory = ViewThreadViewModel.Factory::class)
 class ViewThreadViewModel @AssistedInject constructor(
     private val api: MastodonApi,
-    private val timelineCases: TimelineCases,
     private val db: AppDatabase,
     eventHub: EventHub,
     accountManager: AccountManager,
-    @Assisted("threadId") private val threadId: String
-) : ViewModel() {
+    @Assisted("threadId") val threadId: String
+) : StatusActionsViewModel(api, eventHub) {
 
     private val activeAccount = accountManager.activeAccount!!
 
     private val _uiState: MutableStateFlow<ThreadUiState> = MutableStateFlow(ThreadUiState.Loading)
-    val uiState: Flow<ThreadUiState> = _uiState.asStateFlow()
+    val uiState: StateFlow<ThreadUiState> = _uiState.asStateFlow()
 
-    private val _errors = MutableSharedFlow<Throwable>(
-        replay = 0,
-        extraBufferCapacity = 1,
-        onBufferOverflow = BufferOverflow.DROP_OLDEST
-    )
-    val errors: SharedFlow<Throwable> = _errors.asSharedFlow()
-
-    var isInitialLoad: Boolean = true
+    private val _finish: MutableSharedFlow<Unit> = MutableSharedFlow()
+    val finish: SharedFlow<Unit> = _finish.asSharedFlow()
 
     private val alwaysShowSensitiveMedia: Boolean = activeAccount.alwaysShowSensitiveMedia
     private val alwaysOpenSpoiler: Boolean = activeAccount.alwaysOpenSpoiler
@@ -90,9 +83,10 @@ class ViewThreadViewModel @AssistedInject constructor(
                 .collect { event ->
                     when (event) {
                         is StatusChangedEvent -> handleStatusChangedEvent(event.status)
+                        is PollVoteEvent -> handlePollVotedEvent(event.statusId, event.poll)
                         is BlockEvent -> removeAllByAccountId(event.accountId)
                         is StatusComposedEvent -> handleStatusComposedEvent(event)
-                        is StatusDeletedEvent -> handleStatusDeletedEvent(event)
+                        is StatusDeletedEvent -> removeStatus(event.statusId)
                     }
                 }
         }
@@ -109,10 +103,8 @@ class ViewThreadViewModel @AssistedInject constructor(
         _uiState.update { uiState ->
             if (uiState is ThreadUiState.Success) {
                 refreshable = true
-                ThreadUiState.Refreshing(
-                    statusViewData = uiState.statusViewData,
-                    revealButton = uiState.revealButton,
-                    detailedStatusPosition = uiState.detailedStatusPosition
+                uiState.copy(
+                    isRefreshing = true
                 )
             } else {
                 uiState
@@ -125,9 +117,8 @@ class ViewThreadViewModel @AssistedInject constructor(
 
     private fun loadThread() {
         viewModelScope.launch {
-            Log.d(TAG, "Finding status with: $threadId")
-
             val contextCall = async { api.statusContext(threadId) }
+
             val statusAndAccount = db.timelineStatusDao().getStatusWithAccount(activeAccount.id, threadId)
 
             var detailedStatus = if (statusAndAccount != null) {
@@ -152,10 +143,22 @@ class ViewThreadViewModel @AssistedInject constructor(
                 result.toViewData(isDetailed = true)
             }
 
-            _uiState.value = ThreadUiState.LoadingThread(
-                statusViewDatum = detailedStatus,
-                revealButton = detailedStatus.getRevealButtonState()
-            )
+            _uiState.update { uiState ->
+                if (uiState is ThreadUiState.Success) {
+                    uiState.copy(
+                        statusViewData = uiState.ancestors + detailedStatus + uiState.descendants,
+                        isRefreshing = false,
+                        isloadingThread = true
+                    )
+                } else {
+                    ThreadUiState.Success(
+                        statusViewData = listOf(detailedStatus),
+                        revealButton = detailedStatus.getRevealButtonState(),
+                        isRefreshing = false,
+                        isloadingThread = true
+                    )
+                }
+            }
 
             // If the detailedStatus was loaded from the database it might be out-of-date
             // compared to the remote one. Now the user has a working UI do a background fetch
@@ -167,7 +170,6 @@ class ViewThreadViewModel @AssistedInject constructor(
                     detailedStatus = result.toViewData(isDetailed = true)
                 }
             }
-
             val contextResult = contextCall.await()
 
             contextResult.fold({ statusContext ->
@@ -179,94 +181,46 @@ class ViewThreadViewModel @AssistedInject constructor(
 
                 _uiState.value = ThreadUiState.Success(
                     statusViewData = statuses,
-                    detailedStatusPosition = ancestors.size,
-                    revealButton = statuses.getRevealButtonState()
+                    revealButton = statuses.getRevealButtonState(),
+                    isRefreshing = false,
+                    isloadingThread = false
                 )
             }, { throwable ->
-                _errors.emit(throwable)
-                _uiState.value = ThreadUiState.Success(
-                    statusViewData = listOf(detailedStatus),
-                    detailedStatusPosition = 0,
-                    revealButton = RevealButtonState.NO_BUTTON
+                Log.w(TAG, "Failed to load status context", throwable)
+                errors.emit(
+                    SnackbarError.ResourceMessage(
+                        message = R.string.error_generic,
+                        retryAction = ::retry
+                    )
                 )
+                _uiState.update { uiState ->
+                    if (uiState is ThreadUiState.Success) {
+                        uiState.copy(
+                            statusViewData = uiState.ancestors + detailedStatus + uiState.descendants,
+                            isRefreshing = false,
+                            isloadingThread = false
+                        )
+                    } else {
+                        ThreadUiState.Success(
+                            statusViewData = listOf(detailedStatus),
+                            revealButton = detailedStatus.getRevealButtonState(),
+                            isRefreshing = false,
+                            isloadingThread = false
+                        )
+                    }
+                }
             })
         }
     }
-
-    fun detailedStatus(): StatusViewData.Concrete? {
-        return when (val uiState = _uiState.value) {
-            is ThreadUiState.Success -> uiState.statusViewData.find { status ->
-                status.isDetailed
-            }
-
-            is ThreadUiState.LoadingThread -> uiState.statusViewDatum
-            else -> null
-        }
-    }
-
-    fun reblog(
-        reblog: Boolean,
-        status: StatusViewData.Concrete,
-        visibility: Status.Visibility = Status.Visibility.PUBLIC
-    ): Job = viewModelScope.launch {
-        try {
-            timelineCases.reblog(status.actionableId, reblog, visibility).getOrThrow()
-        } catch (t: Exception) {
-            ifExpected(t) {
-                Log.d(TAG, "Failed to reblog status " + status.actionableId, t)
-            }
-        }
-    }
-
-    fun favorite(favorite: Boolean, status: StatusViewData.Concrete): Job = viewModelScope.launch {
-        try {
-            timelineCases.favourite(status.actionableId, favorite).getOrThrow()
-        } catch (t: Exception) {
-            ifExpected(t) {
-                Log.d(TAG, "Failed to favourite status " + status.actionableId, t)
-            }
-        }
-    }
-
-    fun bookmark(bookmark: Boolean, status: StatusViewData.Concrete): Job = viewModelScope.launch {
-        try {
-            timelineCases.bookmark(status.actionableId, bookmark).getOrThrow()
-        } catch (t: Exception) {
-            ifExpected(t) {
-                Log.d(TAG, "Failed to bookmark status " + status.actionableId, t)
-            }
-        }
-    }
-
-    fun voteInPoll(choices: List<Int>, status: StatusViewData.Concrete): Job =
-        viewModelScope.launch {
-            val poll = status.status.actionableStatus.poll ?: run {
-                Log.w(TAG, "No poll on status ${status.id}")
-                return@launch
-            }
-
-            val votedPoll = poll.votedCopy(choices)
-            updateStatus(status.id) { status ->
-                status.copy(poll = votedPoll)
-            }
-
-            try {
-                timelineCases.voteInPoll(status.actionableId, poll.id, choices).getOrThrow()
-            } catch (t: Exception) {
-                ifExpected(t) {
-                    Log.d(TAG, "Failed to vote in poll: " + status.actionableId, t)
-                }
-            }
-        }
 
     fun showPollResults(status: StatusViewData.Concrete) = viewModelScope.launch {
         updateStatus(status.id) { it.copy(poll = it.poll?.copy(voted = true)) }
     }
 
-    fun removeStatus(statusToRemove: StatusViewData.Concrete) {
+    fun removeStatus(statusIdToRemove: String) {
         updateSuccess { uiState ->
             uiState.copy(
-                statusViewData = uiState.statusViewData.filterNot { status -> status == statusToRemove }
+                statusViewData = uiState.statusViewData.filterNot { status -> status.id == statusIdToRemove }
             )
         }
     }
@@ -303,7 +257,7 @@ class ViewThreadViewModel @AssistedInject constructor(
         updateStatusViewData(status.id) { viewData ->
             viewData.copy(translation = TranslationViewData.Loading)
         }
-        return timelineCases.translate(status.actionableId)
+        return api.translate(status.id, Locale.getDefault().language)
             .map { translation ->
                 updateStatusViewData(status.id) { viewData ->
                     viewData.copy(translation = TranslationViewData.Loaded(translation))
@@ -336,6 +290,12 @@ class ViewThreadViewModel @AssistedInject constructor(
         }
     }
 
+    private fun handlePollVotedEvent(statusId: String, poll: Poll) {
+        updateStatus(statusId) { status ->
+            status.copy(poll = poll)
+        }
+    }
+
     private fun removeAllByAccountId(accountId: String) {
         updateSuccess { uiState ->
             uiState.copy(
@@ -362,16 +322,6 @@ class ViewThreadViewModel @AssistedInject constructor(
             } else {
                 uiState
             }
-        }
-    }
-
-    private fun handleStatusDeletedEvent(event: StatusDeletedEvent) {
-        updateSuccess { uiState ->
-            uiState.copy(
-                statusViewData = uiState.statusViewData.filter { status ->
-                    status.id != event.statusId
-                }
-            )
         }
     }
 
@@ -447,7 +397,7 @@ class ViewThreadViewModel @AssistedInject constructor(
     }
 
     private fun Status.toViewData(isDetailed: Boolean = false): StatusViewData.Concrete {
-        val oldStatus = _uiState.value.statusViewData()?.find {
+        val oldStatus = (_uiState.value as? ThreadUiState.Success)?.statusViewData?.find {
             it.id == this.id
         }
         return toViewData(
@@ -517,39 +467,47 @@ class ViewThreadViewModel @AssistedInject constructor(
 
 sealed interface ThreadUiState {
 
-    /** returns this state's viewData, if available */
-    fun statusViewData(): List<StatusViewData.Concrete>? = null
+    val revealButton: RevealButtonState
 
     /** The initial load of the detailed status for this thread */
-    data object Loading : ThreadUiState
-
-    /** Loading the detailed status has completed, now loading ancestors/descendants */
-    data class LoadingThread(
-        val statusViewDatum: StatusViewData.Concrete,
-        val revealButton: RevealButtonState
-    ) : ThreadUiState {
-        override fun statusViewData() = listOf(statusViewDatum)
+    data object Loading : ThreadUiState {
+        override val revealButton: RevealButtonState
+            get() = RevealButtonState.NO_BUTTON
     }
 
-    /** An error occurred at any point */
-    class Error(val throwable: Throwable) : ThreadUiState
+    /** No statuses could be loaded from network or cache */
+    class Error(val throwable: Throwable) : ThreadUiState {
+        override val revealButton: RevealButtonState
+            get() = RevealButtonState.NO_BUTTON
+    }
 
     /** Successfully loaded the full thread */
     data class Success(
         val statusViewData: List<StatusViewData.Concrete>,
-        val revealButton: RevealButtonState,
-        val detailedStatusPosition: Int
+        val isRefreshing: Boolean,
+        val isloadingThread: Boolean,
+        override val revealButton: RevealButtonState
     ) : ThreadUiState {
-        override fun statusViewData() = statusViewData
-    }
-
-    /** Refreshing the thread with a swipe */
-    data class Refreshing(
-        val statusViewData: List<StatusViewData.Concrete>,
-        val revealButton: RevealButtonState,
-        val detailedStatusPosition: Int
-    ) : ThreadUiState {
-        override fun statusViewData() = statusViewData
+        val ancestors: List<StatusViewData.Concrete>
+            get(): List<StatusViewData.Concrete> {
+                val indexOfDetailed = statusViewData.indexOfFirst { it.isDetailed }
+                return if (indexOfDetailed > 0) {
+                    statusViewData.take(indexOfDetailed)
+                } else {
+                    emptyList()
+                }
+            }
+        val descendants: List<StatusViewData.Concrete>
+            get(): List<StatusViewData.Concrete> {
+                val indexOfDetailed = statusViewData.indexOfFirst { it.isDetailed }
+                return if (indexOfDetailed < statusViewData.size - 1) {
+                    statusViewData.takeLast(statusViewData.size - indexOfDetailed - 1)
+                } else {
+                    emptyList()
+                }
+            }
+        val detailedStatus: StatusViewData.Concrete
+            get() = statusViewData.first { it.isDetailed }
     }
 }
 

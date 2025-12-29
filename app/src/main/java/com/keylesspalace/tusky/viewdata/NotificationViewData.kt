@@ -14,12 +14,14 @@
  * see <http://www.gnu.org/licenses>. */
 package com.keylesspalace.tusky.viewdata
 
+import androidx.compose.runtime.Immutable
 import com.keylesspalace.tusky.entity.AccountWarning
 import com.keylesspalace.tusky.entity.Notification
 import com.keylesspalace.tusky.entity.RelationshipSeveranceEvent
 import com.keylesspalace.tusky.entity.Report
 import com.keylesspalace.tusky.entity.TimelineAccount
 
+@Immutable
 sealed class NotificationViewData {
 
     abstract val id: String
@@ -27,6 +29,7 @@ sealed class NotificationViewData {
     abstract fun asStatusOrNull(): StatusViewData.Concrete?
     abstract fun asPlaceholderOrNull(): LoadMore?
 
+    @Immutable
     data class Concrete(
         override val id: String,
         val type: Notification.Type,
@@ -35,16 +38,13 @@ sealed class NotificationViewData {
         val report: Report?,
         val event: RelationshipSeveranceEvent?,
         val moderationWarning: AccountWarning?
-    ) : NotificationViewData(), ConcreteViewData {
-
-        override val viewData: StatusViewData.Concrete
-            get() = statusViewData ?: throw IllegalStateException("notification type $type has no status attached")
-
+    ) : NotificationViewData() {
         override fun asStatusOrNull() = statusViewData
 
         override fun asPlaceholderOrNull() = null
     }
 
+    @Immutable
     data class LoadMore(
         override val id: String,
         override val isLoading: Boolean

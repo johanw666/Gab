@@ -51,6 +51,7 @@ data class AccountEntity(
     val username: String = "",
     val displayName: String = "",
     val profilePictureUrl: String = "",
+    @ColumnInfo(defaultValue = "") val staticProfilePictureUrl: String = "",
     @ColumnInfo(defaultValue = "") val profileHeaderUrl: String = "",
     val notificationsEnabled: Boolean = true,
     val notificationsMentioned: Boolean = true,
@@ -102,11 +103,12 @@ data class AccountEntity(
     val oauthScopes: String = "",
     val unifiedPushUrl: String = "",
 
-    /**
-     * ID of the status at the top of the visible list in the home timeline when the
-     * user navigated away.
-     */
-    val lastVisibleHomeTimelineStatusId: String? = null,
+    /** to save and restore home timeline position **/
+    @ColumnInfo(defaultValue = "0")
+    val firstVisibleHomeTimelineItemIndex: Int = 0,
+
+    @ColumnInfo(defaultValue = "0")
+    val firstVisibleHomeTimelineItemOffset: Int = 0,
 
     /** true if the connected Mastodon account is locked (has to manually approve all follow requests **/
     @ColumnInfo(defaultValue = "0")

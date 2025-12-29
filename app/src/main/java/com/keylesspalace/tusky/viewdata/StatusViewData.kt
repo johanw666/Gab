@@ -14,28 +14,25 @@
  * see <http://www.gnu.org/licenses>. */
 package com.keylesspalace.tusky.viewdata
 
-import android.text.Spanned
+import androidx.compose.runtime.Immutable
 import com.keylesspalace.tusky.entity.Attachment
 import com.keylesspalace.tusky.entity.Filter
 import com.keylesspalace.tusky.entity.Status
 import com.keylesspalace.tusky.entity.TimelineAccount
 import com.keylesspalace.tusky.entity.Translation
-import com.keylesspalace.tusky.util.parseAsMastodonHtml
-import com.keylesspalace.tusky.util.shouldTrimStatus
-
-interface ConcreteViewData {
-    val viewData: StatusViewData.Concrete
-}
 
 interface LoadMoreViewData {
     val isLoading: Boolean
 }
 
+@Immutable
 sealed interface TranslationViewData {
     val data: Translation?
 
+    @Immutable
     data class Loaded(override val data: Translation) : TranslationViewData
 
+    @Immutable
     data object Loading : TranslationViewData {
         override val data: Translation?
             get() = null
@@ -48,9 +45,11 @@ sealed interface TranslationViewData {
  * Class to represent data required to display either a notification or a placeholder.
  * It is either a [StatusViewData.Concrete] or a [StatusViewData.LoadMore].
  */
+@Immutable
 sealed class StatusViewData {
     abstract val id: String
 
+    @Immutable
     data class Concrete(
         val status: Status,
         val isExpanded: Boolean,
@@ -67,15 +66,9 @@ sealed class StatusViewData {
         val translation: TranslationViewData? = null,
         val filter: Filter? = null,
         val filterActive: Boolean
-    ) : StatusViewData(), ConcreteViewData {
+    ) : StatusViewData() {
         override val id: String
             get() = status.id
-
-        override val viewData: Concrete
-            get() = this
-
-        val content: Spanned =
-            (translation?.data?.content ?: actionable.content).parseAsMastodonHtml()
 
         val attachments: List<Attachment> =
             actionable.attachments.translated { translation -> map { it.translated(translation) } }
@@ -93,16 +86,6 @@ sealed class StatusViewData {
             copy(options = translatedOptions)
         }
 
-        /**
-         * Specifies whether the content of this post is long enough to be automatically
-         * collapsed or if it should show all content regardless.
-         * Translated posts only show the button if the original post had it as well.
-         *
-         * @return Whether the post is collapsible or never collapsed.
-         */
-        val isCollapsible: Boolean = shouldTrimStatus(this.content) &&
-            (translation == null || shouldTrimStatus(actionable.content.parseAsMastodonHtml()))
-
         val actionable: Status
             get() = status.actionableStatus
 
@@ -112,6 +95,13 @@ sealed class StatusViewData {
         val rebloggedAvatar: String?
             get() = if (status.reblog != null) {
                 status.account.avatar
+            } else {
+                null
+            }
+
+        val staticRebloggedAvatar: String?
+            get() = if (status.reblog != null) {
+                status.account.staticAvatar
             } else {
                 null
             }
@@ -131,11 +121,6 @@ sealed class StatusViewData {
         val isFilterHide: Boolean
             get() = filter?.action == Filter.Action.HIDE
 
-        /** Helper for Java */
-        fun copyWithCollapsed(isCollapsed: Boolean): Concrete {
-            return copy(isCollapsed = isCollapsed)
-        }
-
         private fun Attachment.translated(translation: Translation): Attachment {
             val translatedDescription =
                 translation.mediaAttachments.find { it.id == id }?.description
@@ -151,6 +136,7 @@ sealed class StatusViewData {
             }
     }
 
+    @Immutable
     data class LoadMore(
         override val id: String,
         override val isLoading: Boolean

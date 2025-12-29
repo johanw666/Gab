@@ -8,7 +8,10 @@ import com.keylesspalace.tusky.entity.Attachment
 import kotlin.math.roundToInt
 import kotlin.time.Duration.Companion.seconds
 
-fun Attachment.getFormattedDescription(context: Context): String {
+fun Attachment.getFormattedDescription(
+    context: Context,
+    translation: String?
+): String {
     val durationInSeconds = meta?.duration ?: meta?.original?.duration ?: 0f
     val duration = if (durationInSeconds > 0f) {
         durationInSeconds.roundToInt().seconds.toComponents { hours, minutes, seconds, _ ->
@@ -20,7 +23,7 @@ fun Attachment.getFormattedDescription(context: Context): String {
     return duration + if (description.isNullOrEmpty()) {
         context.getString(R.string.description_post_media_no_description_placeholder)
     } else {
-        description
+        translation ?: description
     }
 }
 

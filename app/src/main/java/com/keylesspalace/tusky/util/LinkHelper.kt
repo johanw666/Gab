@@ -25,7 +25,6 @@ import android.net.Uri
 import android.os.Build
 import android.text.Spannable
 import android.text.SpannableStringBuilder
-import android.text.Spanned
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.text.style.ForegroundColorSpan
@@ -42,7 +41,6 @@ import androidx.browser.customtabs.CustomTabColorSchemeParams
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.net.toUri
 import androidx.preference.PreferenceManager
-import at.connyduck.sparkbutton.helpers.Utils
 import com.google.android.material.R as materialR
 import com.google.android.material.color.MaterialColors
 import com.keylesspalace.tusky.R
@@ -52,7 +50,6 @@ import com.keylesspalace.tusky.interfaces.LinkListener
 import com.keylesspalace.tusky.settings.PrefKeys
 import java.net.URI
 import java.net.URISyntaxException
-import java.util.regex.Pattern
 
 fun getDomain(urlString: String?): String {
     val host = urlString?.toUri()?.host
@@ -71,123 +68,25 @@ fun getDomain(urlString: String?): String {
  * @param content containing text with mentions, links, or hashtags
  * @param mentions any '@' mentions which are known to be in the content
  * @param listener to notify about particular spans that are clicked
- * @param trailingHashtagView a text view to fill with trailing / out-of-band hashtags
  */
 fun setClickableText(
     view: TextView,
     content: CharSequence,
     mentions: List<Mention>,
     tags: List<HashTag>?,
-    listener: LinkListener,
-    trailingHashtagView: TextView? = null,
+    listener: LinkListener
 ) {
     val spannableContent = markupHiddenUrls(view, content)
-    val (endOfContent, trailingHashtags) = when {
-        trailingHashtagView == null || tags.isNullOrEmpty() -> Pair(spannableContent.length, emptyList())
-        else -> getTrailingHashtags(spannableContent)
-    }
-    val inlineHashtags = mutableSetOf<CharSequence>()
 
     view.text = spannableContent.apply {
         styleQuoteSpans(view)
-        getSpans(0, endOfContent, URLSpan::class.java).forEach { span ->
-            val start = getSpanStart(span)
-            if (get(start) == '#') {
-                inlineHashtags.add(normalizeToASCII(subSequence(start + 1, getSpanEnd(span))))
-            }
+        getSpans(0, spannableContent.length, URLSpan::class.java).forEach { span ->
             setClickableText(span, this, mentions, tags, listener)
         }
-    }.subSequence(0, endOfContent).trimEnd()
+    }.trimEnd()
 
     view.movementMethod = NoTrailingSpaceLinkMovementMethod
-
-    val showHashtagBar = (trailingHashtags.isNotEmpty() || inlineHashtags.size != tags?.size)
-    // I don't _love_ setting the visibility here, but the alternative is to duplicate the logic in other places
-    trailingHashtagView?.visible(showHashtagBar)
-
-    if (showHashtagBar) {
-        trailingHashtagView?.apply {
-            text = buildTrailingHashtagText(
-                tags?.filterNot { tag -> inlineHashtags.any { it.contentEquals(tag.name, ignoreCase = true) } },
-                trailingHashtags,
-                listener,
-            )
-        }
-    }
 }
-
-/**
- * Build a spanned string containing trailing and out-of-band hashtags for the trailing hashtag view
- * @param tagsFromServer The list of hashtags from the server
- * @param trailingHashtagsFromContent The list of trailing hashtags scraped from the post content
- * @param listener to notify about particular spans that are clicked
- */
-private fun buildTrailingHashtagText(
-    tagsFromServer: List<HashTag>?,
-    trailingHashtagsFromContent: List<HashTag>,
-    listener: LinkListener
-): SpannableStringBuilder {
-    return SpannableStringBuilder().apply {
-        // we apply the tags scraped from the content first to preserve the casing
-        // (tags from the server are often downcased)
-        val additionalTags = tagsFromServer?.let {
-            it.filter { serverTag ->
-                trailingHashtagsFromContent.none {
-                    serverTag.name.equals(normalizeToASCII(it.name), ignoreCase = true)
-                }
-            }
-        } ?: emptyList()
-        appendTags(trailingHashtagsFromContent.plus(additionalTags), listener)
-    }
-}
-
-/**
- * Append space-separated url spans for a list of hashtags
- * @param tags The tags to append
- * @param listener to notify about particular spans that are clicked
- */
-private fun SpannableStringBuilder.appendTags(tags: List<HashTag>, listener: LinkListener) {
-    tags.forEachIndexed { index, tag ->
-        append("#${tag.name}", getCustomSpanForTag(normalizeToASCII(tag.name), URLSpan(tag.url), listener), 0)
-        if (index != tags.lastIndex) {
-            append(" ")
-        }
-    }
-}
-
-private val hashtagWithHashPattern = Pattern.compile("^#$HASHTAG_EXPRESSION$")
-private val whitespacePattern = Regex("""\s+""")
-
-/**
- * Find the "trailing" hashtags in spanned content
- * These are hashtags in lines consisting *only* of hashtags at the end of the post
- */
-@VisibleForTesting
-internal fun getTrailingHashtags(content: Spanned): Pair<Int, List<HashTag>> {
-    // split() instead of lines() because we need to be able to account for the length of the removed delimiter
-    val trailingContentLength = content.split('\r', '\n').asReversed().takeWhile { line ->
-        line.splitToSequence(whitespacePattern).all { it.isBlank() || hashtagWithHashPattern.matcher(it).matches() }
-    }.sumOf { it.length + 1 } // length + 1 to include the stripped line ending character
-
-    return when (trailingContentLength) {
-        0 -> Pair(content.length, emptyList())
-        else -> {
-            val trailingContentOffset = (content.length - trailingContentLength).coerceAtLeast(0)
-            Pair(
-                trailingContentOffset,
-                content.getSpans(trailingContentOffset, content.length, URLSpan::class.java)
-                    .filter { content[content.getSpanStart(it)] == '#' } // just in case
-                    .map { spanToHashtag(content, it) }
-            )
-        }
-    }
-}
-
-// URLSpan("#tag", url) -> Hashtag("tag", url)
-private fun spanToHashtag(content: Spanned, span: URLSpan) = HashTag(
-    content.subSequence(content.getSpanStart(span) + 1, content.getSpanEnd(span)).toString(),
-    span.url,
-)
 
 @VisibleForTesting
 internal fun markupHiddenUrls(view: TextView, content: CharSequence): SpannableStringBuilder {
@@ -325,8 +224,8 @@ private fun SpannableStringBuilder.styleQuoteSpans(view: TextView) {
         val newQuoteSpan = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             QuoteSpan(
                 quoteColor,
-                Utils.dpToPx(view.context, 3),
-                Utils.dpToPx(view.context, 8)
+                dpToPx(view.context, 3),
+                dpToPx(view.context, 8)
             )
         } else {
             QuoteSpan(quoteColor)
@@ -379,12 +278,6 @@ fun setClickableMentions(view: TextView, mentions: List<Mention>?, listener: Lin
         }
     }
     view.movementMethod = NoTrailingSpaceLinkMovementMethod
-}
-
-fun createClickableText(text: String, link: String): CharSequence {
-    return SpannableStringBuilder(text).apply {
-        setSpan(NoUnderlineURLSpan(link), 0, text.length, Spanned.SPAN_INCLUSIVE_EXCLUSIVE)
-    }
 }
 
 /**

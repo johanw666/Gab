@@ -41,10 +41,10 @@ import com.keylesspalace.tusky.db.AppDatabase
 import com.keylesspalace.tusky.db.entity.HomeTimelineData
 import com.keylesspalace.tusky.db.entity.HomeTimelineEntity
 import com.keylesspalace.tusky.network.MastodonApi
-import com.keylesspalace.tusky.usecase.TimelineCases
 import com.keylesspalace.tusky.viewdata.StatusViewData
 import com.keylesspalace.tusky.viewdata.TranslationViewData
 import dagger.hilt.android.lifecycle.HiltViewModel
+import java.util.Locale
 import javax.inject.Inject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -58,14 +58,13 @@ import retrofit2.HttpException
  */
 @HiltViewModel
 class CachedTimelineViewModel @Inject constructor(
-    timelineCases: TimelineCases,
     private val api: MastodonApi,
     eventHub: EventHub,
     accountManager: AccountManager,
     sharedPreferences: SharedPreferences,
     private val db: AppDatabase
 ) : TimelineViewModel(
-    timelineCases,
+    api,
     eventHub,
     accountManager,
     sharedPreferences
@@ -175,10 +174,7 @@ class CachedTimelineViewModel @Inject constructor(
                     return@launch
                 }
 
-                val account = activeAccountFlow.value
-                if (account == null) {
-                    return@launch
-                }
+                val account = activeAccountFlow.value ?: return@launch
 
                 db.withTransaction {
                     timelineDao.deleteHomeTimelineItem(accountId, placeholderId)
@@ -250,25 +246,26 @@ class CachedTimelineViewModel @Inject constructor(
 
     private suspend fun loadMoreFailed(placeholderId: String, e: Exception) {
         Log.w(TAG, "failed loading statuses", e)
-        val activeAccount = accountManager.activeAccount!!
         db.timelineDao()
-            .insertHomeTimelineItem(LoadMorePlaceholder(placeholderId, loading = false).toEntity(activeAccount.id))
+            .insertHomeTimelineItem(LoadMorePlaceholder(placeholderId, loading = false).toEntity(accountId))
     }
 
     override fun fullReload() {
         viewModelScope.launch {
-            val activeAccount = accountManager.activeAccount!!
-            db.timelineDao().removeAllHomeTimelineItems(activeAccount.id)
+            db.timelineDao().removeAllHomeTimelineItems(accountId)
         }
     }
 
-    override fun saveReadingPosition(statusId: String) {
+    override fun saveHomeTimelinePosition(firstVisibleIndex: Int, firstVisibleOffset: Int) {
         viewModelScope.launch {
-            accountManager.activeAccount?.let { account ->
-                Log.d(TAG, "Saving position at: $statusId")
+            activeAccountFlow.value?.let { account ->
                 accountManager.updateAccount(account) {
-                    copy(lastVisibleHomeTimelineStatusId = statusId)
+                    copy(
+                        firstVisibleHomeTimelineItemIndex = firstVisibleIndex,
+                        firstVisibleHomeTimelineItemOffset = firstVisibleOffset
+                    )
                 }
+                Log.d(TAG, "Saved home timeline position $firstVisibleIndex $firstVisibleOffset for account ${account.id}")
             }
         }
     }
@@ -282,7 +279,7 @@ class CachedTimelineViewModel @Inject constructor(
 
     override suspend fun translate(status: StatusViewData.Concrete): NetworkResult<Unit> {
         translations.value += (status.id to TranslationViewData.Loading)
-        return timelineCases.translate(status.actionableId)
+        return api.translate(status.actionableId, Locale.getDefault().language)
             .map { translation ->
                 translations.value += (status.actionableId to TranslationViewData.Loaded(translation))
             }

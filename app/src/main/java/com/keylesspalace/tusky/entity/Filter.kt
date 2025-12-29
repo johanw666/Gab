@@ -1,6 +1,7 @@
 package com.keylesspalace.tusky.entity
 
 import android.os.Parcelable
+import androidx.compose.runtime.Immutable
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import java.util.Date
@@ -8,6 +9,7 @@ import kotlinx.parcelize.Parcelize
 
 @JsonClass(generateAdapter = true)
 @Parcelize
+@Immutable
 data class Filter(
     val id: String = "",
     val title: String = "",

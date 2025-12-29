@@ -245,7 +245,7 @@ class ViewMediaActivity :
         val attach = attachments!![binding.viewPager.currentItem]
         if (attach.statusId != null && attach.statusUrl != null) {
             startActivityWithSlideInAnimation(
-                ViewThreadActivity.startIntent(this, attach.statusId, attach.statusUrl)
+                ViewThreadActivity.newIntent(this, attach.statusId, attach.statusUrl)
             )
         }
     }

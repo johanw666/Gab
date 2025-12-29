@@ -14,38 +14,36 @@
  * see <http://www.gnu.org/licenses>. */
 package com.keylesspalace.tusky.interfaces
 
-import android.view.View
-import at.connyduck.sparkbutton.SparkButton
+import at.connyduck.sparkbutton.compose.SparkButtonState
 import com.keylesspalace.tusky.entity.Status
-import com.keylesspalace.tusky.viewdata.ConcreteViewData
+import com.keylesspalace.tusky.viewdata.StatusViewData
 
-interface StatusActionListener<in C : ConcreteViewData> : LinkListener {
-    fun onReply(viewData: C)
+interface StatusActionListener : LinkListener {
 
     /**
      * Reblog the post represented by [viewData]
      * @param reblog true to reblog, false to undo a reblog
      * @param visibility The visibility to use for the reblog, if the user has already chosen it, null otherwise
-     * @param button Optional button to animate
+     * @param state Optional SparkButtonState for delayed animation
      */
-    fun onReblog(viewData: C, reblog: Boolean, visibility: Status.Visibility?, button: SparkButton? = null)
+    fun onReblog(
+        viewData: StatusViewData.Concrete,
+        reblog: Boolean,
+        visibility: Status.Visibility?,
+        state: SparkButtonState?
+    )
 
     /**
      * Favourite the post represented by [viewData]
-     * @param button Optional button to animate
+     * @param state Optional SparkButtonState to trigger delayed animation
      */
-    fun onFavourite(viewData: C, favourite: Boolean, button: SparkButton? = null)
-    fun onBookmark(viewData: C, bookmark: Boolean)
-    fun onMore(viewData: C, view: View)
-    fun onViewMedia(viewData: C, attachmentIndex: Int, view: View?)
-    fun onViewThread(viewData: C)
+    fun onFavourite(viewData: StatusViewData.Concrete, favourite: Boolean, state: SparkButtonState?)
 
-    /**
-     * Open reblog author for the status [viewData].
-     */
-    fun onOpenReblog(viewData: C)
-    fun onExpandedChange(viewData: C, expanded: Boolean)
-    fun onContentHiddenChange(viewData: C, isShowing: Boolean)
+    fun onBookmark(viewData: StatusViewData.Concrete, bookmark: Boolean)
+
+    fun onExpandedChange(viewData: StatusViewData.Concrete, expanded: Boolean)
+
+    fun onContentHiddenChange(viewData: StatusViewData.Concrete, isShowing: Boolean)
 
     /**
      * Called when the status [android.widget.ToggleButton] responsible for collapsing long
@@ -54,25 +52,37 @@ interface StatusActionListener<in C : ConcreteViewData> : LinkListener {
      * @param viewData    The status that is being toggled
      * @param isCollapsed Whether the status content is shown in a collapsed state or fully.
      */
-    fun onContentCollapsedChange(viewData: C, isCollapsed: Boolean)
+    fun onContentCollapsedChange(viewData: StatusViewData.Concrete, isCollapsed: Boolean)
 
-    /**
-     * called when the reblog count has been clicked
-     */
-    fun onShowReblogs(viewData: C) {}
+    fun onVoteInPoll(viewData: StatusViewData.Concrete, pollId: String, choices: List<Int>)
 
-    /**
-     * called when the favourite count has been clicked
-     */
-    fun onShowFavs(viewData: C) {}
+    fun onShowPollResults(viewData: StatusViewData.Concrete)
 
-    fun onVoteInPoll(viewData: C, choices: List<Int>)
+    fun changeFilter(viewData: StatusViewData.Concrete, filtered: Boolean)
 
-    fun onShowPollResults(viewData: C)
+    fun onTranslate(viewData: StatusViewData.Concrete)
 
-    fun onShowEdits(viewData: C) {}
+    fun onUntranslate(viewData: StatusViewData.Concrete)
 
-    fun changeFilter(filtered: Boolean, viewData: C)
+    fun onBlock(accountId: String)
 
-    fun onUntranslate(viewData: C)
+    fun onMute(accountId: String, hideNotifications: Boolean, duration: Int?)
+
+    fun onMuteConversation(viewData: StatusViewData.Concrete, mute: Boolean)
+
+    fun onDelete(viewData: StatusViewData.Concrete)
+
+    fun onRedraft(viewData: StatusViewData.Concrete)
+
+    fun onPin(viewData: StatusViewData.Concrete, pin: Boolean)
+
+    fun onViewMedia(viewData: StatusViewData.Concrete, attachmentIndex: Int)
+
+    fun onViewThread(viewData: StatusViewData.Concrete)
+
+    fun onEdit(viewData: StatusViewData.Concrete)
+
+    fun onReply(viewData: StatusViewData.Concrete)
+
+    fun onReport(viewData: StatusViewData.Concrete)
 }

@@ -185,8 +185,8 @@ class AccountListFragment :
         )
     }
 
-    override fun onViewAccount(id: String) {
-        activity?.startActivityWithSlideInAnimation(AccountActivity.getIntent(requireContext(), id))
+    override fun onViewAccount(accountId: String) {
+        activity?.startActivityWithSlideInAnimation(AccountActivity.newIntent(requireContext(), accountId))
     }
 
     override fun onViewUrl(url: String) {

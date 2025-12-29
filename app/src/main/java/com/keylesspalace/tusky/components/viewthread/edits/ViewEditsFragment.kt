@@ -179,9 +179,9 @@ class ViewEditsFragment :
         viewModel.loadEdits(statusId, force = true, refreshing = true)
     }
 
-    override fun onViewAccount(id: String) {
+    override fun onViewAccount(accountId: String) {
         bottomSheetActivity?.startActivityWithSlideInAnimation(
-            AccountActivity.getIntent(requireContext(), id)
+            AccountActivity.newIntent(requireContext(), accountId)
         )
     }
 

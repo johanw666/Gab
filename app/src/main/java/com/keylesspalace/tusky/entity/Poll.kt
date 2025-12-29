@@ -1,9 +1,12 @@
 package com.keylesspalace.tusky.entity
 
+import androidx.compose.runtime.Immutable
+import androidx.compose.runtime.Stable
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import java.util.Date
 
+@Immutable
 @JsonClass(generateAdapter = true)
 data class Poll(
     val id: String,
@@ -44,6 +47,7 @@ data class Poll(
     )
 }
 
+@Stable
 @JsonClass(generateAdapter = true)
 data class PollOption(
     val title: String,

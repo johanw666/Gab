@@ -6,6 +6,7 @@ androidx-browser = "1.9.0"
 androidx-cardview = "1.0.0"
 androidx-compose-bom = "2025.09.01"
 androidx-constraintlayout = "2.2.1"
+androidx-constraintlayout-compose = "1.1.1"
 androidx-core = "1.17.0"
 androidx-drawerlayout = "1.2.0"
 androidx-exifinterface = "1.4.1"
@@ -24,17 +25,18 @@ androidx-testing = "2.2.0"
 androidx-viewpager2 = "1.1.0"
 androidx-work = "2.10.5"
 androidx-room = "2.7.2"
+coil = "3.3.0"
 conscrypt = "2.5.3"
 coroutines = "1.10.2"
 diffx = "1.2.4"
 emoji2 = "1.5.0"
 filemoji-compat = "3.3.1"
 glide = "5.0.5"
-glide-compose = "1.0.0-beta07"
 glide-animation-plugin = "3.0.5"
 hilt = "2.57.2"
-kotlin = "2.2.10"
 image-cropper = "4.6.0"
+kotlin = "2.2.10"
+ktxml = "1.0.0"
 material = "1.13.0"
 material-drawer = "9.0.2"
 mockito-inline = "5.2.0"
@@ -45,7 +47,7 @@ okhttp = "5.2.0"
 okio = "3.16.0"
 retrofit = "3.0.0"
 robolectric = "4.14.1"
-sparkbutton = "4.2.0"
+sparkbutton-compose = "1.0.0-beta1"
 touchimageview = "3.7.1"
 turbine = "1.2.1"
 unified-push-connector = "3.0.10"
@@ -75,6 +77,7 @@ androidx-compose-material = { group = "androidx.compose.material3", name = "mate
 androidx-compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
 androidx-compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
 androidx-constraintlayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "androidx-constraintlayout" }
+androidx-constraintlayout-compose = { module = "androidx.constraintlayout:constraintlayout-compose", version.ref = "androidx-constraintlayout-compose" }
 androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "androidx-core" }
 androidx-core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "androidx-splashscreen" }
 androidx-core-testing = { module = "androidx.arch.core:core-testing", version.ref = "androidx-testing" }
@@ -107,6 +110,9 @@ androidx-compose-test-manifest = { module = "androidx.compose.ui:ui-test-manifes
 androidx-viewpager2 = { module = "androidx.viewpager2:viewpager2", version.ref = "androidx-viewpager2" }
 androidx-work-runtime-ktx = { module = "androidx.work:work-runtime-ktx", version.ref = "androidx-work" }
 androidx-work-testing = { module = "androidx.work:work-testing", version.ref = "androidx-work" }
+coil-compose = { group = "io.coil-kt.coil3", name = "coil-compose", version.ref = "coil" }
+coil-okhttp = { group = "io.coil-kt.coil3", name = "coil-network-okhttp", version.ref = "coil" }
+coil-gif = { group = "io.coil-kt.coil3", name = "coil-gif", version.ref = "coil" }
 conscrypt-android = { module = "org.conscrypt:conscrypt-android", version.ref = "conscrypt" }
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
 hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "hilt" }
@@ -118,7 +124,6 @@ glide-animation-plugin = { module = "com.github.penfeizhou.android.animation:gli
 glide-compiler = { module = "com.github.bumptech.glide:ksp", version.ref = "glide" }
 glide-core = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
 glide-okhttp3-integration = { module = "com.github.bumptech.glide:okhttp3-integration", version.ref = "glide" }
-glide-compose = { group = "com.github.bumptech.glide", name = "compose", version.ref = "glide-compose" }
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
 image-cropper = { module = "com.vanniktech:android-image-cropper", version.ref = "image-cropper" }
@@ -137,12 +142,13 @@ okio = { module = "com.squareup.okio:okio", version.ref = "okio" }
 retrofit-converter-moshi = { module = "com.squareup.retrofit2:converter-moshi", version.ref = "retrofit" }
 retrofit-core = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 robolectric = { module = "org.robolectric:robolectric", version.ref = "robolectric" }
-sparkbutton = { module = "at.connyduck.sparkbutton:sparkbutton", version.ref = "sparkbutton" }
+sparkbutton-compose = { module = "at.connyduck.sparkbutton:sparkbutton-compose", version.ref = "sparkbutton-compose" }
 touchimageview = { module = "com.github.MikeOrtiz:TouchImageView", version.ref = "touchimageview" }
 turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
 unified-push-connector = { module = "org.unifiedpush.android:connector", version.ref = "unified-push-connector" }
 unified-push-connector-ui = { module = "org.unifiedpush.android:connector-ui", version.ref = "unified-push-connector-ui" }
 xmlwriter = { module = "org.pageseeder.xmlwriter:pso-xmlwriter", version.ref = "xmlwriter" }
+ktxml = { module = "org.kobjects.ktxml:core", version.ref = "ktxml" }
 
 [bundles]
 androidx = ["androidx-core-ktx", "androidx-appcompat", "androidx-fragment-ktx", "androidx-browser", "androidx-swiperefreshlayout",
@@ -150,9 +156,10 @@ androidx = ["androidx-core-ktx", "androidx-appcompat", "androidx-fragment-ktx", 
     "androidx-emoji2-core", "androidx-emoji2-views-core", "androidx-emoji2-view-helper", "androidx-lifecycle-viewmodel-ktx", "androidx-lifecycle-viewmodel-compose",
     "androidx-constraintlayout", "androidx-paging-compose", "androidx-paging-runtime-ktx", "androidx-viewpager2", "androidx-work-runtime-ktx",
     "androidx-core-splashscreen", "androidx-activity", "androidx-activity-compose", "androidx-media3-exoplayer", "androidx-media3-datasource-okhttp",
-    "androidx-media3-ui", "androidx-drawerlayout"]
+    "androidx-media3-ui", "androidx-drawerlayout", "androidx-constraintlayout-compose"]
+coil = ["coil-compose", "coil-okhttp", "coil-gif"]
 filemojicompat = ["filemojicompat-core", "filemojicompat-ui", "filemojicompat-defaults"]
-glide = ["glide-core", "glide-okhttp3-integration", "glide-animation-plugin", "glide-compose"]
+glide = ["glide-core", "glide-okhttp3-integration", "glide-animation-plugin"]
 material-drawer = ["material-drawer-core", "material-drawer-iconics"]
 mockito = ["mockito-kotlin", "mockito-inline"]
 moshi = ["moshi-core", "moshi-adapters"]

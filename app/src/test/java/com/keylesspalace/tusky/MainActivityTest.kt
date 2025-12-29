@@ -125,7 +125,8 @@ class MainActivityTest {
                         displayName = "Conny Duck",
                         note = "This is their bio",
                         url = "https://mastodon.example/@ConnyDuck",
-                        avatar = "https://mastodon.example/system/accounts/avatars/000/150/486/original/ab27d7ddd18a10ea.jpg"
+                        avatar = "https://mastodon.example/system/accounts/avatars/000/150/486/original/ab27d7ddd18a10ea.jpg",
+                        staticAvatar = "https://mastodon.example/system/accounts/avatars/000/150/486/original/ab27d7ddd18a10ea.jpg"
                     ),
                     status = null,
                     report = null

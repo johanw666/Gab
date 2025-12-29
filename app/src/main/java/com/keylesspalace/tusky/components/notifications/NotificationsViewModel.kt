@@ -17,7 +17,6 @@ package com.keylesspalace.tusky.components.notifications
 
 import android.content.SharedPreferences
 import android.util.Log
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
@@ -45,19 +44,18 @@ import com.keylesspalace.tusky.db.AppDatabase
 import com.keylesspalace.tusky.db.entity.NotificationPolicyEntity
 import com.keylesspalace.tusky.entity.Filter
 import com.keylesspalace.tusky.entity.Notification
-import com.keylesspalace.tusky.entity.Status
 import com.keylesspalace.tusky.network.MastodonApi
 import com.keylesspalace.tusky.settings.PrefKeys
 import com.keylesspalace.tusky.usecase.NotificationPolicyUsecase
-import com.keylesspalace.tusky.usecase.TimelineCases
 import com.keylesspalace.tusky.viewdata.NotificationViewData
 import com.keylesspalace.tusky.viewdata.StatusViewData
 import com.keylesspalace.tusky.viewdata.TranslationViewData
+import com.keylesspalace.tusky.viewmodel.StatusActionsViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import java.util.Locale
 import javax.inject.Inject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -72,14 +70,13 @@ import retrofit2.HttpException
 
 @HiltViewModel
 class NotificationsViewModel @Inject constructor(
-    private val timelineCases: TimelineCases,
     private val api: MastodonApi,
     eventHub: EventHub,
     private val accountManager: AccountManager,
     private val preferences: SharedPreferences,
     private val db: AppDatabase,
     private val notificationPolicyUsecase: NotificationPolicyUsecase
-) : ViewModel() {
+) : StatusActionsViewModel(api, eventHub) {
 
     val activeAccountFlow = accountManager.activeAccount(viewModelScope)
     private val accountId: Long = activeAccountFlow.value!!.id
@@ -194,48 +191,8 @@ class NotificationsViewModel @Inject constructor(
         }
     }
 
-    fun reblog(
-        reblog: Boolean,
-        status: StatusViewData.Concrete,
-        visibility: Status.Visibility = Status.Visibility.PUBLIC
-    ): Job = viewModelScope.launch {
-        timelineCases.reblog(status.actionableId, reblog, visibility).onFailure { t ->
-            ifExpected(t) {
-                Log.w(TAG, "Failed to reblog status " + status.actionableId, t)
-            }
-        }
-    }
-
-    fun favorite(favorite: Boolean, status: StatusViewData.Concrete): Job = viewModelScope.launch {
-        timelineCases.favourite(status.actionableId, favorite).onFailure { t ->
-            ifExpected(t) {
-                Log.d(TAG, "Failed to favourite status " + status.actionableId, t)
-            }
-        }
-    }
-
-    fun bookmark(bookmark: Boolean, status: StatusViewData.Concrete): Job = viewModelScope.launch {
-        timelineCases.bookmark(status.actionableId, bookmark).onFailure { t ->
-            ifExpected(t) {
-                Log.d(TAG, "Failed to bookmark status " + status.actionableId, t)
-            }
-        }
-    }
-
-    fun voteInPoll(choices: List<Int>, status: StatusViewData.Concrete) = viewModelScope.launch {
-        val poll = status.status.actionableStatus.poll ?: run {
-            Log.d(TAG, "No poll on status ${status.id}")
-            return@launch
-        }
-        timelineCases.voteInPoll(status.actionableId, poll.id, choices).onFailure { t ->
-            ifExpected(t) {
-                Log.d(TAG, "Failed to vote in poll: " + status.actionableId, t)
-            }
-        }
-    }
-
     fun showPollResults(status: StatusViewData.Concrete) = viewModelScope.launch {
-        timelineCases.showPollResults(status.actionableId)
+        // TODO
     }
 
     fun changeExpanded(expanded: Boolean, status: StatusViewData.Concrete) {
@@ -286,7 +243,7 @@ class NotificationsViewModel @Inject constructor(
 
     suspend fun translate(status: StatusViewData.Concrete): NetworkResult<Unit> {
         translations.value += (status.id to TranslationViewData.Loading)
-        return timelineCases.translate(status.actionableId)
+        return api.translate(status.actionableId, Locale.getDefault().language)
             .map { translation ->
                 translations.value += (status.id to TranslationViewData.Loaded(translation))
             }
@@ -412,10 +369,9 @@ class NotificationsViewModel @Inject constructor(
 
     private suspend fun loadMoreFailed(placeholderId: String, e: Exception) {
         Log.w(TAG, "failed loading notifications", e)
-        val activeAccount = accountManager.activeAccount!!
         db.notificationsDao()
             .insertNotification(
-                LoadMorePlaceholder(placeholderId, loading = false).toNotificationEntity(activeAccount.id)
+                LoadMorePlaceholder(placeholderId, loading = false).toNotificationEntity(accountId)
             )
     }
 

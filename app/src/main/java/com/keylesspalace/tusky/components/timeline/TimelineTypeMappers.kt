@@ -40,6 +40,7 @@ fun TimelineAccount.toEntity(tuskyAccountId: Long): TimelineAccountEntity {
         displayName = name,
         url = url,
         avatar = avatar,
+        staticAvatar = staticAvatar,
         emojis = emojis,
         note = note,
         bot = bot
@@ -55,6 +56,7 @@ fun TimelineAccountEntity.toAccount(): TimelineAccount {
         note = note,
         url = url,
         avatar = avatar,
+        staticAvatar = staticAvatar,
         bot = bot,
         emojis = emojis
     )

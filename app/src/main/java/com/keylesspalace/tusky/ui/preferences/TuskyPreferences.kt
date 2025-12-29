@@ -16,11 +16,43 @@
 package com.keylesspalace.tusky.ui.preferences
 
 import androidx.compose.runtime.Immutable
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.Hyphens
+import androidx.compose.ui.unit.TextUnit
+import androidx.compose.ui.unit.sp
+import com.keylesspalace.tusky.components.preference.PreferencesFragment
 import com.keylesspalace.tusky.settings.AppTheme
 
 @Immutable
 data class TuskyPreferences(
     val theme: AppTheme = AppTheme.DEFAULT,
 
-    val useBlurhash: Boolean = false
+    val statusTextStyles: StatusTextStyles = StatusTextStyles(),
+
+    val useBlurhash: Boolean = false,
+    val showBotBadge: Boolean = true,
+    val animateCustomEmojis: Boolean = false,
+    val animateAvatars: Boolean = false,
+    val useAbsoluteTime: Boolean = false,
+    val showStatsInline: Boolean = false,
+    val showLinkPreviews: Boolean = false,
+    val readingOrder: PreferencesFragment.ReadingOrder = PreferencesFragment.ReadingOrder.NEWEST_FIRST,
+    val wellbeing: WellbeingSettings = WellbeingSettings()
 )
+
+@Immutable
+data class StatusTextStyles(
+    val small: TextStyle = textStyle(fontSize = 14.sp),
+    val medium: TextStyle = textStyle(fontSize = 16.sp),
+    val large: TextStyle = textStyle(fontSize = 18.sp)
+)
+
+@Immutable
+data class WellbeingSettings(
+    val limitTimelineNotifications: Boolean = false,
+    val hideQuantitativeStatsOnPosts: Boolean = false,
+    val hideQuantitativeStatsOnProfiles: Boolean = false
+)
+
+// 1.3f = about the same as android:lineSpacingMultiplier="1.1"
+fun textStyle(fontSize: TextUnit) = TextStyle(fontSize = fontSize, lineHeight = fontSize * 1.3f, hyphens = Hyphens.Auto)

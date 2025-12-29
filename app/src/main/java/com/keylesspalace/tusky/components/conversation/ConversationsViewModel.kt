@@ -16,7 +16,6 @@
 package com.keylesspalace.tusky.components.conversation
 
 import android.util.Log
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
@@ -24,10 +23,17 @@ import androidx.paging.PagingConfig
 import androidx.paging.cachedIn
 import androidx.paging.map
 import at.connyduck.calladapter.networkresult.fold
+import com.keylesspalace.tusky.appstore.EventHub
+import com.keylesspalace.tusky.appstore.PollVoteEvent
+import com.keylesspalace.tusky.appstore.StatusChangedEvent
 import com.keylesspalace.tusky.db.AccountManager
 import com.keylesspalace.tusky.db.AppDatabase
+import com.keylesspalace.tusky.db.ConversationsDao
+import com.keylesspalace.tusky.entity.Poll
+import com.keylesspalace.tusky.entity.Status
 import com.keylesspalace.tusky.network.MastodonApi
-import com.keylesspalace.tusky.usecase.TimelineCases
+import com.keylesspalace.tusky.viewdata.StatusViewData
+import com.keylesspalace.tusky.viewmodel.StatusActionsViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.map
@@ -35,11 +41,13 @@ import kotlinx.coroutines.launch
 
 @HiltViewModel
 class ConversationsViewModel @Inject constructor(
-    private val timelineCases: TimelineCases,
-    private val database: AppDatabase,
     private val api: MastodonApi,
+    database: AppDatabase,
+    eventHub: EventHub,
     accountManager: AccountManager
-) : ViewModel() {
+) : StatusActionsViewModel(api, eventHub) {
+
+    private val conversationsDao: ConversationsDao = database.conversationDao()
 
     val activeAccountFlow = accountManager.activeAccount(viewModelScope)
     private val accountId: Long = activeAccountFlow.value!!.id
@@ -47,11 +55,12 @@ class ConversationsViewModel @Inject constructor(
     @OptIn(ExperimentalPagingApi::class)
     val conversationFlow = Pager(
         config = PagingConfig(
-            pageSize = 30
+            pageSize = 30,
+            initialLoadSize = 40
         ),
         remoteMediator = ConversationsRemoteMediator(api, database, this),
         pagingSourceFactory = {
-            database.conversationDao().conversationsForAccount(accountId)
+            conversationsDao.conversationsForAccount(accountId)
         }
     )
         .flow
@@ -60,131 +69,72 @@ class ConversationsViewModel @Inject constructor(
         }
         .cachedIn(viewModelScope)
 
-    fun favourite(favourite: Boolean, conversation: ConversationViewData) {
+    init {
         viewModelScope.launch {
-            timelineCases.favourite(conversation.lastStatus.id, favourite).fold({
-                val newConversation = conversation.toEntity(
-                    accountId = accountId,
-                    favourited = favourite
-                )
-
-                saveConversationToDb(newConversation)
-            }, { e ->
-                Log.w(TAG, "failed to favourite status", e)
-            })
+            eventHub.events.collect { event ->
+                when (event) {
+                    is StatusChangedEvent -> updateStatus(event.status)
+                    is PollVoteEvent -> handlePollVotedEvent(event.statusId, event.poll)
+                }
+            }
         }
     }
 
-    fun bookmark(bookmark: Boolean, conversation: ConversationViewData) {
-        viewModelScope.launch {
-            timelineCases.bookmark(conversation.lastStatus.id, bookmark).fold({
-                val newConversation = conversation.toEntity(
-                    accountId = accountId,
-                    bookmarked = bookmark
-                )
-
-                saveConversationToDb(newConversation)
-            }, { e ->
-                Log.w(TAG, "failed to bookmark status", e)
-            })
-        }
-    }
-
-    fun voteInPoll(choices: List<Int>, conversation: ConversationViewData) {
-        viewModelScope.launch {
-            timelineCases.voteInPoll(
-                conversation.lastStatus.id,
-                conversation.lastStatus.status.poll?.id!!,
-                choices
-            )
-                .fold({ poll ->
-                    val newConversation = conversation.toEntity(
-                        accountId = accountId,
-                        poll = poll
-                    )
-
-                    saveConversationToDb(newConversation)
-                }, { e ->
-                    Log.w(TAG, "failed to vote in poll", e)
-                })
-        }
-    }
-
-    fun showPollResults(conversation: ConversationViewData) = viewModelScope.launch {
-        conversation.lastStatus.status.poll?.let { poll ->
-            saveConversationToDb(
-                conversation.toEntity(accountId = accountId, poll = poll.copy(voted = true))
+    fun showPollResults(statusViewData: StatusViewData.Concrete) = viewModelScope.launch {
+        statusViewData.status.poll?.let { poll ->
+            updateStatus(
+                statusViewData.status.copy(poll = poll.copy(voted = true))
             )
         }
     }
 
-    fun expandHiddenStatus(expanded: Boolean, conversation: ConversationViewData) {
+    fun expandHiddenStatus(expanded: Boolean, statusViewData: StatusViewData.Concrete) {
         viewModelScope.launch {
-            val newConversation = conversation.toEntity(
-                accountId = accountId,
-                expanded = expanded
-            )
-            saveConversationToDb(newConversation)
+            conversationsDao.setExpanded(accountId, statusViewData.id, expanded)
         }
     }
 
-    fun collapseLongStatus(collapsed: Boolean, conversation: ConversationViewData) {
+    fun collapseLongStatus(collapsed: Boolean, statusViewData: StatusViewData.Concrete) {
         viewModelScope.launch {
-            val newConversation = conversation.toEntity(
-                accountId = accountId,
-                collapsed = collapsed
-            )
-            saveConversationToDb(newConversation)
+            conversationsDao.setContentCollapsed(accountId, statusViewData.id, collapsed)
         }
     }
 
-    fun showContent(showing: Boolean, conversation: ConversationViewData) {
+    fun showContent(showing: Boolean, statusViewData: StatusViewData.Concrete) {
         viewModelScope.launch {
-            val newConversation = conversation.toEntity(
-                accountId = accountId,
-                showingHiddenContent = showing
-            )
-            saveConversationToDb(newConversation)
+            conversationsDao.setContentShowing(accountId, statusViewData.id, showing)
         }
     }
 
     fun remove(conversation: ConversationViewData) {
         viewModelScope.launch {
-            try {
-                api.deleteConversation(conversationId = conversation.id)
-
-                database.conversationDao().delete(
-                    id = conversation.id,
-                    accountId = accountId
-                )
-            } catch (e: Exception) {
-                Log.w(TAG, "failed to delete conversation", e)
-            }
+            api.deleteConversation(conversationId = conversation.id).fold(
+                onSuccess = {
+                    conversationsDao.delete(
+                        id = conversation.id,
+                        tuskyAccountId = accountId
+                    )
+                },
+                onFailure = { e ->
+                    Log.w(TAG, "failed to delete conversation", e)
+                }
+            )
         }
     }
 
-    fun muteConversation(conversation: ConversationViewData) {
-        viewModelScope.launch {
-            try {
-                timelineCases.muteConversation(
-                    conversation.lastStatus.id,
-                    !conversation.lastStatus.status.muted
-                )
-
-                val newConversation = conversation.toEntity(
-                    accountId = accountId,
-                    muted = !conversation.lastStatus.status.muted
-                )
-
-                database.conversationDao().insert(newConversation)
-            } catch (e: Exception) {
-                Log.w(TAG, "failed to mute conversation", e)
-            }
-        }
+    private suspend fun updateStatus(status: Status) {
+        conversationsDao.update(
+            status = status,
+            tuskyAccountId = accountId
+        )
     }
 
-    private suspend fun saveConversationToDb(conversation: ConversationEntity) {
-        database.conversationDao().insert(conversation)
+    private suspend fun handlePollVotedEvent(statusId: String, poll: Poll) {
+        conversationsDao.updatePoll(
+            tuskyAccountId = accountId,
+            statusId = statusId,
+            poll = poll
+        )
     }
 
     companion object {

@@ -15,8 +15,8 @@
 package com.keylesspalace.tusky.interfaces
 
 interface AccountActionListener {
-    fun onViewAccount(id: String)
-    fun onMute(mute: Boolean, id: String, position: Int, notifications: Boolean)
-    fun onBlock(block: Boolean, id: String, position: Int)
+    fun onViewAccount(accountId: String)
+    fun onMute(mute: Boolean, accountId: String, position: Int, notifications: Boolean)
+    fun onBlock(block: Boolean, accountId: String, position: Int)
     fun onRespondToFollowRequest(accept: Boolean, accountIdRequestingFollow: String, position: Int)
 }

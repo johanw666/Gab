@@ -546,7 +546,7 @@ class MainActivity : BottomSheetActivity(), ActionButtonActivity, MenuProvider {
         val composeOptions =
             intent.getParcelableExtraCompat<ComposeActivity.ComposeOptions>(COMPOSE_OPTIONS)
         val composeIntent = if (composeOptions != null) {
-            ComposeActivity.startIntent(this, composeOptions)
+            ComposeActivity.newIntent(this, composeOptions)
         } else {
             Intent(this, ComposeActivity::class.java).apply {
                 action = intent.action
@@ -909,7 +909,7 @@ class MainActivity : BottomSheetActivity(), ActionButtonActivity, MenuProvider {
     private fun handleProfileClick(profile: IProfile, current: Boolean): Boolean {
         // open profile when active image was clicked
         if (current) {
-            val intent = AccountActivity.getIntent(this, activeAccount.accountId)
+            val intent = AccountActivity.newIntent(this, activeAccount.accountId)
             startActivityWithSlideInAnimation(intent)
             return false
         }

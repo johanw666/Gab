@@ -932,7 +932,7 @@ class AccountActivity : BottomSheetActivity(), ActionButtonActivity, MenuProvide
                     kind = ComposeActivity.ComposeKind.NEW
                 )
             }
-            val intent = ComposeActivity.startIntent(this, options)
+            val intent = ComposeActivity.newIntent(this, options)
             startActivity(intent)
         }
     }
@@ -942,9 +942,9 @@ class AccountActivity : BottomSheetActivity(), ActionButtonActivity, MenuProvide
         startActivityWithSlideInAnimation(intent)
     }
 
-    override fun onViewAccount(id: String) {
+    override fun onViewAccount(accountId: String) {
         val intent = Intent(this, AccountActivity::class.java)
-        intent.putExtra("id", id)
+        intent.putExtra("id", accountId)
         startActivityWithSlideInAnimation(intent)
     }
 
@@ -1115,7 +1115,7 @@ class AccountActivity : BottomSheetActivity(), ActionButtonActivity, MenuProvide
         private val argbEvaluator = ArgbEvaluator()
 
         @JvmStatic
-        fun getIntent(context: Context, accountId: String): Intent {
+        fun newIntent(context: Context, accountId: String): Intent {
             val intent = Intent(context, AccountActivity::class.java)
             intent.putExtra(KEY_ACCOUNT_ID, accountId)
             return intent

@@ -61,7 +61,8 @@ class BottomSheetActivityTest {
         displayName = "Ad Min",
         note = "This is their bio",
         url = "http://mastodon.foo.bar/@User",
-        avatar = ""
+        avatar = "",
+        staticAvatar = ""
     )
     private val accountResult = NetworkResult.success(SearchResult(listOf(account), emptyList(), emptyList()))
 

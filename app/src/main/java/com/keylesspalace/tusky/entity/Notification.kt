@@ -15,6 +15,7 @@
 
 package com.keylesspalace.tusky.entity
 
+import androidx.compose.runtime.Immutable
 import com.keylesspalace.tusky.entity.Notification.Type
 import com.keylesspalace.tusky.entity.Notification.Type.Favourite
 import com.keylesspalace.tusky.entity.Notification.Type.Follow
@@ -29,6 +30,7 @@ import com.keylesspalace.tusky.entity.Notification.Type.Update
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
+@Immutable
 @JsonClass(generateAdapter = true)
 data class Notification(
     val type: Type,

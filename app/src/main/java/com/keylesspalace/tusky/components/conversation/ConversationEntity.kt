@@ -15,6 +15,7 @@
 
 package com.keylesspalace.tusky.components.conversation
 
+import androidx.compose.runtime.Stable
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.TypeConverters
@@ -44,13 +45,21 @@ data class ConversationEntity(
         return ConversationViewData(
             id = id,
             order = order,
-            accounts = accounts,
+            accounts = accounts.sortedBy { account ->
+                // the account that posted last should be first
+                if (account.id == lastStatus.account.id) {
+                    0
+                } else {
+                    1
+                }
+            },
             unread = unread,
             lastStatus = lastStatus.toViewData()
         )
     }
 }
 
+@Stable
 @JsonClass(generateAdapter = true)
 data class ConversationAccountEntity(
     val id: String,
@@ -58,6 +67,7 @@ data class ConversationAccountEntity(
     val username: String,
     val displayName: String,
     val avatar: String,
+    val staticAvatar: String,
     val emojis: List<Emoji>
 ) {
     fun toAccount(): TimelineAccount {
@@ -69,6 +79,7 @@ data class ConversationAccountEntity(
             note = "",
             url = "",
             avatar = avatar,
+            staticAvatar = staticAvatar,
             emojis = emojis
         )
     }
@@ -149,6 +160,7 @@ fun TimelineAccount.toEntity() = ConversationAccountEntity(
     username = username,
     displayName = name,
     avatar = avatar,
+    staticAvatar = staticAvatar,
     emojis = emojis
 )
 

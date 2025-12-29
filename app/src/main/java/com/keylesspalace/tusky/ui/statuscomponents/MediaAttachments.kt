@@ -17,7 +17,6 @@ package com.keylesspalace.tusky.ui.statuscomponents
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.content.res.Configuration.UI_MODE_TYPE_NORMAL
-import android.graphics.drawable.Drawable
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -45,7 +44,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.BiasAlignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.graphics.painter.BitmapPainter
+import androidx.compose.ui.graphics.painter.ColorPainter
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -54,28 +56,34 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.graphics.drawable.toDrawable
-import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
-import com.bumptech.glide.integration.compose.GlideImage
+import coil3.compose.AsyncImage
 import com.keylesspalace.tusky.R
 import com.keylesspalace.tusky.entity.Attachment
+import com.keylesspalace.tusky.entity.Filter
+import com.keylesspalace.tusky.entity.MediaTranslation
+import com.keylesspalace.tusky.ui.LongPressContextMenu
 import com.keylesspalace.tusky.ui.TuskyPreviewTheme
+import com.keylesspalace.tusky.ui.preferences.LocalPreferences
+import com.keylesspalace.tusky.ui.statuscomponents.fake.fourAttachments
 import com.keylesspalace.tusky.ui.tuskyColors
 import com.keylesspalace.tusky.util.BlurHashDecoder
 import com.keylesspalace.tusky.util.getFormattedDescription
 import com.keylesspalace.tusky.util.hasPreviewableAttachment
+import kotlin.math.min
 import kotlin.math.roundToInt
 import kotlin.math.sqrt
 
 @Composable
 fun MediaAttachments(
     attachments: List<Attachment>,
+    translatedDescriptions: List<MediaTranslation>?,
     onOpenAttachment: (Int) -> Unit,
     onMediaHiddenChanged: () -> Unit,
     sensitive: Boolean,
     showMedia: Boolean,
     downloadPreviews: Boolean,
     showBlurhash: Boolean,
+    filter: Filter?,
     modifier: Modifier = Modifier,
 ) {
     if (attachments.isEmpty()) {
@@ -85,26 +93,35 @@ fun MediaAttachments(
     if (downloadPreviews && attachments.hasPreviewableAttachment()) {
         AttachmentPreviewGrid(
             attachments = attachments,
+            translatedDescriptions = translatedDescriptions,
             onOpenAttachment = onOpenAttachment,
             onMediaHiddenChanged = onMediaHiddenChanged,
             sensitive = sensitive,
             showMedia = showMedia,
             showBlurhash = showBlurhash,
+            filter = filter,
             modifier = modifier
         )
     } else {
-        AttachmentDescriptionList(attachments, modifier, onOpenAttachment)
+        AttachmentDescriptionList(
+            attachments = attachments,
+            translatedDescriptions = translatedDescriptions,
+            modifier = modifier,
+            onOpenAttachment = onOpenAttachment
+        )
     }
 }
 
 @Composable
 private fun AttachmentPreviewGrid(
     attachments: List<Attachment>,
+    translatedDescriptions: List<MediaTranslation>?,
     onOpenAttachment: (Int) -> Unit,
     onMediaHiddenChanged: () -> Unit,
     sensitive: Boolean,
     showMedia: Boolean,
     showBlurhash: Boolean,
+    filter: Filter?,
     modifier: Modifier = Modifier,
 ) {
     Box(
@@ -116,6 +133,7 @@ private fun AttachmentPreviewGrid(
 
             MediaItem(
                 attachment = attachment,
+                translation = translatedDescriptions?.getOrNull(0)?.description,
                 onOpenAttachment = { onOpenAttachment(0) },
                 showMedia = showMedia,
                 showBlurhash = showBlurhash,
@@ -132,6 +150,7 @@ private fun AttachmentPreviewGrid(
                 ) {
                     MediaItem(
                         attachment = attachments[0],
+                        translation = translatedDescriptions?.getOrNull(0)?.description,
                         onOpenAttachment = { onOpenAttachment(0) },
                         showMedia = showMedia,
                         showBlurhash = showBlurhash,
@@ -139,6 +158,7 @@ private fun AttachmentPreviewGrid(
                     )
                     MediaItem(
                         attachment = attachments[1],
+                        translation = translatedDescriptions?.getOrNull(1)?.description,
                         onOpenAttachment = { onOpenAttachment(1) },
                         showMedia = showMedia,
                         showBlurhash = showBlurhash,
@@ -147,25 +167,33 @@ private fun AttachmentPreviewGrid(
                 }
             } else {
                 // show next to each other
+
+                // taller image determines aspect ratio for both
+                val aspect = min(aspect1, aspect2).coerceAtLeast(0.6f)
+
                 Row(
                     horizontalArrangement = Arrangement.spacedBy(4.dp),
                     modifier = Modifier.height(IntrinsicSize.Max)
                 ) {
                     MediaItem(
                         attachment = attachments[0],
+                        translation = translatedDescriptions?.getOrNull(0)?.description,
                         onOpenAttachment = { onOpenAttachment(0) },
                         showMedia = showMedia,
                         showBlurhash = showBlurhash,
                         modifier = Modifier
                             .weight(1f)
-                            .aspectRatio(aspect1.coerceAtLeast(0.6f))
+                            .aspectRatio(aspect)
                     )
                     MediaItem(
                         attachment = attachments[1],
+                        translation = translatedDescriptions?.getOrNull(1)?.description,
                         onOpenAttachment = { onOpenAttachment(1) },
                         showMedia = showMedia,
                         showBlurhash = showBlurhash,
-                        modifier = Modifier.weight(1f)
+                        modifier = Modifier
+                            .weight(1f)
+                            .aspectRatio(aspect)
                     )
                 }
             }
@@ -182,6 +210,7 @@ private fun AttachmentPreviewGrid(
                 ) {
                     MediaItem(
                         attachment = attachments[0],
+                        translation = translatedDescriptions?.getOrNull(0)?.description,
                         onOpenAttachment = { onOpenAttachment(0) },
                         showMedia = showMedia,
                         showBlurhash = showBlurhash,
@@ -195,6 +224,7 @@ private fun AttachmentPreviewGrid(
                         val aspectRatio = aspect1.coerceIn(0.6f, 1.6f)
                         MediaItem(
                             attachment = attachments[1],
+                            translation = translatedDescriptions?.getOrNull(1)?.description,
                             onOpenAttachment = { onOpenAttachment(1) },
                             showMedia = showMedia,
                             showBlurhash = showBlurhash,
@@ -204,6 +234,7 @@ private fun AttachmentPreviewGrid(
                         )
                         MediaItem(
                             attachment = attachments[2],
+                            translation = translatedDescriptions?.getOrNull(2)?.description,
                             onOpenAttachment = { onOpenAttachment(2) },
                             showMedia = showMedia,
                             showBlurhash = showBlurhash,
@@ -224,6 +255,7 @@ private fun AttachmentPreviewGrid(
                 ) {
                     MediaItem(
                         attachment = attachments[0],
+                        translation = translatedDescriptions?.getOrNull(0)?.description,
                         onOpenAttachment = { onOpenAttachment(0) },
                         showMedia = showMedia,
                         showBlurhash = showBlurhash,
@@ -234,10 +266,13 @@ private fun AttachmentPreviewGrid(
 
                     Column(
                         verticalArrangement = Arrangement.spacedBy(4.dp),
-                        modifier = Modifier.weight(1f)
+                        modifier = Modifier
+                            .weight(1f)
+                            .aspectRatio(aspect0)
                     ) {
                         MediaItem(
                             attachment = attachments[1],
+                            translation = translatedDescriptions?.getOrNull(1)?.description,
                             onOpenAttachment = { onOpenAttachment(1) },
                             showMedia = showMedia,
                             showBlurhash = showBlurhash,
@@ -245,6 +280,7 @@ private fun AttachmentPreviewGrid(
                         )
                         MediaItem(
                             attachment = attachments[2],
+                            translation = translatedDescriptions?.getOrNull(2)?.description,
                             onOpenAttachment = { onOpenAttachment(2) },
                             showMedia = showMedia,
                             showBlurhash = showBlurhash,
@@ -266,6 +302,7 @@ private fun AttachmentPreviewGrid(
                     val aspectRatio = attachments[0].limitedAspectRatio().coerceIn(0.75f, 1.6f)
                     MediaItem(
                         attachment = attachments[0],
+                        translation = translatedDescriptions?.getOrNull(0)?.description,
                         onOpenAttachment = { onOpenAttachment(0) },
                         showMedia = showMedia,
                         showBlurhash = showBlurhash,
@@ -275,6 +312,7 @@ private fun AttachmentPreviewGrid(
                     )
                     MediaItem(
                         attachment = attachments[1],
+                        translation = translatedDescriptions?.getOrNull(1)?.description,
                         onOpenAttachment = { onOpenAttachment(1) },
                         showMedia = showMedia,
                         showBlurhash = showBlurhash,
@@ -291,6 +329,7 @@ private fun AttachmentPreviewGrid(
                     val aspectRatio = attachments[2].limitedAspectRatio().coerceIn(0.75f, 1.6f)
                     MediaItem(
                         attachment = attachments[2],
+                        translation = translatedDescriptions?.getOrNull(2)?.description,
                         onOpenAttachment = { onOpenAttachment(2) },
                         showMedia = showMedia,
                         showBlurhash = showBlurhash,
@@ -300,6 +339,7 @@ private fun AttachmentPreviewGrid(
                     )
                     MediaItem(
                         attachment = attachments[3],
+                        translation = translatedDescriptions?.getOrNull(3)?.description,
                         onOpenAttachment = { onOpenAttachment(3) },
                         showMedia = showMedia,
                         showBlurhash = showBlurhash,
@@ -320,7 +360,9 @@ private fun AttachmentPreviewGrid(
                     }
             ) {
                 Text(
-                    text = if (sensitive) {
+                    text = if (filter?.action == Filter.Action.BLUR) {
+                        stringResource(R.string.status_filter_placeholder_label_format, filter.title)
+                    } else if (sensitive) {
                         stringResource(R.string.post_sensitive_media_title)
                     } else {
                         stringResource(R.string.post_media_hidden_title)
@@ -344,10 +386,8 @@ private fun AttachmentPreviewGrid(
                 modifier = Modifier
                     .align(Alignment.TopStart)
                     .padding(3.dp)
-                    .background(
-                        color = colorScheme.background.copy(alpha = 0.6f),
-                        shape = RoundedCornerShape(7.dp)
-                    )
+                    .clip(RoundedCornerShape(7.dp))
+                    .background(colorScheme.background.copy(alpha = 0.6f))
                     .clickable {
                         onMediaHiddenChanged()
                     }
@@ -357,132 +397,144 @@ private fun AttachmentPreviewGrid(
     }
 }
 
-@OptIn(ExperimentalGlideComposeApi::class)
 @Composable
 private fun MediaItem(
     attachment: Attachment,
+    translation: String?,
     onOpenAttachment: () -> Unit,
     showMedia: Boolean,
     showBlurhash: Boolean,
     modifier: Modifier = Modifier,
     additionalCount: Int = 0,
 ) {
-    Box(
-        modifier = modifier
-            .clickable {
-                onOpenAttachment()
-            }
-    ) {
-        val backgroundAccent = tuskyColors.backgroundAccent
-        val res = LocalContext.current.resources
-
-        if (attachment.previewUrl != null) {
-            val placeholderDrawable: Drawable = remember(attachment) {
-                if (showBlurhash && attachment.blurhash != null) {
-                    // Render blurhashes in similar aspect ratio as the preview image.
-                    // Otherwise they might get cropped differently and look very differently.
-                    val aspectRatio = attachment.aspectRatio()
-                    val height = sqrt(128 / aspectRatio).roundToInt().coerceIn(16, 256)
-                    val width = (height * aspectRatio).roundToInt().coerceIn(16, 256)
-                    BlurHashDecoder.decode(attachment.blurhash, width, height, 1f)?.toDrawable(res)
-                        ?: backgroundAccent.toArgb().toDrawable()
-                } else {
-                    backgroundAccent.toArgb().toDrawable()
-                }
-            }
-
-            GlideImage(
-                model = if (showMedia) attachment.previewUrl else null,
-                contentDescription = attachment.description ?: stringResource(R.string.description_post_media_no_description_placeholder),
-                contentScale = ContentScale.Crop,
-                alignment = attachment.meta?.focus.asAlignment(),
-                modifier = Modifier.fillMaxSize(),
-                requestBuilderTransform = { requestBuilder ->
-                    requestBuilder.placeholder(placeholderDrawable)
-                }
-            )
-        } else {
-            if (showMedia) {
-                Icon(
-                    painter = if (attachment.type == Attachment.Type.AUDIO) {
-                        painterResource(R.drawable.ic_music_box_24dp)
-                    } else {
-                        painterResource(R.drawable.ic_broken_image_24dp)
-                    },
-                    tint = tuskyColors.tertiaryTextColor,
-                    contentDescription = attachment.description ?: stringResource(R.string.description_post_media_no_description_placeholder),
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .background(backgroundAccent)
-                        .padding(16.dp)
-                )
-            } else {
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .background(backgroundAccent)
-                )
-            }
-        }
-
-        if (showMedia) {
-            if (additionalCount > 0) {
-                Box(
-                    modifier
-                        .matchParentSize()
-                        .background(colorScheme.background.copy(alpha = 0.5f))
-                ) {
-                    Text(
-                        text = "+${additionalCount + 1}",
-                        fontSize = 38.sp,
-                        fontWeight = FontWeight.Medium,
-                        color = tuskyColors.primaryTextColor,
-                        modifier = Modifier.align(Alignment.Center)
-                    )
-                }
-            } else {
-                if (!attachment.description.isNullOrBlank()) {
-                    Text(
-                        text = stringResource(R.string.post_media_alt),
-                        color = tuskyColors.secondaryTextColor,
-                        fontSize = 14.sp,
-                        modifier = Modifier
-                            .padding(3.dp)
-                            .background(
-                                color = colorScheme.background.copy(alpha = 0.6f),
-                                shape = RoundedCornerShape(7.dp)
-                            )
-                            .padding(horizontal = 5.dp, vertical = 3.dp)
-                            .align(Alignment.BottomEnd)
-                    )
-                }
-
-                if (attachment.type == Attachment.Type.VIDEO || attachment.type == Attachment.Type.GIFV) {
-                    Icon(
-                        painter = painterResource(R.drawable.ic_play_arrow_24dp),
-                        tint = colorScheme.primary,
-                        contentDescription = null,
-                        modifier = Modifier
-                            .align(Alignment.Center)
-                            .border(
-                                width = 4.dp,
-                                color = colorScheme.primary,
-                                shape = CircleShape
-                            )
-                            .padding(2.dp)
-                            .background(colorScheme.surface.copy(alpha = 0.8f), shape = CircleShape)
-                            .padding(6.dp)
-                            .size(40.dp)
-                    )
-                }
-            }
-        }
+    val attachmentDescription = if (attachment.description.isNullOrBlank()) {
+        stringResource(R.string.description_post_media_no_description_placeholder)
+    } else {
+        translation ?: attachment.description
     }
+
+    LongPressContextMenu(
+        menuContent = {
+            Text(
+                text = attachmentDescription,
+                style = LocalPreferences.current.statusTextStyles.small,
+                color = tuskyColors.secondaryTextColor
+            )
+        },
+        onClick = onOpenAttachment,
+        modifier = modifier,
+        content = {
+            val backgroundAccent = tuskyColors.backgroundAccent
+
+            if (attachment.previewUrl != null) {
+                val placeholder: Painter = remember(attachment) {
+                    if (showBlurhash && attachment.blurhash != null) {
+                        // Render blurhashes in similar aspect ratio as the preview image.
+                        // Otherwise they might get cropped differently and look very differently.
+                        val aspectRatio = attachment.aspectRatio()
+                        val height = sqrt(128 / aspectRatio).roundToInt().coerceIn(16, 256)
+                        val width = (height * aspectRatio).roundToInt().coerceIn(16, 256)
+                        BlurHashDecoder.decode(attachment.blurhash, width, height, 1f)?.let { blurhashBitmap ->
+                            BitmapPainter(blurhashBitmap.asImageBitmap())
+                        } ?: ColorPainter(backgroundAccent)
+                    } else {
+                        ColorPainter(backgroundAccent)
+                    }
+                }
+
+                AsyncImage(
+                    model = if (showMedia) attachment.previewUrl else null,
+                    contentDescription = attachment.description ?: stringResource(R.string.description_post_media_no_description_placeholder),
+                    placeholder = placeholder,
+                    error = placeholder,
+                    contentScale = ContentScale.Crop,
+                    alignment = attachment.meta?.focus.asAlignment(),
+                    modifier = Modifier.fillMaxSize()
+                )
+            } else {
+                if (showMedia) {
+                    Icon(
+                        painter = if (attachment.type == Attachment.Type.AUDIO) {
+                            painterResource(R.drawable.ic_music_box_24dp)
+                        } else {
+                            painterResource(R.drawable.ic_broken_image_24dp)
+                        },
+                        tint = tuskyColors.tertiaryTextColor,
+                        contentDescription = attachmentDescription,
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .background(backgroundAccent)
+                            .padding(16.dp)
+                    )
+                } else {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .background(backgroundAccent)
+                    )
+                }
+            }
+
+            if (showMedia) {
+                if (additionalCount > 0) {
+                    Box(
+                        Modifier
+                            .matchParentSize()
+                            .background(colorScheme.background.copy(alpha = 0.5f))
+                    ) {
+                        Text(
+                            text = "+${additionalCount + 1}",
+                            fontSize = 38.sp,
+                            fontWeight = FontWeight.Medium,
+                            color = tuskyColors.primaryTextColor,
+                            modifier = Modifier.align(Alignment.Center)
+                        )
+                    }
+                } else {
+                    if (!attachment.description.isNullOrBlank()) {
+                        Text(
+                            text = stringResource(R.string.post_media_alt),
+                            color = tuskyColors.secondaryTextColor,
+                            fontSize = 14.sp,
+                            modifier = Modifier
+                                .padding(3.dp)
+                                .background(
+                                    color = colorScheme.background.copy(alpha = 0.6f),
+                                    shape = RoundedCornerShape(7.dp)
+                                )
+                                .padding(horizontal = 5.dp, vertical = 3.dp)
+                                .align(Alignment.BottomEnd)
+                        )
+                    }
+
+                    if (attachment.type == Attachment.Type.VIDEO || attachment.type == Attachment.Type.GIFV) {
+                        Icon(
+                            painter = painterResource(R.drawable.ic_play_arrow_24dp),
+                            tint = colorScheme.primary,
+                            contentDescription = null,
+                            modifier = Modifier
+                                .align(Alignment.Center)
+                                .border(
+                                    width = 4.dp,
+                                    color = colorScheme.primary,
+                                    shape = CircleShape
+                                )
+                                .padding(2.dp)
+                                .background(colorScheme.surface.copy(alpha = 0.8f), shape = CircleShape)
+                                .padding(6.dp)
+                                .size(40.dp)
+                        )
+                    }
+                }
+            }
+        }
+    )
 }
 
 @Composable
 private fun AttachmentDescriptionList(
     attachments: List<Attachment>,
+    translatedDescriptions: List<MediaTranslation>?,
     modifier: Modifier = Modifier,
     onOpenAttachment: (Int) -> Unit
 ) {
@@ -518,7 +570,10 @@ private fun AttachmentDescriptionList(
                 )
                 Spacer(modifier = Modifier.width(4.dp))
                 Text(
-                    text = attachment.getFormattedDescription(LocalContext.current),
+                    text = attachment.getFormattedDescription(
+                        LocalContext.current,
+                        translatedDescriptions?.getOrNull(index)?.description
+                    ),
                     color = tuskyColors.primaryTextColor,
                 )
             }
@@ -549,60 +604,6 @@ private fun Attachment.limitedAspectRatio(): Float {
 @Preview(name = "Dark", uiMode = UI_MODE_NIGHT_YES or UI_MODE_TYPE_NORMAL, heightDp = 1500)
 @Composable
 fun MediaAttachmentsPreview() {
-    val fourAttachments = listOf(
-        Attachment(
-            id = "1",
-            url = "https://example.com/1",
-            previewUrl = "https://example.com/preview/1",
-            type = Attachment.Type.IMAGE,
-            description = "description 1",
-            blurhash = "U8EC~$^REK-:~Tt6Rjxv9FWYxbRlr{s=oxMz"
-        ),
-        Attachment(
-            id = "2",
-            url = "https://example.com/2",
-            previewUrl = null,
-            meta = Attachment.MetaData(
-                original = Attachment.Size(
-                    duration = 123f
-                )
-            ),
-            type = Attachment.Type.AUDIO,
-            description = "description 2",
-            blurhash = "U~Kd[4p#_%mN%MkQv~j1fQfQfQfQ%MkQv~j1"
-        ),
-        Attachment(
-            id = "3",
-            url = "https://example.com/3",
-            previewUrl = "https://example.com/preview/3",
-            type = Attachment.Type.IMAGE,
-            meta = Attachment.MetaData(
-                original = Attachment.Size(
-                    width = 3527,
-                    height = 2351,
-                    aspect = 1.5002127f
-                )
-            ),
-            description = null,
-            blurhash = "UDEfoh0L.3xupB%Kt6oIxmxZRWR\$t2t6R-n*"
-        ),
-        Attachment(
-            id = "4",
-            url = "https://example.com/4",
-            previewUrl = "https://example.com/preview/4",
-            type = Attachment.Type.IMAGE,
-            meta = Attachment.MetaData(
-                original = Attachment.Size(
-                    width = 2352,
-                    height = 3527,
-                    aspect = 0.6668557f
-                )
-            ),
-            description = "description 4",
-            blurhash = "UBB#%BxsI:%GxtWFj?WE0gf%-UIuNZV[tMbY"
-        )
-    )
-
     TuskyPreviewTheme {
         Column(
             verticalArrangement = Arrangement.spacedBy(8.dp),
@@ -612,52 +613,62 @@ fun MediaAttachmentsPreview() {
         ) {
             MediaAttachments(
                 attachments = fourAttachments.take(1),
+                translatedDescriptions = null,
                 onOpenAttachment = { },
                 onMediaHiddenChanged = { },
                 sensitive = false,
                 showMedia = true,
                 downloadPreviews = true,
                 showBlurhash = true,
+                filter = null
             )
 
             MediaAttachments(
                 attachments = fourAttachments.take(2),
+                translatedDescriptions = null,
                 onOpenAttachment = { },
                 onMediaHiddenChanged = { },
                 sensitive = true,
                 showMedia = false,
                 downloadPreviews = true,
                 showBlurhash = true,
+                filter = null
             )
 
             MediaAttachments(
                 attachments = fourAttachments.take(3),
+                translatedDescriptions = null,
                 onOpenAttachment = { },
                 onMediaHiddenChanged = { },
                 sensitive = false,
                 showMedia = true,
                 downloadPreviews = true,
                 showBlurhash = false,
+                filter = null
             )
 
             MediaAttachments(
                 attachments = fourAttachments,
+                translatedDescriptions = null,
                 onOpenAttachment = { },
                 onMediaHiddenChanged = { },
                 sensitive = false,
                 showMedia = true,
                 downloadPreviews = true,
                 showBlurhash = true,
+                filter = null
             )
 
             MediaAttachments(
                 attachments = fourAttachments,
+                translatedDescriptions = null,
                 onOpenAttachment = { },
                 onMediaHiddenChanged = { },
                 sensitive = false,
                 showMedia = true,
                 downloadPreviews = false,
                 showBlurhash = true,
+                filter = null
             )
         }
     }

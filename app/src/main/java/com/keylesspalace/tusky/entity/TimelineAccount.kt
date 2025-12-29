@@ -15,6 +15,7 @@
 
 package com.keylesspalace.tusky.entity
 
+import androidx.compose.runtime.Immutable
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
@@ -22,6 +23,7 @@ import com.squareup.moshi.JsonClass
  * Same as [Account], but only with the attributes required in timelines.
  * Prefer this class over [Account] because it uses way less memory & deserializes faster from json.
  */
+@Immutable
 @JsonClass(generateAdapter = true)
 data class TimelineAccount(
     val id: String,
@@ -31,6 +33,7 @@ data class TimelineAccount(
     @Json(name = "display_name") val displayName: String? = null,
     val url: String,
     val avatar: String,
+    @Json(name = "avatar_static") val staticAvatar: String,
     val note: String,
     val bot: Boolean = false,
     // optional for backward compatibility

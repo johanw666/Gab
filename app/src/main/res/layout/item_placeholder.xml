@@ -63,7 +63,6 @@
         app:layout_constraintStart_toEndOf="@id/avatarPlaceholder"
         app:layout_constraintTop_toBottomOf="@id/namePlaceholder" />
 
-
     <ImageButton
         android:id="@+id/replyButtonPlaceholder"
         style="@style/TuskyImageButton"
@@ -120,8 +119,7 @@
         app:layout_constraintStart_toEndOf="@id/favouriteButtonPlaceholder"
         app:layout_constraintTop_toTopOf="@id/replyButtonPlaceholder"
         app:srcCompat="@drawable/ic_bookmark_24dp"
-        app:tint="?attr/placeholderColor"
-        sparkbutton:activeImage="@drawable/ic_bookmark_24dp_filled" />
+        app:tint="?attr/placeholderColor" />
 
     <ImageButton
         android:id="@+id/moreButtonPlaceHolder"

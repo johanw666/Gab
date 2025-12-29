@@ -105,7 +105,7 @@ class AccountMediaGridAdapter(
                     .centerInside()
                     .into(imageView)
 
-                imageView.contentDescription = item.attachment.getFormattedDescription(context)
+                imageView.contentDescription = item.attachment.getFormattedDescription(context, null)
             } else if (item.sensitive && !item.isRevealed) {
                 overlay.show()
                 overlay.setImageDrawable(mediaHiddenDrawable)
@@ -135,7 +135,7 @@ class AccountMediaGridAdapter(
                     .centerInside()
                     .into(imageView)
 
-                imageView.contentDescription = item.attachment.getFormattedDescription(context)
+                imageView.contentDescription = item.attachment.getFormattedDescription(context, null)
             }
 
             holder.binding.root.setOnClickListener {

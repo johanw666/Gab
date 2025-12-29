@@ -241,45 +241,32 @@ class ScheduledStatusActivity : BaseActivity() {
                         )
                         LazyColumn(
                             state = listState,
-                            modifier = Modifier.fillMaxSize()
+                            modifier = Modifier.fillMaxSize(),
+                            horizontalAlignment = Alignment.CenterHorizontally
                         ) {
                             items(
                                 count = pagingItems.itemCount,
                                 key = pagingItems.itemKey { it.id }
                             ) { index ->
                                 pagingItems[index]?.let { status ->
-                                    Box(
-                                        modifier = Modifier.fillMaxWidth()
-                                    ) {
-                                        ScheduledStatus(
-                                            status = status,
-                                            modifier = Modifier
-                                                .widthIn(max = 640.dp)
-                                                .align(Alignment.Center),
-                                            onDelete = {
-                                                showDeleteConfirmation = status
-                                            }
-                                        )
-                                    }
+                                    ScheduledStatus(
+                                        status = status,
+                                        modifier = Modifier
+                                            .widthIn(max = 640.dp),
+                                        onDelete = {
+                                            showDeleteConfirmation = status
+                                        }
+                                    )
                                 }
                             }
 
                             item(key = "bottomSpacer") {
-                                Column(
-                                    modifier = Modifier
-                                        .fillMaxSize()
-                                ) {
+                                Column {
                                     Spacer(
-                                        modifier = Modifier
-                                            .windowInsetsBottomHeight(WindowInsets.systemBars)
-                                            .widthIn(min = 640.dp)
-                                            .align(Alignment.CenterHorizontally)
+                                        modifier = Modifier.windowInsetsBottomHeight(WindowInsets.systemBars)
                                     )
                                     Spacer(
-                                        modifier = Modifier
-                                            .height(dimensionResource(R.dimen.recyclerview_bottom_padding_no_actionbutton))
-                                            .widthIn(min = 640.dp)
-                                            .align(Alignment.CenterHorizontally)
+                                        modifier = Modifier.height(dimensionResource(R.dimen.recyclerview_bottom_padding_no_actionbutton))
                                     )
                                 }
                             }
@@ -428,6 +415,7 @@ class ScheduledStatusActivity : BaseActivity() {
 
             MediaAttachments(
                 attachments = status.attachments,
+                translatedDescriptions = null,
                 onOpenAttachment = { index ->
                     val attachmentViewData = status.attachments.map { attachment ->
                         AttachmentViewData(
@@ -448,6 +436,7 @@ class ScheduledStatusActivity : BaseActivity() {
                 showMedia = status.mediaVisible,
                 downloadPreviews = LocalAccount.current?.mediaPreviewEnabled ?: true,
                 showBlurhash = LocalPreferences.current.useBlurhash,
+                filter = null,
                 modifier = Modifier.padding(top = 12.dp, start = 16.dp, end = 16.dp)
             )
             status.poll?.let { poll ->
@@ -538,7 +527,7 @@ class ScheduledStatusActivity : BaseActivity() {
     }
 
     private fun edit(item: ScheduledStatusViewData) {
-        val intent = ComposeActivity.startIntent(
+        val intent = ComposeActivity.newIntent(
             this,
             ComposeActivity.ComposeOptions(
                 scheduledTootId = item.id,

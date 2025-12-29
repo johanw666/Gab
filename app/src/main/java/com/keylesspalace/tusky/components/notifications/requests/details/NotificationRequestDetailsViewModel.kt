@@ -16,7 +16,6 @@
 package com.keylesspalace.tusky.components.notifications.requests.details
 
 import android.util.Log
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
@@ -30,18 +29,18 @@ import com.keylesspalace.tusky.appstore.BlockEvent
 import com.keylesspalace.tusky.appstore.EventHub
 import com.keylesspalace.tusky.appstore.MuteEvent
 import com.keylesspalace.tusky.appstore.StatusChangedEvent
-import com.keylesspalace.tusky.components.timeline.util.ifExpected
 import com.keylesspalace.tusky.db.AccountManager
 import com.keylesspalace.tusky.entity.Status
 import com.keylesspalace.tusky.network.MastodonApi
-import com.keylesspalace.tusky.usecase.TimelineCases
 import com.keylesspalace.tusky.viewdata.NotificationViewData
 import com.keylesspalace.tusky.viewdata.StatusViewData
 import com.keylesspalace.tusky.viewdata.TranslationViewData
+import com.keylesspalace.tusky.viewmodel.StatusActionsViewModel
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import dagger.hilt.android.lifecycle.HiltViewModel
+import java.util.Locale
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -52,11 +51,10 @@ import kotlinx.coroutines.launch
 class NotificationRequestDetailsViewModel @AssistedInject constructor(
     val api: MastodonApi,
     val accountManager: AccountManager,
-    val timelineCases: TimelineCases,
     val eventHub: EventHub,
     @Assisted("notificationRequestId") val notificationRequestId: String,
     @Assisted("accountId") val accountId: String
-) : ViewModel() {
+) : StatusActionsViewModel(api, eventHub) {
 
     var currentSource: NotificationRequestDetailsPagingSource? = null
 
@@ -134,6 +132,12 @@ class NotificationRequestDetailsViewModel @AssistedInject constructor(
         }
     }
 
+    fun changeFilter(filtered: Boolean, status: StatusViewData.Concrete) {
+        viewModelScope.launch {
+            updateStatusViewData(status.id) { it.copy(filterActive = filtered) }
+        }
+    }
+
     private fun updateStatus(status: Status) {
         val position = notificationData.indexOfFirst { it.asStatusOrNull()?.id == status.id }
         if (position == -1) {
@@ -158,30 +162,6 @@ class NotificationRequestDetailsViewModel @AssistedInject constructor(
         currentSource?.invalidate()
     }
 
-    fun reblog(reblog: Boolean, status: StatusViewData.Concrete, visibility: Status.Visibility = Status.Visibility.PUBLIC) = viewModelScope.launch {
-        timelineCases.reblog(status.actionableId, reblog, visibility).onFailure { t ->
-            ifExpected(t) {
-                Log.w(TAG, "Failed to reblog status " + status.actionableId, t)
-            }
-        }
-    }
-
-    fun favorite(favorite: Boolean, status: StatusViewData.Concrete) = viewModelScope.launch {
-        timelineCases.favourite(status.actionableId, favorite).onFailure { t ->
-            ifExpected(t) {
-                Log.w(TAG, "Failed to favourite status " + status.actionableId, t)
-            }
-        }
-    }
-
-    fun bookmark(bookmark: Boolean, status: StatusViewData.Concrete) = viewModelScope.launch {
-        timelineCases.bookmark(status.actionableId, bookmark).onFailure { t ->
-            ifExpected(t) {
-                Log.w(TAG, "Failed to favourite status " + status.actionableId, t)
-            }
-        }
-    }
-
     fun changeExpanded(expanded: Boolean, status: StatusViewData.Concrete) {
         updateStatusViewData(status.id) { it.copy(isExpanded = expanded) }
     }
@@ -194,27 +174,21 @@ class NotificationRequestDetailsViewModel @AssistedInject constructor(
         updateStatusViewData(status.id) { it.copy(isCollapsed = isCollapsed) }
     }
 
-    fun voteInPoll(choices: List<Int>, status: StatusViewData.Concrete) = viewModelScope.launch {
-        val poll = status.status.actionableStatus.poll ?: run {
-            Log.w(TAG, "No poll on status ${status.id}")
-            return@launch
+    fun showPollResults(viewData: StatusViewData.Concrete) {
+        updateStatusViewData(viewData.id) { viewData ->
+            viewData.copy(
+                status = viewData.status.copy(
+                    poll = viewData.status.poll?.copy(voted = true)
+                )
+            )
         }
-        timelineCases.voteInPoll(status.actionableId, poll.id, choices).onFailure { t ->
-            ifExpected(t) {
-                Log.w(TAG, "Failed to vote in poll: " + status.actionableId, t)
-            }
-        }
-    }
-
-    fun showPollResults(status: StatusViewData.Concrete) = viewModelScope.launch {
-        timelineCases.showPollResults(status.actionableId)
     }
 
     suspend fun translate(status: StatusViewData.Concrete): NetworkResult<Unit> {
         updateStatusViewData(status.id) { viewData ->
             viewData.copy(translation = TranslationViewData.Loading)
         }
-        return timelineCases.translate(status.actionableId)
+        return api.translate(status.actionableId, Locale.getDefault().language)
             .map { translation ->
                 updateStatusViewData(status.id) { viewData ->
                     viewData.copy(translation = TranslationViewData.Loaded(translation))

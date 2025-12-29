@@ -527,7 +527,7 @@ interface MastodonApi {
     ): Response<List<Conversation>>
 
     @DELETE("/api/v1/conversations/{id}")
-    suspend fun deleteConversation(@Path("id") conversationId: String)
+    suspend fun deleteConversation(@Path("id") conversationId: String): NetworkResult<Unit>
 
     @FormUrlEncoded
     @POST("api/v2/filters")

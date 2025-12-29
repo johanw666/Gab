@@ -62,6 +62,7 @@ val tuskyGrey95 = Color(0xFFEBEFF4)
 private val LightColorScheme = lightColorScheme(
     primary = tuskyBlueDark,
     onPrimary = Color.White,
+    inversePrimary = tuskyBlueLight,
     secondary = tuskyBlueDark,
     onSecondary = Color.White,
     surface = tuskyGrey95,
@@ -81,13 +82,18 @@ private val LightTuskyColorScheme = TuskyColorScheme(
     primaryTextColor = tuskyGrey10,
     secondaryTextColor = tuskyGrey20,
     tertiaryTextColor = tuskyGrey30,
+    disabledTextColor = tuskyGrey70,
     backgroundAccent = tuskyGrey70,
-    windowBackground = tuskyGrey80
+    windowBackground = tuskyGrey80,
+    favoriteButtonActiveColor = tuskyOrange,
+    bookmarkButtonActiveColor = tuskyGreenDark,
+    placeholderColor = tuskyGrey90
 )
 
 private val DarkColorScheme = darkColorScheme(
     primary = tuskyBlueLight,
     onPrimary = tuskyGrey10,
+    inversePrimary = tuskyBlueDark,
     secondary = tuskyBlueLight,
     onSecondary = tuskyGrey90,
     surface = tuskyGrey30,
@@ -107,8 +113,12 @@ private val DarkTuskyColorScheme = TuskyColorScheme(
     primaryTextColor = Color.White,
     secondaryTextColor = tuskyGrey90,
     tertiaryTextColor = tuskyGrey70,
+    disabledTextColor = tuskyGrey40,
     backgroundAccent = tuskyGrey40,
-    windowBackground = tuskyGrey10
+    windowBackground = tuskyGrey10,
+    favoriteButtonActiveColor = tuskyOrangeLight,
+    bookmarkButtonActiveColor = tuskyGreen,
+    placeholderColor = tuskyGrey40
 )
 
 private val BlackColorScheme = DarkColorScheme.copy(
@@ -124,7 +134,8 @@ private val BlackColorScheme = DarkColorScheme.copy(
 )
 
 private val BlackTuskyColorScheme = DarkTuskyColorScheme.copy(
-    windowBackground = Color.Black
+    windowBackground = Color.Black,
+    placeholderColor = tuskyGrey30
 )
 
 private val TuskyTypography = Typography(

@@ -65,7 +65,7 @@ import java.io.File;
     },
     // Note: Starting with version 54, database versions in Tusky are always even.
     // This is to reserve odd version numbers for use by forks.
-    version = 78,
+    version = 82,
     autoMigrations = {
         @AutoMigration(from = 48, to = 49),
         @AutoMigration(from = 49, to = 50, spec = AppDatabase.MIGRATION_49_50.class),
@@ -80,6 +80,7 @@ import java.io.File;
         @AutoMigration(from = 70, to = 72, spec = AppDatabase.MIGRATION_70_72.class), // added vapidKey to InstanceEntity, removed push keys from AccountEntity
         @AutoMigration(from = 72, to = 74), // added mediaDescriptionLimit to InstanceEntity
         @AutoMigration(from = 74, to = 76, spec = AppDatabase.MIGRATION_74_76.class), // removed filterV2Supported from InstanceEntity, added filterCleared to TimelineStatusEntity
+        @AutoMigration(from = 80, to = 82, spec = AppDatabase.MIGRATION_80_82.class), // AccountEntity: removed lastVisibleHomeTimelineStatusId, added staticProfilePictureUrl, firstVisibleHomeTimelineItemIndex, firstVisibleHomeTimelineItemOffset
     }
 )
 public abstract class AppDatabase extends RoomDatabase {
@@ -879,4 +880,39 @@ public abstract class AppDatabase extends RoomDatabase {
             database.execSQL("ALTER TABLE `AccountEntity` ADD COLUMN `defaultQuotePolicy` TEXT NOT NULL DEFAULT 'followers'");
         }
     };
+
+    public static final Migration MIGRATION_78_80 = new Migration(78, 80) {
+        @Override
+        public void migrate(@NonNull SupportSQLiteDatabase database) {
+            // adding staticAvatar to TimelineAccountEntity
+
+            // first clear all tables that could reference accounts - they are only caches anyway
+            database.execSQL("DELETE FROM `HomeTimelineEntity`");
+            database.execSQL("DELETE FROM `TimelineStatusEntity`");
+
+            // delete the old TimelineAccountEntity
+            database.execSQL("DROP TABLE `TimelineAccountEntity`");
+
+            // create the new TimelineAccountEntity table
+            database.execSQL("""
+                CREATE TABLE IF NOT EXISTS `TimelineAccountEntity` (
+                `serverId` TEXT NOT NULL,
+                `tuskyAccountId` INTEGER NOT NULL,
+                `localUsername` TEXT NOT NULL,
+                `username` TEXT NOT NULL,
+                `displayName` TEXT NOT NULL,
+                `url` TEXT NOT NULL,
+                `avatar` TEXT NOT NULL,
+                `staticAvatar` TEXT NOT NULL,
+                `note` TEXT NOT NULL DEFAULT '',
+                `emojis` TEXT NOT NULL,
+                `bot` INTEGER NOT NULL,
+                PRIMARY KEY(`serverId`, `tuskyAccountId`)
+                )"""
+            );
+        }
+    };
+
+    @DeleteColumn(tableName = "AccountEntity", columnName = "lastVisibleHomeTimelineStatusId")
+    static class MIGRATION_80_82 implements AutoMigrationSpec { }
 }

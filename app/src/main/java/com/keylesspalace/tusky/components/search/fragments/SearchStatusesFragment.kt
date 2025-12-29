@@ -15,60 +15,32 @@
 
 package com.keylesspalace.tusky.components.search.fragments
 
-import android.Manifest
-import android.app.DownloadManager
-import android.content.Intent
 import android.content.SharedPreferences
-import android.os.Build
 import android.os.Bundle
-import android.os.Environment
-import android.util.Log
 import android.view.View
-import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.widget.PopupMenu
-import androidx.core.app.ActivityOptionsCompat
-import androidx.core.content.getSystemService
-import androidx.core.net.toUri
-import androidx.core.view.ViewCompat
+import androidx.compose.foundation.lazy.LazyListScope
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.PagingData
-import androidx.paging.PagingDataAdapter
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.LinearLayoutManager
-import at.connyduck.calladapter.networkresult.fold
+import androidx.paging.compose.LazyPagingItems
 import at.connyduck.calladapter.networkresult.onFailure
-import at.connyduck.sparkbutton.SparkButton
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import at.connyduck.sparkbutton.compose.SparkButtonState
 import com.google.android.material.snackbar.Snackbar
 import com.keylesspalace.tusky.R
-import com.keylesspalace.tusky.ViewMediaActivity
 import com.keylesspalace.tusky.components.compose.ComposeActivity
-import com.keylesspalace.tusky.components.compose.ComposeActivity.ComposeOptions
-import com.keylesspalace.tusky.components.report.ReportActivity
-import com.keylesspalace.tusky.components.search.adapter.SearchStatusesAdapter
-import com.keylesspalace.tusky.db.AccountManager
+import com.keylesspalace.tusky.components.instanceinfo.InstanceInfo
 import com.keylesspalace.tusky.db.entity.AccountEntity
-import com.keylesspalace.tusky.entity.Attachment
 import com.keylesspalace.tusky.entity.Status
-import com.keylesspalace.tusky.entity.Status.Mention
-import com.keylesspalace.tusky.interfaces.AccountSelectionListener
 import com.keylesspalace.tusky.interfaces.StatusActionListener
-import com.keylesspalace.tusky.settings.PrefKeys
-import com.keylesspalace.tusky.util.CardViewMode
-import com.keylesspalace.tusky.util.ListStatusAccessibilityDelegate
-import com.keylesspalace.tusky.util.StatusDisplayOptions
-import com.keylesspalace.tusky.util.copyToClipboard
-import com.keylesspalace.tusky.util.openLink
+import com.keylesspalace.tusky.ui.statuscomponents.Status
+import com.keylesspalace.tusky.util.reply
+import com.keylesspalace.tusky.util.report
 import com.keylesspalace.tusky.util.startActivityWithSlideInAnimation
-import com.keylesspalace.tusky.util.updateRelativeTimePeriodically
+import com.keylesspalace.tusky.util.viewMedia
 import com.keylesspalace.tusky.view.ConfirmationBottomSheet.Companion.confirmFavourite
 import com.keylesspalace.tusky.view.ConfirmationBottomSheet.Companion.confirmReblog
-import com.keylesspalace.tusky.view.showMuteAccountDialog
 import com.keylesspalace.tusky.viewdata.AttachmentViewData
 import com.keylesspalace.tusky.viewdata.StatusViewData
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.Locale
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
@@ -76,10 +48,7 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class SearchStatusesFragment :
     SearchFragment<StatusViewData.Concrete>(),
-    StatusActionListener<StatusViewData.Concrete> {
-
-    @Inject
-    lateinit var accountManager: AccountManager
+    StatusActionListener {
 
     @Inject
     lateinit var preferences: SharedPreferences
@@ -87,200 +56,105 @@ class SearchStatusesFragment :
     override val data: Flow<PagingData<StatusViewData.Concrete>>
         get() = viewModel.statusesFlow
 
-    private var pendingMediaDownloads: List<String>? = null
-
-    private val downloadAllMediaPermissionLauncher =
-        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
-            if (isGranted) {
-                pendingMediaDownloads?.let { downloadAllMedia(it) }
-            } else {
-                Toast.makeText(
-                    context,
-                    R.string.error_media_download_permission,
-                    Toast.LENGTH_SHORT
-                ).show()
+    override fun LazyListScope.searchResult(
+        result: LazyPagingItems<StatusViewData.Concrete>,
+        instanceInfo: InstanceInfo,
+        accounts: List<AccountEntity>
+    ) {
+        items(
+            count = result.itemCount,
+            // We cannot use ids as keys because in rare cases search result pages can include posts already found in previous pages.
+            // key = result.itemKey { viewData -> viewData.id },
+            itemContent = { index ->
+                result[index]?.let { viewData ->
+                    Status(
+                        viewData,
+                        this@SearchStatusesFragment,
+                        translationEnabled = instanceInfo.translationEnabled,
+                        accounts = accounts
+                    )
+                }
             }
-            pendingMediaDownloads = null
-        }
-
-    private var buttonToAnimate: SparkButton? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        pendingMediaDownloads = savedInstanceState?.getStringArrayList(PENDING_MEDIA_DOWNLOADS_STATE_KEY)
+        )
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        adapter?.let {
-            updateRelativeTimePeriodically(preferences, it)
-        }
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        pendingMediaDownloads?.let {
-            outState.putStringArrayList(PENDING_MEDIA_DOWNLOADS_STATE_KEY, ArrayList(it))
-        }
-    }
-
-    override fun createAdapter(): PagingDataAdapter<StatusViewData.Concrete, *> {
-        val statusDisplayOptions = StatusDisplayOptions(
-            animateAvatars = preferences.getBoolean(PrefKeys.ANIMATE_GIF_AVATARS, false),
-            mediaPreviewEnabled = viewModel.mediaPreviewEnabled,
-            useAbsoluteTime = preferences.getBoolean(PrefKeys.ABSOLUTE_TIME_VIEW, false),
-            showBotOverlay = preferences.getBoolean(PrefKeys.SHOW_BOT_OVERLAY, true),
-            useBlurhash = preferences.getBoolean(PrefKeys.USE_BLURHASH, true),
-            cardViewMode = CardViewMode.NONE,
-            hideStats = preferences.getBoolean(PrefKeys.WELLBEING_HIDE_STATS_POSTS, false),
-            animateEmojis = preferences.getBoolean(PrefKeys.ANIMATE_CUSTOM_EMOJIS, false),
-            showStatsInline = preferences.getBoolean(PrefKeys.SHOW_STATS_INLINE, false),
-            showSensitiveMedia = accountManager.activeAccount!!.alwaysShowSensitiveMedia,
-            openSpoiler = accountManager.activeAccount!!.alwaysOpenSpoiler
-        )
-        val adapter = SearchStatusesAdapter(statusDisplayOptions, this)
-
-        binding.searchRecyclerView.setAccessibilityDelegateCompat(
-            ListStatusAccessibilityDelegate(binding.searchRecyclerView, this) { pos ->
-                if (pos in 0 until adapter.itemCount) {
-                    adapter.peek(pos)
-                } else {
-                    null
-                }
-            }
-        )
-
-        binding.searchRecyclerView.addItemDecoration(
-            DividerItemDecoration(
-                binding.searchRecyclerView.context,
-                DividerItemDecoration.VERTICAL
-            )
-        )
-        binding.searchRecyclerView.layoutManager =
-            LinearLayoutManager(binding.searchRecyclerView.context)
-        return adapter
-    }
-
-    override fun onDestroyView() {
-        buttonToAnimate = null
-        super.onDestroyView()
-    }
-
-    override fun onRefresh() {
-        viewModel.clearStatusCache()
-        super.onRefresh()
-    }
-
-    override fun onContentHiddenChange(viewData: StatusViewData.Concrete, isShowing: Boolean) {
-        viewModel.contentHiddenChange(viewData, isShowing)
-    }
-
-    override fun onReply(viewData: StatusViewData.Concrete) {
-        reply(viewData)
-    }
-
-    override fun onFavourite(viewData: StatusViewData.Concrete, favourite: Boolean, button: SparkButton?) {
-        if (favourite) {
-            confirmFavourite(preferences) {
-                viewModel.favorite(viewData, true)
-                buttonToAnimate?.playAnimation()
-                buttonToAnimate?.isChecked = true
-            }
-        } else {
-            viewModel.favorite(viewData, false)
-            buttonToAnimate?.isChecked = false
-        }
-    }
-
-    override fun onBookmark(viewData: StatusViewData.Concrete, bookmark: Boolean) {
-        viewModel.bookmark(viewData, bookmark)
-    }
-
-    override fun onMore(viewData: StatusViewData.Concrete, view: View) {
-        more(viewData, view)
-    }
-
-    override fun onViewMedia(viewData: StatusViewData.Concrete, attachmentIndex: Int, view: View?) {
-        when (viewData.attachments[attachmentIndex].type) {
-            Attachment.Type.GIFV, Attachment.Type.VIDEO, Attachment.Type.IMAGE, Attachment.Type.AUDIO -> {
-                val attachments = AttachmentViewData.list(viewData)
-                val intent = ViewMediaActivity.newIntent(
-                    requireContext(),
-                    attachments,
-                    attachmentIndex
-                )
-                if (view != null) {
-                    val url = viewData.attachments[attachmentIndex].url
-                    ViewCompat.setTransitionName(view, url)
-                    val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
-                        requireActivity(),
-                        view,
-                        url
-                    )
-                    startActivity(intent, options.toBundle())
-                } else {
-                    startActivity(intent)
-                }
-            }
-
-            Attachment.Type.UNKNOWN -> {
-                context?.openLink(viewData.attachments[attachmentIndex].unknownUrl)
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.startComposing.collect { composeOptions ->
+                val intent = ComposeActivity.newIntent(requireContext(), composeOptions)
+                requireContext().startActivityWithSlideInAnimation(intent)
             }
         }
-    }
-
-    override fun onViewThread(viewData: StatusViewData.Concrete) {
-        bottomSheetActivity?.viewThread(viewData.id, viewData.status.url)
-    }
-
-    override fun onOpenReblog(viewData: StatusViewData.Concrete) {
-        bottomSheetActivity?.viewAccount(viewData.status.account.id)
-    }
-
-    override fun onExpandedChange(viewData: StatusViewData.Concrete, expanded: Boolean) {
-        viewModel.expandedChange(viewData, expanded)
-    }
-
-    override fun onContentCollapsedChange(viewData: StatusViewData.Concrete, isCollapsed: Boolean) {
-        viewModel.collapsedChange(viewData, isCollapsed)
-    }
-
-    override fun onVoteInPoll(viewData: StatusViewData.Concrete, choices: List<Int>) {
-        viewModel.voteInPoll(viewData, choices)
-    }
-
-    override fun onShowPollResults(viewData: StatusViewData.Concrete) {
-        viewModel.showPollResults(viewData)
-    }
-
-    override fun changeFilter(filtered: Boolean, viewData: StatusViewData.Concrete) {
-    }
-
-    private fun removeItem(viewData: StatusViewData.Concrete, deleteMedia: Boolean) {
-        viewModel.removeItem(viewData, deleteMedia)
     }
 
     override fun onReblog(
         viewData: StatusViewData.Concrete,
         reblog: Boolean,
         visibility: Status.Visibility?,
-        button: SparkButton?
+        state: SparkButtonState?
     ) {
-        buttonToAnimate = button
-
         if (reblog && visibility == null) {
             confirmReblog(preferences) { visibility ->
-                viewModel.reblog(viewData, true, visibility)
-                buttonToAnimate?.playAnimation()
-                buttonToAnimate?.isChecked = true
+                viewModel.reblog(viewData.id, true, visibility)
+                state?.animate()
             }
         } else {
-            viewModel.reblog(viewData, reblog, visibility ?: Status.Visibility.PUBLIC)
+            viewModel.reblog(viewData.id, reblog, visibility ?: Status.Visibility.PUBLIC)
             if (reblog) {
-                buttonToAnimate?.playAnimation()
+                state?.animate()
             }
-            buttonToAnimate?.isChecked = false
+        }
+    }
+
+    override fun onFavourite(
+        viewData: StatusViewData.Concrete,
+        favourite: Boolean,
+        state: SparkButtonState?
+    ) {
+        if (favourite) {
+            confirmFavourite(preferences) {
+                viewModel.favorite(viewData.id, true)
+                state?.animate()
+            }
+        } else {
+            viewModel.favorite(viewData.id, false)
+        }
+    }
+
+    override fun onBookmark(viewData: StatusViewData.Concrete, bookmark: Boolean) {
+        viewModel.bookmark(viewData.id, bookmark)
+    }
+
+    override fun onExpandedChange(viewData: StatusViewData.Concrete, expanded: Boolean) {
+        viewModel.expandedChange(viewData, expanded)
+    }
+
+    override fun onContentHiddenChange(viewData: StatusViewData.Concrete, isShowing: Boolean) {
+        viewModel.contentHiddenChange(viewData, isShowing)
+    }
+
+    override fun onContentCollapsedChange(viewData: StatusViewData.Concrete, isCollapsed: Boolean) {
+        viewModel.collapsedChange(viewData, isCollapsed)
+    }
+
+    override fun onVoteInPoll(viewData: StatusViewData.Concrete, pollId: String, choices: List<Int>) {
+        viewModel.voteInPoll(viewData.id, pollId, choices)
+    }
+
+    override fun onShowPollResults(viewData: StatusViewData.Concrete) {
+        viewModel.showPollResults(viewData)
+    }
+
+    override fun onTranslate(viewData: StatusViewData.Concrete) {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.translate(viewData)
+                .onFailure {
+                    Snackbar.make(
+                        requireView(),
+                        getString(R.string.ui_error_translate, it.message),
+                        Snackbar.LENGTH_LONG
+                    ).show()
+                }
         }
     }
 
@@ -288,387 +162,58 @@ class SearchStatusesFragment :
         viewModel.untranslate(viewData)
     }
 
-    private fun reply(status: StatusViewData.Concrete) {
-        val actionableStatus = status.actionable
-        val mentionedUsernames = actionableStatus.mentions.map { it.username }
-            .toMutableSet()
-            .apply {
-                add(actionableStatus.account.username)
-                remove(viewModel.activeAccount?.username)
-            }
-
-        val intent = ComposeActivity.startIntent(
-            requireContext(),
-            ComposeOptions(
-                inReplyToId = status.actionableId,
-                replyVisibility = actionableStatus.visibility,
-                contentWarning = actionableStatus.spoilerText,
-                mentionedUsernames = mentionedUsernames,
-                replyingStatusAuthor = actionableStatus.account.localUsername,
-                replyingStatusContent = status.content.toString(),
-                language = actionableStatus.language,
-                kind = ComposeActivity.ComposeKind.NEW
-            )
-        )
-        bottomSheetActivity?.startActivityWithSlideInAnimation(intent)
+    override fun changeFilter(viewData: StatusViewData.Concrete, filtered: Boolean) {
+        viewModel.changeFilter(filtered, viewData)
     }
 
-    private fun more(viewData: StatusViewData.Concrete, view: View) {
-        val status = viewData.status
-        val id = status.actionableId
-        val accountId = status.actionableStatus.account.id
-        val accountUsername = status.actionableStatus.account.username
-        val statusUrl = status.actionableStatus.url
-        val loggedInAccountId = viewModel.activeAccount?.accountId
-
-        val popup = PopupMenu(view.context, view)
-        val statusIsByCurrentUser = loggedInAccountId?.equals(accountId) == true
-        // Give a different menu depending on whether this is the user's own toot or not.
-        if (statusIsByCurrentUser) {
-            popup.inflate(R.menu.status_more_for_user)
-            val menu = popup.menu
-            menu.findItem(R.id.status_open_as).isVisible = !statusUrl.isNullOrBlank()
-            when (status.visibility) {
-                Status.Visibility.PUBLIC, Status.Visibility.UNLISTED -> {
-                    val textId =
-                        getString(
-                            if (status.pinned) R.string.unpin_action else R.string.pin_action
-                        )
-                    menu.add(0, R.id.pin, 1, textId)
-                }
-
-                Status.Visibility.PRIVATE -> {
-                    var reblogged = status.reblogged
-                    if (status.reblog != null) reblogged = status.reblog.reblogged
-                    menu.findItem(R.id.status_reblog_private).isVisible = !reblogged
-                    menu.findItem(R.id.status_unreblog_private).isVisible = reblogged
-                }
-
-                Status.Visibility.UNKNOWN, Status.Visibility.DIRECT -> {
-                } // Ignore
-            }
-        } else {
-            popup.inflate(R.menu.status_more)
-            val menu = popup.menu
-            menu.findItem(R.id.status_download_media).isVisible = status.attachments.isNotEmpty()
-        }
-
-        val openAsItem = popup.menu.findItem(R.id.status_open_as)
-        val openAsText = bottomSheetActivity?.openAsText
-        if (openAsText == null) {
-            openAsItem.isVisible = false
-        } else {
-            openAsItem.title = openAsText
-        }
-
-        val mutable =
-            statusIsByCurrentUser || accountIsInMentions(viewModel.activeAccount, status.mentions)
-        val muteConversationItem = popup.menu.findItem(R.id.status_mute_conversation).apply {
-            isVisible = mutable
-        }
-        if (mutable) {
-            muteConversationItem.setTitle(
-                if (status.muted) {
-                    R.string.action_unmute_conversation
-                } else {
-                    R.string.action_mute_conversation
-                }
-            )
-        }
-
-        // translation not there for your own posts
-        popup.menu.findItem(R.id.status_translate)?.let { translateItem ->
-            translateItem.isVisible =
-                !status.language.equals(Locale.getDefault().language, ignoreCase = true) &&
-                viewModel.supportsTranslation()
-            translateItem.setTitle(if (viewData.translation != null) R.string.action_show_original else R.string.action_translate)
-        }
-
-        popup.setOnMenuItemClickListener { item ->
-            when (item.itemId) {
-                R.id.post_share_content -> {
-                    val statusToShare: Status = status.actionableStatus
-
-                    val sendIntent = Intent()
-                    sendIntent.action = Intent.ACTION_SEND
-
-                    val stringToShare = statusToShare.account.username +
-                        " - " +
-                        statusToShare.content
-                    sendIntent.putExtra(Intent.EXTRA_TEXT, stringToShare)
-                    sendIntent.type = "text/plain"
-                    startActivity(
-                        Intent.createChooser(
-                            sendIntent,
-                            resources.getText(R.string.send_post_content_to)
-                        )
-                    )
-                    return@setOnMenuItemClickListener true
-                }
-
-                R.id.post_share_link -> {
-                    val sendIntent = Intent()
-                    sendIntent.action = Intent.ACTION_SEND
-                    sendIntent.putExtra(Intent.EXTRA_TEXT, statusUrl)
-                    sendIntent.type = "text/plain"
-                    startActivity(
-                        Intent.createChooser(
-                            sendIntent,
-                            resources.getText(R.string.send_post_link_to)
-                        )
-                    )
-                    return@setOnMenuItemClickListener true
-                }
-
-                R.id.status_copy_link -> {
-                    statusUrl?.let { requireActivity().copyToClipboard(it, getString(R.string.url_copied)) }
-                    return@setOnMenuItemClickListener true
-                }
-
-                R.id.status_open_as -> {
-                    showOpenAsDialog(statusUrl!!, item.title)
-                    return@setOnMenuItemClickListener true
-                }
-
-                R.id.status_download_media -> {
-                    requestDownloadAllMedia(status)
-                    return@setOnMenuItemClickListener true
-                }
-
-                R.id.status_mute_conversation -> {
-                    viewModel.muteConversation(viewData, !status.muted)
-                    return@setOnMenuItemClickListener true
-                }
-
-                R.id.status_mute -> {
-                    onMute(accountId, accountUsername)
-                    return@setOnMenuItemClickListener true
-                }
-
-                R.id.status_block -> {
-                    onBlock(accountId, accountUsername)
-                    return@setOnMenuItemClickListener true
-                }
-
-                R.id.status_report -> {
-                    openReportPage(accountId, accountUsername, id)
-                    return@setOnMenuItemClickListener true
-                }
-
-                R.id.status_unreblog_private -> {
-                    onReblog(viewData, false, Status.Visibility.PRIVATE)
-                    return@setOnMenuItemClickListener true
-                }
-
-                R.id.status_reblog_private -> {
-                    onReblog(viewData, true, Status.Visibility.PRIVATE)
-                    return@setOnMenuItemClickListener true
-                }
-
-                R.id.status_delete -> {
-                    showConfirmDeleteDialog(viewData)
-                    return@setOnMenuItemClickListener true
-                }
-
-                R.id.status_delete_and_redraft -> {
-                    showConfirmEditDialog(viewData)
-                    return@setOnMenuItemClickListener true
-                }
-
-                R.id.status_edit -> {
-                    editStatus(id, status)
-                    return@setOnMenuItemClickListener true
-                }
-
-                R.id.pin -> {
-                    viewModel.pinAccount(status, !status.pinned)
-                    return@setOnMenuItemClickListener true
-                }
-
-                R.id.status_translate -> {
-                    if (viewData.translation != null) {
-                        viewModel.untranslate(viewData)
-                    } else {
-                        viewLifecycleOwner.lifecycleScope.launch {
-                            viewModel.translate(viewData)
-                                .onFailure {
-                                    Snackbar.make(
-                                        requireView(),
-                                        getString(R.string.ui_error_translate, it.message),
-                                        Snackbar.LENGTH_LONG
-                                    ).show()
-                                }
-                        }
-                    }
-                }
-            }
-            false
-        }
-        popup.show()
+    override fun onBlock(accountId: String) {
+        viewModel.block(accountId)
     }
 
-    private fun onBlock(accountId: String, accountUsername: String) {
-        MaterialAlertDialogBuilder(requireContext())
-            .setMessage(getString(R.string.dialog_block_warning, accountUsername))
-            .setPositiveButton(android.R.string.ok) { _, _ -> viewModel.blockAccount(accountId) }
-            .setNegativeButton(android.R.string.cancel, null)
-            .show()
+    override fun onMute(accountId: String, hideNotifications: Boolean, duration: Int?) {
+        viewModel.mute(accountId, hideNotifications, duration)
     }
 
-    private fun onMute(accountId: String, accountUsername: String) {
-        showMuteAccountDialog(
-            this.requireActivity(),
-            accountUsername
-        ) { notifications, duration ->
-            viewModel.muteAccount(accountId, notifications, duration)
-        }
+    override fun onMuteConversation(viewData: StatusViewData.Concrete, mute: Boolean) {
+        viewModel.muteConversation(viewData.id, !viewData.status.muted)
     }
 
-    private fun accountIsInMentions(account: AccountEntity?, mentions: List<Mention>): Boolean {
-        return mentions.firstOrNull {
-            account?.username == it.username && account.domain == it.url.toUri().host
-        } != null
+    override fun onDelete(viewData: StatusViewData.Concrete) {
+        viewModel.delete(viewData.id)
     }
 
-    private fun showOpenAsDialog(statusUrl: String, dialogTitle: CharSequence?) {
-        bottomSheetActivity?.showAccountChooserDialog(
-            dialogTitle,
-            false,
-            object : AccountSelectionListener {
-                override fun onAccountSelected(account: AccountEntity) {
-                    bottomSheetActivity?.openAsAccount(statusUrl, account)
-                }
-            }
+    override fun onRedraft(viewData: StatusViewData.Concrete) {
+        viewModel.redraftStatus(viewData.status)
+    }
+
+    override fun onPin(viewData: StatusViewData.Concrete, pin: Boolean) {
+        viewModel.pin(viewData.id, pin)
+    }
+
+    override fun onViewMedia(viewData: StatusViewData.Concrete, attachmentIndex: Int) {
+        requireContext().viewMedia(
+            attachmentIndex,
+            AttachmentViewData.list(viewData),
         )
     }
 
-    private fun downloadAllMedia(mediaUrls: List<String>) {
-        Toast.makeText(context, R.string.downloading_media, Toast.LENGTH_SHORT).show()
-        val downloadManager: DownloadManager = requireContext().getSystemService()!!
-
-        for (url in mediaUrls) {
-            val uri = url.toUri()
-            val request = DownloadManager.Request(uri)
-            request.setDestinationInExternalPublicDir(
-                Environment.DIRECTORY_DOWNLOADS,
-                uri.lastPathSegment
-            )
-            downloadManager.enqueue(request)
-        }
+    override fun onViewThread(viewData: StatusViewData.Concrete) {
+        bottomSheetActivity?.viewThread(viewData.id, viewData.status.url)
     }
 
-    private fun requestDownloadAllMedia(status: Status) {
-        if (status.attachments.isEmpty()) {
-            return
-        }
-        val mediaUrls = status.attachments.map { it.url }
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
-            pendingMediaDownloads = mediaUrls
-            downloadAllMediaPermissionLauncher.launch(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-        } else {
-            downloadAllMedia(mediaUrls)
-        }
+    override fun onEdit(viewData: StatusViewData.Concrete) {
+        viewModel.editStatus(viewData.status)
     }
 
-    private fun openReportPage(accountId: String, accountUsername: String, statusId: String) {
-        startActivity(
-            ReportActivity.getIntent(requireContext(), accountId, accountUsername, statusId)
-        )
+    override fun onReply(viewData: StatusViewData.Concrete) {
+        requireContext().reply(viewData, viewModel.activeAccount!!)
     }
 
-    private fun showConfirmDeleteDialog(viewData: StatusViewData.Concrete) {
-        context?.let {
-            MaterialAlertDialogBuilder(it)
-                .setMessage(R.string.dialog_delete_post_warning)
-                .setPositiveButton(android.R.string.ok) { _, _ ->
-                    viewModel.deleteStatusAsync(viewData.id, true)
-                    removeItem(viewData, true)
-                }
-                .setNegativeButton(android.R.string.cancel, null)
-                .show()
-        }
-    }
-
-    private fun showConfirmEditDialog(viewData: StatusViewData.Concrete) {
-        context?.let { context ->
-            MaterialAlertDialogBuilder(context)
-                .setMessage(R.string.dialog_redraft_post_warning)
-                .setPositiveButton(android.R.string.ok) { _, _ ->
-                    viewLifecycleOwner.lifecycleScope.launch {
-                        viewModel.deleteStatusAsync(viewData.id, false).await().fold(
-                            { deletedStatus ->
-                                removeItem(viewData, false)
-
-                                val redraftStatus = if (deletedStatus.isEmpty) {
-                                    viewData.status.toDeletedStatus()
-                                } else {
-                                    deletedStatus
-                                }
-
-                                val intent = ComposeActivity.startIntent(
-                                    context,
-                                    ComposeOptions(
-                                        content = redraftStatus.text.orEmpty(),
-                                        inReplyToId = redraftStatus.inReplyToId,
-                                        visibility = redraftStatus.visibility,
-                                        contentWarning = redraftStatus.spoilerText,
-                                        mediaAttachments = redraftStatus.attachments,
-                                        sensitive = redraftStatus.sensitive,
-                                        poll = redraftStatus.poll?.toNewPoll(viewData.status.createdAt),
-                                        language = redraftStatus.language,
-                                        kind = ComposeActivity.ComposeKind.NEW
-                                    )
-                                )
-                                startActivity(intent)
-                            },
-                            { error ->
-                                Log.w("SearchStatusesFragment", "error deleting status", error)
-                                Toast.makeText(
-                                    context,
-                                    R.string.error_generic,
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                            }
-                        )
-                    }
-                }
-                .setNegativeButton(android.R.string.cancel, null)
-                .show()
-        }
-    }
-
-    private fun editStatus(id: String, status: Status) {
-        viewLifecycleOwner.lifecycleScope.launch {
-            mastodonApi.statusSource(id).fold(
-                { source ->
-                    val composeOptions = ComposeOptions(
-                        content = source.text,
-                        inReplyToId = status.inReplyToId,
-                        visibility = status.visibility,
-                        contentWarning = source.spoilerText,
-                        mediaAttachments = status.attachments,
-                        sensitive = status.sensitive,
-                        language = status.language,
-                        statusId = source.id,
-                        poll = status.poll?.toNewPoll(status.createdAt),
-                        kind = ComposeActivity.ComposeKind.EDIT_POSTED
-                    )
-                    startActivity(ComposeActivity.startIntent(requireContext(), composeOptions))
-                },
-                {
-                    Snackbar.make(
-                        requireView(),
-                        getString(R.string.error_status_source_load),
-                        Snackbar.LENGTH_SHORT
-                    ).show()
-                }
-            )
-        }
+    override fun onReport(viewData: StatusViewData.Concrete) {
+        requireContext().report(viewData)
     }
 
     companion object {
-        private const val PENDING_MEDIA_DOWNLOADS_STATE_KEY = "pending_media_downloads"
-
         fun newInstance() = SearchStatusesFragment()
     }
 }

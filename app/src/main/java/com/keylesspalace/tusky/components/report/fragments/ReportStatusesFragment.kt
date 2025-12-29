@@ -219,8 +219,8 @@ class ReportStatusesFragment :
         return viewModel.isStatusChecked(id)
     }
 
-    override fun onViewAccount(id: String) = startActivity(
-        AccountActivity.getIntent(requireContext(), id)
+    override fun onViewAccount(accountId: String) = startActivity(
+        AccountActivity.newIntent(requireContext(), accountId)
     )
 
     override fun onViewTag(tag: String) = startActivity(

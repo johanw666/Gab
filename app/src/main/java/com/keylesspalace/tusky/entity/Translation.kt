@@ -1,8 +1,10 @@
 package com.keylesspalace.tusky.entity
 
+import androidx.compose.runtime.Stable
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
+@Stable
 @JsonClass(generateAdapter = true)
 data class MediaTranslation(
     val id: String,
@@ -14,6 +16,7 @@ data class MediaTranslation(
  *
  * See [doc](https://docs.joinmastodon.org/entities/Translation/).
  */
+@Stable
 @JsonClass(generateAdapter = true)
 data class Translation(
     val content: String,
@@ -27,11 +30,13 @@ data class Translation(
     val provider: String,
 )
 
+@Stable
 @JsonClass(generateAdapter = true)
 data class TranslatedPoll(
     val options: List<TranslatedPollOption>
 )
 
+@Stable
 @JsonClass(generateAdapter = true)
 data class TranslatedPollOption(
     val title: String

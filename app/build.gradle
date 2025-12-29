@@ -208,6 +208,8 @@ dependencies {
     implementation libs.bundles.okhttp
     implementation libs.okio
 
+    implementation libs.bundles.coil
+
     implementation libs.conscrypt.android
 
     implementation libs.bundles.glide
@@ -218,7 +220,7 @@ dependencies {
     implementation libs.androidx.hilt.work
     ksp libs.androidx.hilt.compiler
 
-    implementation libs.sparkbutton
+    implementation libs.sparkbutton.compose
 
     implementation libs.touchimageview
 
@@ -231,6 +233,8 @@ dependencies {
     implementation libs.bundles.unifiedpush
 
     implementation libs.bundles.xmldiff
+
+    implementation(libs.ktxml)
 
     testImplementation libs.androidx.test.junit
     testImplementation libs.robolectric

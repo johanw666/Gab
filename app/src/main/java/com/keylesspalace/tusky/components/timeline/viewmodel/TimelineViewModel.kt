@@ -16,33 +16,29 @@
 package com.keylesspalace.tusky.components.timeline.viewmodel
 
 import android.content.SharedPreferences
-import android.util.Log
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import at.connyduck.calladapter.networkresult.NetworkResult
-import at.connyduck.calladapter.networkresult.getOrThrow
 import com.keylesspalace.tusky.appstore.EventHub
 import com.keylesspalace.tusky.appstore.FilterUpdatedEvent
+import com.keylesspalace.tusky.appstore.PollShowResultsEvent
 import com.keylesspalace.tusky.appstore.PreferenceChangedEvent
 import com.keylesspalace.tusky.components.preference.PreferencesFragment.ReadingOrder
-import com.keylesspalace.tusky.components.timeline.util.ifExpected
 import com.keylesspalace.tusky.db.AccountManager
 import com.keylesspalace.tusky.entity.Filter
-import com.keylesspalace.tusky.entity.Status
+import com.keylesspalace.tusky.network.MastodonApi
 import com.keylesspalace.tusky.settings.PrefKeys
-import com.keylesspalace.tusky.usecase.TimelineCases
 import com.keylesspalace.tusky.viewdata.StatusViewData
-import kotlinx.coroutines.Job
+import com.keylesspalace.tusky.viewmodel.StatusActionsViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
 abstract class TimelineViewModel(
-    protected val timelineCases: TimelineCases,
+    api: MastodonApi,
     private val eventHub: EventHub,
     val accountManager: AccountManager,
     private val sharedPreferences: SharedPreferences
-) : ViewModel() {
+) : StatusActionsViewModel(api, eventHub) {
 
     val activeAccountFlow = accountManager.activeAccount(viewModelScope)
     protected val accountId: Long = activeAccountFlow.value!!.id
@@ -98,58 +94,8 @@ abstract class TimelineViewModel(
         }
     }
 
-    fun reblog(
-        reblog: Boolean,
-        status: StatusViewData.Concrete,
-        visibility: Status.Visibility = Status.Visibility.PUBLIC
-    ): Job = viewModelScope.launch {
-        try {
-            timelineCases.reblog(status.actionableId, reblog, visibility).getOrThrow()
-        } catch (t: Exception) {
-            ifExpected(t) {
-                Log.d(TAG, "Failed to reblog status " + status.actionableId, t)
-            }
-        }
-    }
-
-    fun favorite(favorite: Boolean, status: StatusViewData.Concrete): Job = viewModelScope.launch {
-        try {
-            timelineCases.favourite(status.actionableId, favorite).getOrThrow()
-        } catch (t: Exception) {
-            ifExpected(t) {
-                Log.d(TAG, "Failed to favourite status " + status.actionableId, t)
-            }
-        }
-    }
-
-    fun bookmark(bookmark: Boolean, status: StatusViewData.Concrete): Job = viewModelScope.launch {
-        try {
-            timelineCases.bookmark(status.actionableId, bookmark).getOrThrow()
-        } catch (t: Exception) {
-            ifExpected(t) {
-                Log.d(TAG, "Failed to bookmark status " + status.actionableId, t)
-            }
-        }
-    }
-
-    fun voteInPoll(choices: List<Int>, status: StatusViewData.Concrete): Job =
-        viewModelScope.launch {
-            val poll = status.status.actionableStatus.poll ?: run {
-                Log.w(TAG, "No poll on status ${status.id}")
-                return@launch
-            }
-
-            try {
-                timelineCases.voteInPoll(status.actionableId, poll.id, choices).getOrThrow()
-            } catch (t: Exception) {
-                ifExpected(t) {
-                    Log.d(TAG, "Failed to vote in poll: " + status.actionableId, t)
-                }
-            }
-        }
-
     fun showPollResults(status: StatusViewData.Concrete) = viewModelScope.launch {
-        timelineCases.showPollResults(status.actionableId)
+        eventHub.dispatch(PollShowResultsEvent(status.actionableId))
     }
 
     abstract fun changeExpanded(expanded: Boolean, status: StatusViewData.Concrete)
@@ -165,9 +111,6 @@ abstract class TimelineViewModel(
     abstract fun fullReload()
 
     abstract fun changeFilter(filtered: Boolean, status: StatusViewData.Concrete)
-
-    /** Saves the user's reading position so it can be restored later */
-    abstract fun saveReadingPosition(statusId: String)
 
     /** Triggered when currently displayed data must be reloaded. */
     protected abstract suspend fun invalidate()
@@ -233,6 +176,7 @@ abstract class TimelineViewModel(
 
     abstract suspend fun translate(status: StatusViewData.Concrete): NetworkResult<Unit>
     abstract fun untranslate(status: StatusViewData.Concrete)
+    abstract fun saveHomeTimelinePosition(firstVisibleIndex: Int, firstVisibleOffset: Int)
 
     companion object {
         private const val TAG = "TimelineVM"

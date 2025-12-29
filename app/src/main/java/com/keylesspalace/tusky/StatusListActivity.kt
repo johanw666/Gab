@@ -150,7 +150,7 @@ class StatusListActivity : BottomSheetActivity() {
             content = "#$hashtag",
             kind = ComposeActivity.ComposeKind.NEW
         )
-        val intent = ComposeActivity.startIntent(this, options)
+        val intent = ComposeActivity.newIntent(this, options)
         startActivity(intent)
     }
 

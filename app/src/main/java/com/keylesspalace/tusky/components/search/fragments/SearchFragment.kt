@@ -1,153 +1,226 @@
 package com.keylesspalace.tusky.components.search.fragments
 
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
+import android.view.LayoutInflater
 import android.view.View
-import androidx.core.view.MenuProvider
+import android.view.ViewGroup
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.safeDrawing
+import androidx.compose.foundation.layout.systemBars
+import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.layout.windowInsetsBottomHeight
+import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListScope
+import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.MaterialTheme.colorScheme
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.platform.rememberNestedScrollInteropConnection
+import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.paging.LoadState
 import androidx.paging.PagingData
-import androidx.paging.PagingDataAdapter
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.SimpleItemAnimator
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.collectAsLazyPagingItems
 import com.google.android.material.snackbar.Snackbar
 import com.keylesspalace.tusky.BottomSheetActivity
 import com.keylesspalace.tusky.R
 import com.keylesspalace.tusky.StatusListActivity
 import com.keylesspalace.tusky.components.account.AccountActivity
+import com.keylesspalace.tusky.components.instanceinfo.InstanceInfo
+import com.keylesspalace.tusky.components.instanceinfo.InstanceInfoRepository
 import com.keylesspalace.tusky.components.search.SearchViewModel
-import com.keylesspalace.tusky.databinding.FragmentSearchBinding
+import com.keylesspalace.tusky.db.AccountManager
+import com.keylesspalace.tusky.db.entity.AccountEntity
 import com.keylesspalace.tusky.interfaces.LinkListener
-import com.keylesspalace.tusky.network.MastodonApi
-import com.keylesspalace.tusky.util.ensureBottomPadding
+import com.keylesspalace.tusky.ui.MessageViewMode
+import com.keylesspalace.tusky.ui.TuskyMessageView
+import com.keylesspalace.tusky.ui.TuskyPullToRefreshBox
+import com.keylesspalace.tusky.ui.TuskyTheme
 import com.keylesspalace.tusky.util.startActivityWithSlideInAnimation
-import com.keylesspalace.tusky.util.viewBinding
-import com.keylesspalace.tusky.util.visible
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 
 abstract class SearchFragment<T : Any> :
-    Fragment(R.layout.fragment_search),
-    LinkListener,
-    SwipeRefreshLayout.OnRefreshListener,
-    MenuProvider {
+    Fragment(),
+    LinkListener {
 
     @Inject
-    lateinit var mastodonApi: MastodonApi
+    lateinit var instanceInfoRepository: InstanceInfoRepository
+
+    @Inject
+    lateinit var accountManager: AccountManager
 
     protected val viewModel: SearchViewModel by activityViewModels()
 
-    protected val binding by viewBinding(FragmentSearchBinding::bind)
-
-    private var snackbarErrorRetry: Snackbar? = null
-
-    abstract fun createAdapter(): PagingDataAdapter<T, *>
-
     abstract val data: Flow<PagingData<T>>
-    protected var adapter: PagingDataAdapter<T, *>? = null
 
-    private var currentQuery: String = ""
+    abstract fun LazyListScope.searchResult(
+        result: LazyPagingItems<T>,
+        instanceInfo: InstanceInfo,
+        accounts: List<AccountEntity>
+    )
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val adapter = initAdapter()
-        binding.swipeRefreshLayout.setOnRefreshListener(this)
-        binding.searchRecyclerView.ensureBottomPadding()
-        requireActivity().addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
-        subscribeObservables(adapter)
-    }
-
-    override fun onDestroyView() {
-        // Clear the adapter to prevent leaking the View
-        adapter = null
-        snackbarErrorRetry = null
-        super.onDestroyView()
-    }
-
-    private fun subscribeObservables(adapter: PagingDataAdapter<T, *>) {
-        viewLifecycleOwner.lifecycleScope.launch {
-            data.collectLatest { pagingData ->
-                adapter.submitData(pagingData)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        val view = ComposeView(inflater.context)
+        view.setContent {
+            TuskyTheme {
+                SearchContent()
             }
         }
-
-        adapter.addLoadStateListener { loadState ->
-
-            if (loadState.refresh is LoadState.Error) {
-                showError(adapter)
-            }
-
-            val isNewSearch = currentQuery != viewModel.currentQuery
-
-            binding.searchProgressBar.visible(
-                loadState.refresh == LoadState.Loading && isNewSearch && !binding.swipeRefreshLayout.isRefreshing
-            )
-            binding.searchRecyclerView.visible(
-                loadState.refresh is LoadState.NotLoading || !isNewSearch || binding.swipeRefreshLayout.isRefreshing
-            )
-
-            if (loadState.refresh != LoadState.Loading) {
-                binding.swipeRefreshLayout.isRefreshing = false
-                currentQuery = viewModel.currentQuery
-            }
-
-            binding.progressBarBottom.visible(loadState.append == LoadState.Loading)
-
-            binding.searchNoResultsText.visible(
-                loadState.refresh is LoadState.NotLoading && adapter.itemCount == 0 && viewModel.currentQuery.isNotEmpty()
-            )
-        }
+        return view
     }
 
-    override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-        menuInflater.inflate(R.menu.fragment_search, menu)
-    }
+    @Composable
+    private fun SearchContent() {
+        Box {
+            val currentQuery by viewModel.currentQuery.collectAsStateWithLifecycle()
+            val results = data.collectAsLazyPagingItems()
 
-    override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-        return when (menuItem.itemId) {
-            R.id.action_refresh -> {
-                binding.swipeRefreshLayout.isRefreshing = true
-                onRefresh()
-                true
-            }
-
-            else -> false
-        }
-    }
-
-    private fun initAdapter(): PagingDataAdapter<T, *> {
-        binding.searchRecyclerView.layoutManager = LinearLayoutManager(binding.searchRecyclerView.context)
-        val adapter = createAdapter()
-        this.adapter = adapter
-        binding.searchRecyclerView.adapter = adapter
-        binding.searchRecyclerView.setHasFixedSize(true)
-        (binding.searchRecyclerView.itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
-        return adapter
-    }
-
-    private fun showError(adapter: PagingDataAdapter<T, *>) {
-        if (snackbarErrorRetry?.isShown != true) {
-            snackbarErrorRetry =
-                Snackbar.make(binding.root, R.string.failed_search, Snackbar.LENGTH_INDEFINITE)
-                    .setAction(R.string.action_retry) {
-                        snackbarErrorRetry = null
-                        adapter.retry()
-                    }.also {
-                        it.show()
+            if (results.itemCount == 0) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxHeight()
+                        .widthIn(min = 640.dp)
+                        .align(Alignment.Center)
+                        .background(colorScheme.background)
+                ) {
+                    val isLoading = results.loadState.source.refresh is LoadState.Loading || results.loadState.mediator?.refresh is LoadState.Loading
+                    val error = (results.loadState.source.refresh as? LoadState.Error)?.error ?: (results.loadState.mediator?.refresh as? LoadState.Error)?.error
+                    if (isLoading) {
+                        CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+                    } else if (error == null && currentQuery.isNotEmpty()) {
+                        TuskyMessageView(
+                            modifier = Modifier.align(Alignment.Center),
+                            onRetry = null,
+                            message = stringResource(R.string.search_no_results),
+                            mode = MessageViewMode.EMPTY,
+                        )
                     }
+                }
+            } else {
+                val instanceInfo by instanceInfoRepository.instanceInfoFlow().collectAsStateWithLifecycle(instanceInfoRepository.defaultInstanceInfo)
+                val accounts by accountManager.accountsFlow.collectAsStateWithLifecycle()
+
+                var refreshing by remember { mutableStateOf(false) }
+
+                if (refreshing &&
+                    results.loadState.refresh !is LoadState.Loading &&
+                    results.loadState.source.refresh !is LoadState.Loading &&
+                    results.loadState.mediator?.refresh !is LoadState.Loading
+                ) {
+                    refreshing = false
+                }
+
+                TuskyPullToRefreshBox(
+                    isRefreshing = refreshing,
+                    onRefresh = {
+                        refreshing = true
+                        results.refresh()
+                    },
+                    modifier = Modifier.fillMaxSize(),
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .widthIn(max = 640.dp)
+                            .fillMaxWidth()
+                            .fillMaxHeight()
+                            .align(Alignment.Center)
+                            .background(colorScheme.background)
+                    )
+
+                    LazyColumn(
+                        state = rememberLazyListState(),
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .nestedScroll(rememberNestedScrollInteropConnection()),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        searchResult(
+                            result = results,
+                            instanceInfo = instanceInfo,
+                            accounts = accounts
+                        )
+
+                        item(key = "bottomSpacer") {
+                            Column {
+                                Spacer(
+                                    modifier = Modifier.windowInsetsBottomHeight(WindowInsets.systemBars)
+                                )
+                                Spacer(
+                                    modifier = Modifier.height(dimensionResource(R.dimen.recyclerview_bottom_padding_no_actionbutton))
+                                )
+                            }
+                        }
+                    }
+                }
+            }
+
+            val snackbarHostState = remember { SnackbarHostState() }
+
+            SnackbarHost(
+                hostState = snackbarHostState,
+                modifier = Modifier
+                    .align(Alignment.BottomStart)
+                    .windowInsetsPadding(WindowInsets.safeDrawing)
+            )
+
+            val snackBarMessage = stringResource(R.string.failed_search)
+
+            val snackBarAction = stringResource(R.string.action_retry)
+
+            LaunchedEffect(results.loadState.refresh) {
+                if (results.loadState.refresh is LoadState.Error) {
+                    // TODO once ConversationActivity is also migrated to Compose
+                    // The Compose Snackbar is not positioned correctly when inside a CoordinatorLayout with collapsing toolbar
+                    // Using old Snackbars for now.
+                    /*val snackbarResult = snackbarHostState.showSnackbar(
+                        message = snackBarMessage,
+                        actionLabel = snackBarAction,
+                        duration = SnackbarDuration.Indefinite
+                    )
+                    if (snackbarResult == SnackbarResult.ActionPerformed) {
+                        results.retry()
+                    }*/
+                    view?.let {
+                        Snackbar.make(it, snackBarMessage, Snackbar.LENGTH_INDEFINITE)
+                            .setAction(snackBarAction) {
+                                results.retry()
+                            }
+                            .show()
+                    }
+                }
+            }
         }
     }
 
-    override fun onViewAccount(id: String) {
+    override fun onViewAccount(accountId: String) {
         bottomSheetActivity?.startActivityWithSlideInAnimation(
-            AccountActivity.getIntent(requireContext(), id)
+            AccountActivity.newIntent(requireContext(), accountId)
         )
     }
 
@@ -163,10 +236,4 @@ abstract class SearchFragment<T : Any> :
 
     protected val bottomSheetActivity
         get() = (activity as? BottomSheetActivity)
-
-    override fun onRefresh() {
-        snackbarErrorRetry?.dismiss()
-        snackbarErrorRetry = null
-        adapter?.refresh()
-    }
 }

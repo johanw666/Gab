@@ -132,7 +132,7 @@ abstract class BottomSheetActivity : BaseActivity() {
     }
 
     open fun viewAccount(id: String) {
-        val intent = AccountActivity.getIntent(this, id)
+        val intent = AccountActivity.newIntent(this, id)
         startActivityWithSlideInAnimation(intent)
     }
 

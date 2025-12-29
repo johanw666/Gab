@@ -16,8 +16,10 @@ package com.keylesspalace.tusky.ui.preferences
  * see <http://www.gnu.org/licenses>. */
 
 import android.content.SharedPreferences
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.keylesspalace.tusky.components.preference.PreferencesFragment.ReadingOrder
 import com.keylesspalace.tusky.db.AccountManager
 import com.keylesspalace.tusky.settings.AppTheme
 import com.keylesspalace.tusky.settings.PrefKeys
@@ -53,9 +55,57 @@ class PreferencesProviderViewModel @Inject constructor(
     private fun SharedPreferences.toTuskyPreferences(): TuskyPreferences {
         val tuskyTheme = this.getNonNullString(APP_THEME, AppTheme.DEFAULT.value)
 
+        val statusTextStyles = when (this.getString(PrefKeys.STATUS_TEXT_SIZE, "medium")) {
+            "smallest" -> StatusTextStyles(
+                small = textStyle(fontSize = 10.sp),
+                medium = textStyle(fontSize = 12.sp),
+                large = textStyle(14.sp)
+            )
+            "small" -> StatusTextStyles(
+                small = textStyle(fontSize = 12.sp),
+                medium = textStyle(fontSize = 14.sp),
+                large = textStyle(16.sp)
+            )
+            "medium" -> StatusTextStyles(
+                small = textStyle(fontSize = 14.sp),
+                medium = textStyle(fontSize = 16.sp),
+                large = textStyle(18.sp)
+            )
+            "large" -> StatusTextStyles(
+                small = textStyle(fontSize = 16.sp),
+                medium = textStyle(fontSize = 18.sp),
+                large = textStyle(20.sp)
+            )
+            "largest" -> StatusTextStyles(
+                small = textStyle(fontSize = 18.sp),
+                medium = textStyle(fontSize = 20.sp),
+                large = textStyle(22.sp)
+            )
+            else -> StatusTextStyles(
+                small = textStyle(fontSize = 14.sp),
+                medium = textStyle(fontSize = 16.sp),
+                large = textStyle(18.sp)
+            )
+        }
+
         return TuskyPreferences(
             theme = AppTheme.of(tuskyTheme),
-            useBlurhash = this.getBoolean(PrefKeys.USE_BLURHASH, true)
+            statusTextStyles = statusTextStyles,
+            useBlurhash = this.getBoolean(PrefKeys.USE_BLURHASH, true),
+            showBotBadge = this.getBoolean(PrefKeys.SHOW_BOT_OVERLAY, true),
+            animateCustomEmojis = this.getBoolean(PrefKeys.ANIMATE_CUSTOM_EMOJIS, false),
+            animateAvatars = this.getBoolean(PrefKeys.ANIMATE_GIF_AVATARS, false),
+            useAbsoluteTime = this.getBoolean(PrefKeys.ABSOLUTE_TIME_VIEW, false),
+            showStatsInline = this.getBoolean(PrefKeys.SHOW_STATS_INLINE, false),
+            showLinkPreviews = this.getBoolean(PrefKeys.SHOW_CARDS_IN_TIMELINES, false),
+            readingOrder = ReadingOrder.from(
+                this.getString(PrefKeys.READING_ORDER, null)
+            ),
+            wellbeing = WellbeingSettings(
+                limitTimelineNotifications = this.getBoolean(PrefKeys.WELLBEING_LIMITED_NOTIFICATIONS, false),
+                hideQuantitativeStatsOnPosts = this.getBoolean(PrefKeys.WELLBEING_HIDE_STATS_POSTS, false),
+                hideQuantitativeStatsOnProfiles = this.getBoolean(PrefKeys.WELLBEING_HIDE_STATS_PROFILE, false)
+            )
         )
     }
 }

@@ -190,8 +190,8 @@ class AnnouncementsActivity :
         startActivityWithSlideInAnimation(intent)
     }
 
-    override fun onViewAccount(id: String) {
-        viewAccount(id)
+    override fun onViewAccount(accountId: String) {
+        viewAccount(accountId)
     }
 
     override fun onViewUrl(url: String) {

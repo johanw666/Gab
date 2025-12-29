@@ -23,7 +23,8 @@ fun fakeAccount(
     displayName = "Conny Duck",
     note = "This is their bio",
     url = "https://$domain/@ConnyDuck",
-    avatar = "https://$domain/system/accounts/avatars/000/150/486/original/ab27d7ddd18a10ea.jpg"
+    avatar = "https://$domain/system/accounts/avatars/000/150/486/original/ab27d7ddd18a10ea.jpg",
+    staticAvatar = "https://$domain/system/accounts/avatars/000/150/486/original/ab27d7ddd18a10ea.jpg"
 )
 
 fun fakeStatus(

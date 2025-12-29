@@ -33,6 +33,7 @@ data class TimelineAccountEntity(
     val displayName: String,
     val url: String,
     val avatar: String,
+    val staticAvatar: String,
     @ColumnInfo(defaultValue = "") val note: String,
     val emojis: List<Emoji>,
     val bot: Boolean

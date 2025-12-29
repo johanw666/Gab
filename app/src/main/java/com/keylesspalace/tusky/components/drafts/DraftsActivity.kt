@@ -127,7 +127,7 @@ class DraftsActivity : BaseActivity(), DraftActionListener {
 
                         bottomSheet.state = BottomSheetBehavior.STATE_HIDDEN
 
-                        startActivity(ComposeActivity.startIntent(context, composeOptions))
+                        startActivity(ComposeActivity.newIntent(context, composeOptions))
                     },
                     { throwable ->
                         bottomSheet.state = BottomSheetBehavior.STATE_HIDDEN
@@ -171,7 +171,7 @@ class DraftsActivity : BaseActivity(), DraftActionListener {
             kind = ComposeActivity.ComposeKind.EDIT_DRAFT
         )
 
-        startActivity(ComposeActivity.startIntent(this, composeOptions))
+        startActivity(ComposeActivity.newIntent(this, composeOptions))
     }
 
     override fun onDeleteDraft(draft: DraftEntity) {

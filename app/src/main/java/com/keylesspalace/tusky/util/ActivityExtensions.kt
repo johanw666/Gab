@@ -2,7 +2,6 @@
 
 package com.keylesspalace.tusky.util
 
-import android.app.Activity
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
@@ -15,7 +14,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import com.keylesspalace.tusky.BaseActivity
 
-fun Activity.startActivityWithSlideInAnimation(intent: Intent) {
+fun Context.startActivityWithSlideInAnimation(intent: Intent) {
     startActivity(intent.withSlideInAnimation())
 }
 
@@ -51,7 +50,7 @@ fun ComponentActivity.overrideActivityTransitionCompat(
     }
 }
 
-fun Activity.copyToClipboard(text: CharSequence, popupText: CharSequence, clipboardLabel: CharSequence = "") {
+fun Context.copyToClipboard(text: CharSequence, popupText: CharSequence, clipboardLabel: CharSequence = "") {
     val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
     clipboard.setPrimaryClip(ClipData.newPlainText(clipboardLabel, text))
     if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.S_V2) {

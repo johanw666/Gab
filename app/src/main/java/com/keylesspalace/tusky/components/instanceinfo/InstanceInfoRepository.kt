@@ -33,10 +33,13 @@ import com.keylesspalace.tusky.entity.Instance
 import com.keylesspalace.tusky.entity.InstanceV1
 import com.keylesspalace.tusky.network.MastodonApi
 import com.keylesspalace.tusky.util.isHttpNotFound
-import java.util.concurrent.ConcurrentHashMap
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -51,7 +54,9 @@ class InstanceInfoRepository @Inject constructor(
     private val instanceName
         get() = accountManager.activeAccount!!.domain
 
-    fun precache() {
+    val defaultInstanceInfo = null.toInfoOrDefault()
+
+    fun instanceInfoFlow(): Flow<InstanceInfo> {
         // We are avoiding some duplicate work but we are not trying too hard.
         // We might request it multiple times in parallel which is not a big problem.
         // We might also get the results in random order or write them twice but it's also
@@ -59,19 +64,19 @@ class InstanceInfoRepository @Inject constructor(
         // We are just trying to avoid 2 things:
         //  - fetching it when we already have it
         //  - caching default value (we want to rather re-fetch if it fails)
-        if (instanceInfoCache[instanceName] == null) {
+        if (instanceInfoCache.value[instanceName] == null) {
             externalScope.launch {
                 fetchAndPersistInstanceInfo().fold({ fetched ->
-                    instanceInfoCache[instanceName] = fetched.toInfoOrDefault()
+                    instanceInfoCache.update { infoCache ->
+                        infoCache + (instanceName to fetched.toInfoOrDefault())
+                    }
                 }, { e ->
                     Log.w(TAG, "failed to precache instance info", e)
                 })
             }
         }
+        return instanceInfoCache.map { infoCache -> infoCache[instanceName] ?: defaultInstanceInfo }
     }
-
-    val cachedInstanceInfoOrFallback: InstanceInfo
-        get() = instanceInfoCache[instanceName] ?: null.toInfoOrDefault()
 
     /**
      * Returns the custom emojis of the instance.
@@ -143,7 +148,7 @@ class InstanceInfoRepository @Inject constructor(
         maxFieldNameLength = this?.maxFieldNameLength,
         maxFieldValueLength = this?.maxFieldValueLength,
         version = this?.version,
-        translationEnabled = this?.translationEnabled,
+        translationEnabled = this?.translationEnabled == true,
         mastodonApiVersion = this?.mastodonApiVersion,
         vapidKey = this?.vapidKey
     )
@@ -215,7 +220,7 @@ class InstanceInfoRepository @Inject constructor(
         private const val TAG = "InstanceInfoRepo"
 
         /** In-memory cache for instance data, per instance domain.  */
-        private var instanceInfoCache = ConcurrentHashMap<String, InstanceInfo>()
+        private val instanceInfoCache = MutableStateFlow<Map<String, InstanceInfo>>(mapOf())
 
         const val DEFAULT_CHARACTER_LIMIT = 500
         private const val DEFAULT_MAX_OPTION_COUNT = 4

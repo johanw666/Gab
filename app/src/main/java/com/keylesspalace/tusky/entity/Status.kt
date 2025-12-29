@@ -17,11 +17,13 @@ package com.keylesspalace.tusky.entity
 
 import android.text.SpannableStringBuilder
 import android.text.style.URLSpan
+import androidx.compose.runtime.Immutable
 import com.keylesspalace.tusky.util.parseAsMastodonHtml
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import java.util.Date
 
+@Immutable
 @JsonClass(generateAdapter = true)
 data class Status(
     val id: String,
@@ -164,6 +166,7 @@ data class Status(
     fun shouldShowContent(alwayShowSensitiveContent: Boolean, context: Filter.Kind): Boolean =
         alwayShowSensitiveContent || (!actionableStatus.sensitive && getApplicableFilter(context)?.action != Filter.Action.BLUR)
 
+    @Immutable
     @JsonClass(generateAdapter = true)
     data class Mention(
         val id: String,
@@ -172,6 +175,7 @@ data class Status(
         @Json(name = "username") val localUsername: String
     )
 
+    @Immutable
     @JsonClass(generateAdapter = true)
     data class Application(
         val name: String,

@@ -24,10 +24,10 @@ import android.graphics.RectF
 import android.util.AttributeSet
 import androidx.appcompat.R as appcompatR
 import androidx.appcompat.content.res.AppCompatResources
-import at.connyduck.sparkbutton.helpers.Utils
 import com.google.android.material.R as materialR
 import com.google.android.material.color.MaterialColors
 import com.keylesspalace.tusky.R
+import com.keylesspalace.tusky.util.dpToPx
 import com.keylesspalace.tusky.view.MediaPreviewImageView
 
 class ProgressImageView
@@ -41,7 +41,7 @@ class ProgressImageView
     private val biggerRect = RectF()
     private val circlePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         color = MaterialColors.getColor(this@ProgressImageView, appcompatR.attr.colorPrimary)
-        strokeWidth = Utils.dpToPx(context, 4).toFloat()
+        strokeWidth = dpToPx(context, 4).toFloat()
         style = Paint.Style.STROKE
     }
     private val clearPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
@@ -55,8 +55,8 @@ class ProgressImageView
         context,
         R.drawable.ic_spellcheck_24dp
     )!!
-    private val circleRadius = Utils.dpToPx(context, 14)
-    private val circleMargin = Utils.dpToPx(context, 14)
+    private val circleRadius = dpToPx(context, 14)
+    private val circleMargin = dpToPx(context, 14)
 
     fun setProgress(progress: Int) {
         this.progress = progress

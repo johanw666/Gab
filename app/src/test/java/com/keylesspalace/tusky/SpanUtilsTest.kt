@@ -14,7 +14,7 @@ import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
 
 /** The [Pattern.UNICODE_CHARACTER_CLASS] flag is not supported on Android, on Android it is just always on.
- * Since thesse tests run on a regular Jvm, we need a to set this flag or they would behave differently.
+ * Since these tests run on a regular Jvm, we need to set this flag or they would behave differently.
  * */
 private val urlPattern = Regex.VALID_URL_PATTERN_STRING.toPattern(Pattern.CASE_INSENSITIVE or Pattern.UNICODE_CHARACTER_CLASS)
 private val tagPattern = TAG_PATTERN_STRING.toPattern(Pattern.CASE_INSENSITIVE or Pattern.UNICODE_CHARACTER_CLASS)

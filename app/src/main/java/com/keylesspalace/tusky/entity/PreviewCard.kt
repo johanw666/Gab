@@ -15,11 +15,13 @@
 
 package com.keylesspalace.tusky.entity
 
+import androidx.compose.runtime.Immutable
 import com.keylesspalace.tusky.json.Guarded
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import java.util.Date
 
+@Immutable
 @JsonClass(generateAdapter = true)
 data class PreviewCard(
     val url: String,

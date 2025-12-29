@@ -34,6 +34,7 @@ import com.keylesspalace.tusky.util.StatusViewHelper.Companion.NO_INPUT_FILTER
 import com.keylesspalace.tusky.util.emojify
 import com.keylesspalace.tusky.util.getRelativeTimeSpanString
 import com.keylesspalace.tusky.util.hide
+import com.keylesspalace.tusky.util.parseAsMastodonHtml
 import com.keylesspalace.tusky.util.setClickableMentions
 import com.keylesspalace.tusky.util.setClickableText
 import com.keylesspalace.tusky.util.shouldTrimStatus
@@ -105,8 +106,9 @@ class StatusViewHolder(
 
     private fun updateTextView() {
         viewdata()?.let { viewdata ->
+            val content = viewdata.actionable.content.parseAsMastodonHtml()
             setupCollapsedState(
-                shouldTrimStatus(viewdata.content),
+                shouldTrimStatus(content),
                 viewState.isCollapsed(viewdata.id, true),
                 viewState.isContentShow(viewdata.id, viewdata.status.sensitive),
                 viewdata.status.spoilerText
@@ -115,7 +117,7 @@ class StatusViewHolder(
             if (viewdata.status.spoilerText.isBlank()) {
                 setTextVisible(
                     true,
-                    viewdata.content,
+                    content,
                     viewdata.status.mentions,
                     viewdata.status.tags,
                     viewdata.status.emojis,
@@ -140,7 +142,7 @@ class StatusViewHolder(
                         viewState.setContentShow(viewdata.id, !contentShown)
                         setTextVisible(
                             !contentShown,
-                            viewdata.content,
+                            content,
                             viewdata.status.mentions,
                             viewdata.status.tags,
                             viewdata.status.emojis,
@@ -151,7 +153,7 @@ class StatusViewHolder(
                 }
                 setTextVisible(
                     viewState.isContentShow(viewdata.id, true),
-                    viewdata.content,
+                    content,
                     viewdata.status.mentions,
                     viewdata.status.tags,
                     viewdata.status.emojis,

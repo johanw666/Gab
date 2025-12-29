@@ -10,7 +10,20 @@ import android.text.style.ForegroundColorSpan
 import android.text.style.ImageSpan
 import android.text.style.URLSpan
 import androidx.appcompat.content.res.AppCompatResources
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.text.InlineTextContent
+import androidx.compose.material3.Icon
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.Placeholder
+import androidx.compose.ui.text.PlaceholderVerticalAlign
+import androidx.compose.ui.text.TextLinkStyles
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.unit.sp
 import com.keylesspalace.tusky.R
+import com.keylesspalace.tusky.ui.statuscomponents.text.htmlToAnnotatedString
 import com.keylesspalace.tusky.util.twittertext.Regex
 import java.util.regex.Pattern
 
@@ -112,7 +125,7 @@ private val iconNameMapping: Map<String, Int> = mapOf(
 fun addDrawables(text: CharSequence, color: Int, size: Int, context: Context): Spannable {
     val builder = SpannableStringBuilder(text)
 
-    iconNameMapping.forEach { iconName, icon ->
+    iconNameMapping.forEach { (iconName, icon) ->
         var index = 0
         while (index < text.length - iconName.length && index != -1) {
             index = text.indexOf(iconName, index)
@@ -133,6 +146,53 @@ fun addDrawables(text: CharSequence, color: Int, size: Int, context: Context): S
     }
 
     return builder
+}
+
+fun addIconAnnotations(text: String): AnnotatedString {
+    val textWithStyling = htmlToAnnotatedString(text, TextLinkStyles(), Color.Unspecified, null, emptyList())
+    return buildAnnotatedString {
+        append(textWithStyling)
+
+        iconNameMapping.forEach { (iconName, _) ->
+            var index = 0
+            while (index < textWithStyling.length - iconName.length && index != -1) {
+                index = textWithStyling.indexOf(iconName, index)
+
+                if (index != -1) {
+                    addStringAnnotation(
+                        // TODO investigate a better way to do this,
+                        //  hardcoding an internal androidx identifier is not a good idea
+                        "androidx.compose.foundation.text.inlineContent",
+                        iconName,
+                        index,
+                        index + iconName.length
+                    )
+                    index += iconName.length
+                }
+            }
+        }
+    }
+}
+
+fun iconInlineContent(color: Color): Map<String, InlineTextContent> {
+    return iconNameMapping.asIterable()
+        .associate { (iconName, icon) ->
+            iconName to InlineTextContent(
+                placeholder = Placeholder(
+                    width = 22.sp,
+                    height = 22.sp,
+                    placeholderVerticalAlign = PlaceholderVerticalAlign.TextCenter
+                ),
+                children = {
+                    Icon(
+                        painter = painterResource(icon),
+                        modifier = Modifier.fillMaxSize(),
+                        tint = color,
+                        contentDescription = null,
+                    )
+                }
+            )
+        }
 }
 
 private fun getSpan(

@@ -15,9 +15,11 @@
 
 package com.keylesspalace.tusky.entity
 
+import androidx.compose.runtime.Immutable
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
+@Immutable
 @JsonClass(generateAdapter = true)
 data class RelationshipSeveranceEvent(
     val id: String,

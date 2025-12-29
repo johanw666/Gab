@@ -15,21 +15,18 @@
 
 package com.keylesspalace.tusky.components.conversation
 
+import androidx.compose.runtime.Stable
 import com.keylesspalace.tusky.entity.Poll
-import com.keylesspalace.tusky.viewdata.ConcreteViewData
 import com.keylesspalace.tusky.viewdata.StatusViewData
 
+@Stable
 data class ConversationViewData(
     val id: String,
     val order: Int,
     val accounts: List<ConversationAccountEntity>,
     val unread: Boolean,
     val lastStatus: StatusViewData.Concrete
-) : ConcreteViewData {
-
-    override val viewData: StatusViewData.Concrete
-        get() = lastStatus
-
+) {
     fun toEntity(
         accountId: Long,
         favourited: Boolean = lastStatus.status.favourited,
@@ -44,7 +41,14 @@ data class ConversationViewData(
             accountId = accountId,
             id = id,
             order = order,
-            accounts = accounts,
+            accounts = accounts.sortedBy { account ->
+                // the account that posted last should be first
+                if (account.id == lastStatus.status.account.id) {
+                    0
+                } else {
+                    1
+                }
+            },
             unread = unread,
             lastStatus = lastStatus.toConversationStatusEntity(
                 favourited = favourited,

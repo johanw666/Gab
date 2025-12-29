@@ -17,6 +17,6 @@ package com.keylesspalace.tusky.interfaces
 
 interface LinkListener {
     fun onViewTag(tag: String)
-    fun onViewAccount(id: String)
+    fun onViewAccount(accountId: String)
     fun onViewUrl(url: String)
 }

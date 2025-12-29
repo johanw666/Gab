@@ -1447,7 +1447,7 @@ class ComposeActivity :
          * @return an Intent to start the ComposeActivity
          */
         @JvmStatic
-        fun startIntent(context: Context, options: ComposeOptions): Intent {
+        fun newIntent(context: Context, options: ComposeOptions): Intent {
             return Intent(context, ComposeActivity::class.java).apply {
                 putExtra(COMPOSE_OPTIONS_EXTRA, options)
             }

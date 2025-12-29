@@ -17,15 +17,16 @@ package com.keylesspalace.tusky.components.notifications
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.compose.ui.platform.ComposeView
+import androidx.lifecycle.findViewTreeViewModelStoreOwner
+import androidx.lifecycle.setViewTreeViewModelStoreOwner
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.keylesspalace.tusky.R
 import com.keylesspalace.tusky.adapter.FilteredNotificationViewHolder
 import com.keylesspalace.tusky.adapter.FollowRequestViewHolder
 import com.keylesspalace.tusky.adapter.LoadMoreViewHolder
 import com.keylesspalace.tusky.adapter.PlaceholderViewHolder
-import com.keylesspalace.tusky.adapter.StatusBaseViewHolder
 import com.keylesspalace.tusky.databinding.ItemFollowBinding
 import com.keylesspalace.tusky.databinding.ItemFollowRequestBinding
 import com.keylesspalace.tusky.databinding.ItemLoadMoreBinding
@@ -34,13 +35,15 @@ import com.keylesspalace.tusky.databinding.ItemPlaceholderBinding
 import com.keylesspalace.tusky.databinding.ItemReportNotificationBinding
 import com.keylesspalace.tusky.databinding.ItemSeveredRelationshipNotificationBinding
 import com.keylesspalace.tusky.databinding.ItemStatusFilteredBinding
-import com.keylesspalace.tusky.databinding.ItemStatusNotificationBinding
 import com.keylesspalace.tusky.databinding.ItemUnknownNotificationBinding
 import com.keylesspalace.tusky.entity.Notification
 import com.keylesspalace.tusky.interfaces.AccountActionListener
 import com.keylesspalace.tusky.interfaces.LoadMoreActionListener
 import com.keylesspalace.tusky.interfaces.StatusActionListener
-import com.keylesspalace.tusky.util.AbsoluteTimeFormatter
+import com.keylesspalace.tusky.ui.TuskyTheme
+import com.keylesspalace.tusky.ui.statuscomponents.NotificationInfo
+import com.keylesspalace.tusky.ui.statuscomponents.Status
+import com.keylesspalace.tusky.ui.statuscomponents.StatusNotification
 import com.keylesspalace.tusky.util.StatusDisplayOptions
 import com.keylesspalace.tusky.viewdata.NotificationViewData
 
@@ -57,9 +60,8 @@ interface NotificationsViewHolder {
 }
 
 class NotificationsPagingAdapter(
-    private val accountId: String,
     private var statusDisplayOptions: StatusDisplayOptions,
-    private val statusListener: StatusActionListener<NotificationViewData.Concrete>,
+    private val statusListener: StatusActionListener,
     private val loadMoreListener: LoadMoreActionListener<NotificationViewData.LoadMore>,
     private val notificationActionListener: NotificationActionListener,
     private val accountActionListener: AccountActionListener,
@@ -75,8 +77,6 @@ class NotificationsPagingAdapter(
             notifyItemRangeChanged(0, itemCount)
         }
 
-    private val absoluteTimeFormatter = AbsoluteTimeFormatter()
-
     init {
         stateRestorationPolicy = StateRestorationPolicy.PREVENT_WHEN_EMPTY
     }
@@ -87,16 +87,12 @@ class NotificationsPagingAdapter(
             is NotificationViewData.Concrete -> {
                 when (notification.type) {
                     Notification.Type.Mention,
-                    Notification.Type.Poll -> if (notification.statusViewData?.isFilterWarn == true) {
-                        VIEW_TYPE_STATUS_FILTERED
-                    } else {
-                        VIEW_TYPE_STATUS
-                    }
+                    Notification.Type.Poll,
                     Notification.Type.Status,
                     Notification.Type.Update -> if (notification.statusViewData?.isFilterWarn == true) {
                         VIEW_TYPE_STATUS_FILTERED
                     } else {
-                        VIEW_TYPE_STATUS_NOTIFICATION
+                        VIEW_TYPE_STATUS
                     }
                     Notification.Type.Favourite,
                     Notification.Type.Reblog -> VIEW_TYPE_STATUS_NOTIFICATION
@@ -120,19 +116,19 @@ class NotificationsPagingAdapter(
                 ItemPlaceholderBinding.inflate(inflater, parent, false),
                 mode = PlaceholderViewHolder.Mode.NOTIFICATION
             )
-            VIEW_TYPE_STATUS -> StatusViewHolder(
-                inflater.inflate(R.layout.item_status, parent, false),
-                statusListener,
-                accountId
+            VIEW_TYPE_STATUS -> ComposeViewHolder(
+                ComposeView(parent.context).apply {
+                    setViewTreeViewModelStoreOwner(parent.findViewTreeViewModelStoreOwner())
+                }
             )
             VIEW_TYPE_STATUS_FILTERED -> FilteredNotificationViewHolder(
                 ItemStatusFilteredBinding.inflate(inflater, parent, false),
                 statusListener
             )
-            VIEW_TYPE_STATUS_NOTIFICATION -> StatusNotificationViewHolder(
-                ItemStatusNotificationBinding.inflate(inflater, parent, false),
-                statusListener,
-                absoluteTimeFormatter
+            VIEW_TYPE_STATUS_NOTIFICATION -> ComposeViewHolder(
+                ComposeView(parent.context).apply {
+                    setViewTreeViewModelStoreOwner(parent.findViewTreeViewModelStoreOwner())
+                }
             )
             VIEW_TYPE_FOLLOW -> FollowViewHolder(
                 ItemFollowBinding.inflate(inflater, parent, false),
@@ -175,8 +171,41 @@ class NotificationsPagingAdapter(
     override fun onBindViewHolder(viewHolder: RecyclerView.ViewHolder, position: Int, payloads: List<Any>) {
         getItem(position)?.let { notification ->
             when (notification) {
-                is NotificationViewData.Concrete ->
-                    (viewHolder as NotificationsViewHolder).bind(notification, payloads, statusDisplayOptions)
+                is NotificationViewData.Concrete -> {
+                    val viewType = getItemViewType(position)
+                    when (viewType) {
+                        VIEW_TYPE_STATUS -> {
+                            (viewHolder as ComposeViewHolder).composeView.setContent {
+                                TuskyTheme {
+                                    Status(
+                                        notification.statusViewData!!,
+                                        statusListener,
+                                        statusInfo = {
+                                            NotificationInfo(
+                                                notificationViewData = notification,
+                                                listener = statusListener
+                                            )
+                                        },
+                                        translationEnabled = false,
+                                        accounts = emptyList(),
+                                        showDivider = false
+                                    )
+                                }
+                            }
+                        }
+                        VIEW_TYPE_STATUS_NOTIFICATION -> {
+                            (viewHolder as ComposeViewHolder).composeView.setContent {
+                                TuskyTheme {
+                                    StatusNotification(
+                                        notificationViewData = notification,
+                                        listener = statusListener
+                                    )
+                                }
+                            }
+                        }
+                        else -> (viewHolder as NotificationsViewHolder).bind(notification, payloads, statusDisplayOptions)
+                    }
+                }
                 is NotificationViewData.LoadMore -> {
                     (viewHolder as LoadMoreViewHolder<NotificationViewData.LoadMore>).setup(notification)
                 }
@@ -209,21 +238,12 @@ class NotificationsPagingAdapter(
                 oldItem: NotificationViewData,
                 newItem: NotificationViewData
             ): Boolean {
-                return false // Items are different always. It allows to refresh timestamp on every view holder update
-            }
-
-            override fun getChangePayload(
-                oldItem: NotificationViewData,
-                newItem: NotificationViewData
-            ): Any? {
-                return if (oldItem == newItem) {
-                    // If items are equal - update timestamp only
-                    StatusBaseViewHolder.Key.KEY_CREATED
-                } else {
-                    // If items are different - update the whole view holder
-                    null
-                }
+                return oldItem == newItem
             }
         }
     }
+
+    class ComposeViewHolder(
+        val composeView: ComposeView
+    ) : RecyclerView.ViewHolder(composeView)
 }

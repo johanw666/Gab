@@ -16,10 +16,12 @@
 package com.keylesspalace.tusky.entity
 
 import androidx.annotation.StringRes
+import androidx.compose.runtime.Immutable
 import com.keylesspalace.tusky.R
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
+@Immutable
 @JsonClass(generateAdapter = true)
 data class AccountWarning(
     val id: String,

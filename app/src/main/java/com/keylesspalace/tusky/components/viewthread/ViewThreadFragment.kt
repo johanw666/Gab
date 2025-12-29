@@ -17,45 +17,85 @@ package com.keylesspalace.tusky.components.viewthread
 
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.util.Log
+import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
-import android.widget.LinearLayout
-import androidx.annotation.CheckResult
+import android.view.ViewGroup
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.systemBars
+import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.layout.windowInsetsBottomHeight
+import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.LinearProgressIndicator
+import androidx.compose.material3.MaterialTheme.colorScheme
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.SnackbarResult
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.core.view.MenuProvider
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.SimpleItemAnimator
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
 import at.connyduck.calladapter.networkresult.onFailure
-import at.connyduck.sparkbutton.SparkButton
+import at.connyduck.sparkbutton.compose.SparkButtonState
 import com.google.android.material.snackbar.Snackbar
+import com.keylesspalace.tusky.BottomSheetActivity
 import com.keylesspalace.tusky.R
-import com.keylesspalace.tusky.components.accountlist.AccountListActivity
-import com.keylesspalace.tusky.components.accountlist.AccountListActivity.Companion.newIntent
+import com.keylesspalace.tusky.components.compose.ComposeActivity
+import com.keylesspalace.tusky.components.instanceinfo.InstanceInfoRepository
 import com.keylesspalace.tusky.components.viewthread.edits.ViewEditsFragment
-import com.keylesspalace.tusky.databinding.FragmentViewThreadBinding
+import com.keylesspalace.tusky.db.AccountManager
 import com.keylesspalace.tusky.db.DraftsAlert
+import com.keylesspalace.tusky.entity.Filter
 import com.keylesspalace.tusky.entity.Status
-import com.keylesspalace.tusky.fragment.SFragment
 import com.keylesspalace.tusky.interfaces.StatusActionListener
 import com.keylesspalace.tusky.settings.PrefKeys
-import com.keylesspalace.tusky.util.CardViewMode
-import com.keylesspalace.tusky.util.ListStatusAccessibilityDelegate
-import com.keylesspalace.tusky.util.StatusDisplayOptions
-import com.keylesspalace.tusky.util.ensureBottomPadding
-import com.keylesspalace.tusky.util.hide
+import com.keylesspalace.tusky.ui.FilteredStatus
+import com.keylesspalace.tusky.ui.TuskyMessageView
+import com.keylesspalace.tusky.ui.TuskyPullToRefreshBox
+import com.keylesspalace.tusky.ui.TuskyTheme
+import com.keylesspalace.tusky.ui.statuscomponents.DetailedStatus
+import com.keylesspalace.tusky.ui.statuscomponents.Status
+import com.keylesspalace.tusky.ui.tuskyColors
 import com.keylesspalace.tusky.util.openLink
-import com.keylesspalace.tusky.util.show
+import com.keylesspalace.tusky.util.reply
+import com.keylesspalace.tusky.util.report
 import com.keylesspalace.tusky.util.startActivityWithSlideInAnimation
-import com.keylesspalace.tusky.util.updateRelativeTimePeriodically
-import com.keylesspalace.tusky.util.viewBinding
+import com.keylesspalace.tusky.util.viewAccount
+import com.keylesspalace.tusky.util.viewMedia
+import com.keylesspalace.tusky.util.viewTag
+import com.keylesspalace.tusky.util.viewThread
 import com.keylesspalace.tusky.view.ConfirmationBottomSheet.Companion.confirmFavourite
 import com.keylesspalace.tusky.view.ConfirmationBottomSheet.Companion.confirmReblog
 import com.keylesspalace.tusky.viewdata.AttachmentViewData
@@ -63,16 +103,13 @@ import com.keylesspalace.tusky.viewdata.StatusViewData
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.withCreationCallback
 import javax.inject.Inject
-import kotlinx.coroutines.CoroutineStart
-import kotlinx.coroutines.awaitCancellation
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class ViewThreadFragment :
-    SFragment<StatusViewData.Concrete>(R.layout.fragment_view_thread),
-    OnRefreshListener,
-    StatusActionListener<StatusViewData.Concrete>,
+    Fragment(),
+    StatusActionListener,
     MenuProvider {
 
     @Inject
@@ -81,25 +118,21 @@ class ViewThreadFragment :
     @Inject
     lateinit var draftsAlert: DraftsAlert
 
+    @Inject
+    lateinit var accountManager: AccountManager
+
+    @Inject
+    lateinit var instanceInfoRepository: InstanceInfoRepository
+
     private val viewModel: ViewThreadViewModel by viewModels(
         extrasProducer = {
             defaultViewModelCreationExtras.withCreationCallback<ViewThreadViewModel.Factory> { factory ->
                 factory.create(
-                    threadId = thisThreadsStatusId,
+                    threadId = requireArguments().getString(ID_EXTRA)!!,
                 )
             }
         }
     )
-
-    private val binding by viewBinding(FragmentViewThreadBinding::bind)
-
-    private var adapter: ThreadAdapter? = null
-    private lateinit var thisThreadsStatusId: String
-
-    private var alwaysShowSensitiveMedia = false
-    private var alwaysOpenSpoiler = false
-
-    private var buttonToAnimate: SparkButton? = null
 
     /**
      * State of the "reveal" menu item that shows/hides content that is behind a content
@@ -107,176 +140,274 @@ class ViewThreadFragment :
      */
     private var revealButtonState = RevealButtonState.NO_BUTTON
         set(value) {
-            field = value
-            requireActivity().invalidateMenu()
+            if (field != value) {
+                field = value
+                requireActivity().invalidateMenu()
+            }
         }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        thisThreadsStatusId = requireArguments().getString(ID_EXTRA)!!
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        val view = ComposeView(inflater.context)
+        view.setContent {
+            TuskyTheme {
+                ViewThreadContent()
+            }
+        }
+        return view
     }
 
-    private fun createAdapter(): ThreadAdapter {
-        val statusDisplayOptions = StatusDisplayOptions(
-            animateAvatars = preferences.getBoolean(PrefKeys.ANIMATE_GIF_AVATARS, false),
-            mediaPreviewEnabled = accountManager.activeAccount!!.mediaPreviewEnabled,
-            useAbsoluteTime = preferences.getBoolean(PrefKeys.ABSOLUTE_TIME_VIEW, false),
-            showBotOverlay = preferences.getBoolean(PrefKeys.SHOW_BOT_OVERLAY, true),
-            useBlurhash = preferences.getBoolean(PrefKeys.USE_BLURHASH, true),
-            cardViewMode = if (preferences.getBoolean(PrefKeys.SHOW_CARDS_IN_TIMELINES, false)) {
-                CardViewMode.INDENTED
-            } else {
-                CardViewMode.NONE
+    @Composable
+    private fun ViewThreadContent() {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(tuskyColors.windowBackground)
+        ) {
+            val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
+            revealButtonState = uiState.revealButton
+
+            when (uiState) {
+                is ThreadUiState.Loading -> {
+                    Box(
+                        modifier = Modifier
+                            .widthIn(max = 640.dp)
+                            .fillMaxSize()
+                            .align(Alignment.Center)
+                            .background(colorScheme.background)
+                    ) {
+                        CircularProgressIndicator(
+                            modifier = Modifier.align(Alignment.Center)
+                        )
+                    }
+                }
+
+                is ThreadUiState.Error -> {
+                    Box(
+                        modifier = Modifier
+                            .widthIn(max = 640.dp)
+                            .fillMaxSize()
+                            .align(Alignment.Center)
+                            .background(colorScheme.background)
+                    ) {
+                        TuskyMessageView(
+                            onRetry = viewModel::retry,
+                            error = (uiState as ThreadUiState.Error).throwable,
+                            modifier = Modifier.align(Alignment.Center)
+                        )
+                    }
+                }
+
+                is ThreadUiState.Success -> {
+                    ViewThreadContentList(uiState as ThreadUiState.Success)
+                }
+            }
+
+            ErrorSnackbars(
+                modifier = Modifier
+                    .align(Alignment.BottomStart)
+                    .windowInsetsPadding(WindowInsets.systemBars)
+            )
+        }
+    }
+
+    @Composable
+    private fun ViewThreadContentList(
+        uiState: ThreadUiState.Success
+    ) {
+        val statuses = uiState.statusViewData
+
+        var refreshing by remember { mutableStateOf(false) }
+
+        if (refreshing && !uiState.isRefreshing && !uiState.isloadingThread) {
+            refreshing = false
+        }
+
+        TuskyPullToRefreshBox(
+            isRefreshing = refreshing,
+            onRefresh = {
+                refreshing = true
+                viewModel.refresh()
             },
-            hideStats = preferences.getBoolean(PrefKeys.WELLBEING_HIDE_STATS_POSTS, false),
-            animateEmojis = preferences.getBoolean(PrefKeys.ANIMATE_CUSTOM_EMOJIS, false),
-            showStatsInline = preferences.getBoolean(PrefKeys.SHOW_STATS_INLINE, false),
-            showSensitiveMedia = accountManager.activeAccount!!.alwaysShowSensitiveMedia,
-            openSpoiler = accountManager.activeAccount!!.alwaysOpenSpoiler
+            modifier = Modifier.fillMaxSize(),
+        ) {
+            Box(
+                modifier = Modifier
+                    .widthIn(max = 640.dp)
+                    .fillMaxSize()
+                    .align(Alignment.Center)
+                    .background(colorScheme.background)
+            )
+
+            val instanceInfo by instanceInfoRepository.instanceInfoFlow().collectAsStateWithLifecycle(instanceInfoRepository.defaultInstanceInfo)
+            val accounts by accountManager.accountsFlow.collectAsStateWithLifecycle()
+
+            val lineColor = tuskyColors.backgroundAccent
+            val avatarMargin = with(LocalDensity.current) { 14.dp.toPx() }
+            val lineThickness = with(LocalDensity.current) { 4.dp.toPx() }
+            val avatarSize = with(LocalDensity.current) { 48.dp.toPx() }
+
+            val state = rememberLazyListState(initialFirstVisibleItemIndex = statuses.indexOfFirst { it.isDetailed }, initialFirstVisibleItemScrollOffset = -120)
+            LazyColumn(
+                state = state,
+                modifier = Modifier.fillMaxSize(),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                itemsIndexed(
+                    items = statuses,
+                    key = { _, viewData -> viewData.id },
+                ) { position, viewData ->
+
+                    if (viewData.isDetailed) {
+                        DetailedStatus(
+                            viewData,
+                            listener = this@ViewThreadFragment,
+                            translationEnabled = instanceInfo.translationEnabled,
+                            accounts = accounts,
+                            showEdits = {
+                                onShowEdits(viewData)
+                            },
+                            modifier = Modifier
+                                .widthIn(max = 640.dp)
+                                .drawBehind {
+                                    val itemAbove = statuses.getOrNull(position - 1)
+                                    if (itemAbove != null && viewData.status.inReplyToId == itemAbove.id) {
+                                        drawLine(
+                                            color = lineColor,
+                                            start = Offset(avatarMargin + avatarSize / 2, 0f),
+                                            end = Offset(avatarMargin + avatarSize / 2, avatarMargin),
+                                            strokeWidth = lineThickness
+                                        )
+                                    }
+                                }
+                        )
+                    } else if (viewData.filterActive && viewData.filter?.action == Filter.Action.WARN) {
+                        FilteredStatus(
+                            filterTitle = viewData.filter.title,
+                            onReveal = {
+                                viewModel.changeFilter(false, viewData)
+                            },
+                            modifier = Modifier.widthIn(max = 640.dp)
+                        )
+                    } else {
+                        Status(
+                            viewData,
+                            listener = this@ViewThreadFragment,
+                            translationEnabled = instanceInfo.translationEnabled,
+                            accounts = accounts,
+                            modifier = Modifier
+                                .widthIn(max = 640.dp)
+                                .drawBehind {
+                                    val itemAbove = statuses.getOrNull(position - 1)
+                                    val itemBelow = statuses.getOrNull(position + 1)
+                                    if (itemAbove != null && viewData.status.inReplyToId == itemAbove.id) {
+                                        drawLine(
+                                            color = lineColor,
+                                            start = Offset(avatarMargin + avatarSize / 2, 0f),
+                                            end = Offset(avatarMargin + avatarSize / 2, avatarMargin),
+                                            strokeWidth = lineThickness
+                                        )
+                                    }
+                                    if (itemBelow != null && itemBelow.status.inReplyToId == viewData.id) {
+                                        drawLine(
+                                            color = lineColor,
+                                            start = Offset(avatarMargin + avatarSize / 2, avatarMargin + avatarSize),
+                                            end = Offset(avatarMargin + avatarSize / 2, size.height),
+                                            strokeWidth = lineThickness
+                                        )
+                                    }
+                                }
+                        )
+                    }
+                }
+                item(key = "bottomSpacer") {
+                    Column {
+                        Spacer(
+                            modifier = Modifier.windowInsetsBottomHeight(WindowInsets.systemBars)
+                        )
+                        Spacer(
+                            modifier = Modifier.height(dimensionResource(R.dimen.recyclerview_bottom_padding_no_actionbutton))
+                        )
+                    }
+                }
+            }
+            if (uiState.isloadingThread) {
+                ThreadLoadingBar(
+                    modifier = Modifier
+                        .align(Alignment.TopCenter)
+                        .fillMaxWidth()
+                )
+            }
+        }
+    }
+
+    @Composable
+    private fun ThreadLoadingBar(modifier: Modifier = Modifier) {
+        var isShown by remember { mutableStateOf(false) }
+
+        LaunchedEffect(Unit) {
+            delay(500)
+            isShown = true
+        }
+
+        if (isShown) {
+            LinearProgressIndicator(modifier = modifier)
+        }
+    }
+
+    @Composable
+    private fun ErrorSnackbars(modifier: Modifier = Modifier) {
+        val snackbarHostState = remember { SnackbarHostState() }
+
+        SnackbarHost(
+            hostState = snackbarHostState,
+            modifier = modifier
         )
-        return ThreadAdapter(statusDisplayOptions, this)
+
+        val error by viewModel.snackbarErrors.collectAsStateWithLifecycle(initialValue = null)
+
+        val snackbarMessage = error?.message()
+        val snackbarActionLabel = error?.retryAction?.let {
+            stringResource(R.string.action_retry)
+        }
+
+        LaunchedEffect(error) {
+            if (snackbarMessage != null) {
+                val snackbarResult = snackbarHostState
+                    .showSnackbar(
+                        message = snackbarMessage,
+                        actionLabel = snackbarActionLabel,
+                        withDismissAction = true,
+                        duration = SnackbarDuration.Long
+                    )
+                if (error?.retryAction != null && snackbarResult == SnackbarResult.ActionPerformed) {
+                    error?.retryAction?.invoke()
+                }
+                viewModel.snackbarErrorShown()
+            }
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         requireActivity().addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
 
-        val adapter = createAdapter()
-        this.adapter = adapter
-
-        binding.swipeRefreshLayout.setOnRefreshListener(this)
-
-        binding.recyclerView.ensureBottomPadding()
-
-        binding.recyclerView.setHasFixedSize(true)
-        binding.recyclerView.layoutManager = LinearLayoutManager(context)
-        binding.recyclerView.setAccessibilityDelegateCompat(
-            ListStatusAccessibilityDelegate(
-                binding.recyclerView,
-                this
-            ) { index -> adapter.currentList.getOrNull(index) }
-        )
-        val divider = DividerItemDecoration(context, LinearLayout.VERTICAL)
-        binding.recyclerView.addItemDecoration(divider)
-        binding.recyclerView.addItemDecoration(ConversationLineItemDecoration(requireContext()))
-        alwaysShowSensitiveMedia = accountManager.activeAccount!!.alwaysShowSensitiveMedia
-        alwaysOpenSpoiler = accountManager.activeAccount!!.alwaysOpenSpoiler
-
-        binding.recyclerView.adapter = adapter
-
-        (binding.recyclerView.itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
-
-        var initialProgressBar = getProgressBarJob(binding.initialProgressBar, 500)
-        var threadProgressBar = getProgressBarJob(binding.threadProgressBar, 500)
-
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.uiState.collect { uiState ->
-                when (uiState) {
-                    is ThreadUiState.Loading -> {
-                        revealButtonState = RevealButtonState.NO_BUTTON
-
-                        binding.recyclerView.hide()
-                        binding.statusView.hide()
-
-                        initialProgressBar = getProgressBarJob(binding.initialProgressBar, 500)
-                        initialProgressBar.start()
-                    }
-
-                    is ThreadUiState.LoadingThread -> {
-                        if (uiState.statusViewDatum == null) {
-                            // no detailed statuses available, e.g. because author is blocked
-                            activity?.finish()
-                            return@collect
-                        }
-
-                        initialProgressBar.cancel()
-                        threadProgressBar = getProgressBarJob(binding.threadProgressBar, 500)
-                        threadProgressBar.start()
-
-                        if (viewModel.isInitialLoad) {
-                            adapter.submitList(listOf(uiState.statusViewDatum))
-
-                            // else this "submit one and then all on success below" will always center on the one
-                        }
-
-                        revealButtonState = uiState.revealButton
-                        binding.swipeRefreshLayout.isRefreshing = false
-
-                        binding.recyclerView.show()
-                        binding.statusView.hide()
-                    }
-
-                    is ThreadUiState.Error -> {
-                        Log.w(TAG, "failed to load status", uiState.throwable)
-                        initialProgressBar.cancel()
-                        threadProgressBar.cancel()
-
-                        revealButtonState = RevealButtonState.NO_BUTTON
-                        binding.swipeRefreshLayout.isRefreshing = false
-
-                        binding.recyclerView.hide()
-                        binding.statusView.show()
-
-                        binding.statusView.setup(
-                            uiState.throwable
-                        ) { viewModel.retry() }
-                    }
-
-                    is ThreadUiState.Success -> {
-                        if (uiState.statusViewData.none { viewData -> viewData.isDetailed }) {
-                            // no detailed statuses available, e.g. because author is blocked
-                            activity?.finish()
-                            return@collect
-                        }
-
-                        threadProgressBar.cancel()
-
-                        adapter.submitList(uiState.statusViewData) {
-                            if (lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED) && viewModel.isInitialLoad) {
-                                viewModel.isInitialLoad = false
-
-                                // Ensure the top of the status is visible
-                                (binding.recyclerView.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(
-                                    uiState.detailedStatusPosition,
-                                    0
-                                )
-                            }
-                        }
-
-                        revealButtonState = uiState.revealButton
-                        binding.swipeRefreshLayout.isRefreshing = false
-
-                        binding.recyclerView.show()
-                        binding.statusView.hide()
-                    }
-
-                    is ThreadUiState.Refreshing -> {
-                        threadProgressBar.cancel()
-                    }
-                }
+            viewModel.finish.collect {
+                activity?.finish()
             }
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.errors.collect { throwable ->
-                Log.w(TAG, "failed to load status context", throwable)
-                Snackbar.make(binding.root, R.string.error_generic, Snackbar.LENGTH_SHORT)
-                    .setAction(R.string.action_retry) {
-                        viewModel.retry()
-                    }
-                    .show()
+            viewModel.startComposing.collect { composeOptions ->
+                val intent = ComposeActivity.newIntent(requireContext(), composeOptions)
+                requireContext().startActivityWithSlideInAnimation(intent)
             }
         }
-
-        updateRelativeTimePeriodically(preferences, adapter)
-
-        draftsAlert.observeInContext(requireActivity(), true)
     }
 
-    override fun onDestroyView() {
-        // Clear the adapter to prevent leaking the View
-        adapter = null
-        buttonToAnimate = null
-        super.onDestroyView()
+    override fun onResume() {
+        super.onResume()
+        requireActivity().title = getString(R.string.title_view_thread)
     }
 
     override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
@@ -304,7 +435,7 @@ class ViewThreadFragment :
             }
 
             R.id.action_refresh -> {
-                onRefresh()
+                viewModel.refresh()
                 true
             }
 
@@ -312,65 +443,69 @@ class ViewThreadFragment :
         }
     }
 
-    /**
-     * Create a job to implement a delayed-visible progress bar.
-     *
-     * Delaying the visibility of the progress bar can improve user perception of UI speed because
-     * fewer UI elements are appearing and disappearing.
-     *
-     * When started the job will wait `delayMs` then show `view`. If the job is cancelled at
-     * any time `view` is hidden.
-     */
-    @CheckResult
-    private fun getProgressBarJob(view: View, delayMs: Long) =
-        viewLifecycleOwner.lifecycleScope.launch(
-            start = CoroutineStart.LAZY
-        ) {
-            try {
-                delay(delayMs)
-                view.show()
-                awaitCancellation()
-            } finally {
-                view.hide()
-            }
-        }
-
-    override fun onRefresh() {
-        viewModel.refresh()
-    }
-
-    override fun onReply(viewData: StatusViewData.Concrete) {
-        super.reply(viewData.status)
-    }
-
-    override fun onReblog(viewData: StatusViewData.Concrete, reblog: Boolean, visibility: Status.Visibility?, button: SparkButton?) {
-        buttonToAnimate = button
-
+    override fun onReblog(
+        viewData: StatusViewData.Concrete,
+        reblog: Boolean,
+        visibility: Status.Visibility?,
+        state: SparkButtonState?
+    ) {
         if (reblog && visibility == null) {
             confirmReblog(preferences) { visibility ->
-                viewModel.reblog(true, viewData, visibility)
-                buttonToAnimate?.playAnimation()
-                buttonToAnimate?.isChecked = true
+                viewModel.reblog(viewData.id, true, visibility)
+                state?.animate()
             }
         } else {
-            viewModel.reblog(reblog, viewData, visibility ?: Status.Visibility.PUBLIC)
+            viewModel.reblog(viewData.id, reblog, visibility ?: Status.Visibility.PUBLIC)
             if (reblog) {
-                buttonToAnimate?.playAnimation()
+                state?.animate()
             }
-            buttonToAnimate?.isChecked = false
         }
     }
 
-    override val onMoreTranslate: ((translate: Boolean, viewData: StatusViewData.Concrete) -> Unit) =
-        { translate: Boolean, viewData: StatusViewData.Concrete ->
-            if (translate) {
-                onTranslate(viewData)
-            } else {
-                onUntranslate(viewData)
+    override fun onFavourite(
+        viewData: StatusViewData.Concrete,
+        favourite: Boolean,
+        state: SparkButtonState?
+    ) {
+        if (favourite) {
+            confirmFavourite(preferences) {
+                viewModel.favorite(viewData.id, true)
+                state?.animate()
             }
+        } else {
+            viewModel.favorite(viewData.id, true)
         }
+    }
 
-    private fun onTranslate(viewData: StatusViewData.Concrete) {
+    override fun onBookmark(viewData: StatusViewData.Concrete, bookmark: Boolean) {
+        viewModel.bookmark(viewData.id, bookmark)
+    }
+
+    override fun onExpandedChange(viewData: StatusViewData.Concrete, expanded: Boolean) {
+        viewModel.changeExpanded(expanded, viewData)
+    }
+
+    override fun onContentHiddenChange(viewData: StatusViewData.Concrete, isShowing: Boolean) {
+        viewModel.changeContentShowing(isShowing, viewData)
+    }
+
+    override fun onContentCollapsedChange(viewData: StatusViewData.Concrete, isCollapsed: Boolean) {
+        viewModel.changeContentCollapsed(isCollapsed, viewData)
+    }
+
+    override fun onVoteInPoll(viewData: StatusViewData.Concrete, pollId: String, choices: List<Int>) {
+        viewModel.voteInPoll(viewData.actionableId, pollId, choices)
+    }
+
+    override fun onShowPollResults(viewData: StatusViewData.Concrete) {
+        viewModel.showPollResults(viewData)
+    }
+
+    override fun changeFilter(viewData: StatusViewData.Concrete, filtered: Boolean) {
+        viewModel.changeFilter(filtered, viewData)
+    }
+
+    override fun onTranslate(viewData: StatusViewData.Concrete) {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.translate(viewData)
                 .onFailure {
@@ -387,47 +522,59 @@ class ViewThreadFragment :
         viewModel.untranslate(viewData)
     }
 
-    override fun onFavourite(viewData: StatusViewData.Concrete, favourite: Boolean, button: SparkButton?) {
-        buttonToAnimate = button
-
-        if (favourite) {
-            confirmFavourite(preferences) {
-                viewModel.favorite(true, viewData)
-                buttonToAnimate?.playAnimation()
-                buttonToAnimate?.isChecked = true
-            }
-        } else {
-            viewModel.favorite(false, viewData)
-            buttonToAnimate?.isChecked = false
-        }
+    override fun onBlock(accountId: String) {
+        viewModel.block(accountId)
     }
 
-    override fun onBookmark(viewData: StatusViewData.Concrete, bookmark: Boolean) {
-        viewModel.bookmark(bookmark, viewData)
+    override fun onMute(accountId: String, hideNotifications: Boolean, duration: Int?) {
+        viewModel.mute(accountId, hideNotifications, duration)
     }
 
-    override fun onMore(viewData: StatusViewData.Concrete, view: View) {
-        super.more(viewData, view)
+    override fun onMuteConversation(viewData: StatusViewData.Concrete, mute: Boolean) {
+        viewModel.muteConversation(viewData.id, mute)
     }
 
-    override fun onViewMedia(viewData: StatusViewData.Concrete, attachmentIndex: Int, view: View?) {
-        super.viewMedia(
+    override fun onDelete(viewData: StatusViewData.Concrete) {
+        viewModel.delete(viewData.id)
+    }
+
+    override fun onRedraft(viewData: StatusViewData.Concrete) {
+        viewModel.redraftStatus(viewData.actionable)
+    }
+
+    override fun onPin(viewData: StatusViewData.Concrete, pin: Boolean) {
+        viewModel.pin(viewData.id, pin)
+    }
+
+    override fun onViewMedia(viewData: StatusViewData.Concrete, attachmentIndex: Int) {
+        requireContext().viewMedia(
             attachmentIndex,
-            AttachmentViewData.list(viewData, alwaysShowSensitiveMedia),
-            view
+            AttachmentViewData.list(viewData, preferences.getBoolean(PrefKeys.ALWAYS_SHOW_SENSITIVE_MEDIA, false))
         )
     }
 
     override fun onViewThread(viewData: StatusViewData.Concrete) {
-        if (thisThreadsStatusId == viewData.id) {
+        if (viewModel.threadId == viewData.id) {
             // If already viewing this thread, don't reopen it.
             return
         }
-        super.viewThread(viewData.actionableId, viewData.actionable.url)
+        requireContext().viewThread(viewData)
+    }
+
+    override fun onEdit(viewData: StatusViewData.Concrete) {
+        viewModel.editStatus(viewData.actionable)
+    }
+
+    override fun onReply(viewData: StatusViewData.Concrete) {
+        requireContext().reply(viewData, accountManager.activeAccount!!)
+    }
+
+    override fun onReport(viewData: StatusViewData.Concrete) {
+        requireContext().report(viewData)
     }
 
     override fun onViewUrl(url: String) {
-        val status: StatusViewData.Concrete? = viewModel.detailedStatus()
+        val status: StatusViewData.Concrete? = (viewModel.uiState.value as? ThreadUiState.Success)?.detailedStatus
         if (status != null && status.status.url == url) {
             // already viewing the status with this url
             // probably just a preview federated and the user is clicking again to view more -> open the browser
@@ -435,61 +582,18 @@ class ViewThreadFragment :
             requireContext().openLink(url)
             return
         }
-        super.onViewUrl(url)
-    }
-
-    override fun onOpenReblog(viewData: StatusViewData.Concrete) {
-        // there are no reblogs in threads
-    }
-
-    override fun onExpandedChange(viewData: StatusViewData.Concrete, expanded: Boolean) {
-        viewModel.changeExpanded(expanded, viewData)
-    }
-
-    override fun onContentHiddenChange(viewData: StatusViewData.Concrete, isShowing: Boolean) {
-        viewModel.changeContentShowing(isShowing, viewData)
-    }
-
-    override fun onShowReblogs(viewData: StatusViewData.Concrete) {
-        val intent = newIntent(requireContext(), AccountListActivity.Type.REBLOGGED, viewData.id)
-        requireActivity().startActivityWithSlideInAnimation(intent)
-    }
-
-    override fun onShowFavs(viewData: StatusViewData.Concrete) {
-        val intent = newIntent(requireContext(), AccountListActivity.Type.FAVOURITED, viewData.id)
-        requireActivity().startActivityWithSlideInAnimation(intent)
-    }
-
-    override fun onContentCollapsedChange(viewData: StatusViewData.Concrete, isCollapsed: Boolean) {
-        viewModel.changeContentCollapsed(isCollapsed, viewData)
+        (requireActivity() as BottomSheetActivity).viewUrl(url)
     }
 
     override fun onViewTag(tag: String) {
-        super.viewTag(tag)
+        requireContext().viewTag(tag)
     }
 
-    override fun onViewAccount(id: String) {
-        super.viewAccount(id)
+    override fun onViewAccount(accountId: String) {
+        requireContext().viewAccount(accountId)
     }
 
-    public override fun removeItem(viewData: StatusViewData.Concrete) {
-        if (viewData.isDetailed) {
-            // the main status we are viewing is being removed, finish the activity
-            activity?.finish()
-            return
-        }
-        viewModel.removeStatus(viewData)
-    }
-
-    override fun onVoteInPoll(viewData: StatusViewData.Concrete, choices: List<Int>) {
-        viewModel.voteInPoll(choices, viewData)
-    }
-
-    override fun onShowPollResults(viewData: StatusViewData.Concrete) {
-        viewModel.showPollResults(viewData)
-    }
-
-    override fun onShowEdits(viewData: StatusViewData.Concrete) {
+    private fun onShowEdits(viewData: StatusViewData.Concrete) {
         val viewEditsFragment = ViewEditsFragment.newInstance(viewData.actionableId)
 
         parentFragmentManager.commit {
@@ -504,13 +608,7 @@ class ViewThreadFragment :
         }
     }
 
-    override fun changeFilter(filtered: Boolean, viewData: StatusViewData.Concrete) {
-        viewModel.changeFilter(filtered, viewData)
-    }
-
     companion object {
-        private const val TAG = "ViewThreadFragment"
-
         private const val ID_EXTRA = "id"
         private const val URL_EXTRA = "url"
 

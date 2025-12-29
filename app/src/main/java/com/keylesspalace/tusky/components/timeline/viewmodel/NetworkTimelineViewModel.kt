@@ -41,7 +41,6 @@ import com.keylesspalace.tusky.db.AccountManager
 import com.keylesspalace.tusky.entity.Poll
 import com.keylesspalace.tusky.entity.Status
 import com.keylesspalace.tusky.network.MastodonApi
-import com.keylesspalace.tusky.usecase.TimelineCases
 import com.keylesspalace.tusky.util.getDomain
 import com.keylesspalace.tusky.util.isLessThan
 import com.keylesspalace.tusky.util.isLessThanOrEqual
@@ -50,6 +49,7 @@ import com.keylesspalace.tusky.viewdata.StatusViewData
 import com.keylesspalace.tusky.viewdata.TranslationViewData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import java.io.IOException
+import java.util.Locale
 import javax.inject.Inject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.asExecutor
@@ -64,13 +64,12 @@ import retrofit2.Response
  */
 @HiltViewModel
 class NetworkTimelineViewModel @Inject constructor(
-    timelineCases: TimelineCases,
     private val api: MastodonApi,
     eventHub: EventHub,
     accountManager: AccountManager,
     sharedPreferences: SharedPreferences,
 ) : TimelineViewModel(
-    timelineCases,
+    api,
     eventHub,
     accountManager,
     sharedPreferences
@@ -313,7 +312,7 @@ class NetworkTimelineViewModel @Inject constructor(
         status.copy(filterActive = filtered).update()
     }
 
-    override fun saveReadingPosition(statusId: String) {
+    override fun saveHomeTimelinePosition(firstVisibleIndex: Int, firstVisibleOffset: Int) {
         /** Does nothing for non-cached timelines */
     }
 
@@ -323,7 +322,7 @@ class NetworkTimelineViewModel @Inject constructor(
 
     override suspend fun translate(status: StatusViewData.Concrete): NetworkResult<Unit> {
         status.copy(translation = TranslationViewData.Loading).update()
-        return timelineCases.translate(status.actionableId)
+        return api.translate(status.actionableId, Locale.getDefault().language)
             .map { translation ->
                 status.copy(translation = TranslationViewData.Loaded(translation)).update()
             }

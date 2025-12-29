@@ -24,8 +24,12 @@ data class TuskyColorScheme(
     val primaryTextColor: Color,
     val secondaryTextColor: Color,
     val tertiaryTextColor: Color,
+    val disabledTextColor: Color,
     val backgroundAccent: Color,
-    val windowBackground: Color
+    val windowBackground: Color,
+    val favoriteButtonActiveColor: Color,
+    val bookmarkButtonActiveColor: Color,
+    val placeholderColor: Color
 )
 
 @SuppressLint("CompositionLocalNaming")
@@ -34,8 +38,12 @@ val TuskyColors = staticCompositionLocalOf {
         primaryTextColor = Color.Unspecified,
         secondaryTextColor = Color.Unspecified,
         tertiaryTextColor = Color.Unspecified,
+        disabledTextColor = Color.Unspecified,
         backgroundAccent = Color.Unspecified,
-        windowBackground = Color.Unspecified
+        windowBackground = Color.Unspecified,
+        favoriteButtonActiveColor = Color.Unspecified,
+        bookmarkButtonActiveColor = Color.Unspecified,
+        placeholderColor = Color.Unspecified
     )
 }
 

@@ -95,7 +95,10 @@ fun TuskyOutlinedButton(
         modifier = modifier
             .heightIn(min = size.minHeight)
     ) {
-        Text(text)
+        Text(
+            text = text,
+            color = colorScheme.primary
+        )
     }
 }
 

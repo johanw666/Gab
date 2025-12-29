@@ -19,7 +19,6 @@ import com.keylesspalace.tusky.db.entity.AccountEntity
 import com.keylesspalace.tusky.di.NetworkModule
 import com.keylesspalace.tusky.entity.StatusContext
 import com.keylesspalace.tusky.network.MastodonApi
-import com.keylesspalace.tusky.usecase.TimelineCases
 import java.io.IOException
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
@@ -80,7 +79,6 @@ class ViewThreadViewModelTest {
     suspend fun setup(dbInit: suspend () -> Unit = {}) {
         shadowOf(getMainLooper()).idle()
 
-        val timelineCases = TimelineCases(api, eventHub)
         val accountManager: AccountManager = mock {
             on { activeAccount } doReturn AccountEntity(
                 id = 1,
@@ -99,7 +97,7 @@ class ViewThreadViewModelTest {
 
         dbInit()
 
-        viewModel = ViewThreadViewModel(api, timelineCases, db, eventHub, accountManager, threadId)
+        viewModel = ViewThreadViewModel(api, db, eventHub, accountManager, threadId)
     }
 
     @After
@@ -120,7 +118,8 @@ class ViewThreadViewModelTest {
                     fakeStatusViewData(id = threadId, inReplyToId = "1", inReplyToAccountId = "1", isDetailed = true, spoilerText = "Test"),
                     fakeStatusViewData(id = "3", inReplyToId = threadId, inReplyToAccountId = "1", spoilerText = "Test")
                 ),
-                detailedStatusPosition = 1,
+                isRefreshing = false,
+                isloadingThread = false,
                 revealButton = RevealButtonState.REVEAL
             ),
             viewModel.uiState.first()
@@ -141,7 +140,8 @@ class ViewThreadViewModelTest {
                 statusViewData = listOf(
                     fakeStatusViewData(id = threadId, inReplyToId = "1", inReplyToAccountId = "1", isDetailed = true)
                 ),
-                detailedStatusPosition = 0,
+                isRefreshing = false,
+                isloadingThread = false,
                 revealButton = RevealButtonState.NO_BUTTON
             ),
             viewModel.uiState.first()
@@ -204,7 +204,8 @@ class ViewThreadViewModelTest {
                     ),
                     fakeStatusViewData(id = "3", inReplyToId = threadId, inReplyToAccountId = "1", spoilerText = "Test", isExpanded = true)
                 ),
-                detailedStatusPosition = 1,
+                isRefreshing = false,
+                isloadingThread = false,
                 revealButton = RevealButtonState.HIDE
             ),
             viewModel.uiState.first()
@@ -226,7 +227,8 @@ class ViewThreadViewModelTest {
                     fakeStatusViewData(id = threadId, inReplyToId = "1", inReplyToAccountId = "1", isDetailed = true, spoilerText = "Test"),
                     fakeStatusViewData(id = "3", inReplyToId = threadId, inReplyToAccountId = "1", spoilerText = "Test")
                 ),
-                detailedStatusPosition = 1,
+                isRefreshing = false,
+                isloadingThread = false,
                 revealButton = RevealButtonState.REVEAL
             ),
             viewModel.uiState.first()
@@ -239,7 +241,7 @@ class ViewThreadViewModelTest {
 
         setup()
 
-        viewModel.removeStatus(fakeStatusViewData(id = "3", inReplyToId = threadId, inReplyToAccountId = "1", spoilerText = "Test"))
+        viewModel.removeStatus("3")
 
         assertEquals(
             ThreadUiState.Success(
@@ -247,7 +249,8 @@ class ViewThreadViewModelTest {
                     fakeStatusViewData(id = "1", spoilerText = "Test"),
                     fakeStatusViewData(id = threadId, inReplyToId = "1", inReplyToAccountId = "1", isDetailed = true, spoilerText = "Test")
                 ),
-                detailedStatusPosition = 1,
+                isRefreshing = false,
+                isloadingThread = false,
                 revealButton = RevealButtonState.REVEAL
             ),
             viewModel.uiState.first()
@@ -279,7 +282,8 @@ class ViewThreadViewModelTest {
                     ),
                     fakeStatusViewData(id = "3", inReplyToId = threadId, inReplyToAccountId = "1", spoilerText = "Test")
                 ),
-                detailedStatusPosition = 1,
+                isRefreshing = false,
+                isloadingThread = false,
                 revealButton = RevealButtonState.REVEAL
             ),
             viewModel.uiState.first()
@@ -311,7 +315,8 @@ class ViewThreadViewModelTest {
                     ),
                     fakeStatusViewData(id = "3", inReplyToId = threadId, inReplyToAccountId = "1", spoilerText = "Test")
                 ),
-                detailedStatusPosition = 1,
+                isRefreshing = false,
+                isloadingThread = false,
                 revealButton = RevealButtonState.REVEAL
             ),
             viewModel.uiState.first()
@@ -343,7 +348,8 @@ class ViewThreadViewModelTest {
                     ),
                     fakeStatusViewData(id = "3", inReplyToId = threadId, inReplyToAccountId = "1", spoilerText = "Test")
                 ),
-                detailedStatusPosition = 1,
+                isRefreshing = false,
+                isloadingThread = false,
                 revealButton = RevealButtonState.REVEAL
             ),
             viewModel.uiState.first()
@@ -377,7 +383,8 @@ class ViewThreadViewModelTest {
                     ),
                     fakeStatusViewData(id = "3", inReplyToId = threadId, inReplyToAccountId = "1", spoilerText = "Test")
                 ),
-                detailedStatusPosition = 1,
+                isRefreshing = false,
+                isloadingThread = false,
                 revealButton = RevealButtonState.REVEAL
             ),
             viewModel.uiState.first()
@@ -410,7 +417,8 @@ class ViewThreadViewModelTest {
                     ),
                     fakeStatusViewData(id = "3", inReplyToId = threadId, inReplyToAccountId = "1", spoilerText = "Test")
                 ),
-                detailedStatusPosition = 1,
+                isRefreshing = false,
+                isloadingThread = false,
                 revealButton = RevealButtonState.REVEAL
             ),
             viewModel.uiState.first()
