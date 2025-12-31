@@ -177,19 +177,22 @@ class NotificationsPagingAdapter(
                         VIEW_TYPE_STATUS -> {
                             (viewHolder as ComposeViewHolder).composeView.setContent {
                                 TuskyTheme {
-                                    Status(
-                                        notification.statusViewData!!,
-                                        statusListener,
-                                        statusInfo = {
-                                            NotificationInfo(
-                                                notificationViewData = notification,
-                                                listener = statusListener
-                                            )
-                                        },
-                                        translationEnabled = false,
-                                        accounts = emptyList(),
-                                        showDivider = false
-                                    )
+                                    // unfortunately servers sometimes send null statuses for notification types where they should not
+                                    if (notification.statusViewData != null) {
+                                        Status(
+                                            notification.statusViewData,
+                                            statusListener,
+                                            statusInfo = {
+                                                NotificationInfo(
+                                                    notificationViewData = notification,
+                                                    listener = statusListener
+                                                )
+                                            },
+                                            translationEnabled = false,
+                                            accounts = emptyList(),
+                                            showDivider = false
+                                        )
+                                    }
                                 }
                             }
                         }
