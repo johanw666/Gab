@@ -24,6 +24,7 @@ import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -45,7 +46,8 @@ fun TuskyPullToRefreshBox(
                 modifier = Modifier.align(Alignment.TopCenter),
                 isRefreshing = isRefreshing,
                 state = state,
-                color = colorScheme.primary
+                color = colorScheme.primary,
+                maxDistance = 64.dp
             )
         },
         content = content
