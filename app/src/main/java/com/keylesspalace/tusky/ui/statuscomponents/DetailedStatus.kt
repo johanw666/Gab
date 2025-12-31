@@ -28,6 +28,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.InlineTextContent
 import androidx.compose.foundation.text.appendInlineContent
+import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme.colorScheme
@@ -99,74 +100,75 @@ fun DetailedStatus(
                 customActions = actions
             }
     ) {
-        Column(
-            modifier = Modifier.padding(start = 14.dp, top = 14.dp, end = 14.dp)
-        ) {
-            Row(
-                verticalAlignment = Alignment.CenterVertically
+        SelectionContainer {
+            Column(
+                modifier = Modifier.padding(start = 14.dp, top = 14.dp, end = 14.dp)
             ) {
-                Avatar(
-                    url = status.account.avatar,
-                    staticUrl = status.account.staticAvatar,
-                    isBot = status.account.bot,
-                    boostedAvatarUrl = statusViewData.rebloggedAvatar,
-                    staticBoostedAvatarUrl = statusViewData.staticRebloggedAvatar,
-                    onOpenProfile = {
-                        listener.onViewAccount(status.account.id)
-                    },
-                    modifier = Modifier.clearAndSetSemantics {
-                        hideFromAccessibility()
+                Row(
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Avatar(
+                        url = status.account.avatar,
+                        staticUrl = status.account.staticAvatar,
+                        isBot = status.account.bot,
+                        boostedAvatarUrl = statusViewData.rebloggedAvatar,
+                        staticBoostedAvatarUrl = statusViewData.staticRebloggedAvatar,
+                        onOpenProfile = {
+                            listener.onViewAccount(status.account.id)
+                        },
+                        modifier = Modifier.clearAndSetSemantics {
+                            hideFromAccessibility()
+                        }
+                    )
+
+                    Spacer(modifier = Modifier.width(16.dp))
+
+                    Column(
+                        modifier = Modifier
+                            .clickable {
+                                listener.onViewAccount(status.account.id)
+                            }
+                    ) {
+                        val username = stringResource(R.string.post_username_format, status.account.username)
+
+                        Text(
+                            text = status.account.name.emojify(status.account.emojis),
+                            fontWeight = FontWeight.Bold,
+                            color = tuskyColors.primaryTextColor,
+                            style = LocalPreferences.current.statusTextStyles.medium,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
+                            inlineContent = status.account.emojis.toInlineContent()
+                        )
+                        Text(
+                            text = username,
+                            color = tuskyColors.secondaryTextColor,
+                            style = LocalPreferences.current.statusTextStyles.medium,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
+                        )
                     }
+                }
+                StatusContent(
+                    statusViewData = statusViewData,
+                    listener = listener
                 )
 
-                Spacer(modifier = Modifier.width(16.dp))
-
-                Column(
-                    modifier = Modifier
-                        .clickable {
-                            listener.onViewAccount(status.account.id)
-                        }
-                ) {
-                    val username = stringResource(R.string.post_username_format, status.account.username)
-
-                    Text(
-                        text = status.account.name.emojify(status.account.emojis),
-                        fontWeight = FontWeight.Bold,
-                        color = tuskyColors.primaryTextColor,
-                        style = LocalPreferences.current.statusTextStyles.medium,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis,
-                        inlineContent = status.account.emojis.toInlineContent()
+                DetailedMetadata(
+                    statusViewData = statusViewData,
+                    listener = listener,
+                    showEdits = showEdits,
+                    modifier = Modifier.padding(top = 8.dp)
+                )
+                if (!LocalPreferences.current.wellbeing.hideQuantitativeStatsOnPosts) {
+                    HorizontalDivider(
+                        modifier = Modifier.padding(top = 6.dp)
                     )
-                    Text(
-                        text = username,
-                        color = tuskyColors.secondaryTextColor,
-                        style = LocalPreferences.current.statusTextStyles.medium,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
+                    DetailedStatistics(
+                        statusViewData = statusViewData,
+                        modifier = Modifier.padding(top = 6.dp)
                     )
                 }
-            }
-
-            StatusContent(
-                statusViewData = statusViewData,
-                listener = listener
-            )
-
-            DetailedMetadata(
-                statusViewData = statusViewData,
-                listener = listener,
-                showEdits = showEdits,
-                modifier = Modifier.padding(top = 8.dp)
-            )
-            if (!LocalPreferences.current.wellbeing.hideQuantitativeStatsOnPosts) {
-                HorizontalDivider(
-                    modifier = Modifier.padding(top = 6.dp)
-                )
-                DetailedStatistics(
-                    statusViewData = statusViewData,
-                    modifier = Modifier.padding(top = 6.dp)
-                )
             }
         }
 
