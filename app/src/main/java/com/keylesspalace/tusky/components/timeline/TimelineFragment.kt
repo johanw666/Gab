@@ -42,7 +42,6 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -62,7 +61,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.compose.LifecycleEventEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
@@ -228,10 +229,8 @@ class TimelineFragment :
             val statuses = viewModel.statuses.collectAsLazyPagingItems()
 
             if (viewModel.kind == TimelineViewModel.Kind.HOME && oldestFirst) {
-                DisposableEffect(Unit) {
-                    onDispose {
-                        viewModel.saveHomeTimelinePosition(listState.firstVisibleItemIndex, listState.firstVisibleItemScrollOffset)
-                    }
+                LifecycleEventEffect(Lifecycle.Event.ON_STOP) {
+                    viewModel.saveHomeTimelinePosition(listState.firstVisibleItemIndex, listState.firstVisibleItemScrollOffset)
                 }
             }
 
