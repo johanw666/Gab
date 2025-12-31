@@ -136,20 +136,18 @@ fun ColumnScope.StatusContent(
         modifier = Modifier.padding(top = 6.dp)
     )
 
-    if (isExpanded || status.spoilerText.isEmpty()) {
-        MediaAttachments(
-            attachments = statusViewData.attachments,
-            translatedDescriptions = statusViewData.translation?.data?.mediaAttachments,
-            onOpenAttachment = { index -> listener.onViewMedia(statusViewData, index) },
-            onMediaHiddenChanged = { listener.onContentHiddenChange(statusViewData, !statusViewData.isShowingContent) },
-            sensitive = status.sensitive,
-            showMedia = statusViewData.isShowingContent,
-            downloadPreviews = LocalAccount.current?.mediaPreviewEnabled ?: true,
-            showBlurhash = LocalPreferences.current.useBlurhash,
-            filter = statusViewData.filter,
-            modifier = Modifier.padding(top = 6.dp)
-        )
-    }
+    MediaAttachments(
+        attachments = statusViewData.attachments,
+        translatedDescriptions = statusViewData.translation?.data?.mediaAttachments,
+        onOpenAttachment = { index -> listener.onViewMedia(statusViewData, index) },
+        onMediaHiddenChanged = { listener.onContentHiddenChange(statusViewData, !statusViewData.isShowingContent) },
+        sensitive = status.sensitive,
+        showMedia = statusViewData.isShowingContent,
+        downloadPreviews = LocalAccount.current?.mediaPreviewEnabled ?: true,
+        showBlurhash = LocalPreferences.current.useBlurhash,
+        filter = statusViewData.filter,
+        modifier = Modifier.padding(top = 6.dp)
+    )
 
     Poll(
         statusViewData = statusViewData,
