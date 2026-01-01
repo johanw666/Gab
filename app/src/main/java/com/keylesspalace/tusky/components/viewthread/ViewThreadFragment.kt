@@ -57,8 +57,10 @@ import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
@@ -242,6 +244,8 @@ class ViewThreadFragment :
             val instanceInfo by instanceInfoRepository.instanceInfoFlow().collectAsStateWithLifecycle(instanceInfoRepository.defaultInstanceInfo)
             val accounts by accountManager.accountsFlow.collectAsStateWithLifecycle()
 
+            val rtl = LocalLayoutDirection.current == LayoutDirection.Rtl
+
             val lineColor = tuskyColors.backgroundAccent
             val avatarMargin = with(LocalDensity.current) { 14.dp.toPx() }
             val lineThickness = with(LocalDensity.current) { 4.dp.toPx() }
@@ -257,7 +261,6 @@ class ViewThreadFragment :
                     items = statuses,
                     key = { _, viewData -> viewData.id },
                 ) { position, viewData ->
-
                     if (viewData.isDetailed) {
                         DetailedStatus(
                             viewData,
@@ -272,10 +275,15 @@ class ViewThreadFragment :
                                 .drawBehind {
                                     val itemAbove = statuses.getOrNull(position - 1)
                                     if (itemAbove != null && viewData.status.inReplyToId == itemAbove.id) {
+                                        val horizontalOffset = if (rtl) {
+                                            size.width - avatarMargin - avatarSize / 2
+                                        } else {
+                                            avatarMargin + avatarSize / 2
+                                        }
                                         drawLine(
                                             color = lineColor,
-                                            start = Offset(avatarMargin + avatarSize / 2, 0f),
-                                            end = Offset(avatarMargin + avatarSize / 2, avatarMargin),
+                                            start = Offset(horizontalOffset, 0f),
+                                            end = Offset(horizontalOffset, avatarMargin),
                                             strokeWidth = lineThickness
                                         )
                                     }
@@ -298,21 +306,26 @@ class ViewThreadFragment :
                             modifier = Modifier
                                 .widthIn(max = 640.dp)
                                 .drawBehind {
+                                    val horizontalOffset = if (rtl) {
+                                        size.width - avatarMargin - avatarSize / 2
+                                    } else {
+                                        avatarMargin + avatarSize / 2
+                                    }
                                     val itemAbove = statuses.getOrNull(position - 1)
                                     val itemBelow = statuses.getOrNull(position + 1)
                                     if (itemAbove != null && viewData.status.inReplyToId == itemAbove.id) {
                                         drawLine(
                                             color = lineColor,
-                                            start = Offset(avatarMargin + avatarSize / 2, 0f),
-                                            end = Offset(avatarMargin + avatarSize / 2, avatarMargin),
+                                            start = Offset(horizontalOffset, 0f),
+                                            end = Offset(horizontalOffset, avatarMargin),
                                             strokeWidth = lineThickness
                                         )
                                     }
                                     if (itemBelow != null && itemBelow.status.inReplyToId == viewData.id) {
                                         drawLine(
                                             color = lineColor,
-                                            start = Offset(avatarMargin + avatarSize / 2, avatarMargin + avatarSize),
-                                            end = Offset(avatarMargin + avatarSize / 2, size.height),
+                                            start = Offset(horizontalOffset, avatarMargin + avatarSize),
+                                            end = Offset(horizontalOffset, size.height),
                                             strokeWidth = lineThickness
                                         )
                                     }
