@@ -145,6 +145,8 @@ fun StatusButtons(
                     formatNumber(status.repliesCount.toLong(), 1000)
                 } else if (status.repliesCount == 0) {
                     "0"
+                } else if (status.repliesCount == 1) {
+                    "1"
                 } else {
                     stringResource(R.string.status_count_one_plus)
                 },
