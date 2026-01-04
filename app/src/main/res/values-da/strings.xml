@@ -181,7 +181,7 @@
     <string name="error_missing_edits">Din server ved, at dette indlæg er blevet redigeret, men har ikke en kopi af redigeringerne, så de kan ikke vises for dig.\n\nDette er et <a href="https://github.com/mastodon/mastodon/issues/25398">Mastodon-problem #25398</a>.</string>
     <string name="filter_description_blur">Skjul medier med en advarsel</string>
     <string name="help_empty_home">Dette er din <b>hjemmetidslinje</b>. Den viser de seneste indlæg fra de konti, du følger.\n\nFor at udforske konti kan du enten finde dem i en af de andre tidslinjer. For eksempel den lokale tidslinje for din instans {{group}}. Du kan også søge efter dem ved navn {{search}}; søg f.eks. efter Tusky for at finde vores Mastodon-konto.</string>
-    <string name="help_empty_conversations">Her er dine <b>private beskeder</b>; undertiden kaldet samtaler eller direkte beskeder (DM).\n\nPrivate beskeder oprettes ved at indstille synligheden {{public}} for et indlæg til {{mail}} <i>Direkte</i> og omtale af en eller flere brugere i teksten.\n\nDu kan f.eks. starte i profilvisningen for en konto og trykke på opret-knappen {{edit}} og ændre synligheden.\n\nBemærk, at beskeder på Fediverse ikke er krypteret fra ende til ende. Del ikke følsomme oplysninger.</string>
+    <string name="help_empty_conversations">Her er dine &lt;b&gt;private beskeder&lt;/b&gt;; undertiden kaldet samtaler eller direkte beskeder (DM).\n\nPrivate beskeder oprettes ved at indstille synligheden {{public}} for et indlæg til {{mail}} <i>Direkte</i> og omtale af en eller flere brugere i teksten.\n\nDu kan f.eks. starte i profilvisningen for en konto og trykke på opret-knappen {{edit}} og ændre synligheden.\n\nBemærk, at beskeder på Fediverse ikke er krypteret fra ende til ende. Del ikke følsomme oplysninger.</string>
     <string name="relationship_severance_event_account_suspension">En administrator fra %1$s har suspenderet %2$s, hvilket betyder, at du ikke længere kan modtage opdateringer fra dem eller interagere med dem.</string>
     <string name="report_which_rules_violated">Hvilke regler overtrædes? Vælg alle, der er relevante.</string>
     <string name="notification_policies_filter_not_following_title">Personer, der ikke følger dig</string>
@@ -802,4 +802,8 @@
     <string name="open_settings">Åbn indstillinger</string>
     <string name="report_category_spam_title">Det er spam</string>
     <string name="report_category_legal_description">Du mener, at det er i strid med loven i dit eller serverens land</string>
+    <plurals name="replies">
+        <item quantity="one">%1$s svar</item>
+        <item quantity="other">%1$s svar</item>
+    </plurals>
 </resources>
