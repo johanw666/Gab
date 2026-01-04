@@ -332,7 +332,7 @@ class NotificationsFragment :
                 state?.animate()
             }
         } else {
-            viewModel.favorite(viewData.actionableId, true)
+            viewModel.favorite(viewData.actionableId, false)
         }
     }
 

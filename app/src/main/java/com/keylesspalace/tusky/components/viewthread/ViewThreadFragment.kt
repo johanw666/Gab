@@ -486,7 +486,7 @@ class ViewThreadFragment :
                 state?.animate()
             }
         } else {
-            viewModel.favorite(viewData.id, true)
+            viewModel.favorite(viewData.id, false)
         }
     }
 
