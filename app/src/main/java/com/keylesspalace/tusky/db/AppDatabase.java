@@ -888,6 +888,7 @@ public abstract class AppDatabase extends RoomDatabase {
 
             // first clear all tables that could reference accounts - they are only caches anyway
             database.execSQL("DELETE FROM `HomeTimelineEntity`");
+            database.execSQL("DELETE FROM `NotificationEntity`");
             database.execSQL("DELETE FROM `TimelineStatusEntity`");
 
             // delete the old TimelineAccountEntity
