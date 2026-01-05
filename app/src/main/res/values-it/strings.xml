@@ -648,7 +648,7 @@
     <string name="error_media_upload_sending_fmt">Il caricamento è fallito: %1$s</string>
     <string name="label_image">Immagine</string>
     <string name="app_theme_system_black">Usa design di sistema (nero)</string>
-    <string name="help_empty_conversations">Questi sono i tuoi <b>messaggi privati</b>; a volte sono chiamati conversazioni o messaggi diretti (DM).\n\nI messaggi privati sono creati impostando la visibilità {{public}} di un post su {{mail}} <i>Privato</i> e menzionando uno o più utenti nel testo.\n\nPer esempio puoi andare su un profilo e creare un messaggio {{edit}} e cambiare la visibilità.\n\nRicorda che i messaggi nel Fediverso non sono criptati end-to-end. Non condividere informazioni sensibili.</string>
+    <string name="help_empty_conversations">Questi sono i tuoi &lt;b&gt;messaggi privati&lt;/b&gt;; a volte sono chiamati conversazioni o messaggi diretti (DM).\n\nI messaggi privati sono creati impostando la visibilità {{public}} di un post su {{mail}} <i>Privato</i> e menzionando uno o più utenti nel testo.\n\nPer esempio puoi andare su un profilo e creare un messaggio {{edit}} e cambiare la visibilità.\n\nRicorda che i messaggi nel Fediverso non sono criptati end-to-end. Non condividere informazioni sensibili.</string>
     <string name="unfollowing_hashtag_success_format">Non segui più l\'hashtag #%1$s</string>
     <string name="unmuting_hashtag_success_format">Riattivazione dell\'hashtag #%1$s</string>
     <string name="action_view_filter">Vedi filtro</string>
@@ -826,4 +826,9 @@
     <string name="quote_policy_nobody">Solo io</string>
     <string name="quote_policy_followers">Solo chi mi segue</string>
     <string name="quote_policy_public">Chiunque</string>
+    <plurals name="replies">
+        <item quantity="one">%1$s risposta</item>
+        <item quantity="many">%1$s risposte</item>
+        <item quantity="other">%1$s risposte</item>
+    </plurals>
 </resources>
