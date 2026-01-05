@@ -158,9 +158,8 @@ class ConversationsFragment :
                         .align(Alignment.Center)
                         .background(colorScheme.background)
                 ) {
-                    val isLoading = conversations.loadState.source.refresh is LoadState.Loading || conversations.loadState.mediator?.refresh is LoadState.Loading
                     val error = (conversations.loadState.source.refresh as? LoadState.Error)?.error ?: (conversations.loadState.mediator?.refresh as? LoadState.Error)?.error
-                    if (isLoading) {
+                    if (conversations.loadState.isAnyLoading()) {
                         CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
                     } else if (error != null) {
                         TuskyMessageView(

@@ -106,6 +106,7 @@ import com.keylesspalace.tusky.ui.statuscomponents.TimelineStatusInfo
 import com.keylesspalace.tusky.ui.tuskyColors
 import com.keylesspalace.tusky.util.addIconAnnotations
 import com.keylesspalace.tusky.util.iconInlineContent
+import com.keylesspalace.tusky.util.isAnyLoading
 import com.keylesspalace.tusky.util.reply
 import com.keylesspalace.tusky.util.report
 import com.keylesspalace.tusky.util.startActivityWithSlideInAnimation
@@ -256,9 +257,8 @@ class TimelineFragment :
                         .align(Alignment.Center)
                         .background(colorScheme.background)
                 ) {
-                    val isLoading = statuses.loadState.source.refresh is LoadState.Loading || statuses.loadState.mediator?.refresh is LoadState.Loading
                     val error = (statuses.loadState.source.refresh as? LoadState.Error)?.error ?: (statuses.loadState.mediator?.refresh as? LoadState.Error)?.error
-                    if (isLoading) {
+                    if (statuses.loadState.isAnyLoading()) {
                         CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
                     } else if (error != null) {
                         TuskyMessageView(
