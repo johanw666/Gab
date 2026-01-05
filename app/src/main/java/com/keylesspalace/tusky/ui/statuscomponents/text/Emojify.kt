@@ -80,7 +80,7 @@ fun List<Emoji>.toInlineContent(): Map<String, InlineTextContent> {
                         modifier = Modifier.fillMaxSize(),
                         model = if (animateCustomEmojis) emoji.url else emoji.staticUrl,
                         contentDescription = null,
-                        contentScale = ContentScale.FillBounds
+                        contentScale = ContentScale.Fit
                     )
                 }
             )
