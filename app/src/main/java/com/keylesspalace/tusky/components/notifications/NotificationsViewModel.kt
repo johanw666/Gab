@@ -31,6 +31,7 @@ import at.connyduck.calladapter.networkresult.map
 import at.connyduck.calladapter.networkresult.onFailure
 import com.keylesspalace.tusky.appstore.EventHub
 import com.keylesspalace.tusky.appstore.FilterUpdatedEvent
+import com.keylesspalace.tusky.appstore.PollShowResultsEvent
 import com.keylesspalace.tusky.appstore.PreferenceChangedEvent
 import com.keylesspalace.tusky.components.preference.PreferencesFragment.ReadingOrder
 import com.keylesspalace.tusky.components.systemnotifications.NotificationChannelData
@@ -71,7 +72,7 @@ import retrofit2.HttpException
 @HiltViewModel
 class NotificationsViewModel @Inject constructor(
     private val api: MastodonApi,
-    eventHub: EventHub,
+    private val eventHub: EventHub,
     private val accountManager: AccountManager,
     private val preferences: SharedPreferences,
     private val db: AppDatabase,
@@ -192,7 +193,7 @@ class NotificationsViewModel @Inject constructor(
     }
 
     fun showPollResults(status: StatusViewData.Concrete) = viewModelScope.launch {
-        // TODO
+        eventHub.dispatch(PollShowResultsEvent(status.actionableId))
     }
 
     fun changeExpanded(expanded: Boolean, status: StatusViewData.Concrete) {
