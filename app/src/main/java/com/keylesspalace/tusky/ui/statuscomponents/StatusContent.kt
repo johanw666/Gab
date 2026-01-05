@@ -26,6 +26,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.clearAndSetSemantics
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import com.keylesspalace.tusky.R
 import com.keylesspalace.tusky.interfaces.StatusActionListener
@@ -97,11 +100,18 @@ fun ColumnScope.StatusContent(
     }
 
     if (status.spoilerText.isNotEmpty()) {
+        val spoilerText = statusViewData.translation?.data?.spoilerText ?: status.spoilerText
+        val spoilerDescription = stringResource(R.string.description_post_cw, spoilerText)
+        val contentHiddenDescription = stringResource(R.string.content_hidden_description)
         Text(
-            text = statusViewData.translation?.data?.spoilerText ?: status.spoilerText,
+            text = spoilerText,
             color = tuskyColors.primaryTextColor,
             style = LocalPreferences.current.statusTextStyles.medium,
-            modifier = Modifier.padding(top = 6.dp)
+            modifier = Modifier
+                .padding(top = 6.dp)
+                .semantics {
+                    contentDescription = spoilerDescription
+                }
         )
         TuskyOutlinedButton(
             text = if (isExpanded) {
@@ -117,7 +127,11 @@ fun ColumnScope.StatusContent(
             modifier = Modifier
                 .widthIn(min = 150.dp)
                 .padding(top = 6.dp)
-
+                .clearAndSetSemantics {
+                    if (!isExpanded) {
+                        contentDescription = contentHiddenDescription
+                    }
+                }
         )
     }
 

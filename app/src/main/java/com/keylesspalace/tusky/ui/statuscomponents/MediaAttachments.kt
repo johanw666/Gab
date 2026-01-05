@@ -52,6 +52,10 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.clearAndSetSemantics
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.hideFromAccessibility
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -352,21 +356,25 @@ private fun AttachmentPreviewGrid(
             }
         }
         if (!showMedia) {
+            val text = if (filter?.action == Filter.Action.BLUR) {
+                stringResource(R.string.status_filter_placeholder_label_format, filter.title)
+            } else if (sensitive) {
+                stringResource(R.string.post_sensitive_media_title)
+            } else {
+                stringResource(R.string.post_media_hidden_title)
+            }
             Box(
                 modifier = Modifier
                     .matchParentSize()
+                    .clearAndSetSemantics {
+                        contentDescription = text
+                    }
                     .clickable {
                         onMediaHiddenChanged()
                     }
             ) {
                 Text(
-                    text = if (filter?.action == Filter.Action.BLUR) {
-                        stringResource(R.string.status_filter_placeholder_label_format, filter.title)
-                    } else if (sensitive) {
-                        stringResource(R.string.post_sensitive_media_title)
-                    } else {
-                        stringResource(R.string.post_media_hidden_title)
-                    },
+                    text = text,
                     fontSize = 16.sp,
                     color = tuskyColors.secondaryTextColor,
                     modifier = Modifier
@@ -392,6 +400,7 @@ private fun AttachmentPreviewGrid(
                         onMediaHiddenChanged()
                     }
                     .padding(5.dp)
+                    .semantics { hideFromAccessibility() }
             )
         }
     }

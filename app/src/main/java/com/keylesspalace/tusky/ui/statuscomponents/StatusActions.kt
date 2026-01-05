@@ -94,6 +94,19 @@ fun statusActions(
         }
     )
 
+    if (status.attachments.isNotEmpty() && LocalAccount.current?.mediaPreviewEnabled == true) {
+        addAction(
+            label = if (statusViewData.isShowingContent) {
+                stringResource(R.string.action_hide_media)
+            } else {
+                stringResource(R.string.action_reveal_media)
+            },
+            action = {
+                listener.onContentHiddenChange(statusViewData, !statusViewData.isShowingContent)
+            }
+        )
+    }
+
     status.attachments.indices.forEach { index ->
         addAction(
             label = stringResource(R.string.action_open_media_n, index + 1),
