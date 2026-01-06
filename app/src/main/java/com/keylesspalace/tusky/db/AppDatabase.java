@@ -65,7 +65,7 @@ import java.io.File;
     },
     // Note: Starting with version 54, database versions in Tusky are always even.
     // This is to reserve odd version numbers for use by forks.
-    version = 82,
+    version = 84,
     autoMigrations = {
         @AutoMigration(from = 48, to = 49),
         @AutoMigration(from = 49, to = 50, spec = AppDatabase.MIGRATION_49_50.class),
@@ -81,6 +81,7 @@ import java.io.File;
         @AutoMigration(from = 72, to = 74), // added mediaDescriptionLimit to InstanceEntity
         @AutoMigration(from = 74, to = 76, spec = AppDatabase.MIGRATION_74_76.class), // removed filterV2Supported from InstanceEntity, added filterCleared to TimelineStatusEntity
         @AutoMigration(from = 80, to = 82, spec = AppDatabase.MIGRATION_80_82.class), // AccountEntity: removed lastVisibleHomeTimelineStatusId, added staticProfilePictureUrl, firstVisibleHomeTimelineItemIndex, firstVisibleHomeTimelineItemOffset
+        @AutoMigration(from = 82, to = 84), // TimelineStatusEntity: support for displaying quotes
     }
 )
 public abstract class AppDatabase extends RoomDatabase {

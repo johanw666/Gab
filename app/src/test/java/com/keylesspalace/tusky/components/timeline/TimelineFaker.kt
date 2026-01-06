@@ -55,6 +55,7 @@ fun fakeStatus(
     reblogsCount = 1,
     favouritesCount = 2,
     repliesCount = 3,
+    quotesCount = 1,
     reblogged = reblogged,
     favourited = favourited,
     bookmarked = bookmarked,
@@ -70,7 +71,8 @@ fun fakeStatus(
     poll = null,
     card = null,
     language = null,
-    filtered = emptyList()
+    filtered = emptyList(),
+    quote = null
 )
 
 fun fakeStatusViewData(
@@ -99,7 +101,8 @@ fun fakeStatusViewData(
     isShowingContent = isShowingContent,
     isCollapsed = isCollapsed,
     isDetailed = isDetailed,
-    filterActive = true
+    filterActive = true,
+    quote = null
 )
 
 fun fakeHomeTimelineData(
@@ -137,7 +140,9 @@ fun fakeHomeTimelineData(
             )
         },
         repliedToAccount = null,
-        loading = false
+        loading = false,
+        quotedStatus = null,
+        quotedStatusAccount = null
     )
 }
 
@@ -149,7 +154,9 @@ fun fakePlaceholderHomeTimelineData(
     status = null,
     reblogAccount = null,
     repliedToAccount = null,
-    loading = false
+    loading = false,
+    quotedStatus = null,
+    quotedStatusAccount = null
 )
 
 suspend fun AppDatabase.insert(timelineItems: List<HomeTimelineData>, tuskyAccountId: Long = 1) = withTransaction {

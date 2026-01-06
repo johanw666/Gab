@@ -22,6 +22,7 @@ import androidx.paging.RemoteMediator
 import com.keylesspalace.tusky.components.notifications.toViewData
 import com.keylesspalace.tusky.entity.Filter
 import com.keylesspalace.tusky.entity.Notification
+import com.keylesspalace.tusky.entity.Quote
 import com.keylesspalace.tusky.util.HttpHeaderLink
 import com.keylesspalace.tusky.viewdata.NotificationViewData
 import retrofit2.HttpException
@@ -71,10 +72,14 @@ class NotificationRequestDetailsRemoteMediator(
         val alwaysOpenSpoiler = viewModel.accountManager.activeAccount?.alwaysOpenSpoiler == false
         val notificationData = notifications.map { notification ->
             notification.toViewData(
-                isShowingContent = notification.status?.shouldShowContent(alwaysShowSensitiveMedia, Filter.Kind.NOTIFICATIONS) ?: true,
+                isShowingContent = notification.status?.shouldShowContent(alwaysShowSensitiveMedia, Filter.Kind.NOTIFICATIONS) ?: alwaysShowSensitiveMedia,
                 isExpanded = alwaysOpenSpoiler,
                 isCollapsed = true,
                 filterKind = Filter.Kind.NOTIFICATIONS,
+                isQuoteShowingContent = notification.status?.quote?.quotedStatus?.shouldShowContent(alwaysShowSensitiveMedia, Filter.Kind.NOTIFICATIONS) ?: alwaysShowSensitiveMedia,
+                isQuoteExpanded = alwaysOpenSpoiler,
+                isQuoteCollapsed = true,
+                isQuoteShown = notification.status?.quote?.state == Quote.State.ACCEPTED
             )
         }
 

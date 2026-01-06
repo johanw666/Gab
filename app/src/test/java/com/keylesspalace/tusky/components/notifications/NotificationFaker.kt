@@ -65,6 +65,8 @@ fun Notification.toNotificationDataEntity(
     reportTargetAccount = report?.targetAccount?.toEntity(tuskyAccountId),
     event = null,
     moderationWarning = null,
+    quotedStatus = null,
+    quotedStatusAccount = null
 )
 
 fun LoadMorePlaceholder.toNotificationDataEntity(
@@ -80,6 +82,8 @@ fun LoadMorePlaceholder.toNotificationDataEntity(
     reportTargetAccount = null,
     event = null,
     moderationWarning = null,
+    quotedStatus = null,
+    quotedStatusAccount = null
 )
 
 suspend fun AppDatabase.insert(notifications: List<Notification>, tuskyAccountId: Long = 1) = withTransaction {

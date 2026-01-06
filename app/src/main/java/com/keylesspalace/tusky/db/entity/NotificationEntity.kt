@@ -38,6 +38,8 @@ data class NotificationDataEntity(
     @Embedded(prefix = "sa_") val statusAccount: TimelineAccountEntity?,
     @Embedded(prefix = "r_") val report: NotificationReportEntity?,
     @Embedded(prefix = "ra_") val reportTargetAccount: TimelineAccountEntity?,
+    @Embedded(prefix = "q_") val quotedStatus: TimelineStatusEntity?,
+    @Embedded(prefix = "qa_") val quotedStatusAccount: TimelineAccountEntity?,
     val event: RelationshipSeveranceEvent?,
     val moderationWarning: AccountWarning?,
     // relevant when it is a placeholder

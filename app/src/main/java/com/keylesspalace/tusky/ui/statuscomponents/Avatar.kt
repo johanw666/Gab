@@ -19,6 +19,7 @@ import androidx.annotation.FloatRange
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CornerSize
@@ -69,9 +70,9 @@ fun Avatar(
             modifier = Modifier
                 .run {
                     if (boostedAvatarUrl == null) {
-                        size(48.dp)
+                        fillMaxSize()
                     } else {
-                        size(36.dp)
+                        fillMaxSize(0.75f)
                     }
                 }
                 .align(Alignment.TopStart)
@@ -95,7 +96,7 @@ fun Avatar(
                 placeholder = placeholder,
                 error = placeholder,
                 modifier = Modifier
-                    .size(24.dp)
+                    .fillMaxSize(0.5f)
                     .align(Alignment.BottomEnd)
                     .clip(RoundedCornerShape(PercentCornerSize(25f)))
             )
@@ -105,7 +106,7 @@ fun Avatar(
                 tint = tuskyColors.primaryTextColor,
                 contentDescription = null,
                 modifier = Modifier
-                    .size(24.dp)
+                    .fillMaxSize(0.5f)
                     .align(Alignment.BottomEnd)
                     .clip(RoundedCornerShape(PercentCornerSize(25f)))
                     .background(tuskyColors.windowBackground.copy(alpha = 0.75f))

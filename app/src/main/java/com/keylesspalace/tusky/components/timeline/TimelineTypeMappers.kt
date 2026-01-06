@@ -20,8 +20,10 @@ import com.keylesspalace.tusky.db.entity.HomeTimelineEntity
 import com.keylesspalace.tusky.db.entity.TimelineAccountEntity
 import com.keylesspalace.tusky.db.entity.TimelineStatusEntity
 import com.keylesspalace.tusky.entity.Filter
+import com.keylesspalace.tusky.entity.Quote
 import com.keylesspalace.tusky.entity.Status
 import com.keylesspalace.tusky.entity.TimelineAccount
+import com.keylesspalace.tusky.viewdata.QuoteViewData
 import com.keylesspalace.tusky.viewdata.StatusViewData
 import com.keylesspalace.tusky.viewdata.TranslationViewData
 import java.util.Date
@@ -91,6 +93,8 @@ fun Status.toEntity(
     emojis = actionableStatus.emojis,
     reblogsCount = actionableStatus.reblogsCount,
     favouritesCount = actionableStatus.favouritesCount,
+    repliesCount = actionableStatus.repliesCount,
+    quotesCount = actionableStatus.quotesCount,
     reblogged = actionableStatus.reblogged,
     favourited = actionableStatus.favourited,
     bookmarked = actionableStatus.bookmarked,
@@ -108,15 +112,19 @@ fun Status.toEntity(
     contentCollapsed = contentCollapsed,
     pinned = actionableStatus.pinned,
     card = actionableStatus.card,
-    repliesCount = actionableStatus.repliesCount,
     language = actionableStatus.language,
     filtered = actionableStatus.filtered.orEmpty(),
-    filterActive = filterActive
+    filterActive = filterActive,
+    quoteState = quote?.state,
+    quotedStatusId = quote?.quotedStatus?.id,
+    quoteShown = quote?.state == Quote.State.ACCEPTED
 )
 
 fun TimelineStatusEntity.toStatus(
     account: TimelineAccountEntity,
-) = Status(
+    quotedStatus: TimelineStatusEntity?,
+    quotedStatusAccount: TimelineAccountEntity?
+): Status = Status(
     id = serverId,
     url = url,
     account = account.toAccount(),
@@ -129,6 +137,8 @@ fun TimelineStatusEntity.toStatus(
     emojis = emojis,
     reblogsCount = reblogsCount,
     favouritesCount = favouritesCount,
+    repliesCount = repliesCount,
+    quotesCount = quotesCount,
     reblogged = reblogged,
     favourited = favourited,
     bookmarked = bookmarked,
@@ -143,9 +153,22 @@ fun TimelineStatusEntity.toStatus(
     muted = muted,
     poll = poll,
     card = card,
-    repliesCount = repliesCount,
     language = language,
     filtered = filtered,
+    quote = quoteState?.let {
+        Quote(
+            state = quoteState,
+            quotedStatus = if (quotedStatus != null && quotedStatusAccount != null) {
+                quotedStatus.toStatus(
+                    account = quotedStatusAccount,
+                    quotedStatus = null,
+                    quotedStatusAccount = null
+                )
+            } else {
+                null
+            }
+        )
+    }
 )
 
 fun HomeTimelineData.toViewData(
@@ -156,7 +179,7 @@ fun HomeTimelineData.toViewData(
         return StatusViewData.LoadMore(this.id, loading)
     }
 
-    val originalStatus = status.toStatus(account)
+    val originalStatus = status.toStatus(account, quotedStatus, quotedStatusAccount)
     val status = if (reblogAccount != null) {
         Status(
             id = id,
@@ -173,6 +196,8 @@ fun HomeTimelineData.toViewData(
             emojis = emptyList(),
             reblogsCount = status.reblogsCount,
             favouritesCount = status.favouritesCount,
+            repliesCount = status.repliesCount,
+            quotesCount = status.quotesCount,
             reblogged = status.reblogged,
             favourited = status.favourited,
             bookmarked = status.bookmarked,
@@ -187,9 +212,10 @@ fun HomeTimelineData.toViewData(
             muted = status.muted,
             poll = null,
             card = null,
-            repliesCount = status.repliesCount,
             language = status.language,
             filtered = status.filtered,
+            // reblogs have no quote
+            quote = null
         )
     } else {
         originalStatus
@@ -204,6 +230,34 @@ fun HomeTimelineData.toViewData(
         repliedToAccount = repliedToAccount?.toAccount(),
         translation = translation,
         filter = status.getApplicableFilter(Filter.Kind.HOME),
-        filterActive = this.status.filterActive
+        filterActive = this.status.filterActive,
+        quote = status.actionableStatus.quote?.let { quote ->
+            QuoteViewData(
+                state = quote.state,
+                quotedStatusViewData = if (quotedStatus != null && quote.quotedStatus != null) {
+                    StatusViewData.Concrete(
+                        status = quote.quotedStatus,
+                        isExpanded = quotedStatus.expanded,
+                        isShowingContent = quotedStatus.contentShowing,
+                        isCollapsed = quotedStatus.contentCollapsed,
+                        isDetailed = isDetailed,
+                        repliedToAccount = null,
+                        translation = null,
+                        filter = quote.quotedStatus.getApplicableFilter(Filter.Kind.HOME),
+                        filterActive = quotedStatus.filterActive,
+                        quote = quotedStatus.quoteState?.let { quoteState ->
+                            QuoteViewData(
+                                state = quoteState,
+                                quotedStatusViewData = null,
+                                quoteShown = quotedStatus.quoteShown
+                            )
+                        }
+                    )
+                } else {
+                    null
+                },
+                quoteShown = this.status.quoteShown
+            )
+        }
     )
 }

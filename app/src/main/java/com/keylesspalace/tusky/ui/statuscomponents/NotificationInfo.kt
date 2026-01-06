@@ -89,6 +89,28 @@ fun NotificationInfo(
                 }
             )
         }
+        Notification.Type.Quote -> {
+            NotificationInfo(
+                icon = R.drawable.ic_format_quote_24dp_filled,
+                iconColor = colorScheme.primary,
+                text = R.string.notification_quote_format,
+                account = notificationViewData.statusViewData!!.status.account,
+                onViewAccount = {
+                    listener.onViewAccount(notificationViewData.statusViewData.status.account.id)
+                }
+            )
+        }
+        Notification.Type.QuotedUpdate -> {
+            NotificationInfo(
+                icon = R.drawable.ic_edit_24dp_filled,
+                iconColor = colorScheme.primary,
+                text = R.string.notification_quoted_update_format,
+                account = notificationViewData.statusViewData!!.status.account,
+                onViewAccount = {
+                    listener.onViewAccount(notificationViewData.statusViewData.status.account.id)
+                }
+            )
+        }
         else -> {
             // not used for other types of notifications
         }

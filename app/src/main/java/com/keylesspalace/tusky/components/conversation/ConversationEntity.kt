@@ -129,6 +129,8 @@ data class ConversationStatusEntity(
                 reblogsCount = 0,
                 favouritesCount = favouritesCount,
                 repliesCount = repliesCount,
+                // can't quote a private status
+                quotesCount = 0,
                 reblogged = false,
                 favourited = favourited,
                 bookmarked = bookmarked,
@@ -144,12 +146,15 @@ data class ConversationStatusEntity(
                 poll = poll,
                 card = null,
                 language = language,
-                filtered = emptyList()
+                filtered = emptyList(),
+                // private posts can't have quotes attached
+                quote = null
             ),
             isExpanded = expanded,
             isShowingContent = showingHiddenContent,
             isCollapsed = collapsed,
-            filterActive = true
+            filterActive = true,
+            quote = null
         )
     }
 }
@@ -164,33 +169,36 @@ fun TimelineAccount.toEntity() = ConversationAccountEntity(
     emojis = emojis
 )
 
-fun Status.toEntity(expanded: Boolean, contentShowing: Boolean, contentCollapsed: Boolean) =
-    ConversationStatusEntity(
-        id = id,
-        url = url,
-        inReplyToId = inReplyToId,
-        inReplyToAccountId = inReplyToAccountId,
-        account = account.toEntity(),
-        content = content,
-        createdAt = createdAt,
-        editedAt = editedAt,
-        emojis = emojis,
-        favouritesCount = favouritesCount,
-        repliesCount = repliesCount,
-        favourited = favourited,
-        bookmarked = bookmarked,
-        sensitive = sensitive,
-        spoilerText = spoilerText,
-        attachments = attachments,
-        mentions = mentions,
-        tags = tags,
-        showingHiddenContent = contentShowing,
-        expanded = expanded,
-        collapsed = contentCollapsed,
-        muted = muted,
-        poll = poll,
-        language = language
-    )
+fun Status.toEntity(
+    expanded: Boolean,
+    contentShowing: Boolean,
+    contentCollapsed: Boolean
+): ConversationStatusEntity = ConversationStatusEntity(
+    id = id,
+    url = url,
+    inReplyToId = inReplyToId,
+    inReplyToAccountId = inReplyToAccountId,
+    account = account.toEntity(),
+    content = content,
+    createdAt = createdAt,
+    editedAt = editedAt,
+    emojis = emojis,
+    favouritesCount = favouritesCount,
+    repliesCount = repliesCount,
+    favourited = favourited,
+    bookmarked = bookmarked,
+    sensitive = sensitive,
+    spoilerText = spoilerText,
+    attachments = attachments,
+    mentions = mentions,
+    tags = tags,
+    showingHiddenContent = contentShowing,
+    expanded = expanded,
+    collapsed = contentCollapsed,
+    muted = muted,
+    poll = poll,
+    language = language
+)
 
 fun Conversation.toEntity(
     accountId: Long,

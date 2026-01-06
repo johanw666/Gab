@@ -696,6 +696,13 @@ interface MastodonApi {
         @Query("offset") offset: String? = null
     ): Response<List<Status>>
 
+    @GET("api/v1/statuses/{id}/quotes")
+    suspend fun quotingStatuses(
+        @Path("id") statusId: String,
+        @Query("limit") limit: Int? = null,
+        @Query("offset") offset: String? = null
+    ): Response<List<Status>>
+
     @FormUrlEncoded
     @POST("api/v1/statuses/{id}/translate")
     suspend fun translate(

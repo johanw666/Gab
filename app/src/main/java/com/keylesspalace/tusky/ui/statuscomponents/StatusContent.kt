@@ -169,6 +169,13 @@ fun ColumnScope.StatusContent(
         listener = listener
     )
 
+    Quote(
+        statusViewData = statusViewData,
+        isExpanded = isExpanded,
+        listener = listener,
+        modifier = Modifier.padding(top = 6.dp)
+    )
+
     LinkPreviewCard(
         statusViewData = statusViewData,
         isExpanded = isExpanded,

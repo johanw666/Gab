@@ -85,4 +85,10 @@ interface StatusActionListener : LinkListener {
     fun onReply(viewData: StatusViewData.Concrete)
 
     fun onReport(viewData: StatusViewData.Concrete)
+
+    /**
+     * Show a quote despite the author being blocked or muted.
+     * @param viewData The parent status containing the quote.
+     */
+    fun onShowQuote(viewData: StatusViewData.Concrete)
 }

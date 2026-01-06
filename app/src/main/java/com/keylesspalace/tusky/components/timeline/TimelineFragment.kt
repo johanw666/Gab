@@ -172,7 +172,8 @@ class TimelineFragment :
         val id: String? = if (kind == TimelineViewModel.Kind.USER ||
             kind == TimelineViewModel.Kind.USER_PINNED ||
             kind == TimelineViewModel.Kind.USER_WITH_REPLIES ||
-            kind == TimelineViewModel.Kind.LIST
+            kind == TimelineViewModel.Kind.LIST ||
+            kind == TimelineViewModel.Kind.QUOTES
         ) {
             arguments.getString(ID_ARG)!!
         } else {
@@ -485,7 +486,8 @@ class TimelineFragment :
                         TimelineViewModel.Kind.FAVOURITES,
                         TimelineViewModel.Kind.LIST,
                         TimelineViewModel.Kind.BOOKMARKS,
-                        TimelineViewModel.Kind.USER_PINNED -> return@collect
+                        TimelineViewModel.Kind.USER_PINNED,
+                        TimelineViewModel.Kind.QUOTES -> return@collect
                     }
                 }
         }
@@ -688,6 +690,10 @@ class TimelineFragment :
         (requireActivity() as BottomSheetActivity).viewUrl(url)
     }
 
+    override fun onShowQuote(viewData: StatusViewData.Concrete) {
+        viewModel.showQuote(viewData)
+    }
+
     override fun onReselect() {
         lifecycleScope.launch {
             jumpUp.emit(Unit)
@@ -721,7 +727,6 @@ class TimelineFragment :
             return fragment
         }
 
-        @JvmStatic
         fun newHashtagInstance(hashtags: List<String>): TimelineFragment {
             val fragment = TimelineFragment()
             val arguments = Bundle(3)

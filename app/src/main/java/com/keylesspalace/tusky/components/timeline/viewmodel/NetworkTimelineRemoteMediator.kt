@@ -21,6 +21,7 @@ import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import com.keylesspalace.tusky.components.timeline.util.ifExpected
+import com.keylesspalace.tusky.entity.Filter
 import com.keylesspalace.tusky.util.HttpHeaderLink
 import com.keylesspalace.tusky.util.toViewData
 import com.keylesspalace.tusky.viewdata.StatusViewData
@@ -74,18 +75,30 @@ class NetworkTimelineRemoteMediator(
                     s.asStatusOrNull()?.id == status.id
                 }?.asStatusOrNull()
 
+                val oldQuoteViewData = oldStatus?.quote?.quotedStatusViewData
+
                 val contentShowing = oldStatus?.isShowingContent
                     ?: status.shouldShowContent(activeAccount.alwaysShowSensitiveMedia, viewModel.kind.toFilterKind())
                 val expanded = oldStatus?.isExpanded ?: activeAccount.alwaysOpenSpoiler
                 val contentCollapsed = oldStatus?.isCollapsed != false
                 val filterActive = oldStatus?.filterActive ?: true
 
+                val isQuoteShowingContent = oldQuoteViewData?.isShowingContent
+                    ?: status.quote?.quotedStatus?.shouldShowContent(activeAccount.alwaysShowSensitiveMedia, Filter.Kind.THREAD)
+                    ?: activeAccount.alwaysShowSensitiveMedia
+                val isQuoteExpanded = oldQuoteViewData?.isExpanded ?: activeAccount.alwaysOpenSpoiler
+                val isQuoteCollapsed = oldQuoteViewData?.isCollapsed ?: true
+
                 status.toViewData(
                     isShowingContent = contentShowing,
                     isExpanded = expanded,
                     isCollapsed = contentCollapsed,
                     filterKind = viewModel.kind.toFilterKind(),
-                    filterActive = filterActive
+                    filterActive = filterActive,
+                    isQuoteShowingContent = isQuoteShowingContent,
+                    isQuoteExpanded = isQuoteExpanded,
+                    isQuoteCollapsed = isQuoteCollapsed,
+                    isQuoteShown = oldStatus?.quote?.quoteShown ?: false
                 )
             }
 

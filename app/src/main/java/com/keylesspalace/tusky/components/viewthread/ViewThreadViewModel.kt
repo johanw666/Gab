@@ -39,6 +39,7 @@ import com.keylesspalace.tusky.entity.Status
 import com.keylesspalace.tusky.network.MastodonApi
 import com.keylesspalace.tusky.ui.SnackbarError
 import com.keylesspalace.tusky.util.toViewData
+import com.keylesspalace.tusky.viewdata.QuoteViewData
 import com.keylesspalace.tusky.viewdata.StatusViewData
 import com.keylesspalace.tusky.viewdata.TranslationViewData
 import com.keylesspalace.tusky.viewmodel.StatusActionsViewModel
@@ -119,20 +120,53 @@ class ViewThreadViewModel @AssistedInject constructor(
         viewModelScope.launch {
             val contextCall = async { api.statusContext(threadId) }
 
-            val statusAndAccount = db.timelineStatusDao().getStatusWithAccount(activeAccount.id, threadId)
+            val cachedStatusData = db.timelineStatusDao().getFullStatus(activeAccount.id, threadId)
 
-            var detailedStatus = if (statusAndAccount != null) {
+            var detailedStatus = if (cachedStatusData != null) {
                 Log.d(TAG, "Loaded status from local timeline")
+                val status = cachedStatusData.status.toStatus(
+                    account = cachedStatusData.account,
+                    quotedStatus = cachedStatusData.quotedStatus,
+                    quotedStatusAccount = cachedStatusData.quotedStatusAccount
+                )
                 StatusViewData.Concrete(
-                    status = statusAndAccount.first.toStatus(statusAndAccount.second),
-                    isExpanded = statusAndAccount.first.expanded,
-                    isShowingContent = statusAndAccount.first.contentShowing,
-                    isCollapsed = statusAndAccount.first.contentCollapsed,
+                    status = status,
+                    isExpanded = cachedStatusData.status.expanded,
+                    isShowingContent = cachedStatusData.status.contentShowing,
+                    isCollapsed = cachedStatusData.status.contentCollapsed,
                     isDetailed = true,
                     // don't show "in reply to" over the post
                     repliedToAccount = null,
                     translation = null,
-                    filterActive = true
+                    filterActive = true,
+                    quote = status.quote?.let { quote ->
+                        QuoteViewData(
+                            state = quote.state,
+                            quotedStatusViewData = if (cachedStatusData.quotedStatus != null && quote.quotedStatus != null) {
+                                StatusViewData.Concrete(
+                                    status = quote.quotedStatus,
+                                    isExpanded = cachedStatusData.quotedStatus.expanded,
+                                    isShowingContent = cachedStatusData.quotedStatus.contentShowing,
+                                    isCollapsed = cachedStatusData.quotedStatus.contentCollapsed,
+                                    isDetailed = false,
+                                    repliedToAccount = null,
+                                    translation = null,
+                                    filter = quote.quotedStatus.getApplicableFilter(Filter.Kind.HOME),
+                                    filterActive = cachedStatusData.quotedStatus.filterActive,
+                                    quote = cachedStatusData.quotedStatus.quoteState?.let { quoteState ->
+                                        QuoteViewData(
+                                            state = quoteState,
+                                            quotedStatusViewData = null,
+                                            quoteShown = cachedStatusData.quotedStatus.quoteShown
+                                        )
+                                    }
+                                )
+                            } else {
+                                null
+                            },
+                            quoteShown = cachedStatusData.status.quoteShown
+                        )
+                    }
                 )
             } else {
                 Log.d(TAG, "Loaded status from network")
@@ -164,7 +198,7 @@ class ViewThreadViewModel @AssistedInject constructor(
             // compared to the remote one. Now the user has a working UI do a background fetch
             // for the status. Ignore errors, the user still has a functioning UI if the fetch
             // failed. Update the database when the fetch was successful.
-            if (statusAndAccount != null) {
+            if (cachedStatusData != null) {
                 api.status(threadId).onSuccess { result ->
                     db.timelineStatusDao().update(tuskyAccountId = activeAccount.id, status = result)
                     detailedStatus = result.toViewData(isDetailed = true)
@@ -231,7 +265,15 @@ class ViewThreadViewModel @AssistedInject constructor(
                 if (viewData.id == status.id) {
                     viewData.copy(isExpanded = expanded)
                 } else {
-                    viewData
+                    if (viewData.quote?.quotedStatusViewData?.id == status.id) {
+                        viewData.copy(
+                            quote = viewData.quote.copy(
+                                quotedStatusViewData = viewData.quote.quotedStatusViewData.copy(isExpanded = expanded)
+                            )
+                        )
+                    } else {
+                        viewData
+                    }
                 }
             }
             uiState.copy(
@@ -278,6 +320,7 @@ class ViewThreadViewModel @AssistedInject constructor(
 
     private fun handleStatusChangedEvent(status: Status) {
         updateStatusViewData(status.id) { viewData ->
+            val oldQuoteViewData = viewData.quote?.quotedStatusViewData
             status.toViewData(
                 isShowingContent = viewData.isShowingContent,
                 isExpanded = viewData.isExpanded,
@@ -285,7 +328,13 @@ class ViewThreadViewModel @AssistedInject constructor(
                 isDetailed = viewData.isDetailed,
                 translation = viewData.translation,
                 filterKind = Filter.Kind.THREAD,
-                filterActive = viewData.filterActive
+                filterActive = viewData.filterActive,
+                isQuoteShowingContent = oldQuoteViewData?.isShowingContent
+                    ?: status.quote?.quotedStatus?.shouldShowContent(alwaysShowSensitiveMedia, Filter.Kind.THREAD)
+                    ?: alwaysShowSensitiveMedia,
+                isQuoteExpanded = oldQuoteViewData?.isExpanded ?: alwaysOpenSpoiler,
+                isQuoteCollapsed = oldQuoteViewData?.isCollapsed ?: true,
+                isQuoteShown = viewData.quote?.quoteShown ?: false
             )
         }
     }
@@ -400,13 +449,20 @@ class ViewThreadViewModel @AssistedInject constructor(
         val oldStatus = (_uiState.value as? ThreadUiState.Success)?.statusViewData?.find {
             it.id == this.id
         }
+        val oldQuoteViewData = oldStatus?.quote?.quotedStatusViewData
         return toViewData(
             isShowingContent = oldStatus?.isShowingContent ?: actionableStatus.shouldShowContent(alwaysShowSensitiveMedia, Filter.Kind.THREAD),
             isExpanded = oldStatus?.isExpanded ?: alwaysOpenSpoiler,
             isCollapsed = oldStatus?.isCollapsed ?: !isDetailed,
             isDetailed = oldStatus?.isDetailed ?: isDetailed,
             filterKind = Filter.Kind.THREAD,
-            filterActive = oldStatus?.filterActive ?: true
+            filterActive = oldStatus?.filterActive ?: true,
+            isQuoteShowingContent = oldQuoteViewData?.isShowingContent
+                ?: quote?.quotedStatus?.shouldShowContent(alwaysShowSensitiveMedia, Filter.Kind.THREAD)
+                ?: alwaysShowSensitiveMedia,
+            isQuoteExpanded = oldQuoteViewData?.isExpanded ?: alwaysOpenSpoiler,
+            isQuoteCollapsed = oldQuoteViewData?.isCollapsed ?: true,
+            isQuoteShown = oldStatus?.quote?.quoteShown ?: false
         )
     }
 
@@ -430,7 +486,15 @@ class ViewThreadViewModel @AssistedInject constructor(
                     if (viewData.id == statusId) {
                         updater(viewData)
                     } else {
-                        viewData
+                        if (viewData.quote?.quotedStatusViewData?.id == statusId) {
+                            viewData.copy(
+                                quote = viewData.quote.copy(
+                                    quotedStatusViewData = updater(viewData.quote.quotedStatusViewData)
+                                )
+                            )
+                        } else {
+                            viewData
+                        }
                     }
                 }
             )
@@ -449,6 +513,14 @@ class ViewThreadViewModel @AssistedInject constructor(
         updateStatusViewData(viewData.id) { viewData ->
             viewData.copy(
                 filterActive = filtered
+            )
+        }
+    }
+
+    fun showQuote(viewData: StatusViewData.Concrete) {
+        updateStatusViewData(viewData.id) {
+            it.copy(
+                quote = it.quote?.copy(quoteShown = true)
             )
         }
     }

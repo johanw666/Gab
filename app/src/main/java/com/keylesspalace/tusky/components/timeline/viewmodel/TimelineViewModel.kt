@@ -112,6 +112,8 @@ abstract class TimelineViewModel(
 
     abstract fun changeFilter(filtered: Boolean, status: StatusViewData.Concrete)
 
+    abstract fun showQuote(status: StatusViewData.Concrete)
+
     /** Triggered when currently displayed data must be reloaded. */
     protected abstract suspend fun invalidate()
 
@@ -197,7 +199,8 @@ abstract class TimelineViewModel(
         FAVOURITES,
         LIST,
         BOOKMARKS,
-        PUBLIC_TRENDING_STATUSES;
+        PUBLIC_TRENDING_STATUSES,
+        QUOTES;
 
         fun toFilterKind(): Filter.Kind {
             return when (valueOf(name)) {

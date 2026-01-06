@@ -133,8 +133,14 @@ class NotificationRequestDetailsViewModel @AssistedInject constructor(
     }
 
     fun changeFilter(filtered: Boolean, status: StatusViewData.Concrete) {
-        viewModelScope.launch {
-            updateStatusViewData(status.id) { it.copy(filterActive = filtered) }
+        updateStatusViewData(status.id) { it.copy(filterActive = filtered) }
+    }
+
+    fun showQuote(viewData: StatusViewData.Concrete) {
+        updateStatusViewData(viewData.id) {
+            it.copy(
+                quote = it.quote?.copy(quoteShown = true)
+            )
         }
     }
 
@@ -227,9 +233,27 @@ class NotificationRequestDetailsViewModel @AssistedInject constructor(
         statusId: String,
         updater: (StatusViewData.Concrete) -> StatusViewData.Concrete
     ) {
-        val position = notificationData.indexOfFirst { it.asStatusOrNull()?.id == statusId }
-        val statusViewData = notificationData.getOrNull(position)?.statusViewData ?: return
-        notificationData[position] = notificationData[position].copy(statusViewData = updater(statusViewData))
+        val position =
+            notificationData.indexOfFirst { viewData -> viewData.asStatusOrNull()?.id == statusId }
+        if (position >= 0) {
+            val statusViewData = notificationData.getOrNull(position)?.statusViewData ?: return
+            notificationData[position] = notificationData[position].copy(statusViewData = updater(statusViewData))
+        } else {
+            val position =
+                notificationData.indexOfFirst { viewData ->
+                    viewData.asStatusOrNull()?.quote?.quotedStatusViewData?.id == statusId
+                }
+            val statusViewData = notificationData.getOrNull(position)?.statusViewData ?: return
+            notificationData[position] = notificationData[position].copy(
+                statusViewData = statusViewData.copy(
+                    quote = statusViewData.quote?.copy(
+                        quotedStatusViewData = statusViewData.quote.quotedStatusViewData?.let { quotedStatus ->
+                            updater(quotedStatus)
+                        }
+                    )
+                )
+            )
+        }
         currentSource?.invalidate()
     }
 

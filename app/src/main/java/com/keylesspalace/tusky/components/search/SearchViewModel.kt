@@ -37,6 +37,7 @@ import com.keylesspalace.tusky.db.AccountManager
 import com.keylesspalace.tusky.db.entity.AccountEntity
 import com.keylesspalace.tusky.entity.Filter
 import com.keylesspalace.tusky.entity.Poll
+import com.keylesspalace.tusky.entity.Quote
 import com.keylesspalace.tusky.entity.Status
 import com.keylesspalace.tusky.network.MastodonApi
 import com.keylesspalace.tusky.util.toViewData
@@ -102,7 +103,13 @@ class SearchViewModel @Inject constructor(
                             isExpanded = alwaysOpenSpoiler,
                             isCollapsed = true,
                             filterKind = Filter.Kind.PUBLIC,
-                            filterActive = true
+                            filterActive = true,
+                            isQuoteShowingContent =
+                            status.quote?.quotedStatus?.shouldShowContent(alwaysShowSensitiveMedia, Filter.Kind.THREAD)
+                                ?: alwaysShowSensitiveMedia,
+                            isQuoteExpanded = alwaysOpenSpoiler,
+                            isQuoteCollapsed = true,
+                            isQuoteShown = status.quote?.state == Quote.State.ACCEPTED
                         )
                     }
                     loadedStatuses.addAll(statuses)
@@ -219,8 +226,19 @@ class SearchViewModel @Inject constructor(
         updateStatusViewData(status.copy(filterActive = filtered))
     }
 
+    fun showQuote(viewData: StatusViewData.Concrete) {
+        updateStatusViewData(
+            viewData.copy(
+                quote = viewData.quote?.copy(
+                    quoteShown = true
+                )
+            )
+        )
+    }
+
     private fun handleStatusChangedEvent(status: Status) {
         updateStatusViewData(status.id) { viewData ->
+            val oldQuoteViewData = viewData.quote?.quotedStatusViewData
             status.toViewData(
                 isShowingContent = viewData.isShowingContent,
                 isExpanded = viewData.isExpanded,
@@ -228,7 +246,13 @@ class SearchViewModel @Inject constructor(
                 isDetailed = viewData.isDetailed,
                 translation = viewData.translation,
                 filterKind = Filter.Kind.THREAD,
-                filterActive = viewData.filterActive
+                filterActive = viewData.filterActive,
+                isQuoteShowingContent = oldQuoteViewData?.isShowingContent
+                    ?: status.quote?.quotedStatus?.shouldShowContent(alwaysShowSensitiveMedia, Filter.Kind.THREAD)
+                    ?: alwaysShowSensitiveMedia,
+                isQuoteExpanded = oldQuoteViewData?.isExpanded ?: alwaysOpenSpoiler,
+                isQuoteCollapsed = oldQuoteViewData?.isCollapsed ?: true,
+                isQuoteShown = viewData.quote?.quoteShown ?: false
             )
         }
     }

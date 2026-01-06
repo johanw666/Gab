@@ -27,6 +27,7 @@ import com.keylesspalace.tusky.entity.Notification
 import com.keylesspalace.tusky.entity.Report
 import com.keylesspalace.tusky.util.toViewData
 import com.keylesspalace.tusky.viewdata.NotificationViewData
+import com.keylesspalace.tusky.viewdata.QuoteViewData
 import com.keylesspalace.tusky.viewdata.StatusViewData
 import com.keylesspalace.tusky.viewdata.TranslationViewData
 
@@ -63,6 +64,10 @@ fun Notification.toViewData(
     isExpanded: Boolean,
     isCollapsed: Boolean,
     filterKind: Filter.Kind,
+    isQuoteShowingContent: Boolean,
+    isQuoteExpanded: Boolean,
+    isQuoteCollapsed: Boolean,
+    isQuoteShown: Boolean
 ): NotificationViewData.Concrete = NotificationViewData.Concrete(
     id = id,
     type = type,
@@ -72,7 +77,11 @@ fun Notification.toViewData(
         isExpanded = isExpanded,
         isCollapsed = isCollapsed,
         filterKind = filterKind,
-        filterActive = true
+        filterActive = true,
+        isQuoteShowingContent = isQuoteShowingContent,
+        isQuoteExpanded = isQuoteExpanded,
+        isQuoteCollapsed = isQuoteCollapsed,
+        isQuoteShown = isQuoteShown
     ),
     report = report,
     moderationWarning = moderationWarning,
@@ -102,15 +111,44 @@ fun NotificationDataEntity.toViewData(
         type = type,
         account = account.toAccount(),
         statusViewData = if (status != null && statusAccount != null) {
-            val status = status.toStatus(statusAccount)
+            val status = status.toStatus(
+                account = statusAccount,
+                quotedStatus = quotedStatus,
+                quotedStatusAccount = quotedStatusAccount
+            )
             StatusViewData.Concrete(
-                status = this.status.toStatus(statusAccount),
+                status = status,
                 isExpanded = this.status.expanded,
                 isShowingContent = this.status.contentShowing,
                 isCollapsed = this.status.contentCollapsed,
                 translation = translation,
                 filter = status.getApplicableFilter(Filter.Kind.NOTIFICATIONS),
-                filterActive = this.status.filterActive
+                filterActive = this.status.filterActive,
+                quote = status.quote?.let {
+                    QuoteViewData(
+                        state = status.quote.state,
+                        quotedStatusViewData = if (status.quote.quotedStatus != null && quotedStatus != null && quotedStatusAccount != null) {
+                            StatusViewData.Concrete(
+                                status = status.quote.quotedStatus,
+                                isExpanded = quotedStatus.expanded,
+                                isShowingContent = quotedStatus.contentShowing,
+                                isCollapsed = quotedStatus.contentCollapsed,
+                                translation = null,
+                                filterActive = true,
+                                quote = quotedStatus.quoteState?.let { quoteState ->
+                                    QuoteViewData(
+                                        state = quoteState,
+                                        quotedStatusViewData = null,
+                                        quoteShown = quotedStatus.quoteShown
+                                    )
+                                }
+                            )
+                        } else {
+                            null
+                        },
+                        quoteShown = this.status.quoteShown
+                    )
+                }
             )
         } else {
             null

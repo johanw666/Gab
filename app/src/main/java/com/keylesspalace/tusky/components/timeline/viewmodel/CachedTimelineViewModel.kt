@@ -132,6 +132,12 @@ class CachedTimelineViewModel @Inject constructor(
         }
     }
 
+    override fun showQuote(status: StatusViewData.Concrete) {
+        viewModelScope.launch {
+            db.timelineStatusDao().showQuote(accountId, status.actionableId, true)
+        }
+    }
+
     override fun removeStatusWithId(id: String) {
         // handled by CacheUpdater
     }
@@ -190,6 +196,19 @@ class CachedTimelineViewModel @Inject constructor(
                     }
 
                     for (status in statuses) {
+                        status.actionableStatus.quote?.quotedStatus?.let { quotedStatus ->
+                            accountDao.insert(quotedStatus.account.toEntity(accountId))
+                            statusDao.insert(
+                                quotedStatus.toEntity(
+                                    tuskyAccountId = accountId,
+                                    expanded = account.alwaysOpenSpoiler,
+                                    contentShowing = quotedStatus.shouldShowContent(account.alwaysShowSensitiveMedia, kind.toFilterKind()),
+                                    contentCollapsed = true,
+                                    filterActive = true
+                                )
+                            )
+                        }
+
                         accountDao.insert(status.account.toEntity(accountId))
                         status.reblog?.account?.toEntity(accountId)
                             ?.let { rebloggedAccount ->

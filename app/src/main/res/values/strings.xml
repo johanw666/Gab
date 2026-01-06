@@ -112,6 +112,9 @@
     <string name="notification_header_report_format">%1$s reported %2$s</string>
     <string name="notification_summary_report_format">%1$s · %2$d posts attached</string>
 
+    <string name="notification_quote_format">%1$s quoted your post</string>
+    <string name="notification_quoted_update_format">%1$s edited a post you have quoted</string>
+
     <string name="report_username_format">Report @%1$s</string>
     <string name="report_comment_hint">Additional comments?</string>
 
@@ -578,6 +581,11 @@
         <item quantity="other">%1$s Boosts</item>
     </plurals>
 
+    <plurals name="quotes">
+        <item quantity="one">%1$s Quote</item>
+        <item quantity="other">%1$s Quotes</item>
+    </plurals>
+
     <string name="label_translating">Translating…</string>
     <string name="label_translated">Translated from %1$s with %2$s</string>
 
@@ -993,6 +1001,17 @@
     <string name="scheduled_post_deletion_error">Failed to delete scheduled post.</string>
 
     <string name="unified_push_error_no_vapid_key">Failed setting up Unified Push: %1$s has invalid vapid key.</string>
+
+    <string name="quote">Quote</string>
+    <string name="title_quotes">Quotes</string>
+
+    <string name="quote_pending">Post pending</string>
+    <string name="quote_unavailable">Post unavailable</string>
+
+    <string name="quote_account_blocked">This post is hidden because you\'ve blocked %1$s.</string>
+    <string name="quote_account_muted">This post is hidden because you\'ve muted %1$s.</string>
+    <string name="quote_domain_blocked">This post is hidden because you\'ve blocked %1$s.</string>
+    <string name="quote_hidden_show_anyway">Show anyway</string>
 
     <!-- Text for the screenreader when content is hidden by a warning -->
     <string name="content_hidden_description">Content hidden</string>

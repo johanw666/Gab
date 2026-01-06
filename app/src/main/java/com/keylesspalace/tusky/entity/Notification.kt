@@ -17,16 +17,6 @@ package com.keylesspalace.tusky.entity
 
 import androidx.compose.runtime.Immutable
 import com.keylesspalace.tusky.entity.Notification.Type
-import com.keylesspalace.tusky.entity.Notification.Type.Favourite
-import com.keylesspalace.tusky.entity.Notification.Type.Follow
-import com.keylesspalace.tusky.entity.Notification.Type.FollowRequest
-import com.keylesspalace.tusky.entity.Notification.Type.Mention
-import com.keylesspalace.tusky.entity.Notification.Type.ModerationWarning
-import com.keylesspalace.tusky.entity.Notification.Type.Reblog
-import com.keylesspalace.tusky.entity.Notification.Type.SeveredRelationship
-import com.keylesspalace.tusky.entity.Notification.Type.SignUp
-import com.keylesspalace.tusky.entity.Notification.Type.Unknown
-import com.keylesspalace.tusky.entity.Notification.Type.Update
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
@@ -84,13 +74,19 @@ data class Notification(
         /** moderation_warning = A moderator has taken action against your account or has sent you a warning **/
         object ModerationWarning : Type("moderation_warning")
 
+        /** Someone has quoted one of your statuses **/
+        object Quote : Type("quote")
+
+        /** A status you have quoted has been edited **/
+        object QuotedUpdate : Type("quoted_update")
+
         // can't use data objects or this wouldn't work
         override fun toString() = name
     }
 
     // for Pleroma compatibility that uses Mention type
     fun rewriteToStatusTypeIfNeeded(accountId: String): Notification {
-        if (type == Mention && status != null) {
+        if (type == Type.Mention && status != null) {
             return if (status.mentions.any {
                     it.id == accountId
                 }
@@ -109,20 +105,22 @@ data class Notification(
  * otherwise it might get initialized when a subclass is loaded,
  * which leds to crash since those subclasses are referenced here */
 val visibleNotificationTypes = listOf(
-    Mention,
-    Reblog,
-    Favourite,
-    Follow,
-    FollowRequest,
+    Type.Mention,
+    Type.Reblog,
+    Type.Favourite,
+    Type.Follow,
+    Type.FollowRequest,
     Type.Poll,
     Type.Status,
-    SignUp,
-    Update,
+    Type.SignUp,
+    Type.Update,
     Type.Report,
-    SeveredRelationship,
-    ModerationWarning
+    Type.SeveredRelationship,
+    Type.ModerationWarning,
+    Type.Quote,
+    Type.QuotedUpdate
 )
 
 fun notificationTypeFromString(s: String): Type {
-    return visibleNotificationTypes.firstOrNull { it.name == s.lowercase() } ?: Unknown(s)
+    return visibleNotificationTypes.firstOrNull { it.name == s.lowercase() } ?: Type.Unknown(s)
 }

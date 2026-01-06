@@ -43,11 +43,11 @@ a.note as 'a_note', a.emojis as 'a_emojis', a.bot as 'a_bot',
 s.serverId as 's_serverId', s.url as 's_url', s.tuskyAccountId as 's_tuskyAccountId',
 s.authorServerId as 's_authorServerId', s.inReplyToId as 's_inReplyToId', s.inReplyToAccountId as 's_inReplyToAccountId',
 s.content as 's_content', s.createdAt as 's_createdAt', s.editedAt as 's_editedAt', s.emojis as 's_emojis', s.reblogsCount as 's_reblogsCount',
-s.favouritesCount as 's_favouritesCount', s.repliesCount as 's_repliesCount', s.reblogged as 's_reblogged', s.favourited as 's_favourited',
+s.favouritesCount as 's_favouritesCount', s.repliesCount as 's_repliesCount', s.quotesCount as 's_quotesCount', s.reblogged as 's_reblogged', s.favourited as 's_favourited',
 s.bookmarked as 's_bookmarked', s.sensitive as 's_sensitive', s.spoilerText as 's_spoilerText', s.visibility as 's_visibility',
 s.mentions as 's_mentions', s.tags as 's_tags', s.application as 's_application', s.content as 's_content', s.attachments as 's_attachments', s.poll as 's_poll',
 s.card as 's_card', s.muted as 's_muted', s.expanded as 's_expanded', s.contentShowing as 's_contentShowing', s.contentCollapsed as 's_contentCollapsed',
-s.pinned as 's_pinned', s.language as 's_language', s.filtered as 's_filtered', s.filterActive as 's_filterActive',
+s.pinned as 's_pinned', s.language as 's_language', s.filtered as 's_filtered', s.filterActive as 's_filterActive', s.quoteState as 's_quoteState', s.quoteShown as 's_quoteShown',
 sa.serverId as 'sa_serverId', sa.tuskyAccountId as 'sa_tuskyAccountId',
 sa.localUsername as 'sa_localUsername', sa.username as 'sa_username',
 sa.displayName as 'sa_displayName', sa.url as 'sa_url', sa.avatar as 'sa_avatar', sa.staticAvatar as 'sa_staticAvatar',
@@ -58,13 +58,26 @@ r.createdAt as 'r_createdAt', r.targetAccountId as 'r_targetAccountId',
 ra.serverId as 'ra_serverId', ra.tuskyAccountId as 'ra_tuskyAccountId',
 ra.localUsername as 'ra_localUsername', ra.username as 'ra_username',
 ra.displayName as 'ra_displayName', ra.url as 'ra_url', ra.avatar as 'ra_avatar', ra.staticAvatar as 'ra_staticAvatar',
-ra.note as 'ra_note', ra.emojis as 'ra_emojis', ra.bot as 'ra_bot'
+ra.note as 'ra_note', ra.emojis as 'ra_emojis', ra.bot as 'ra_bot',
+q.serverId as 'q_serverId', q.url as 'q_url', q.tuskyAccountId as 'q_tuskyAccountId',
+q.authorServerId as 'q_authorServerId', q.inReplyToId as 'q_inReplyToId', q.inReplyToAccountId as 'q_inReplyToAccountId', q.createdAt as 'q_createdAt', q.editedAt as 'q_editedAt',
+q.emojis as 'q_emojis', q.reblogsCount as 'q_reblogsCount', q.favouritesCount as 'q_favouritesCount', q.repliesCount as 'q_repliesCount', q.quotesCount as 'q_quotesCount', q.quoteShown as 'q_quoteShown',
+q.reblogged as 'q_reblogged', q.favourited as 'q_favourited', q.bookmarked as 'q_bookmarked', q.sensitive as 'q_sensitive',
+q.spoilerText as 'q_spoilerText', q.visibility as 'q_visibility', q.mentions as 'q_mentions', q.tags as 'q_tags', q.application as 'q_application',
+q.content as 'q_content', q.attachments as 'q_attachments', q.poll as 'q_poll', q.card as 'q_card', q.muted as 'q_muted', q.expanded as 'q_expanded', q.contentShowing as 'q_contentShowing',
+q.contentCollapsed as 'q_contentCollapsed', q.pinned as 'q_pinned', q.language as 'q_language', q.filtered as 'q_filtered', q.filterActive as 'q_filterActive', q.quoteState as 'q_quoteState',
+qa.serverId as 'qa_serverId', qa.tuskyAccountId as 'qa_tuskyAccountId',
+qa.localUsername as 'qa_localUsername', qa.username as 'qa_username',
+qa.displayName as 'qa_displayName', qa.url as 'qa_url', qa.avatar as 'qa_avatar', qa.staticAvatar as 'qa_staticAvatar',
+qa.note as 'qa_note', qa.emojis as 'qa_emojis', qa.bot as 'qa_bot'
 FROM NotificationEntity n
 LEFT JOIN TimelineAccountEntity a ON (n.tuskyAccountId = a.tuskyAccountId AND n.accountId = a.serverId)
 LEFT JOIN TimelineStatusEntity s ON (n.tuskyAccountId = s.tuskyAccountId AND n.statusId = s.serverId)
 LEFT JOIN TimelineAccountEntity sa ON (n.tuskyAccountId = sa.tuskyAccountId AND s.authorServerId = sa.serverId)
 LEFT JOIN NotificationReportEntity r ON (n.tuskyAccountId = r.tuskyAccountId AND n.reportId = r.serverId)
 LEFT JOIN TimelineAccountEntity ra ON (n.tuskyAccountId = ra.tuskyAccountId AND r.targetAccountId = ra.serverId)
+LEFT JOIN TimelineStatusEntity q ON (q.tuskyAccountId = n.tuskyAccountId AND s.quotedStatusId = q.serverId)
+LEFT JOIN TimelineAccountEntity qa ON (qa.tuskyAccountId = n.tuskyAccountId AND q.authorServerId = qa.serverId)
 WHERE n.tuskyAccountId = :tuskyAccountId
 ORDER BY LENGTH(n.id) DESC, n.id DESC"""
     )

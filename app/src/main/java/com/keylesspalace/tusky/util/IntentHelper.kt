@@ -81,6 +81,11 @@ fun Context.showReblogs(viewData: StatusViewData.Concrete) {
     startActivityWithSlideInAnimation(intent)
 }
 
+fun Context.showQuotes(viewData: StatusViewData.Concrete) {
+    val intent = StatusListActivity.newQuotesIntent(this, viewData.actionableId)
+    startActivityWithSlideInAnimation(intent)
+}
+
 fun Context.report(viewData: StatusViewData.Concrete) {
     val account = viewData.actionable.account
     val intent = ReportActivity.getIntent(this, account.id, account.username, viewData.id)

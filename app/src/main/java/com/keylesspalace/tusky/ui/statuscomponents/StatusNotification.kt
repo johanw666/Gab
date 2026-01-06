@@ -221,42 +221,63 @@ fun StatusNotification(
                     modifier = Modifier.padding(top = 6.dp)
                 )
 
-                if (status.attachments.isNotEmpty()) {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        modifier = Modifier.padding(top = 8.dp)
-                    ) {
-                        Icon(
-                            painter = painterResource(R.drawable.ic_attach_file_24dp),
-                            tint = tuskyColors.tertiaryTextColor,
-                            contentDescription = null,
-                            modifier = Modifier.padding(end = 4.dp)
-                        )
-                        val attachmentCount = status.attachments.size
-                        Text(
-                            text = pluralStringResource(R.plurals.media_attachments, attachmentCount, attachmentCount),
-                            style = LocalPreferences.current.statusTextStyles.medium,
-                            color = tuskyColors.tertiaryTextColor
-                        )
+                if (isExpanded) {
+                    if (status.attachments.isNotEmpty()) {
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            modifier = Modifier.padding(top = 8.dp)
+                        ) {
+                            Icon(
+                                painter = painterResource(R.drawable.ic_attach_file_24dp),
+                                tint = tuskyColors.tertiaryTextColor,
+                                contentDescription = null,
+                                modifier = Modifier.padding(end = 4.dp)
+                            )
+                            val attachmentCount = status.attachments.size
+                            Text(
+                                text = pluralStringResource(R.plurals.media_attachments, attachmentCount, attachmentCount),
+                                style = LocalPreferences.current.statusTextStyles.medium,
+                                color = tuskyColors.tertiaryTextColor
+                            )
+                        }
                     }
-                }
 
-                if (status.poll != null) {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        modifier = Modifier.padding(top = 8.dp)
-                    ) {
-                        Icon(
-                            painter = painterResource(R.drawable.ic_insert_chart_24dp),
-                            tint = tuskyColors.tertiaryTextColor,
-                            contentDescription = null,
-                            modifier = Modifier.padding(end = 4.dp)
-                        )
-                        Text(
-                            text = stringResource(R.string.poll),
-                            style = LocalPreferences.current.statusTextStyles.medium,
-                            color = tuskyColors.tertiaryTextColor
-                        )
+                    if (status.poll != null) {
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            modifier = Modifier.padding(top = 8.dp)
+                        ) {
+                            Icon(
+                                painter = painterResource(R.drawable.ic_insert_chart_24dp),
+                                tint = tuskyColors.tertiaryTextColor,
+                                contentDescription = null,
+                                modifier = Modifier.padding(end = 4.dp)
+                            )
+                            Text(
+                                text = stringResource(R.string.poll),
+                                style = LocalPreferences.current.statusTextStyles.medium,
+                                color = tuskyColors.tertiaryTextColor
+                            )
+                        }
+                    }
+
+                    if (status.quote != null) {
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            modifier = Modifier.padding(top = 8.dp)
+                        ) {
+                            Icon(
+                                painter = painterResource(R.drawable.ic_format_quote_24dp),
+                                tint = tuskyColors.tertiaryTextColor,
+                                contentDescription = null,
+                                modifier = Modifier.padding(end = 4.dp)
+                            )
+                            Text(
+                                text = stringResource(R.string.quote),
+                                style = LocalPreferences.current.statusTextStyles.medium,
+                                color = tuskyColors.tertiaryTextColor
+                            )
+                        }
                     }
                 }
             }

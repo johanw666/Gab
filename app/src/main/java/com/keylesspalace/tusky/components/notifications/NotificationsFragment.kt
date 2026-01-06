@@ -459,6 +459,10 @@ class NotificationsFragment :
         requireContext().viewTag(tag)
     }
 
+    override fun onShowQuote(viewData: StatusViewData.Concrete) {
+        viewModel.showQuote(viewData)
+    }
+
     override fun onLoadMore(loadMore: NotificationViewData.LoadMore) {
         val adapter = this.notificationsAdapter ?: return
         val items = adapter.snapshot()

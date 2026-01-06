@@ -31,6 +31,7 @@ import com.keylesspalace.tusky.db.entity.AccountEntity
 import com.keylesspalace.tusky.db.entity.NotificationDataEntity
 import com.keylesspalace.tusky.db.entity.TimelineStatusEntity
 import com.keylesspalace.tusky.entity.Notification
+import com.keylesspalace.tusky.entity.Status
 import com.keylesspalace.tusky.network.MastodonApi
 import com.keylesspalace.tusky.util.isLessThan
 import retrofit2.HttpException
@@ -157,33 +158,11 @@ class NotificationsRemoteMediator(
                 notificationsDao.insertReport(report.toEntity(activeAccount.id))
             }
 
-            // check if we already have one of the newly loaded statuses cached locally
-            // in case we do, copy the local state (expanded, contentShowing, contentCollapsed) over so it doesn't get lost
-            var oldStatus: TimelineStatusEntity? = null
-            for (page in state.pages) {
-                oldStatus = page.data.find { s ->
-                    s.id == notification.id
-                }?.status
-                if (oldStatus != null) break
-            }
-
             notification.status?.let { status ->
-                val expanded = oldStatus?.expanded ?: activeAccount.alwaysOpenSpoiler
-                val contentShowing = oldStatus?.contentShowing ?: (activeAccount.alwaysShowSensitiveMedia || !status.sensitive)
-                val contentCollapsed = oldStatus?.contentCollapsed ?: true
-                val filterActive = oldStatus?.filterActive ?: true
-
-                val statusToInsert = status.reblog ?: status
-                accountDao.insert(statusToInsert.account.toEntity(activeAccount.id))
-                statusDao.insert(
-                    statusToInsert.toEntity(
-                        tuskyAccountId = activeAccount.id,
-                        expanded = expanded,
-                        contentShowing = contentShowing,
-                        contentCollapsed = contentCollapsed,
-                        filterActive = filterActive
-                    )
-                )
+                status.quote?.quotedStatus?.let { quotedStatus ->
+                    insertStatus(quotedStatus, state, activeAccount)
+                }
+                insertStatus(status, state, activeAccount)
             }
 
             notificationsDao.insertNotification(
@@ -196,6 +175,39 @@ class NotificationsRemoteMediator(
             saveNewestNotificationId(notification)
         }
         return overlappedNotifications
+    }
+
+    private suspend fun insertStatus(
+        status: Status,
+        state: PagingState<Int, NotificationDataEntity>,
+        activeAccount: AccountEntity
+    ) {
+        // check if we already have one of the newly loaded statuses cached locally
+        // in case we do, copy the local state (expanded, contentShowing, contentCollapsed) over so it doesn't get lost
+        var oldStatus: TimelineStatusEntity? = null
+        for (page in state.pages) {
+            oldStatus = page.data.find { s ->
+                s.status?.serverId == status.id
+            }?.status
+            if (oldStatus != null) break
+        }
+
+        val expanded = oldStatus?.expanded ?: activeAccount.alwaysOpenSpoiler
+        val contentShowing = oldStatus?.contentShowing ?: (activeAccount.alwaysShowSensitiveMedia || !status.sensitive)
+        val contentCollapsed = oldStatus?.contentCollapsed ?: true
+        val filterActive = oldStatus?.filterActive ?: true
+
+        val statusToInsert = status.reblog ?: status
+        accountDao.insert(statusToInsert.account.toEntity(activeAccount.id))
+        statusDao.insert(
+            statusToInsert.toEntity(
+                tuskyAccountId = activeAccount.id,
+                expanded = expanded,
+                contentShowing = contentShowing,
+                contentCollapsed = contentCollapsed,
+                filterActive = filterActive
+            )
+        )
     }
 
     private suspend fun saveNewestNotificationId(notification: Notification) {

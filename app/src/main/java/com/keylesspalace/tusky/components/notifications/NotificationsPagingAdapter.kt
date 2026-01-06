@@ -89,7 +89,9 @@ class NotificationsPagingAdapter(
                     Notification.Type.Mention,
                     Notification.Type.Poll,
                     Notification.Type.Status,
-                    Notification.Type.Update -> if (notification.statusViewData?.isFilterWarn == true) {
+                    Notification.Type.Update,
+                    Notification.Type.Quote,
+                    Notification.Type.QuotedUpdate -> if (notification.statusViewData?.isFilterWarn == true) {
                         VIEW_TYPE_STATUS_FILTERED
                     } else {
                         VIEW_TYPE_STATUS

@@ -27,13 +27,6 @@ abstract class TimelineAccountDao {
     @Insert(onConflict = REPLACE)
     abstract suspend fun insert(timelineAccountEntity: TimelineAccountEntity): Long
 
-    @Query(
-        """SELECT * FROM TimelineAccountEntity a
-           WHERE a.serverId = :accountId
-           AND a.tuskyAccountId = :tuskyAccountId"""
-    )
-    internal abstract suspend fun getAccount(tuskyAccountId: Long, accountId: String): TimelineAccountEntity?
-
     @Query("DELETE FROM TimelineAccountEntity WHERE tuskyAccountId = :tuskyAccountId")
     abstract suspend fun removeAllAccounts(tuskyAccountId: Long)
 

@@ -70,6 +70,7 @@ import com.keylesspalace.tusky.ui.statuscomponents.text.linkStyles
 import com.keylesspalace.tusky.ui.statuscomponents.text.toInlineContent
 import com.keylesspalace.tusky.ui.tuskyColors
 import com.keylesspalace.tusky.util.showFavs
+import com.keylesspalace.tusky.util.showQuotes
 import com.keylesspalace.tusky.util.showReblogs
 import com.keylesspalace.tusky.viewdata.StatusViewData
 import java.text.DateFormat
@@ -293,6 +294,16 @@ private fun DetailedStatistics(
             modifier = Modifier
                 .clickable {
                     context.showReblogs(statusViewData)
+                }
+        )
+        Text(
+            text = getMetaDataText(R.plurals.quotes, statusViewData.status.quotesCount),
+            style = LocalPreferences.current.statusTextStyles.medium,
+            color = tuskyColors.tertiaryTextColor,
+            modifier = Modifier
+                .padding(start = 12.dp)
+                .clickable {
+                    context.showQuotes(statusViewData)
                 }
         )
         Text(

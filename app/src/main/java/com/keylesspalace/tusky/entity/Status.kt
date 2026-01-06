@@ -40,6 +40,7 @@ data class Status(
     @Json(name = "reblogs_count") val reblogsCount: Int,
     @Json(name = "favourites_count") val favouritesCount: Int,
     @Json(name = "replies_count") val repliesCount: Int,
+    @Json(name = "quotes_count") val quotesCount: Int = 0,
     val reblogged: Boolean = false,
     val favourited: Boolean = false,
     val bookmarked: Boolean = false,
@@ -60,7 +61,8 @@ data class Status(
     val language: String? = null,
     /** If the current token has an authorized user: The filter and keywords that matched this status.
      *  Iceshrimp and maybe other implementations explicitly send filtered=null so we can't default to empty list. */
-    val filtered: List<FilterResult>? = null
+    val filtered: List<FilterResult>? = null,
+    val quote: Quote?
 ) {
 
     val actionableId: String

@@ -213,6 +213,10 @@ class SearchStatusesFragment :
         requireContext().report(viewData)
     }
 
+    override fun onShowQuote(viewData: StatusViewData.Concrete) {
+        viewModel.showQuote(viewData)
+    }
+
     companion object {
         fun newInstance() = SearchStatusesFragment()
     }

@@ -229,6 +229,12 @@ class NotificationsViewModel @Inject constructor(
         }
     }
 
+    fun showQuote(viewData: StatusViewData.Concrete) {
+        viewModelScope.launch {
+            db.timelineStatusDao().changeFilter(accountId, viewData.actionableId, true)
+        }
+    }
+
     fun clearNotifications() {
         viewModelScope.launch {
             api.clearNotifications().fold(
@@ -323,6 +329,21 @@ class NotificationsViewModel @Inject constructor(
                         }
                         notification.status?.let { status ->
                             val statusToInsert = status.reblog ?: status
+
+                            statusToInsert.quote?.quotedStatus?.let { quotedStatus ->
+                                accountDao.insert(quotedStatus.account.toEntity(accountId))
+
+                                statusDao.insert(
+                                    quotedStatus.toEntity(
+                                        tuskyAccountId = accountId,
+                                        expanded = account.alwaysOpenSpoiler,
+                                        contentShowing = account.alwaysShowSensitiveMedia || !quotedStatus.sensitive,
+                                        contentCollapsed = true,
+                                        filterActive = true
+                                    )
+                                )
+                            }
+
                             accountDao.insert(statusToInsert.account.toEntity(accountId))
 
                             statusDao.insert(

@@ -39,6 +39,7 @@ import com.keylesspalace.tusky.appstore.UnfollowEvent
 import com.keylesspalace.tusky.components.timeline.util.ifExpected
 import com.keylesspalace.tusky.db.AccountManager
 import com.keylesspalace.tusky.entity.Poll
+import com.keylesspalace.tusky.entity.Quote
 import com.keylesspalace.tusky.entity.Status
 import com.keylesspalace.tusky.network.MastodonApi
 import com.keylesspalace.tusky.util.getDomain
@@ -220,7 +221,13 @@ class NetworkTimelineViewModel @Inject constructor(
                         isExpanded = activeAccount.alwaysOpenSpoiler,
                         isCollapsed = true,
                         filterKind = kind.toFilterKind(),
-                        filterActive = true
+                        filterActive = true,
+                        isQuoteShowingContent =
+                        status.quote?.quotedStatus?.shouldShowContent(activeAccount.alwaysShowSensitiveMedia, kind.toFilterKind())
+                            ?: activeAccount.alwaysShowSensitiveMedia,
+                        isQuoteExpanded = activeAccount.alwaysOpenSpoiler,
+                        isQuoteCollapsed = true,
+                        isQuoteShown = status.quote?.state == Quote.State.ACCEPTED
                     )
                 }.toMutableList()
 
@@ -312,6 +319,14 @@ class NetworkTimelineViewModel @Inject constructor(
         status.copy(filterActive = filtered).update()
     }
 
+    override fun showQuote(status: StatusViewData.Concrete) {
+        status.copy(
+            quote = status.quote?.copy(
+                quoteShown = true
+            )
+        ).update()
+    }
+
     override fun saveHomeTimelinePosition(firstVisibleIndex: Int, firstVisibleOffset: Int) {
         /** Does nothing for non-cached timelines */
     }
@@ -385,25 +400,75 @@ class NetworkTimelineViewModel @Inject constructor(
             Kind.BOOKMARKS -> api.bookmarks(fromId, uptoId, limit)
             Kind.LIST -> api.listTimeline(id!!, fromId, uptoId, limit)
             Kind.PUBLIC_TRENDING_STATUSES -> api.trendingStatuses(limit = limit, offset = fromId)
+            Kind.QUOTES -> api.quotingStatuses(statusId = id!!, limit = limit, offset = fromId)
         }
     }
 
     private fun StatusViewData.Concrete.update() {
         val position =
             statusData.indexOfFirst { viewData -> viewData.asStatusOrNull()?.id == this.id }
-        statusData[position] = this
+        if (position >= 0) {
+            statusData[position] = this
+        } else {
+            val position =
+                statusData.indexOfFirst { viewData ->
+                    viewData.asStatusOrNull()?.quote?.quotedStatusViewData?.id == this.id
+                }
+            if (position != -1) {
+                statusData[position].asStatusOrNull()?.let { viewData ->
+                    statusData[position] = viewData.copy(
+                        quote = viewData.quote?.copy(
+                            quotedStatusViewData = this
+                        )
+                    )
+                }
+            }
+        }
         currentSource?.invalidate()
     }
 
     private inline fun updateStatusByActionableId(id: String, updater: (Status) -> Status) {
         // posts can be multiple times in the timeline, e.g. once the original and once as boost
-        statusData.forEachIndexed { index, status ->
-            if (status.asStatusOrNull()?.actionableId == id) {
+        statusData.forEachIndexed { index, viewData ->
+            val status = viewData.asStatusOrNull()
+            if (status?.actionableId == id) {
                 updateViewDataAt(index) { vd ->
                     if (vd.status.reblog != null) {
                         vd.copy(status = vd.status.copy(reblog = updater(vd.status.reblog)))
                     } else {
                         vd.copy(status = updater(vd.status))
+                    }
+                }
+            } else if (status?.quote?.quotedStatusViewData?.id == id) {
+                updateViewDataAt(index) { vd ->
+                    if (vd.status.reblog != null) {
+                        vd.copy(
+                            status = vd.status.copy(
+                                reblog = vd.status.reblog.copy(
+                                    quote = vd.status.reblog.quote?.copy(
+                                        quotedStatus = vd.status.reblog.quote.quotedStatus?.let { updater(it) }
+                                    )
+                                )
+                            ),
+                            quote = vd.quote?.copy(
+                                quotedStatusViewData = vd.quote.quotedStatusViewData?.copy(
+                                    status = updater(vd.quote.quotedStatusViewData.status)
+                                )
+                            )
+                        )
+                    } else {
+                        vd.copy(
+                            status = vd.status.copy(
+                                quote = vd.status.quote?.copy(
+                                    quotedStatus = vd.status.quote.quotedStatus?.let { updater(it) }
+                                )
+                            ),
+                            quote = vd.quote?.copy(
+                                quotedStatusViewData = vd.quote.quotedStatusViewData?.copy(
+                                    status = updater(vd.quote.quotedStatusViewData.status)
+                                )
+                            )
+                        )
                     }
                 }
             }

@@ -43,7 +43,6 @@ import java.net.URLEncoder
 import java.util.Date
 import javax.inject.Inject
 import javax.inject.Singleton
-import kotlin.collections.forEach
 import org.json.JSONArray
 
 @OptIn(ExperimentalStdlibApi::class)

@@ -145,36 +145,18 @@ class CachedTimelineRemoteMediator(
         }
 
         for (status in statuses) {
+            status.actionableStatus.quote?.quotedStatus?.let { quotedStatus ->
+                accountDao.insert(quotedStatus.account.toEntity(activeAccount.id))
+                insertStatus(quotedStatus, state, activeAccount)
+            }
+
             accountDao.insert(status.account.toEntity(activeAccount.id))
             status.reblog?.account?.toEntity(activeAccount.id)?.let { rebloggedAccount ->
                 accountDao.insert(rebloggedAccount)
             }
 
-            // check if we already have one of the newly loaded statuses cached locally
-            // in case we do, copy the local state (expanded, contentShowing, contentCollapsed) over so it doesn't get lost
-            var oldStatus: TimelineStatusEntity? = null
-            for (page in state.pages) {
-                oldStatus = page.data.find { s ->
-                    s.status?.serverId == status.actionableId
-                }?.status
-                if (oldStatus != null) break
-            }
+            insertStatus(status, state, activeAccount)
 
-            val expanded = oldStatus?.expanded ?: activeAccount.alwaysOpenSpoiler
-            val contentShowing = oldStatus?.contentShowing
-                ?: status.shouldShowContent(activeAccount.alwaysShowSensitiveMedia, viewModel.kind.toFilterKind())
-            val contentCollapsed = oldStatus?.contentCollapsed != false
-            val filterActive = oldStatus?.filterActive ?: true
-
-            statusDao.insert(
-                status.actionableStatus.toEntity(
-                    tuskyAccountId = activeAccount.id,
-                    expanded = expanded,
-                    contentShowing = contentShowing,
-                    contentCollapsed = contentCollapsed,
-                    filterActive = filterActive
-                )
-            )
             timelineDao.insertHomeTimelineItem(
                 HomeTimelineEntity(
                     tuskyAccountId = activeAccount.id,
@@ -189,6 +171,38 @@ class CachedTimelineRemoteMediator(
             )
         }
         return overlappedStatuses
+    }
+
+    private suspend fun insertStatus(
+        status: Status,
+        state: PagingState<Int, HomeTimelineData>,
+        activeAccount: AccountEntity
+    ) {
+        // check if we already have one of the newly loaded statuses cached locally
+        // in case we do, copy the local state (expanded, contentShowing, contentCollapsed) over so it doesn't get lost
+        var oldStatus: TimelineStatusEntity? = null
+        for (page in state.pages) {
+            oldStatus = page.data.find { s ->
+                s.status?.serverId == status.actionableId
+            }?.status
+            if (oldStatus != null) break
+        }
+
+        val expanded = oldStatus?.expanded ?: activeAccount.alwaysOpenSpoiler
+        val contentShowing = oldStatus?.contentShowing
+            ?: status.shouldShowContent(activeAccount.alwaysShowSensitiveMedia, viewModel.kind.toFilterKind())
+        val contentCollapsed = oldStatus?.contentCollapsed != false
+        val filterActive = oldStatus?.filterActive ?: true
+
+        statusDao.insert(
+            status.actionableStatus.toEntity(
+                tuskyAccountId = activeAccount.id,
+                expanded = expanded,
+                contentShowing = contentShowing,
+                contentCollapsed = contentCollapsed,
+                filterActive = filterActive
+            )
+        )
     }
 
     companion object {

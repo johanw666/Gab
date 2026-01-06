@@ -17,6 +17,7 @@ package com.keylesspalace.tusky.viewdata
 import androidx.compose.runtime.Immutable
 import com.keylesspalace.tusky.entity.Attachment
 import com.keylesspalace.tusky.entity.Filter
+import com.keylesspalace.tusky.entity.Quote
 import com.keylesspalace.tusky.entity.Status
 import com.keylesspalace.tusky.entity.TimelineAccount
 import com.keylesspalace.tusky.entity.Translation
@@ -38,6 +39,13 @@ sealed interface TranslationViewData {
             get() = null
     }
 }
+
+@Immutable
+data class QuoteViewData(
+    val state: Quote.State,
+    val quotedStatusViewData: StatusViewData.Concrete?,
+    val quoteShown: Boolean
+)
 
 /**
  * Created by charlag on 11/07/2017.
@@ -65,7 +73,8 @@ sealed class StatusViewData {
         val repliedToAccount: TimelineAccount? = null,
         val translation: TranslationViewData? = null,
         val filter: Filter? = null,
-        val filterActive: Boolean
+        val filterActive: Boolean,
+        val quote: QuoteViewData?
     ) : StatusViewData() {
         override val id: String
             get() = status.id

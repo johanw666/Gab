@@ -47,14 +47,16 @@ class StatusComparisonTest {
             isExpanded = false,
             isShowingContent = false,
             isCollapsed = false,
-            filterActive = true
+            filterActive = true,
+            quote = null
         )
         val viewdata2 = StatusViewData.Concrete(
             status = createStatus(),
             isExpanded = false,
             isShowingContent = false,
             isCollapsed = false,
-            filterActive = true
+            filterActive = true,
+            quote = null
         )
         assertEquals(viewdata1, viewdata2)
     }
@@ -66,14 +68,16 @@ class StatusComparisonTest {
             isExpanded = true,
             isShowingContent = false,
             isCollapsed = false,
-            filterActive = true
+            filterActive = true,
+            quote = null
         )
         val viewdata2 = StatusViewData.Concrete(
             status = createStatus(),
             isExpanded = false,
             isShowingContent = false,
             isCollapsed = false,
-            filterActive = true
+            filterActive = true,
+            quote = null
         )
         assertNotEquals(viewdata1, viewdata2)
     }
@@ -85,14 +89,16 @@ class StatusComparisonTest {
             isExpanded = true,
             isShowingContent = false,
             isCollapsed = false,
-            filterActive = true
+            filterActive = true,
+            quote = null
         )
         val viewdata2 = StatusViewData.Concrete(
             status = createStatus(),
             isExpanded = false,
             isShowingContent = false,
             isCollapsed = false,
-            filterActive = true
+            filterActive = true,
+            quote = null
         )
         assertNotEquals(viewdata1, viewdata2)
     }

@@ -50,6 +50,7 @@ fun fakeStatusViewData(
         reblogsCount = 2,
         favouritesCount = 3,
         repliesCount = 4,
+        quotesCount = 1,
         reblogged = false,
         favourited = false,
         bookmarked = false,
@@ -68,12 +69,14 @@ fun fakeStatusViewData(
         poll = poll,
         card = null,
         language = "en",
-        filtered = null
+        filtered = null,
+        quote = null
     ),
     isExpanded = true,
     isShowingContent = true,
     isCollapsed = false,
     filterActive = false,
+    quote = null
 )
 
 val fakeTimelineAccount = TimelineAccount(
@@ -214,4 +217,5 @@ val noopListener = object : StatusActionListener {
     override fun onViewUrl(url: String) { }
     override fun onReply(viewData: StatusViewData.Concrete) { }
     override fun onReport(viewData: StatusViewData.Concrete) { }
+    override fun onShowQuote(viewData: StatusViewData.Concrete) { }
 }

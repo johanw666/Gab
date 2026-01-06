@@ -606,6 +606,10 @@ class ViewThreadFragment :
         requireContext().viewAccount(accountId)
     }
 
+    override fun onShowQuote(viewData: StatusViewData.Concrete) {
+        viewModel.showQuote(viewData)
+    }
+
     private fun onShowEdits(viewData: StatusViewData.Concrete) {
         val viewEditsFragment = ViewEditsFragment.newInstance(viewData.actionableId)
 

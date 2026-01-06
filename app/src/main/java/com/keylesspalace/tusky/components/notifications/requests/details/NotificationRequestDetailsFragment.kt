@@ -340,6 +340,10 @@ class NotificationRequestDetailsFragment :
         viewModel.respondToFollowRequest(accept, accountId = accountIdRequestingFollow, notification = notification)
     }
 
+    override fun onShowQuote(viewData: StatusViewData.Concrete) {
+        viewModel.showQuote(viewData)
+    }
+
     override fun onDestroyView() {
         adapter = null
         super.onDestroyView()

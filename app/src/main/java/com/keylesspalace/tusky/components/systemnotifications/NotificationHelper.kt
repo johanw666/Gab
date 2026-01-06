@@ -489,24 +489,26 @@ class NotificationHelper @Inject constructor(
 
     private fun titleForType(notification: Notification, account: AccountEntity): String? {
         val accountName = notification.account.name.unicodeWrap()
-        when (notification.type) {
-            Notification.Type.Mention -> return context.getString(R.string.notification_mention_format, accountName)
-            Notification.Type.Status -> return context.getString(R.string.notification_subscription_format, accountName)
-            Notification.Type.Follow -> return context.getString(R.string.notification_follow_format, accountName)
-            Notification.Type.FollowRequest -> return context.getString(R.string.notification_follow_request_format, accountName)
-            Notification.Type.Favourite -> return context.getString(R.string.notification_favourite_format, accountName)
-            Notification.Type.Reblog -> return context.getString(R.string.notification_reblog_format, accountName)
-            Notification.Type.Poll -> return if (notification.status!!.account.id == account.accountId) {
+        return when (notification.type) {
+            Notification.Type.Mention -> context.getString(R.string.notification_mention_format, accountName)
+            Notification.Type.Status -> context.getString(R.string.notification_subscription_format, accountName)
+            Notification.Type.Follow -> context.getString(R.string.notification_follow_format, accountName)
+            Notification.Type.FollowRequest -> context.getString(R.string.notification_follow_request_format, accountName)
+            Notification.Type.Favourite -> context.getString(R.string.notification_favourite_format, accountName)
+            Notification.Type.Reblog -> context.getString(R.string.notification_reblog_format, accountName)
+            Notification.Type.Poll -> if (notification.status!!.account.id == account.accountId) {
                 context.getString(R.string.poll_ended_created)
             } else {
                 context.getString(R.string.poll_ended_voted)
             }
-            Notification.Type.SignUp -> return context.getString(R.string.notification_sign_up_format, accountName)
-            Notification.Type.Update -> return context.getString(R.string.notification_update_format, accountName)
-            Notification.Type.Report -> return context.getString(R.string.notification_report_format, account.domain)
-            Notification.Type.SeveredRelationship -> return context.getString(R.string.relationship_severance_event_title)
-            Notification.Type.ModerationWarning -> return context.getString(R.string.moderation_warning)
-            is Notification.Type.Unknown -> return null
+            Notification.Type.SignUp -> context.getString(R.string.notification_sign_up_format, accountName)
+            Notification.Type.Update -> context.getString(R.string.notification_update_format, accountName)
+            Notification.Type.Report -> context.getString(R.string.notification_report_format, account.domain)
+            Notification.Type.SeveredRelationship -> context.getString(R.string.relationship_severance_event_title)
+            Notification.Type.ModerationWarning -> context.getString(R.string.moderation_warning)
+            Notification.Type.Quote -> context.getString(R.string.notification_quote_format, accountName)
+            Notification.Type.QuotedUpdate -> context.getString(R.string.notification_quoted_update_format, accountName)
+            is Notification.Type.Unknown -> null
         }
     }
 

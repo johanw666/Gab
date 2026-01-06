@@ -1,4 +1,4 @@
-/* Copyright 2022 Tusky Contributors
+/* Copyright 2026 Tusky Contributors
  *
  * This file is a part of Tusky.
  *
@@ -13,16 +13,13 @@
  * You should have received a copy of the GNU General Public License along with Tusky; if not,
  * see <http://www.gnu.org/licenses>. */
 
-package com.keylesspalace.tusky.components.conversation
+package com.keylesspalace.tusky.db.entity
 
-import androidx.compose.runtime.Stable
-import com.keylesspalace.tusky.viewdata.StatusViewData
+import androidx.room.Embedded
 
-@Stable
-data class ConversationViewData(
-    val id: String,
-    val order: Int,
-    val accounts: List<ConversationAccountEntity>,
-    val unread: Boolean,
-    val lastStatus: StatusViewData.Concrete
+data class StatusAndAccountEntity(
+    @Embedded val status: TimelineStatusEntity,
+    @Embedded(prefix = "a_") val account: TimelineAccountEntity,
+    @Embedded(prefix = "q_") val quotedStatus: TimelineStatusEntity?,
+    @Embedded(prefix = "qa_") val quotedStatusAccount: TimelineAccountEntity?
 )

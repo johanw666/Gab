@@ -33,9 +33,9 @@ abstract class TimelineDao {
         """
 SELECT h.id, s.serverId, s.url, s.tuskyAccountId,
 s.authorServerId, s.inReplyToId, s.inReplyToAccountId, s.createdAt, s.editedAt,
-s.emojis, s.reblogsCount, s.favouritesCount, s.repliesCount, s.reblogged, s.favourited, s.bookmarked, s.sensitive,
+s.emojis, s.reblogsCount, s.favouritesCount, s.repliesCount, s.quotesCount, s.reblogged, s.favourited, s.bookmarked, s.sensitive,
 s.spoilerText, s.visibility, s.mentions, s.tags, s.application,
-s.content, s.attachments, s.poll, s.card, s.muted, s.expanded, s.contentShowing, s.contentCollapsed, s.pinned, s.language, s.filtered, s.filterActive,
+s.content, s.attachments, s.poll, s.card, s.muted, s.expanded, s.contentShowing, s.contentCollapsed, s.pinned, s.language, s.filtered, s.filterActive, s.quoteState, s.quoteShown,
 a.serverId as 'a_serverId', a.tuskyAccountId as 'a_tuskyAccountId',
 a.localUsername as 'a_localUsername', a.username as 'a_username',
 a.displayName as 'a_displayName', a.url as 'a_url', a.avatar as 'a_avatar', a.staticAvatar as 'a_staticAvatar',
@@ -48,12 +48,25 @@ replied.serverId as 'replied_serverId', replied.tuskyAccountId 'replied_tuskyAcc
 replied.localUsername as 'replied_localUsername', replied.username as 'replied_username',
 replied.displayName as 'replied_displayName', replied.url as 'replied_url', replied.avatar as 'replied_avatar', replied.staticAvatar as 'replied_staticAvatar',
 replied.note as 'replied_note', replied.emojis as 'replied_emojis', replied.bot as 'replied_bot',
+q.serverId as 'q_serverId', q.url as 'q_url', q.tuskyAccountId as 'q_tuskyAccountId',
+q.authorServerId as 'q_authorServerId', q.inReplyToId as 'q_inReplyToId', q.inReplyToAccountId as 'q_inReplyToAccountId', q.createdAt as 'q_createdAt', q.editedAt as 'q_editedAt',
+q.emojis as 'q_emojis', q.reblogsCount as 'q_reblogsCount', q.favouritesCount as 'q_favouritesCount', q.repliesCount as 'q_repliesCount', q.quotesCount as 'q_quotesCount',
+q.reblogged as 'q_reblogged', q.favourited as 'q_favourited', q.bookmarked as 'q_bookmarked', q.sensitive as 'q_sensitive',
+q.spoilerText as 'q_spoilerText', q.visibility as 'q_visibility', q.mentions as 'q_mentions', q.tags as 'q_tags', q.application as 'q_application',
+q.content as 'q_content', q.attachments as 'q_attachments', q.poll as 'q_poll', q.card as 'q_card', q.muted as 'q_muted', q.expanded as 'q_expanded', q.contentShowing as 'q_contentShowing',
+q.contentCollapsed as 'q_contentCollapsed', q.pinned as 'q_pinned', q.language as 'q_language', q.filtered as 'q_filtered', q.filterActive as 'q_filterActive', q.quoteState as 'q_quoteState', q.quoteShown as 'q_quoteShown',
+qa.serverId as 'qa_serverId', qa.tuskyAccountId as 'qa_tuskyAccountId',
+qa.localUsername as 'qa_localUsername', qa.username as 'qa_username',
+qa.displayName as 'qa_displayName', qa.url as 'qa_url', qa.avatar as 'qa_avatar', qa.staticAvatar as 'qa_staticAvatar',
+qa.note as 'qa_note', qa.emojis as 'qa_emojis', qa.bot as 'qa_bot',
 h.loading
 FROM HomeTimelineEntity h
 LEFT JOIN TimelineStatusEntity s ON (h.statusId = s.serverId AND s.tuskyAccountId = :tuskyAccountId)
 LEFT JOIN TimelineAccountEntity a ON (s.authorServerId = a.serverId AND a.tuskyAccountId = :tuskyAccountId)
 LEFT JOIN TimelineAccountEntity rb ON (h.reblogAccountId = rb.serverId AND rb.tuskyAccountId = :tuskyAccountId)
 LEFT JOIN TimelineAccountEntity replied ON (s.inReplyToAccountId = replied.serverId AND replied.tuskyAccountId = :tuskyAccountId)
+LEFT JOIN TimelineStatusEntity q ON (s.quotedStatusId = q.serverId AND q.tuskyAccountId = :tuskyAccountId)
+LEFT JOIN TimelineAccountEntity qa ON (q.authorServerId = qa.serverId AND qa.tuskyAccountId = :tuskyAccountId)
 WHERE h.tuskyAccountId = :tuskyAccountId
 ORDER BY LENGTH(h.id) DESC, h.id DESC"""
     )

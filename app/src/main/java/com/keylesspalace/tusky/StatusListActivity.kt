@@ -57,6 +57,7 @@ class StatusListActivity : BottomSheetActivity() {
     )
     private lateinit var kind: Kind
     private var hashtag: String? = null
+    private var statusId: String? = null
     private var followTagItem: MenuItem? = null
     private var unfollowTagItem: MenuItem? = null
     private var muteTagItem: MenuItem? = null
@@ -75,12 +76,14 @@ class StatusListActivity : BottomSheetActivity() {
         kind = Kind.valueOf(intent.getStringExtra(EXTRA_KIND)!!)
         val listId = intent.getStringExtra(EXTRA_LIST_ID)
         hashtag = intent.getStringExtra(EXTRA_HASHTAG)
+        statusId = intent.getStringExtra(EXTRA_STATUS_ID)
 
         val title = when (kind) {
             Kind.FAVOURITES -> getString(R.string.title_favourites)
             Kind.BOOKMARKS -> getString(R.string.title_bookmarks)
             Kind.TAG -> getString(R.string.hashtag_format, hashtag)
             Kind.PUBLIC_TRENDING_STATUSES -> getString(R.string.title_public_trending_statuses)
+            Kind.QUOTES -> getString(R.string.title_quotes)
             else -> intent.getStringExtra(EXTRA_LIST_TITLE)
         }
 
@@ -92,10 +95,10 @@ class StatusListActivity : BottomSheetActivity() {
 
         if (supportFragmentManager.findFragmentById(R.id.fragmentContainer) == null) {
             supportFragmentManager.commit {
-                val fragment = if (kind == Kind.TAG) {
-                    TimelineFragment.newHashtagInstance(listOf(hashtag!!))
-                } else {
-                    TimelineFragment.newInstance(kind, listId)
+                val fragment = when (kind) {
+                    Kind.TAG -> TimelineFragment.newHashtagInstance(listOf(hashtag!!))
+                    Kind.QUOTES -> TimelineFragment.newInstance(kind, statusId)
+                    else -> TimelineFragment.newInstance(kind, listId)
                 }
                 replace(R.id.fragmentContainer, fragment)
             }
@@ -373,6 +376,7 @@ class StatusListActivity : BottomSheetActivity() {
         private const val EXTRA_LIST_ID = "id"
         private const val EXTRA_LIST_TITLE = "title"
         private const val EXTRA_HASHTAG = "tag"
+        private const val EXTRA_STATUS_ID = "status"
         const val TAG = "StatusListActivity"
 
         fun newFavouritesIntent(context: Context) =
@@ -392,7 +396,6 @@ class StatusListActivity : BottomSheetActivity() {
                 putExtra(EXTRA_LIST_TITLE, listTitle)
             }
 
-        @JvmStatic
         fun newHashtagIntent(context: Context, hashtag: String) =
             Intent(context, StatusListActivity::class.java).apply {
                 putExtra(EXTRA_KIND, Kind.TAG.name)
@@ -402,6 +405,12 @@ class StatusListActivity : BottomSheetActivity() {
         fun newTrendingIntent(context: Context) =
             Intent(context, StatusListActivity::class.java).apply {
                 putExtra(EXTRA_KIND, Kind.PUBLIC_TRENDING_STATUSES.name)
+            }
+
+        fun newQuotesIntent(context: Context, statusId: String) =
+            Intent(context, StatusListActivity::class.java).apply {
+                putExtra(EXTRA_KIND, Kind.QUOTES.name)
+                putExtra(EXTRA_STATUS_ID, statusId)
             }
     }
 }

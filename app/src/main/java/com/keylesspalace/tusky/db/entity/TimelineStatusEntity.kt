@@ -27,6 +27,7 @@ import com.keylesspalace.tusky.entity.FilterResult
 import com.keylesspalace.tusky.entity.HashTag
 import com.keylesspalace.tusky.entity.Poll
 import com.keylesspalace.tusky.entity.PreviewCard
+import com.keylesspalace.tusky.entity.Quote
 import com.keylesspalace.tusky.entity.Status
 
 /**
@@ -41,6 +42,11 @@ import com.keylesspalace.tusky.entity.Status
                 entity = TimelineAccountEntity::class,
                 parentColumns = ["serverId", "tuskyAccountId"],
                 childColumns = ["authorServerId", "tuskyAccountId"]
+            ),
+            ForeignKey(
+                entity = TimelineStatusEntity::class,
+                parentColumns = ["serverId", "tuskyAccountId"],
+                childColumns = ["quotedStatusId", "tuskyAccountId"]
             )
         ]
         ),
@@ -64,6 +70,7 @@ data class TimelineStatusEntity(
     val reblogsCount: Int,
     val favouritesCount: Int,
     val repliesCount: Int,
+    @ColumnInfo(defaultValue = "0") val quotesCount: Int,
     val reblogged: Boolean,
     val bookmarked: Boolean,
     val favourited: Boolean,
@@ -85,5 +92,8 @@ data class TimelineStatusEntity(
     val card: PreviewCard?,
     val language: String?,
     val filtered: List<FilterResult>,
-    @ColumnInfo(defaultValue = "true") val filterActive: Boolean
+    @ColumnInfo(defaultValue = "true") val filterActive: Boolean,
+    val quoteState: Quote.State?,
+    val quotedStatusId: String?,
+    @ColumnInfo(defaultValue = "false") val quoteShown: Boolean
 )

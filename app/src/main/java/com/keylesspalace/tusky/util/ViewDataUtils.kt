@@ -39,6 +39,7 @@ import androidx.paging.LoadState
 import com.keylesspalace.tusky.entity.Filter
 import com.keylesspalace.tusky.entity.Status
 import com.keylesspalace.tusky.entity.TrendingTag
+import com.keylesspalace.tusky.viewdata.QuoteViewData
 import com.keylesspalace.tusky.viewdata.StatusViewData
 import com.keylesspalace.tusky.viewdata.TranslationViewData
 import com.keylesspalace.tusky.viewdata.TrendingViewData
@@ -50,8 +51,12 @@ fun Status.toViewData(
     isDetailed: Boolean = false,
     filterKind: Filter.Kind,
     translation: TranslationViewData? = null,
-    filterActive: Boolean
-) = StatusViewData.Concrete(
+    filterActive: Boolean,
+    isQuoteShowingContent: Boolean,
+    isQuoteExpanded: Boolean,
+    isQuoteCollapsed: Boolean,
+    isQuoteShown: Boolean
+): StatusViewData.Concrete = StatusViewData.Concrete(
     status = this,
     isShowingContent = isShowingContent,
     isCollapsed = isCollapsed,
@@ -59,7 +64,26 @@ fun Status.toViewData(
     isDetailed = isDetailed,
     translation = translation,
     filter = this.getApplicableFilter(filterKind),
-    filterActive = filterActive
+    filterActive = filterActive,
+    quote = quote?.let {
+        QuoteViewData(
+            state = quote.state,
+            quotedStatusViewData = quote.quotedStatus?.toViewData(
+                isShowingContent = isQuoteShowingContent,
+                isExpanded = isQuoteExpanded,
+                isCollapsed = isQuoteCollapsed,
+                isDetailed = false,
+                filterKind = filterKind,
+                translation = null,
+                filterActive = true,
+                isQuoteShowingContent = false,
+                isQuoteExpanded = false,
+                isQuoteCollapsed = false,
+                isQuoteShown = false
+            ),
+            quoteShown = isQuoteShown
+        )
+    }
 )
 
 fun List<TrendingTag>.toViewData(): List<TrendingViewData.Tag> {
@@ -68,7 +92,6 @@ fun List<TrendingTag>.toViewData(): List<TrendingViewData.Tag> {
         .maxOrNull() ?: 1
 
     return map { tag ->
-
         val reversedHistory = tag.history.asReversed()
 
         TrendingViewData.Tag(
