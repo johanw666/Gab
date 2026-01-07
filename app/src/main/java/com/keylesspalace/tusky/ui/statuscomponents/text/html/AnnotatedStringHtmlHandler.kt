@@ -272,6 +272,10 @@ internal class AnnotatedStringHtmlHandler(
     }
 
     private fun handleAnchorStart(url: String) {
+        if (skippedQuoteTag != null) {
+            // don't handle the quote link that is never shown
+            return
+        }
         currentLink = url
         builder.pushLink(
             LinkAnnotation.Url(
@@ -406,11 +410,13 @@ internal class AnnotatedStringHtmlHandler(
     }
 
     private fun handleAnchorEnd() {
+        if (skippedQuoteTag != null) {
+            return
+        }
         if (currentLink.isNotEmpty() &&
             !currentLinkText.startsWith("#") &&
             !currentLinkText.startsWith("@") &&
-            currentLinkText != currentLink &&
-            skippedQuoteTag == null
+            currentLinkText != currentLink
         ) {
             val linkDomain = getDomain(currentLink)
             if (currentLinkText != linkDomain) {
