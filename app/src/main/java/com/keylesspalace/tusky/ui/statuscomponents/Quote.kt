@@ -77,19 +77,19 @@ fun Quote(
             )
             .clip(RoundedCornerShape(12.dp))
             .run {
-                if (quote.quoteShown && quote.quotedStatusViewData != null) {
-                    if (quote.quotedStatusViewData.filterActive && quote.quotedStatusViewData.filter?.action == Filter.Action.WARN) {
-                        clickable {
-                            listener.changeFilter(quote.quotedStatusViewData, filtered = false)
-                        }
-                    } else {
-                        clickable {
-                            listener.onViewThread(quote.quotedStatusViewData)
-                        }
+                if (quote.quotedStatusViewData?.filterActive == true && quote.quotedStatusViewData.filter?.action == Filter.Action.WARN) {
+                    clickable {
+                        listener.changeFilter(quote.quotedStatusViewData, filtered = false)
                     }
-                } else if (quote.state == Quote.State.BLOCKED_ACCOUNT || quote.state == Quote.State.MUTED_ACCOUNT || quote.state == Quote.State.BLOCKED_DOMAIN) {
+                } else if (!quote.quoteShown &&
+                    (quote.state == Quote.State.BLOCKED_ACCOUNT || quote.state == Quote.State.MUTED_ACCOUNT || quote.state == Quote.State.BLOCKED_DOMAIN)
+                ) {
                     clickable {
                         listener.onShowQuote(statusViewData)
+                    }
+                } else if (quote.quotedStatusViewData != null) {
+                    clickable {
+                        listener.onViewThread(quote.quotedStatusViewData)
                     }
                 } else {
                     this
