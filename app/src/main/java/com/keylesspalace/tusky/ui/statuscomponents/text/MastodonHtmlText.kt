@@ -179,17 +179,9 @@ internal fun getTrailingHashtags(
 
     val trailingContentOffset = (content.length - trailingContentLength).coerceAtLeast(0)
 
-    val inlineHashtags = content.getLinkAnnotations(0, trailingContentOffset)
-        .filter { content[it.start] == '#' } // just in case
-        .map { annotation ->
-            content.subSequence(annotation.start + 1, annotation.end).toString()
-        }
+    val inlineHashtags = content.getHashtagsInRange(0, trailingContentOffset)
 
-    val trailingHashtags = content.getLinkAnnotations(trailingContentOffset, content.length)
-        .filter { content[it.start] == '#' } // just in case
-        .map { annotation ->
-            content.subSequence(annotation.start + 1, annotation.end).toString()
-        }
+    val trailingHashtags = content.getHashtagsInRange(trailingContentOffset, content.length)
 
     val missingServerTags = serverTags.filterNot { serverTag ->
         inlineHashtags.any { inlineTag -> serverTag.name.equals(normalizeToASCII(inlineTag), ignoreCase = true) } ||
@@ -197,6 +189,22 @@ internal fun getTrailingHashtags(
     }.map { tag -> tag.name }
 
     return content.subSequence(0, trailingContentOffset) to trailingHashtags + missingServerTags
+}
+
+/** returns the list of hashtags (without #) that are found in the specified range of the AnnotatedString.
+ * @param startIndex The start index (inclusive), must be > 0.
+ * @param endIndex The end index (exclusive), must be less than the length of the AnnotatedString.
+ * */
+private fun AnnotatedString.getHashtagsInRange(startIndex: Int, endIndex: Int): List<String> {
+    return getLinkAnnotations(startIndex, endIndex)
+        .mapNotNull { annotation ->
+            val annotationContent = subSequence(annotation.start, annotation.end).trim()
+            if (annotationContent.firstOrNull() == '#') {
+                annotationContent.drop(1).toString()
+            } else {
+                null
+            }
+        }
 }
 
 @Composable

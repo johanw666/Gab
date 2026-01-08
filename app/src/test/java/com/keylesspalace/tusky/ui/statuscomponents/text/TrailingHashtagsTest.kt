@@ -1,17 +1,29 @@
 package com.keylesspalace.tusky.ui.statuscomponents.text
 
+import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.LinkAnnotation
 import androidx.compose.ui.text.TextLinkStyles
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.withLink
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.keylesspalace.tusky.components.timeline.fakeStatus
+import com.keylesspalace.tusky.components.timeline.fakeStatusViewData
 import com.keylesspalace.tusky.entity.HashTag
 import com.keylesspalace.tusky.util.HASHTAG_EXPRESSION
 import java.util.regex.Pattern
 import org.junit.Assert.assertEquals
+import org.junit.Rule
 import org.junit.Test
+import org.junit.runner.RunWith
+import org.robolectric.annotation.Config
 
+@Config(sdk = [34])
+@RunWith(AndroidJUnit4::class)
 class TrailingHashtagsTest {
+
+    @get:Rule
+    val composeTestRule = createComposeRule()
 
     /** The [Pattern.UNICODE_CHARACTER_CLASS] flag is not supported on Android, on Android it is just always on.
      * Since these tests run on a regular Jvm, we need to set this flag or they would behave differently.
@@ -165,6 +177,40 @@ class TrailingHashtagsTest {
         }
         assertEquals(expectedContentOut, contentOut)
         assertEquals(listOf("tag", "tëst"), trailingHashtags)
+    }
+
+    @Test
+    fun `get trailing hashtags correctly works on full status`() {
+        val status = fakeStatusViewData().copy(
+            status = fakeStatus().copy(
+                content = """
+                    <p>I was a backer of The Comic Shop! A Workplace <a href=\"https://social.coop/tags/Comedy\" class=\"mention hashtag\"
+                            rel=\"nofollow noopener\" target=\"_blank\">#<span>Comedy</span></a> on Kickstarter.</p>
+                    <p>Lovely to see a cute show made by and featuring so many creators of color! The whole thing is out on YouTube now for
+                        free.</p>
+                    <p>I just watched the pilot, it was good! Each episode is 15 minutes or less.</p>
+                    <p><a href=\"https://youtube.com/playlist?list=PLcBItu-HVRPe-Nx-ASwZrDdk2pj6iG4Dj\" rel=\"nofollow noopener\"
+                            translate=\"no\" target=\"_blank\"><span class=\"invisible\">https://</span><span
+                                class=\"ellipsis\">youtube.com/playlist?list=PLcB</span><span
+                                class=\"invisible\">Itu-HVRPe-Nx-ASwZrDdk2pj6iG4Dj</span></a></p>
+                    <p><a href=\"https://social.coop/tags/Comics\" class=\"mention hashtag\" rel=\"nofollow noopener\"
+                            target=\"_blank\">#<span>Comics</span></a> <a href=\"https://social.coop/tags/PoCCreators\" class=\"mention
+                            hashtag\" rel=\"nofollow noopener\" target=\"_blank\">#<span>PoCCreators</span></a> <a
+                            href=\"https://social.coop/tags/WebSeries\" class=\"mention hashtag\" rel=\"nofollow noopener\"
+                            target=\"_blank\">#<span>WebSeries</span></a></p>
+                """.trimIndent()
+            )
+        )
+        composeTestRule.setContent {
+            val (_, trailingHashtags) = mastodonHtmlText(
+                status = status,
+                onMentionClick = { },
+                onHashtagClick = { },
+                onUrlClick = { },
+                splitOffTrailingHashtags = true
+            )
+            assertEquals(listOf("Comics", "PoCCreators", "WebSeries"), trailingHashtags)
+        }
     }
 
     private fun AnnotatedString.Builder.appendTag(tag: String) {
