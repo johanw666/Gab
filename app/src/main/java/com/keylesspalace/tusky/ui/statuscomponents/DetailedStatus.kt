@@ -20,11 +20,14 @@ import androidx.annotation.PluralsRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.InlineTextContent
 import androidx.compose.foundation.text.appendInlineContent
@@ -38,6 +41,7 @@ import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
@@ -265,10 +269,12 @@ private fun DetailedMetadata(
                 ),
                 children = {
                     getVisibilityIcon(status.visibility)?.let { icon ->
+                        val size = with(LocalDensity.current) { 18.sp.toDp() }
                         Icon(
                             painterResource(icon),
                             tint = tuskyColors.tertiaryTextColor,
-                            contentDescription = null
+                            contentDescription = null,
+                            modifier = Modifier.size(size)
                         )
                     }
                 }
@@ -284,8 +290,9 @@ private fun DetailedStatistics(
     modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
-    Row(
-        modifier = modifier
+    FlowRow(
+        modifier = modifier,
+        horizontalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         Text(
             text = getMetaDataText(R.plurals.reblogs, statusViewData.status.reblogsCount),
@@ -301,7 +308,6 @@ private fun DetailedStatistics(
             style = LocalPreferences.current.statusTextStyles.medium,
             color = tuskyColors.tertiaryTextColor,
             modifier = Modifier
-                .padding(start = 12.dp)
                 .clickable {
                     context.showQuotes(statusViewData)
                 }
@@ -311,7 +317,6 @@ private fun DetailedStatistics(
             style = LocalPreferences.current.statusTextStyles.medium,
             color = tuskyColors.tertiaryTextColor,
             modifier = Modifier
-                .padding(start = 12.dp)
                 .clickable {
                     context.showFavs(statusViewData)
                 }
