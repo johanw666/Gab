@@ -27,11 +27,11 @@ import com.keylesspalace.tusky.network.MastodonApi
 import com.keylesspalace.tusky.viewdata.StatusViewData
 
 @OptIn(ExperimentalPagingApi::class)
-class SearchRemoteMediator(
+class SearchStatusRemoteMediator(
     private val api: MastodonApi,
     private val searchRequest: String,
-    private val searchType: SearchType,
     private val onPageLoaded: (SearchResult) -> Boolean,
+    private val currentOffset: () -> Int
 ) : RemoteMediator<Int, StatusViewData.Concrete>() {
     override suspend fun load(
         loadType: LoadType,
@@ -41,14 +41,12 @@ class SearchRemoteMediator(
             return MediatorResult.Success(endOfPaginationReached = true)
         }
 
-        val currentOffset = state.pages.sumOf { page -> page.data.size }
-
         return api.search(
             query = searchRequest,
-            type = searchType.apiParameter,
+            type = SearchType.Status.apiParameter,
             resolve = true,
             limit = SearchViewModel.DEFAULT_LOAD_SIZE,
-            offset = currentOffset,
+            offset = currentOffset(),
             following = false
         ).fold(
             onSuccess = { searchResult ->

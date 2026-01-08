@@ -31,8 +31,8 @@ import com.keylesspalace.tusky.appstore.PollVoteEvent
 import com.keylesspalace.tusky.appstore.StatusChangedEvent
 import com.keylesspalace.tusky.appstore.StatusDeletedEvent
 import com.keylesspalace.tusky.components.search.paging.SearchPagingSource
-import com.keylesspalace.tusky.components.search.paging.SearchRemoteMediator
 import com.keylesspalace.tusky.components.search.paging.SearchStatusPagingSource
+import com.keylesspalace.tusky.components.search.paging.SearchStatusRemoteMediator
 import com.keylesspalace.tusky.db.AccountManager
 import com.keylesspalace.tusky.db.entity.AccountEntity
 import com.keylesspalace.tusky.entity.Filter
@@ -47,7 +47,6 @@ import com.keylesspalace.tusky.viewmodel.StatusActionsViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import java.util.Locale
 import javax.inject.Inject
-import kotlin.collections.map
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -73,7 +72,7 @@ class SearchViewModel @Inject constructor(
     val alwaysShowSensitiveMedia = activeAccount?.alwaysShowSensitiveMedia == true
     val alwaysOpenSpoiler = activeAccount?.alwaysOpenSpoiler == true
 
-    private val loadedStatuses: MutableList<StatusViewData.Concrete> = mutableListOf()
+    val loadedStatuses: MutableList<StatusViewData.Concrete> = mutableListOf()
 
     val statusesPagingSourceFactory = InvalidatingPagingSourceFactory {
         SearchStatusPagingSource(loadedStatuses, loadedStatuses.size)
@@ -92,10 +91,9 @@ class SearchViewModel @Inject constructor(
                 initialLoadSize = DEFAULT_LOAD_SIZE
             ),
             pagingSourceFactory = statusesPagingSourceFactory,
-            remoteMediator = SearchRemoteMediator(
+            remoteMediator = SearchStatusRemoteMediator(
                 api = mastodonApi,
                 searchRequest = query,
-                searchType = SearchType.Status,
                 onPageLoaded = { searchResult ->
                     val statuses = searchResult.statuses.map { status ->
                         status.toViewData(
@@ -115,7 +113,8 @@ class SearchViewModel @Inject constructor(
                     loadedStatuses.addAll(statuses)
                     statusesPagingSourceFactory.invalidate()
                     statuses.isEmpty()
-                }
+                },
+                currentOffset = { loadedStatuses.size },
             )
         ).flow
     }.cachedIn(viewModelScope)
