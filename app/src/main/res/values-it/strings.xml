@@ -831,4 +831,21 @@
         <item quantity="many">%1$s risposte</item>
         <item quantity="other">%1$s risposte</item>
     </plurals>
+    <string name="quote">Cita</string>
+    <string name="title_quotes">Citazioni</string>
+    <string name="quote_pending">Post in attesa</string>
+    <string name="quote_unavailable">Post non disponibile</string>
+    <string name="quote_account_blocked">Questo post è nascosto perché hai bloccato %1$s.</string>
+    <string name="quote_account_muted">Questo post è nascosto perché hai silenziato %1$s.</string>
+    <string name="quote_domain_blocked">Questo posto è nascosto perché hai bloccato %1$s.</string>
+    <string name="quote_hidden_show_anyway">Mostra comunque</string>
+    <string name="notification_quote_format">%1$s ha citato il tuo post</string>
+    <string name="content_hidden_description">Contenuto nascosto</string>
+    <string name="notification_quoted_update_format">%1$s ha modificato un post che hai citato</string>
+    <plurals name="quotes">
+        <item quantity="one">%1$s citazione</item>
+        <item quantity="many">%1$s citazioni</item>
+        <item quantity="other">%1$s citazioni</item>
+    </plurals>
+    <string name="action_reveal_media">Mostra media</string>
 </resources>
