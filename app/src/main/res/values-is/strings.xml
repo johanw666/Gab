@@ -635,7 +635,7 @@
     <string name="error_blocking_domain">Mistókst að þagga niður í %1$s: %2$s</string>
     <string name="error_unblocking_domain">Mistókst að hætta að þagga niður í %1$s: %2$s</string>
     <string name="error_media_upload_sending_fmt">Innsendingin mistókst: %1$s</string>
-    <string name="help_empty_conversations">Hér eru <b>einkaskilaboðin</b> þín; stundum kölluð samtöl eða bein skilaboð (DM). \u0020 \n \u0020 \nEinkaskilaboð eru gerð með því að stilla sýnileika {{public}} færslu {{mail}} á <i>Beint</i> og að minnast á einn eða fleiri notendur í textanum. \u0020 \n \u0020 \nÞú getur til dæmis farið á notandaaðgang einhvers og ýtt á \'Útbúa\'-hnappinn {{edit}} og breytt sýnileikanum. \n \nAthugaðu að skilaboð í Fediverse-almannarýminu eru ekki dulrituð enda-í-enda. Ekki deila neinum viðkvæmum upplýsingum.</string>
+    <string name="help_empty_conversations">Hér eru &lt;b&gt;einkaskilaboðin&lt;/b&gt;; þín; stundum kölluð samtöl eða bein skilaboð (DM). \n \u0020 \nEinkaskilaboð eru gerð með því að stilla sýnileika {{public}} færslu {{mail}} á <i>Beint</i> og að minnast á einn eða fleiri notendur í textanum. \u0020 \n \u0020 \nÞú getur til dæmis farið á notandaaðgang einhvers og ýtt á \'Útbúa\'-hnappinn {{edit}} og breytt sýnileikanum. \n \nAthugaðu að skilaboð í Fediverse-almannarýminu eru ekki dulrituð enda-í-enda. Ekki deila neinum viðkvæmum upplýsingum.</string>
     <string name="help_empty_lists">Þetta er <b>listasýnin</b> þín. Þú getur skilgreint fjölmarga einkalista og bætt notendaaðgöngum á þá. \u0020 \n \u0020 \nATHUGAÐU: þú getur bara bætt notendaaðgöngum sem þú fylgist með á listana þína. \u0020 \n \u0020 \nÞessa lista má nota sem flipa í Kjörstillingar aðgangs{{manage_accounts}} {{chevron_right} flipunum.</string>
     <string name="label_image">Mynd</string>
     <string name="app_theme_system_black">Nota hönnun kerfis (svart)</string>
@@ -802,4 +802,24 @@
     <string name="quote_policy_followers">Einungis fylgjendur</string>
     <string name="pref_default_quote_policy">Stefna varðandi tilvitnanir (samstillt við netþjón)</string>
     <string name="quote_policy_nobody">Bara ég</string>
+    <string name="notification_quote_format">%1$s vitnaði í færsluna þína</string>
+    <string name="notification_quoted_update_format">%1$s breytti færslu sem þú hefur vitnað í</string>
+    <plurals name="replies">
+        <item quantity="one">%1$s svar</item>
+        <item quantity="other">%1$s svör</item>
+    </plurals>
+    <plurals name="quotes">
+        <item quantity="one">%1$s tilvitnun</item>
+        <item quantity="other">%1$s tilvitnanir</item>
+    </plurals>
+    <string name="quote">Tilvitnun</string>
+    <string name="title_quotes">Tilvitnanir</string>
+    <string name="quote_pending">Færsla í bið</string>
+    <string name="quote_unavailable">Færsla ekki tiltæk</string>
+    <string name="quote_account_blocked">Þessi færsla er falin vegna þess að þú hefur lokað á %1$s.</string>
+    <string name="quote_account_muted">Þessi færsla er falin vegna þess að þú hefur þaggað niður í %1$s.</string>
+    <string name="quote_domain_blocked">Þessi færsla er falin vegna þess að þú hefur lokað á %1$s.</string>
+    <string name="quote_hidden_show_anyway">Birta samt</string>
+    <string name="action_reveal_media">Birta myndefni</string>
+    <string name="content_hidden_description">Efni falið</string>
 </resources>
