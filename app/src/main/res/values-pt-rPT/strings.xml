@@ -482,7 +482,7 @@
     <string name="draft_deleted">Rascunho apagado</string>
     <string name="drafts_post_reply_removed">A publicação para a qual escreveu um rascunho foi apagada</string>
     <string name="error_generic">Ocorreu um erro.</string>
-    <string name="error_network">Ocorreu um erro de conetividade. Por favor, verifique a sua ligação e tente novamente.</string>
+    <string name="error_network">Ocorreu um erro de conectividade. Por favor, verifique a sua ligação e tente novamente.</string>
     <string name="error_empty">Isto não pode estar vazio.</string>
     <string name="error_invalid_domain">A instância inserida é inválida</string>
     <string name="error_failed_app_registration">Erro ao autenticar com esta instância. Se o erro persistir, tenta fazer login através do navegador pelo menu.</string>
@@ -651,7 +651,7 @@
     <string name="ui_success_accepted_follow_request">Seguidor pendente aceite</string>
     <string name="ui_success_rejected_follow_request">Seguidor pendente bloqueado</string>
     <string name="label_filter_action">Ação de filtro</string>
-    <string name="help_empty_conversations">As suas <b>mensagens privadas</b> estão aqui, também chamadas de conversas ou mensagens diretas (MD/DM).\n\nAs mensagens privadas são criadas definindo a visibilidade {{public}} de uma publicação como {{mail}} <i>Direta</i> e mencionando um ou mais utilizadores no texto.\n\nPor exemplo, pode entrar na vista de perfil de uma conta e pressionar o botão de criar publicação [iconics gmd_edit] e alterar a visibilidade.\n\nAtenção, as mensagens no Fediverso não têm encriptação ponta-a-ponta. Não partilhe informação sensível.</string>
+    <string name="help_empty_conversations">As suas &lt;b&gt;mensagens privadas&lt;/b&gt;; estão aqui, também chamadas de conversas ou mensagens diretas (MD/DM).\n\nAs mensagens privadas são criadas definindo a visibilidade {{public}} de uma publicação como {{mail}} <i>Direta</i> e mencionando um ou mais utilizadores no texto.\n\nPor exemplo, pode entrar na vista de perfil de uma conta e pressionar o botão de criar publicação [iconics gmd_edit] e alterar a visibilidade.\n\nAtenção, as mensagens no Fediverso não têm encriptação ponta-a-ponta. Não partilhe informação sensível.</string>
     <string name="help_empty_lists">Esta é a sua <b>vista de listas</b>. Pode criar várias listas privadas e adicionar contas nelas.\n\nAtenção: apenas pode adicionar contas que segue às suas listas.\n\nEstas listas podem ser usadas como um separador nos separadores das Configurações da Conta {{manage_accounts}} {{chevron_right}}.</string>
     <string name="help_empty_home">Esta é a sua <b>timeline inicial</b>. Ela mostra as publicações mais recentes das contas que segue.\n\nPara explorar contas, pode descobri-las numa das outras timelines. Por exemplo, a timeline local da sua instância {{group}}. Ou pode pesquisá-las pelo nome {{search}}: por exemplo, pesquisando por Tusky para encontrar a nossa conta Mastodon.</string>
     <string name="unmuting_hashtag_success_format">Remover silêncio da hashtag #%1$s</string>
@@ -793,4 +793,52 @@
     <string name="message_filters_empty">Não tem filtros.</string>
     <string name="account_disconnected_title">Conta desligada</string>
     <string name="action_remove_account">Remover conta</string>
+    <string name="notification_quote_format">%1$s citou a sua publicação</string>
+    <string name="action_reveal_media">Mostrar conteúdo multimédia</string>
+    <plurals name="replies">
+        <item quantity="one">%1$s Resposta</item>
+        <item quantity="many">%1$s Respostas</item>
+        <item quantity="other">%1$s Respostas</item>
+    </plurals>
+    <plurals name="quotes">
+        <item quantity="one">%1$s Citação</item>
+        <item quantity="many">%1$s Citações</item>
+        <item quantity="other">%1$s Citações</item>
+    </plurals>
+    <string name="scheduled_posts_not_supported">O seu servidor, %1$s, não suporta agendamento de publicações</string>
+    <string name="account_disconnected_message">A autenticação do Tusky para %1$s não é válida. Isto pode acontecer por ter alterado a sua palavra-passe ou revogado o acesso do Tusky. Por favor, autentique-se novamente.</string>
+    <string name="notification_quoted_update_format">%1$s editou uma publicação que citou</string>
+    <string name="quote_account_blocked">Esta publicação foi ocultada porque bloqueou %1$s.</string>
+    <plurals name="seconds">
+        <item quantity="one">%1$s segundo</item>
+        <item quantity="many">%1$s segundos</item>
+        <item quantity="other">%1$s segundo</item>
+    </plurals>
+    <plurals name="minutes">
+        <item quantity="one">%1$s minuto</item>
+        <item quantity="many">%1$s minutos</item>
+        <item quantity="other">%1$s minutos</item>
+    </plurals>
+    <plurals name="hours">
+        <item quantity="one">%1$s hora</item>
+        <item quantity="many">%1$s horas</item>
+        <item quantity="other">%1$s horas</item>
+    </plurals>
+    <plurals name="days">
+        <item quantity="one">%1$s dia</item>
+        <item quantity="many">%1$s dias</item>
+        <item quantity="other">%1$s dias</item>
+    </plurals>
+    <string name="scheduled_post_reply">Resposta</string>
+    <string name="scheduled_post_deletion_error">Não foi possível apagar publicação agendada.</string>
+    <string name="unified_push_error_no_vapid_key">Não foi possível configurar Unified Push: %1$s tem uma chave vapi inválida.</string>
+    <string name="quote">Citação</string>
+    <string name="title_quotes">Citações</string>
+    <string name="quote_pending">Publicação pendente</string>
+    <string name="quote_unavailable">Publicação indisponível</string>
+    <string name="quote_account_muted">Esta publicação foi ocultada porque silenciou %1$s.</string>
+    <string name="quote_domain_blocked">Esta publicação está oculta porque bloqueou %1$s.</string>
+    <string name="quote_hidden_show_anyway">Mostrar à mesma</string>
+    <string name="content_hidden_description">Conteúdo ocultado</string>
+    <string name="filter_context_home">Início e Listas</string>
 </resources>

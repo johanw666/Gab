@@ -626,7 +626,7 @@
     <string name="dialog_delete_filter_text">删除筛选器\'%1$s\'吗？</string>
     <string name="dialog_delete_filter_positive_action">删除</string>
     <string name="dialog_save_profile_changes_message">你要保存你的个人资料更改吗？</string>
-    <string name="help_empty_conversations">这是你的 <b>私信</b>；有时也称为对话或直接信息 (DM)。 \n \n私信需要将嘟文的可见性 {{public}} 设为 {{mail}} <i>Direct</i> 并在文本中提及一名或多名用户。 \n \n你可以在账户的个人资料视图中，轻按“创建”按钮 {{edit}} 并更改可见性。 \n \n请注意 Fediverse 上的消息不是端到端加密的。不要分享任何敏感信息。</string>
+    <string name="help_empty_conversations">这是你的&lt;b&gt;私信&lt;/b&gt;，有时也称为对话或直接信息 (DM)。 \n \n私信需要将嘟文的可见性 {{public}} 设为 {{mail}} <i>Direct</i> 并在文本中提及一名或多名用户。 \n \n你可以在账户的个人资料视图中，轻按“创建”按钮 {{edit}} 并更改可见性。 \n \n请注意 Fediverse 上的消息不是端到端加密的。不要分享任何敏感信息。</string>
     <string name="muting_hashtag_success_format">以警告形式对话题标签 #%1$s 静音</string>
     <string name="unmuting_hashtag_success_format">取消对话题标签 #%1$s 的静音</string>
     <string name="action_view_filter">查看筛选器</string>
@@ -794,4 +794,22 @@
     <string name="quote_policy_followers">仅关注者</string>
     <string name="quote_policy_nobody">只有我</string>
     <string name="quote_policy_public">任何人</string>
+    <string name="notification_quote_format">%1$s 引用了你的嘟文</string>
+    <string name="notification_quoted_update_format">%1$s 编辑了你已经引用的嘟文</string>
+    <plurals name="replies">
+        <item quantity="other">%1$s 则回复</item>
+    </plurals>
+    <plurals name="quotes">
+        <item quantity="other">%1$s 次引用</item>
+    </plurals>
+    <string name="quote">引用</string>
+    <string name="content_hidden_description">内容被隐藏</string>
+    <string name="quote_account_blocked">此嘟文被隐藏，因为你封禁了 %1$s。</string>
+    <string name="title_quotes">引用</string>
+    <string name="quote_unavailable">嘟文不可用</string>
+    <string name="quote_pending">嘟文待发布</string>
+    <string name="quote_account_muted">此嘟文被隐藏，因为你将 %1$s 静音。</string>
+    <string name="quote_domain_blocked">此嘟文被隐藏，因为你拦截了 %1$s。</string>
+    <string name="quote_hidden_show_anyway">仍要显示</string>
+    <string name="action_reveal_media">揭示媒体</string>
 </resources>

@@ -806,4 +806,20 @@
         <item quantity="one">%1$s resposta</item>
         <item quantity="other">%1$s respostas</item>
     </plurals>
+    <string name="notification_quote_format">%1$s citou a túa publicación</string>
+    <string name="action_reveal_media">Mostrar multimedia</string>
+    <string name="notification_quoted_update_format">%1$s editou unha publicación que citaches</string>
+    <string name="content_hidden_description">Contido oculto</string>
+    <plurals name="quotes">
+        <item quantity="one">%1$s Cita</item>
+        <item quantity="other">%1$s Citas</item>
+    </plurals>
+    <string name="quote">Citar</string>
+    <string name="quote_account_blocked">Esta publicación está oculta porque bloqueaches a %1$s.</string>
+    <string name="title_quotes">Citas</string>
+    <string name="quote_pending">Publicación pendente</string>
+    <string name="quote_unavailable">Publicación non dispoñible</string>
+    <string name="quote_account_muted">Esta publicación está oculta porque silenciaches a %1$s.</string>
+    <string name="quote_domain_blocked">Esta publicación está oculta porque bloqueaches %1$s.</string>
+    <string name="quote_hidden_show_anyway">Mostrar igualmente</string>
 </resources>

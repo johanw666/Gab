@@ -877,4 +877,5 @@
     <string name="quote_policy_nobody">Dim ond fi</string>
     <string name="unified_push_error_no_vapid_key">Wedi methu sefydlu Unified Push: Mae allwedd vapid annilys gyda %1$s.</string>
     <string name="scheduled_posts_not_supported">Na allwch chi ddefnyddio negeseuon wedi\'u hamserlennu ar eich gweinydd %1$s</string>
+    <string name="action_reveal_media">Dangos cyfryngau.</string>
 </resources>
