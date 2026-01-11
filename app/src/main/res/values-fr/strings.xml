@@ -616,7 +616,7 @@
     <string name="help_empty_home">Ceci est votre <b>fil d\'accueil</b>. Il affiche les publications récentes des comptes que vous suivez. \u0020 \n \u0020 \nPour trouver des comptes vous pouvez soit les découvrir dans l\'un des autres fils, par exemple le fil local de votre instance {{group}} ; soit les chercher par leur nom {{search}}, par exemple cherchez « Tusky » pour trouver notre compte Mastodon.</string>
     <string name="action_add">Ajouter</string>
     <string name="label_filter_keywords">Mots-clés ou phrases à filtrer</string>
-    <string name="filter_description_warn">Cacher derrière un avertissement</string>
+    <string name="filter_description_warn">Cacher la publication entière derrière un avertissement</string>
     <string name="filter_description_hide">Cacher complètement</string>
     <string name="label_filter_action">Effet du filtre</string>
     <string name="filter_action_warn">Avertissement</string>
@@ -728,4 +728,29 @@
     <string name="action_reblog_unlisted">Boot non listé</string>
     <string name="poll_show_results">Afficher les résultats</string>
     <string name="poll">Sondage</string>
+    <string name="quote_policy_followers">Abonnés uniquement</string>
+    <string name="quote_policy_nobody">Moi uniquement</string>
+    <string name="filter_action_blur">Flou</string>
+    <string name="action_remove_account">Supprimer le compte</string>
+    <string name="action_rehide_status">Cacher de nouveau le statu filtré</string>
+    <string name="message_filters_empty">Vous n\'avez aucun filtres.</string>
+    <string name="action_remove_account_confirm">Êtes-vous sur de vouloir supprimer le compte de Tusky ? Cela supprimera toutes les données locales du compte, brouillons et préférences compris.</string>
+    <string name="error_missing_edits">Votre serveur sait que cette publication a été éditée, mais n\'a pas de copie des éditions. Elles ne peuvent donc pas vous être affichées.\n\nC\'est une <a href="https://github.com/mastodon/mastodon/issues/25398">erreur #25398 de Mastodon</a>.</string>
+    <string name="action_reveal_media">Montrer le média</string>
+    <string name="quote_policy_public">N\'importe qui</string>
+    <plurals name="quotes">
+        <item quantity="one">Citation</item>
+        <item quantity="many">Citations</item>
+        <item quantity="other">Citations</item>
+    </plurals>
+    <string name="filter_description_blur">Cache le média avec un avertissement</string>
+    <plurals name="replies">
+        <item quantity="one">Réponse</item>
+        <item quantity="many">Réponses</item>
+        <item quantity="other">Réponses</item>
+    </plurals>
+    <string name="help_empty_conversations">Voici vos &lt;b&gt;messages privés&lt;/b&gt;; parfois appelé \"conversations\" ou \"direct messages\" (DM)\n\nLes messages privés sont crées en paramétrant la visibilité {{public}} d\'une publication sur {{mail}} <i>Direct</i> et en mentionnant un ou plusieurs utilisateurs dans le texte.\n\nPar exemple, vous pouvez commencer dans la vue profil d\'un compte, sélectionner le bouton de création {{edit}} et changer la visibilité.\n\nVeuillez noter que les messages sur Fediverse ne sont pas chiffrés de bout en bout. Ne partagez aucunes informations sensibles.</string>
+    <string name="notification_unknown_description">Type de notification inconnu</string>
+    <string name="notification_channel_other_description">Autres notifications, telles que connections perdues et avertissements de modération</string>
+    <string name="notification_channel_admin_description">Notifications admin, telles que nouveaux rapports ou inscriptions</string>
 </resources>
