@@ -65,7 +65,7 @@ import java.io.File;
     },
     // Note: Starting with version 54, database versions in Tusky are always even.
     // This is to reserve odd version numbers for use by forks.
-    version = 84,
+    version = 86,
     autoMigrations = {
         @AutoMigration(from = 48, to = 49),
         @AutoMigration(from = 49, to = 50, spec = AppDatabase.MIGRATION_49_50.class),
@@ -917,4 +917,11 @@ public abstract class AppDatabase extends RoomDatabase {
 
     @DeleteColumn(tableName = "AccountEntity", columnName = "lastVisibleHomeTimelineStatusId")
     static class MIGRATION_80_82 implements AutoMigrationSpec { }
+
+    public static final Migration MIGRATION_84_86 = new Migration(84, 86) {
+        @Override
+        public void migrate(@NonNull SupportSQLiteDatabase database) {
+            database.execSQL("CREATE INDEX `index_TimelineStatusEntity_quotedStatusId_tuskyAccountId` ON `TimelineStatusEntity` (`quotedStatusId`, `tuskyAccountId`)");
+        }
+    };
 }

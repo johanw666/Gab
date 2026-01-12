@@ -51,7 +51,10 @@ import com.keylesspalace.tusky.entity.Status
         ]
         ),
     // Avoiding rescanning status table when accounts table changes. Recommended by Room(c).
-    indices = [Index("authorServerId", "tuskyAccountId")]
+    indices = [
+        Index("authorServerId", "tuskyAccountId"),
+        Index("quotedStatusId", "tuskyAccountId")
+    ]
 )
 @TypeConverters(Converters::class)
 data class TimelineStatusEntity(
