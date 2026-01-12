@@ -633,7 +633,7 @@
     <string name="error_media_upload_sending_fmt">Das Hochladen ist fehlgeschlagen: %1$s</string>
     <string name="label_image">Bild</string>
     <string name="help_empty_lists">Das ist deine <b>Listenansicht</b>. Du kannst private Listen erstellen und diese Profile hinzufügen. \u0020 \n \u0020 \nBEACHTE, dass du nur Profile hinzufügen kannst, denen du folgst. \u0020 \n \u0020 \nDiese Listen können als Tab in den Kontoeinstellungen {{manage_accounts}} {{chevron_right}} Tabs festgelegt werden.</string>
-    <string name="help_empty_conversations">Hier befinden sich deine <b>privaten Nachrichten</b> – auch bekannt als Unterhaltungen oder »direct messages« (DM, Direktnachricht). \n \nPrivate Nachrichten werden erstellt, indem die Beitragssichtbarkeit {{public}} auf {{mail}} <i>Direkt</i> gesetzt wird und ein oder mehrere Profile erwähnt werden. \n \nBeispiel: Du befindest dich auf einer Profilseite und klickst auf die Schaltfläche »Verfassen« {{edit}} und änderst anschließend die Sichtbarkeit. \n \nBeachte dass Nachrichten im Fediverse nicht Ende-zu-Ende verschlüsselt sind. Versende keine heiklen Informationen.</string>
+    <string name="help_empty_conversations">Hier befinden sich deine &lt;b&gt;privaten Nachrichten&lt;/b&gt; – auch bekannt als Unterhaltungen oder »direct messages« (DM, Direktnachricht). \n \nPrivate Nachrichten werden erstellt, indem die Beitragssichtbarkeit {{public}} auf {{mail}} &lt;i&gt;Direkt&lt;/i&gt; gesetzt wird und ein oder mehrere Profile erwähnt werden. \n \nBeispiel: Du befindest dich auf einer Profilseite und klickst auf die Schaltfläche »Verfassen« {{edit}} und änderst anschließend die Sichtbarkeit. \n \nBeachte dass Nachrichten im Fediverse nicht Ende-zu-Ende verschlüsselt sind. Versende keine heiklen Informationen.</string>
     <string name="app_theme_system_black">Systemdesign verwenden (Schwarz)</string>
     <string name="error_media_playback">Wiedergabe fehlgeschlagen: %1$s</string>
     <string name="dialog_delete_filter_positive_action">Entfernen</string>
@@ -809,4 +809,24 @@
     <string name="pref_default_quote_policy">Zitat-Policy (mit dem Server synchronisiert)</string>
     <string name="quote_policy_followers">Nur Follower</string>
     <string name="quote_policy_nobody">Nur ich</string>
+    <string name="notification_quoted_update_format">%1$s bearbeitete einen von dir zitierten Beitrag</string>
+    <plurals name="quotes">
+        <item quantity="one">%1$s-mal zitiert</item>
+        <item quantity="other">%1$s-mal zitiert</item>
+    </plurals>
+    <string name="title_quotes">Zitate</string>
+    <string name="quote_unavailable">Beitrag nicht verfügbar</string>
+    <string name="quote_account_muted">Dieser Beitrag ist versteckt weil du %1$s stummgeschalten hast.</string>
+    <string name="quote_domain_blocked">Dieser Beitrag ist versteckt weil du %1$s blockiert hast.</string>
+    <string name="quote_pending">Beitrag ausstehend</string>
+    <string name="notification_quote_format">%1$s zitierte deinen Beitrag</string>
+    <string name="quote">Zitat</string>
+    <plurals name="replies">
+        <item quantity="one">%1$s Antwort</item>
+        <item quantity="other">%1$s Antworten</item>
+    </plurals>
+    <string name="quote_account_blocked">Dieser Beitrag ist versteckt weil du %1$s blockiert hast.</string>
+    <string name="quote_hidden_show_anyway">Trotzdem anzeigen</string>
+    <string name="content_hidden_description">Inhalt versteckt</string>
+    <string name="action_reveal_media">Anhang anzeigen</string>
 </resources>
