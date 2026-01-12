@@ -106,7 +106,8 @@ fun Poll(
                 votesCount = pollOption.votesCount ?: 0,
                 votersCount = poll.votersCount,
                 totalVotes = poll.votesCount,
-                voted = poll.ownVotes.contains(index)
+                voted = poll.ownVotes.contains(index),
+                emojis = status.emojis
             )
         }
     } else {
@@ -171,6 +172,7 @@ private fun PollOptionResult(
     votersCount: Int?,
     totalVotes: Int,
     voted: Boolean,
+    emojis: List<Emoji>
 ) {
     val percent = calculatePercent(votesCount, votersCount, totalVotes)
 
@@ -190,10 +192,10 @@ private fun PollOptionResult(
     val textStyle = LocalPreferences.current.statusTextStyles.medium
 
     Text(
-        text = buildDescription(title, percent, voted),
+        text = buildDescription(title, percent, voted, emojis),
         color = tuskyColors.primaryTextColor,
         style = textStyle,
-        inlineContent = mapOf(
+        inlineContent = emojis.toInlineContent() + mapOf(
             CHECKMARK_CONTENT to InlineTextContent(
                 placeholder = Placeholder(
                     width = textStyle.fontSize,
@@ -274,14 +276,20 @@ private fun PollOption(
     }
 }
 
-private fun buildDescription(title: String, percent: Int, voted: Boolean): AnnotatedString {
+@Composable
+private fun buildDescription(
+    title: String,
+    percent: Int,
+    voted: Boolean,
+    emojis: List<Emoji>
+): AnnotatedString {
     return buildAnnotatedString {
         withStyle(SpanStyle(fontWeight = FontWeight.Bold)) {
             append(percent.toString())
             append('%')
         }
         append(' ')
-        append(title)
+        append(title.emojify(emojis))
         if (voted) {
             append(' ')
             appendInlineContent(CHECKMARK_CONTENT, "✓")
