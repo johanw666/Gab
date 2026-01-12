@@ -90,6 +90,7 @@ import com.keylesspalace.tusky.ui.tuskyColors
 import com.keylesspalace.tusky.util.addIconAnnotations
 import com.keylesspalace.tusky.util.iconInlineContent
 import com.keylesspalace.tusky.util.isAnyLoading
+import com.keylesspalace.tusky.util.isRefreshing
 import com.keylesspalace.tusky.util.reply
 import com.keylesspalace.tusky.util.report
 import com.keylesspalace.tusky.util.startActivityWithSlideInAnimation
@@ -159,7 +160,7 @@ class ConversationsFragment :
                         .background(colorScheme.background)
                 ) {
                     val error = (conversations.loadState.source.refresh as? LoadState.Error)?.error ?: (conversations.loadState.mediator?.refresh as? LoadState.Error)?.error
-                    if (conversations.loadState.isAnyLoading()) {
+                    if (conversations.loadState.isRefreshing()) {
                         CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
                     } else if (error != null) {
                         TuskyMessageView(

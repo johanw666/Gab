@@ -61,7 +61,7 @@ import com.keylesspalace.tusky.ui.MessageViewMode
 import com.keylesspalace.tusky.ui.TuskyMessageView
 import com.keylesspalace.tusky.ui.TuskyPullToRefreshBox
 import com.keylesspalace.tusky.ui.TuskyTheme
-import com.keylesspalace.tusky.util.isAnyLoading
+import com.keylesspalace.tusky.util.isRefreshing
 import com.keylesspalace.tusky.util.startActivityWithSlideInAnimation
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
@@ -111,7 +111,7 @@ abstract class SearchFragment<T : Any> :
                         .background(colorScheme.background)
                 ) {
                     val error = (results.loadState.source.refresh as? LoadState.Error)?.error ?: (results.loadState.mediator?.refresh as? LoadState.Error)?.error
-                    if (results.loadState.isAnyLoading()) {
+                    if (results.loadState.isRefreshing()) {
                         CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
                     } else if (error == null && currentQuery.isNotEmpty()) {
                         TuskyMessageView(
