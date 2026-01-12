@@ -806,4 +806,20 @@
         <item quantity="one">%1$s svar</item>
         <item quantity="other">%1$s svar</item>
     </plurals>
+    <string name="quote">Citat</string>
+    <string name="title_quotes">Citater</string>
+    <string name="quote_unavailable">Indlæg ikke tilgængeligt</string>
+    <string name="quote_account_blocked">Dette indlæg er skjult, fordi du har blokeret %1$s.</string>
+    <string name="quote_domain_blocked">Dette indlæg er skjult, fordi du har blokeret %1$s.</string>
+    <string name="quote_hidden_show_anyway">Vis alligevel</string>
+    <string name="action_reveal_media">Vis medie</string>
+    <string name="notification_quote_format">%1$s citerede dit indlæg</string>
+    <string name="notification_quoted_update_format">%1$s redigerede et indlæg, du har citeret</string>
+    <plurals name="quotes">
+        <item quantity="one">%1$s citat</item>
+        <item quantity="other">%1$s citater</item>
+    </plurals>
+    <string name="quote_pending">Indlæg afventer</string>
+    <string name="content_hidden_description">Indhold skjult</string>
+    <string name="quote_account_muted">Dette indlæg er skjult, fordi du har skjult %1$s.</string>
 </resources>
