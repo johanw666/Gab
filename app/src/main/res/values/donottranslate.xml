@@ -11,7 +11,6 @@
     <string name="hashtag_format" translatable="false">#%1$s</string>
 
     <string name="emoji_shortcode_format" translatable="false">:%1$s:</string>
-    <string name="post_timestamp_with_edited_indicator" translatable="false">%1$s *</string>
     <string name="metadata_joiner" translatable="false">" • "</string>
     <string name="date_range" translatable="false">%1$s — %2$s</string>
 
@@ -182,16 +181,6 @@
         <item>disambiguate</item>
         <item>never</item>
     </string-array>
-
-    <string name="description_status" translatable="false">
-        <!--
-         %1$s|display_name %2$s|CW?; %3$s|content?, %15$s|poll?, %4$s|date,
-         %6$s|reposted_by?; %7$s|username, %5$s|edited?, %16$s|translated?, %8$s|reposted?, %9$s|favorited?,
-         %10$s|bookmarked?, %11$s|media?; %12$s|visibility, %13$s|fav_number?,
-         %14$s|reblog_number?
-         -->
-        %1$s; %2$s; %3$s, %15$s, %4$s, %6$s; %7$s, %5$s, %16$s, %8$s, %9$s, %10$s, %11$s; %12$s, %13$s, %14$s
-    </string>
 
     <string-array name="rick_roll_domains" translatable="false">
         <item>gab.com</item>

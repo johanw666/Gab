@@ -2,7 +2,6 @@ package com.keylesspalace.tusky.appstore
 
 import com.keylesspalace.tusky.db.AccountManager
 import com.keylesspalace.tusky.db.AppDatabase
-import com.squareup.moshi.Moshi
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -17,8 +16,7 @@ import kotlinx.coroutines.launch
 class CacheUpdater @Inject constructor(
     eventHub: EventHub,
     accountManager: AccountManager,
-    appDatabase: AppDatabase,
-    moshi: Moshi
+    appDatabase: AppDatabase
 ) {
 
     private val scope = CoroutineScope(Dispatchers.IO + SupervisorJob())

@@ -99,7 +99,6 @@
     <string name="post_edited">Edited %1$s</string>
 
     <string name="message_empty">Nothing here.</string>
-    <string name="footer_empty">Nothing here. Pull down to refresh!</string>
 
     <string name="notification_reblog_format">%1$s boosted your post</string>
     <string name="notification_favourite_format">%1$s favorited your post</string>
@@ -206,9 +205,6 @@
     <string name="action_schedule_post">Schedule Post</string>
     <string name="action_reset_schedule">Reset</string>
     <string name="action_add_tab">Add Tab</string>
-    <string name="action_links">Links</string>
-    <string name="action_mentions">Mentions</string>
-    <string name="action_hashtags">Hashtags</string>
     <string name="action_follow_hashtag">Follow a new hashtag</string>
     <string name="action_open_reblogger">Open boost author</string>
     <string name="action_open_reblogged_by">Show boosts</string>
@@ -530,10 +526,6 @@
     <string name="performing_lookup_title">Performing lookup…</string>
     <string name="expand_collapse_all_posts">Expand/Collapse all posts</string>
     <string name="action_open_post">Open post</string>
-    <string name="restart_required">App restart required</string>
-    <string name="restart_emoji">You\'ll need to restart Tusky in order to apply these changes</string>
-    <string name="later">Later</string>
-    <string name="restart">Restart</string>
     <string name="caption_systememoji">Your device\'s default emoji set</string>
     <string name="caption_blobmoji">The Blob emojis known from Android 4.4–7.1</string>
     <string name="caption_twemoji">Mastodon\'s standard emoji set</string>

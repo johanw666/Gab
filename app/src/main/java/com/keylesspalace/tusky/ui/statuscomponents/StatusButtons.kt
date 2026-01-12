@@ -173,8 +173,16 @@ fun StatusButtons(
             )
         } else if (status.visibility == Status.Visibility.PRIVATE) {
             Icon(
-                painter = painterResource(R.drawable.ic_lock_24dp),
-                tint = tuskyColors.disabledTextColor,
+                painter = if (reblogged) {
+                    painterResource(R.drawable.ic_lock_24dp_filled)
+                } else {
+                    painterResource(R.drawable.ic_lock_24dp)
+                },
+                tint = if (reblogged) {
+                    colorScheme.primary
+                } else {
+                    tuskyColors.disabledTextColor
+                },
                 contentDescription = null,
                 modifier = Modifier.size(24.dp)
                     .constrainAs(reblogButton) {
