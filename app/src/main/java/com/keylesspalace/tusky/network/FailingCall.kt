@@ -15,6 +15,7 @@
 
 package com.keylesspalace.tusky.network
 
+import kotlin.reflect.KClass
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.Protocol
@@ -52,6 +53,14 @@ class FailingCall(private val request: Request) : Call {
     override fun timeout(): Timeout {
         return Timeout.NONE
     }
+
+    override fun <T : Any> tag(type: KClass<T>): T? = null
+
+    override fun <T> tag(type: Class<out T>): T? = null
+
+    override fun <T : Any> tag(type: KClass<T>, computeIfAbsent: () -> T) = computeIfAbsent()
+
+    override fun <T : Any> tag(type: Class<T>, computeIfAbsent: () -> T) = computeIfAbsent()
 
     private fun failingResponse(): Response {
         return Response.Builder()
