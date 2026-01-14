@@ -386,6 +386,8 @@
     <string name="notification_sign_up_description">Notifications about new users</string>
     <string name="notification_update_name">Post edits</string>
     <string name="notification_update_description">Notifications when posts you\'ve interacted with are edited</string>
+    <string name="notification_quote_name">Quotes</string>
+    <string name="notification_quote_description">Notifications when your posts are quoted</string>
     <string name="notification_report_name">Reports</string>
     <string name="notification_severed_relationship_name">Lost connections</string>
     <string name="notification_moderation_warning_name">Moderation warnings</string>

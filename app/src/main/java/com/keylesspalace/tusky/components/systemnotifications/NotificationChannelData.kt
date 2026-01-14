@@ -55,9 +55,15 @@ enum class NotificationChannelData(
     ),
 
     UPDATES(
-        listOf(Notification.Type.Update),
+        listOf(Notification.Type.Update, Notification.Type.QuotedUpdate),
         R.string.notification_update_name,
         R.string.notification_update_description
+    ),
+
+    QUOTES(
+        listOf(Notification.Type.Quote),
+        R.string.notification_quote_name,
+        R.string.notification_quote_description
     ),
 
     ADMIN(
