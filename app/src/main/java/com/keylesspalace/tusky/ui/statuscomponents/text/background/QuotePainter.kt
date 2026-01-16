@@ -21,7 +21,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextLayoutResult
 import com.keylesspalace.tusky.ui.statuscomponents.text.html.AnnotatedStringHtmlHandler.Companion.QUOTE_ANNOTATION
 
-class QuotePainter(val color: Color, val widthPx: Float) : TextBackgroundPainter() {
+class QuotePainter(val color: Color, val widthPx: Float, val indentPx: Float) : TextBackgroundPainter() {
 
     override fun drawInstructions(layoutResult: TextLayoutResult): BackgroundDrawInstructions {
         val text = layoutResult.layoutInput.text
@@ -31,7 +31,7 @@ class QuotePainter(val color: Color, val widthPx: Float) : TextBackgroundPainter
             annotations.forEach { annotation ->
                 val quoteStartLine = try {
                     layoutResult.getLineForOffset(annotation.start)
-                } catch (e: IllegalArgumentException) {
+                } catch (_: IllegalArgumentException) {
                     // can happen if the line is currently not visible - nothing to draw here
                     return@forEach
                 }
@@ -41,7 +41,7 @@ class QuotePainter(val color: Color, val widthPx: Float) : TextBackgroundPainter
 
                 val quoteEndLine = try {
                     layoutResult.getLineForOffset(annotation.end - 1)
-                } catch (e: IllegalArgumentException) {
+                } catch (_: IllegalArgumentException) {
                     // can happen if the line is currently not visible - fallback to the last visible line
                     layoutResult.lineCount - 1
                 }.coerceAtMost(layoutResult.lineCount - 1)
@@ -49,7 +49,9 @@ class QuotePainter(val color: Color, val widthPx: Float) : TextBackgroundPainter
                 val quoteStart = layoutResult.getLineTop(quoteStartLine)
                 val quoteEnd = layoutResult.getLineBottom(quoteEndLine)
 
-                drawRect(color, Offset(0f, quoteStart), Size(widthPx, quoteEnd - quoteStart))
+                val quoteIndent = (annotation.item.toInt() - 1) * indentPx
+
+                drawRect(color, Offset(quoteIndent, quoteStart), Size(widthPx, quoteEnd - quoteStart))
             }
         }
     }

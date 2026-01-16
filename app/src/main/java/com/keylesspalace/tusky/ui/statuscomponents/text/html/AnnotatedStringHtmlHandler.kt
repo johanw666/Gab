@@ -67,7 +67,7 @@ internal class AnnotatedStringHtmlHandler(
         }
     )
     private val pendingSpanStyles = mutableListOf<SpanStyle>()
-    private var pendingQuoteAnnotation = false
+    private var pendingQuoteAnnotationCount: Int = 0
     private var listLevel = 0
 
     // A negative index means the list is unordered
@@ -94,10 +94,10 @@ internal class AnnotatedStringHtmlHandler(
     }
 
     private fun pushPendingQuoteAnnotations() {
-        if (pendingQuoteAnnotation) {
-            builder.pushStringAnnotation(QUOTE_ANNOTATION, "")
-            pendingQuoteAnnotation = false
+        repeat(pendingQuoteAnnotationCount) {
+            builder.pushStringAnnotation(QUOTE_ANNOTATION, blockLevel.toString())
         }
+        pendingQuoteAnnotationCount = 0
     }
 
     override fun onOpenTag(name: String, attributes: (String) -> String?) {
@@ -197,7 +197,7 @@ internal class AnnotatedStringHtmlHandler(
 
     private fun handleQuoteStart() {
         handleBlockStart(2, QUOTE_INDENT)
-        pendingQuoteAnnotation = true
+        pendingQuoteAnnotationCount++
         pendingSpanStyles.add(SpanStyle(color = quoteColor))
     }
 
@@ -362,7 +362,7 @@ internal class AnnotatedStringHtmlHandler(
 
     private fun handleQuoteEnd() {
         handleSpanStyleEnd()
-        if (!pendingQuoteAnnotation) {
+        if (pendingQuoteAnnotationCount == 0) {
             builder.pop()
         }
         handleBlockEnd(2, QUOTE_INDENT)

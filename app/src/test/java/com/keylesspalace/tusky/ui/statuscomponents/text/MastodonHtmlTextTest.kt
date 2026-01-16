@@ -81,6 +81,48 @@ class MastodonHtmlTextTest {
         }
     }
 
+    @Test
+    fun `input with nested blockquotes - should not crash`() {
+        composeTestRule.setContent {
+            val (contentOut, trailingHashtags) = mastodonHtmlText("<blockquote>blockquote<blockquote>nested blockquote</blockquote></blockquote>")
+            assertEqualAnnotatedString(
+                buildAnnotatedString {
+                    withAnnotation("QUOTE", "1") {
+                        withStyle(SpanStyle()) {
+                            withStyle(
+                                ParagraphStyle(
+                                    textIndent = TextIndent(
+                                        firstLine = 8.sp,
+                                        restLine = 8.sp
+                                    )
+                                )
+                            ) {
+                                append("blockquote")
+                            }
+                            withStyle(
+                                ParagraphStyle(
+                                    textIndent = TextIndent(
+                                        firstLine = 16.sp,
+                                        restLine = 16.sp
+                                    )
+                                )
+                            ) {
+                                append("\n")
+                                withAnnotation("QUOTE", "2") {
+                                    withStyle(SpanStyle()) {
+                                        append("nested blockquote")
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                contentOut
+            )
+            assertEquals(emptyList<String>(), trailingHashtags)
+        }
+    }
+
     /** real fedi posts **/
 
     @Test
@@ -322,7 +364,7 @@ class MastodonHtmlTextTest {
                             )
                         )
                     ) {
-                        withAnnotation("QUOTE", "") {
+                        withAnnotation("QUOTE", "2") {
                             withStyle(SpanStyle()) {
                                 append("a quote")
                             }
@@ -338,7 +380,7 @@ class MastodonHtmlTextTest {
                         )
                     ) {
                         append("\n")
-                        withAnnotation("QUOTE", "") {
+                        withAnnotation("QUOTE", "2") {
                             withStyle(SpanStyle()) {
                                 append("another quote")
                             }

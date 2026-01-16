@@ -73,7 +73,7 @@ fun ColumnScope.StatusText(
 
         val backgroundPainters = remember {
             TextBackgroundPainters(
-                QuotePainter(quoteColor, with(density) { 3.sp.toPx() })
+                QuotePainter(quoteColor, with(density) { 3.sp.toPx() }, with(density) { 8.sp.toPx() })
             )
         }
 
