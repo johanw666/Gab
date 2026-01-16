@@ -14,7 +14,7 @@
      limitations under the License.
 -->
 <!-- This file is "magic". Simply by existing in Tusky at this path, it overrides
-     the media3 default layout. This version is adapted from media3-ui-1.1.0. -->
+     the media3 default layout. This version is adapted from media3-ui-1.9.0. -->
 <merge xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!-- 0dp dimensions are used to prevent this view from influencing the size of
@@ -29,34 +29,6 @@
         android:layout_height="0dp"
         android:background="@color/exo_black_opacity_60"/>
     -->
-
-    <!-- Changes from media3 default: Background is gray rather than transparent; moved before (underneath on Z axis) exo_bottom_bar -->
-    <LinearLayout
-        android:id="@id/exo_center_controls"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:background="@color/exo_bottom_bar_background"
-        android:gravity="center"
-        android:padding="@dimen/exo_styled_controls_padding"
-        android:clipToPadding="false"
-        android:layoutDirection="ltr">
-
-        <ImageButton android:id="@id/exo_prev"
-            style="@style/ExoStyledControls.Button.Center.Previous"/>
-
-        <include layout="@layout/exo_player_control_rewind_button" />
-
-        <!-- Changes from media3 default: Different style to add more margins -->
-        <ImageButton android:id="@id/exo_play_pause"
-            style="@style/TuskyExoPlayerPlayPause"/>
-
-        <include layout="@layout/exo_player_control_ffwd_button" />
-
-        <ImageButton android:id="@id/exo_next"
-            style="@style/ExoStyledControls.Button.Center.Next"/>
-
-    </LinearLayout>
 
     <FrameLayout android:id="@id/exo_bottom_bar"
         android:layout_width="match_parent"
@@ -154,6 +126,47 @@
         <ImageButton android:id="@id/exo_minimal_fullscreen"
             style="@style/ExoStyledControls.Button.Bottom.FullScreen"/>
 
+    </LinearLayout>
+
+    <!-- Changes from media3 default: Background is gray rather than transparent; moved before (underneath on Z axis) exo_bottom_bar -->
+    <LinearLayout
+        android:id="@id/exo_center_controls"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@color/exo_bottom_bar_background"
+        android:gravity="center"
+        android:padding="@dimen/exo_styled_controls_padding"
+        android:clipToPadding="false"
+        android:layoutDirection="ltr">
+
+        <ImageButton android:id="@id/exo_prev"
+            style="@style/ExoStyledControls.Button.Center.Previous"/>
+
+        <include layout="@layout/exo_player_control_rewind_button" />
+
+        <!-- Changes from media3 default: Different style to add more margins -->
+        <ImageButton android:id="@id/exo_play_pause"
+            style="@style/TuskyExoPlayerPlayPause"/>
+
+        <include layout="@layout/exo_player_control_ffwd_button" />
+
+        <ImageButton android:id="@id/exo_next"
+            style="@style/ExoStyledControls.Button.Center.Next"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/exo_top_controls"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|end"
+        android:background="@android:color/transparent">
+        <View
+            android:id="@+id/exo_media_route_button_placeholder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"/>
     </LinearLayout>
 
 </merge>
