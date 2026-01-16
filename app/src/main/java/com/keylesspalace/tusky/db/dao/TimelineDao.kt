@@ -54,7 +54,7 @@ q.emojis as 'q_emojis', q.reblogsCount as 'q_reblogsCount', q.favouritesCount as
 q.reblogged as 'q_reblogged', q.favourited as 'q_favourited', q.bookmarked as 'q_bookmarked', q.sensitive as 'q_sensitive',
 q.spoilerText as 'q_spoilerText', q.visibility as 'q_visibility', q.mentions as 'q_mentions', q.tags as 'q_tags', q.application as 'q_application',
 q.content as 'q_content', q.attachments as 'q_attachments', q.poll as 'q_poll', q.card as 'q_card', q.muted as 'q_muted', q.expanded as 'q_expanded', q.contentShowing as 'q_contentShowing',
-q.contentCollapsed as 'q_contentCollapsed', q.pinned as 'q_pinned', q.language as 'q_language', q.filtered as 'q_filtered', q.filterActive as 'q_filterActive', q.quoteState as 'q_quoteState', q.quotedStatusId as 'q_quotedStatusI', q.quoteShown as 'q_quoteShown',
+q.contentCollapsed as 'q_contentCollapsed', q.pinned as 'q_pinned', q.language as 'q_language', q.filtered as 'q_filtered', q.filterActive as 'q_filterActive', q.quoteState as 'q_quoteState', q.quotedStatusId as 'q_quotedStatusId', q.quoteShown as 'q_quoteShown',
 qa.serverId as 'qa_serverId', qa.tuskyAccountId as 'qa_tuskyAccountId',
 qa.localUsername as 'qa_localUsername', qa.username as 'qa_username',
 qa.displayName as 'qa_displayName', qa.url as 'qa_url', qa.avatar as 'qa_avatar', qa.staticAvatar as 'qa_staticAvatar',
