@@ -86,6 +86,7 @@ fun Avatar(
                 }
         )
         if (boostedAvatarUrl != null) {
+            val boostedAvatarPlaceholder = painterResource(R.drawable.avatar_default)
             AsyncImage(
                 model = if (animateAvatars) {
                     boostedAvatarUrl
@@ -93,8 +94,8 @@ fun Avatar(
                     staticBoostedAvatarUrl
                 },
                 contentDescription = null,
-                placeholder = placeholder,
-                error = placeholder,
+                placeholder = boostedAvatarPlaceholder,
+                error = boostedAvatarPlaceholder,
                 modifier = Modifier
                     .fillMaxSize(0.5f)
                     .align(Alignment.BottomEnd)
