@@ -60,7 +60,6 @@
     <string name="title_posts">पोस्ट</string>
     <string name="title_home">घर</string>
     <string name="license_description">टस्की में निम्नलिखित ओपन सोर्स परियोजनाओं से कोड और संपत्ति हैं:</string>
-    <string name="restart_emoji">इन परिवर्तनों को लागू करने के लिए आपको टस्की को पुनः आरंभ करना होगा</string>
     <string name="about_tusky_account">टस्की की प्रोफाइल</string>
     <string name="about_bug_feature_request_site">बग रिपोर्ट और सुविधा अनुरोध: \n https://github.com/tuskyapp/Tusky/issues</string>
     <string name="about_project_site">परियोजना की वेबसाइट: \n https://tusky.app</string>
@@ -133,8 +132,6 @@
     <string name="title_mentions_dialog">ज़िक्र</string>
     <string name="title_hashtags_dialog">हैशटैग</string>
     <string name="action_open_faved_by">पसंदीदा दिखाएँ</string>
-    <string name="action_hashtags">हैशटैग</string>
-    <string name="action_mentions">ज़िक्र</string>
     <string name="action_add_tab">ऐड टैब</string>
     <string name="action_schedule_post">अनुसूची टूट</string>
     <string name="action_emoji_keyboard">इमोजी कीबोर्ड</string>
@@ -168,7 +165,6 @@
     <string name="report_username_format">रिपोर्ट @%1$s</string>
     <string name="notification_favourite_format">%1$s ने आपके टूट को पसंद किया</string>
     <string name="notification_reblog_format">%1$s ने आपके टूट को बढावा दिया</string>
-    <string name="footer_empty">यहाँ कुछ नहीं। ताज़ा करने के लिए नीचे खींचो!</string>
     <string name="message_empty">यहाँ कुछ नहीं।</string>
     <string name="post_content_warning_show_less">कम दिखाएं</string>
     <string name="post_content_warning_show_more">और दिखाओ</string>
@@ -287,9 +283,6 @@
     <string name="caption_notoemoji">गूगल का इमोजी सेट</string>
     <string name="caption_twemoji">मास्टोडन का मानक इमोजी सेट</string>
     <string name="caption_systememoji">आपके डिवाइस का डिफ़ॉल्ट इमोजी सेट</string>
-    <string name="restart">पुनः आरंभ करें</string>
-    <string name="later">बाद में</string>
-    <string name="restart_required">एप्लिकेशन को पुनः आरंभ की आवश्यकता है</string>
     <string name="download_fonts">आपको पहले इस इमोजी सेट को डाउनलोड करना होगा</string>
     <string name="action_compose_shortcut">लिखें</string>
     <string name="send_post_notification_saved_content">टूट की एक प्रति आपके ड्राफ्ट में सहेज ली गई है</string>
@@ -350,7 +343,6 @@
     <string name="action_share_as">साझा करें …</string>
     <string name="action_open_as">%1$s के रूप में खोलें</string>
     <string name="download_image">%1$s डाउनलोड हो रहा है</string>
-    <string name="action_links">लिंक</string>
     <string name="action_unmute_desc">अनम्यूट %1$s</string>
     <string name="action_view_domain_mutes">छिपे हुए डोमेन</string>
     <string name="action_view_blocks">रोके गए उपयोगकर्ता</string>
