@@ -64,7 +64,6 @@
     <string name="post_content_show_less">Згарнуць</string>
     <string name="post_edited">Рэдагаваны %1$s</string>
     <string name="message_empty">Тут нічога няма.</string>
-    <string name="footer_empty">Тут нічога няма. Пацягніце ўніз, каб абнавіць!</string>
     <string name="notification_reblog_format">%1$s пашырыў(-ла) ваш допіс</string>
     <string name="notification_favourite_format">%1$s падабаўся ваш допіс</string>
     <string name="notification_follow_format">%1$s падпісаўся(-лася) на вас</string>
@@ -91,7 +90,6 @@
     <string name="action_access_drafts">Чарнавікі</string>
     <string name="action_access_scheduled_posts">Запланаваныя допісы</string>
     <string name="action_toggle_visibility">Бачнасць допісаў</string>
-    <string name="action_hashtags">Хэштэгі</string>
     <string name="action_open_reblogger">Адкрыць аўтара пашырэння</string>
     <string name="action_open_reblogged_by">Паказаць пашырэнні</string>
     <string name="action_open_faved_by">Паказаць абраныя</string>
@@ -231,8 +229,6 @@
     <string name="action_schedule_post">Запланаваць допіс</string>
     <string name="action_reset_schedule">Скінуць</string>
     <string name="action_add_tab">Дадаць укладку</string>
-    <string name="action_links">Спасылкі</string>
-    <string name="action_mentions">Згадкі</string>
     <string name="action_copy_link">Капіяваць спасылку</string>
     <string name="action_open_as">Адкрыць як %1$s</string>
     <string name="confirmation_unmuted">Прыхоўванне карыстальніка скасавана</string>
@@ -360,7 +356,6 @@
     <string name="action_edit_image">Рэдагаваць выяву</string>
     <string name="failed_to_remove_from_list">Не атрымалася выдаліць уліковы запіс са спіса</string>
     <string name="send_post_notification_channel_name">Дасыланне допісаў</string>
-    <string name="later">Пазней</string>
     <plurals name="favs">
         <item quantity="one"><b>%1$s</b> абраны</item>
         <item quantity="few"><b>%1$s</b> абраныя</item>
@@ -409,11 +404,8 @@
     <string name="compose_unsaved_changes">У Вас засталіся незахаваныя змены.</string>
     <string name="expand_collapse_all_posts">Разгарнуць/згарнуць допісы</string>
     <string name="action_open_post">Адкрыць допіс</string>
-    <string name="restart_required">Патрэбна перазапусціць праграму</string>
-    <string name="restart_emoji">Патрэбна перазапусціць Tusky, каб прымяніць гэтыя змены</string>
     <string name="profile_badge_bot_text">Бот</string>
     <string name="account_moved_description">%1$s пераехаў(-ла) да:</string>
-    <string name="restart">Перазапусціць</string>
     <string name="reblog_private">Пашырыць для пачатковай аўдыторыі</string>
     <string name="license_description">Tusky змяшчае код і рэсурсы з наступных праграм з адкрытым зыходным кодам:</string>
     <string name="conversation_1_recipients">%1$s</string>
