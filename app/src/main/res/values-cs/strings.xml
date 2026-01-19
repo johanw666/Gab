@@ -46,7 +46,6 @@
     <string name="post_content_show_more">Rozbalit</string>
     <string name="post_content_show_less">Sbalit</string>
     <string name="message_empty">Tady nic není.</string>
-    <string name="footer_empty">Tady nic není. Obnovte přetažením dolů!</string>
     <string name="notification_reblog_format">%1$s boostnul/a váš příspěvek</string>
     <string name="notification_favourite_format">%1$s si oblíbil/a váš příspěvek</string>
     <string name="notification_follow_format">%1$s vás nyní sleduje</string>
@@ -104,9 +103,6 @@
     <string name="action_content_warning">Varování o obsahu</string>
     <string name="action_emoji_keyboard">Klávesnice s emoji</string>
     <string name="action_add_tab">Přidat panel</string>
-    <string name="action_links">Odkazy</string>
-    <string name="action_mentions">Zmínky</string>
-    <string name="action_hashtags">Hashtagy</string>
     <string name="action_open_reblogger">Otevřít autora boostu</string>
     <string name="action_open_reblogged_by">Zobrazit boosty</string>
     <string name="action_open_faved_by">Zobrazit oblíbení</string>
@@ -282,10 +278,6 @@
     <string name="performing_lookup_title">Provádím prohledávání…</string>
     <string name="expand_collapse_all_posts">Rozbalit/Sbalit všechny příspěvky</string>
     <string name="action_open_post">Otevřít příspěvek</string>
-    <string name="restart_required">Je vyžadováno restartování aplikace</string>
-    <string name="restart_emoji">Pro použití těchto změn musíte restartovat aplikaci Tusky</string>
-    <string name="later">Později</string>
-    <string name="restart">Restartovat</string>
     <string name="caption_systememoji">Výchozí sada emoji vašeho zařízení</string>
     <string name="caption_blobmoji">Blob Emoji známá z Androidu 4.4–7.1</string>
     <string name="caption_twemoji">Standardní sada emoji na Mastodonu</string>
