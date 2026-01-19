@@ -35,7 +35,6 @@
     <string name="message_empty">Šeit nekā nav.</string>
     <string name="notification_follow_format">%1$s sāka tev sekot</string>
     <string name="notification_sign_up_format">%1$s reģistrējās</string>
-    <string name="footer_empty">Šeit nekā nav. Pavelciet uz leju, lai atjauninātu!</string>
     <string name="notification_update_format">%1$s laboja savu ierakstu</string>
     <string name="post_media_alt">ALT</string>
     <string name="action_quick_reply">Ātrā atbilde</string>
@@ -74,7 +73,6 @@
     <string name="action_emoji_keyboard">Emocijzīmju tastatūra</string>
     <string name="action_add_tab">Pievienot cilni</string>
     <string name="action_reset_schedule">Atiestatīt</string>
-    <string name="action_mentions">Pieminējumi</string>
     <string name="download_image">Lejupielādē %1$s</string>
     <string name="title_mentions_dialog">Pieminējumi</string>
     <string name="action_details">Detaļas</string>
@@ -134,8 +132,6 @@
     <string name="send_post_notification_title">Sūta ierakstu…</string>
     <string name="send_post_notification_cancel_title">Sūtīšana atcelta</string>
     <string name="compose_save_draft_loses_media">Vai saglabāt melnrakstu (atjaunojot melnrakstu, pielikumi tiks augšupielādēti vēlreiz)?</string>
-    <string name="later">Vēlāk</string>
-    <string name="restart">Sākt no jauna</string>
     <string name="system_default">Sistēmas noklusējuma</string>
     <string name="action_open_post">Atvērt ierakstu</string>
     <string name="profile_metadata_content_label">Saturs</string>
@@ -206,7 +202,6 @@
     <string name="action_retry">Mēģināt vēlreiz</string>
     <string name="action_view_bookmarks">Grāmatzīmes</string>
     <string name="action_save">Saglabāt</string>
-    <string name="action_links">Saites</string>
     <string name="title_links_dialog">Saites</string>
     <string name="dialog_message_uploading_media">Augšupielādē…</string>
     <string name="pref_title_timeline_filters">Filtri</string>
@@ -245,7 +240,6 @@
     <string name="action_access_scheduled_posts">Ieplānotie ieraksti</string>
     <string name="error_multimedia_size_limit">Video un audio faili nevar pārsniegt %1$s MB izmēru.</string>
     <string name="error_following_hashtags_unsupported">Šī instance neatbalsta sekošanu tēmturiem.</string>
-    <string name="action_hashtags">Tēmturi</string>
     <string name="send_post_notification_channel_name">Sūta ierakstus</string>
     <string name="emoji_style">Emocijzīmju stils</string>
     <string name="add_hashtag_title">Pievienot tēmturi</string>
@@ -259,7 +253,6 @@
     <string name="action_view_account_preferences">Konta iestatījumi</string>
     <string name="mute_domain_warning">Vai tiešām vēlaties bloķēt visu %1$s? Šī domēna saturs netiks rādīts ne publiskajās laika līnijās, ne paziņojumos. Jūsu sekotāji no šī domēna tiks noņemti.</string>
     <string name="send_post_notification_saved_content">Ieraksta kopija tika saglabāta tavos melnrakstos</string>
-    <string name="restart_emoji">Lai pielietotu šīs izmaiņas, ir jāpārstartē Tusky</string>
     <string name="error_status_source_load">Neizdevās ielādēt statusa avotu no servera.</string>
     <string name="error_sender_account_gone">Sūtot ziņu, radās kļūda.</string>
     <string name="title_login">Pieslēgties</string>
@@ -465,7 +458,6 @@
     <string name="pref_title_animate_custom_emojis">Animēt pielāgotās emocijzīmes</string>
     <string name="notification_sign_up_name">Jaunu dalībnieku reģistrācija</string>
     <string name="pref_show_self_username_disambiguate">Kad pievienoti vairāki konti</string>
-    <string name="restart_required">Nepieciešama lietotnes restartēšana</string>
     <string name="reblog_private">Pastiprināt sākotnējai auditorijai</string>
     <string name="description_post_reblogged">Pastiprināts</string>
     <string name="replying_to">Atbildot @%1$s</string>
