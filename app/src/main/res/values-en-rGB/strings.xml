@@ -73,7 +73,6 @@
     <string name="post_content_show_less">Collapse</string>
     <string name="post_edited">Edited %1$s</string>
     <string name="message_empty">Nothing here.</string>
-    <string name="footer_empty">Nothing here. Pull down to refresh!</string>
     <string name="notification_follow_format">%1$s followed you</string>
     <string name="notification_sign_up_format">%1$s signed up</string>
     <string name="title_drafts">Drafts</string>
