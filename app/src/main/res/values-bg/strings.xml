@@ -109,10 +109,6 @@
     <string name="caption_twemoji">Стандартният емоджи комплект на Mastodon</string>
     <string name="caption_blobmoji">Blob емоджитата, известни от Android 4.4–7.1</string>
     <string name="caption_systememoji">Емоджи комплектът по подразбиране в устройство ви</string>
-    <string name="restart">Рестартиране</string>
-    <string name="later">По-късно</string>
-    <string name="restart_emoji">Ще трябва да рестартирате Tusky, за да приложите тези промени</string>
-    <string name="restart_required">Изисква се рестартиране на приложението</string>
     <string name="action_open_post">Отваряне на публикация</string>
     <string name="expand_collapse_all_posts">Разгъване/сгъване на всички публикации</string>
     <string name="performing_lookup_title">Извършва се търсене…</string>
@@ -275,9 +271,6 @@
     <string name="action_open_faved_by">Показване на любими</string>
     <string name="action_open_reblogged_by">Показване на споделяния</string>
     <string name="action_open_reblogger">Отваряне на споделилия автор</string>
-    <string name="action_hashtags">Хаштагове</string>
-    <string name="action_mentions">Споменавания</string>
-    <string name="action_links">Връзки</string>
     <string name="action_add_tab">Добавяне на раздел</string>
     <string name="action_reset_schedule">Нулиране</string>
     <string name="action_schedule_post">Планиране на публикация</string>
@@ -351,7 +344,6 @@
     <string name="notification_follow_format">%1$s ви последва</string>
     <string name="notification_favourite_format">%1$s постави вашата публикация в любими</string>
     <string name="notification_reblog_format">%1$s сподели вашата публикация</string>
-    <string name="footer_empty">Нищо тук. Дръпнете надолу, за да опресните!</string>
     <string name="message_empty">Нищо тук.</string>
     <string name="post_content_show_less">Сгъване</string>
     <string name="post_content_show_more">Разгъване</string>
