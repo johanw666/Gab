@@ -46,7 +46,6 @@
     <string name="post_content_show_more">Espandi</string>
     <string name="post_content_show_less">Riduci</string>
     <string name="message_empty">Qui non c\'è nulla.</string>
-    <string name="footer_empty">Qui non c\'è nulla. Trascina verso il basso per aggiornare!</string>
     <string name="notification_reblog_format">%1$s ha condiviso il tuo post</string>
     <string name="notification_favourite_format">%1$s ha messo il tuo messaggio nei preferiti</string>
     <string name="notification_follow_format">%1$s ti segue</string>
@@ -104,9 +103,6 @@
     <string name="action_content_warning">Avviso di contenuto sensibile</string>
     <string name="action_emoji_keyboard">Tastiera emoji</string>
     <string name="action_add_tab">Aggiungi scheda</string>
-    <string name="action_links">Collegamenti</string>
-    <string name="action_mentions">Menzioni</string>
-    <string name="action_hashtags">Hashtag</string>
     <string name="action_open_reblogger">Vai all\'autore della condivisione</string>
     <string name="action_open_reblogged_by">Mostra ricondivisioni</string>
     <string name="action_open_faved_by">Mostra preferiti</string>
@@ -280,10 +276,6 @@
     <string name="performing_lookup_title">Ricerca in corso…</string>
     <string name="expand_collapse_all_posts">Espandi/riduci tutti i post</string>
     <string name="action_open_post">Apri post</string>
-    <string name="restart_required">Riavvio dell\'app richiesto</string>
-    <string name="restart_emoji">Devi riavviare Tusky per applicare queste modifiche</string>
-    <string name="later">Più tardi</string>
-    <string name="restart">Riavvia</string>
     <string name="caption_systememoji">Le emoji predefinite del tuo dispositivo</string>
     <string name="caption_blobmoji">Le emoji Blob di Android 4.4-7.1</string>
     <string name="caption_twemoji">Le emoji standard di Mastodon</string>

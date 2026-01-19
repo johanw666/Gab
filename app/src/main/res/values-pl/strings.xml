@@ -38,7 +38,6 @@
     <string name="post_sensitive_media_directions">Naciśnij, aby wyświetlić</string>
     <string name="post_content_warning_show_more">Pokaż więcej</string>
     <string name="post_content_warning_show_less">Pokaż mniej</string>
-    <string name="footer_empty">Pusto tutaj. Pociągnij, aby odświeżyć!</string>
     <string name="notification_reblog_format">%1$s podbił/a Twój wpis</string>
     <string name="notification_favourite_format">%1$s dodał/a Twój post do ulubionych</string>
     <string name="notification_follow_format">%1$s zaczął/-ęła Cię obserwować</string>
@@ -230,10 +229,6 @@
     <string name="performing_lookup_title">Wyszukiwanie…</string>
     <string name="expand_collapse_all_posts">Rozwiń/zwiń wszystkie wpisy</string>
     <string name="action_open_post">Otwórz wpis</string>
-    <string name="restart_required">Wymagane jest ponowne uruchomienie</string>
-    <string name="restart_emoji">Musisz uruchomić ponownie Tuskyego, aby zastosować zmiany</string>
-    <string name="later">Później</string>
-    <string name="restart">Uruchom ponownie</string>
     <string name="caption_systememoji">Domyślny zestaw emoji tego urządzenia</string>
     <string name="caption_blobmoji">Emoji Blob znane z Androida 4.4–7.1</string>
     <string name="caption_twemoji">Standardowy zestaw emoji Mastodona</string>
@@ -256,9 +251,6 @@
     <string name="action_unfavourite">Usuń z ulubionych</string>
     <string name="action_delete_and_redraft">Usuń i przeredaguj</string>
     <string name="action_view_account_preferences">Ustawienia konta</string>
-    <string name="action_links">Linki</string>
-    <string name="action_mentions">Wzmianki</string>
-    <string name="action_hashtags">Hashtagi</string>
     <string name="action_open_faved_by">Pokaż ulubione</string>
     <string name="title_hashtags_dialog">Hashtagi</string>
     <string name="title_mentions_dialog">Wzmianki</string>

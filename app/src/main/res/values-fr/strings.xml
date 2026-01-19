@@ -46,7 +46,6 @@
     <string name="post_content_show_more">Déplier</string>
     <string name="post_content_show_less">Replier</string>
     <string name="message_empty">Rien ici.</string>
-    <string name="footer_empty">Il n’y a aucun pouet ici pour l’instant. Glissez vers le bas pour actualiser !</string>
     <string name="notification_reblog_format">%1$s a partagé votre message</string>
     <string name="notification_favourite_format">%1$s a ajouté votre message à ses favoris</string>
     <string name="notification_follow_format">%1$s vous suit</string>
@@ -104,9 +103,6 @@
     <string name="action_content_warning">Contenu sensible</string>
     <string name="action_emoji_keyboard">Clavier d’émojis</string>
     <string name="action_add_tab">Ajouter un onglet</string>
-    <string name="action_links">Liens</string>
-    <string name="action_mentions">Mentions</string>
-    <string name="action_hashtags">Hashtags</string>
     <string name="action_open_reblogger">Afficher l’auteur·rice du partage</string>
     <string name="action_open_reblogged_by">Afficher les partages</string>
     <string name="action_open_faved_by">Montrer les favoris</string>
@@ -282,10 +278,6 @@
     <string name="performing_lookup_title">Recherche en cours…</string>
     <string name="expand_collapse_all_posts">Déplier/replier tout les messages</string>
     <string name="action_open_post">Ouvrir le message</string>
-    <string name="restart_required">Un redémarrage de l’application est nécessaire</string>
-    <string name="restart_emoji">Vous devrez redémarrer Tusky pour appliquer ces modifications</string>
-    <string name="later">Plus tard</string>
-    <string name="restart">Redémarrer</string>
     <string name="caption_systememoji">Votre jeu d’émojis par défaut</string>
     <string name="caption_blobmoji">Un jeu d’émojis basé sur les émojis « blob »</string>
     <string name="caption_twemoji">Le jeu d’émojis standard de Mastodon</string>

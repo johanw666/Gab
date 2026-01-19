@@ -159,7 +159,6 @@
     <string name="pref_title_thread_filter_keywords">Idewenniyen</string>
     <string name="lock_account_label">Rgel amiḍan</string>
     <string name="performing_lookup_title">Yettnadi…</string>
-    <string name="restart">Ales tanekra</string>
     <string name="download_failed">Tuccḍa n usider</string>
     <string name="account_moved_description">Igujj %1$s ɣer:</string>
     <string name="unpin_action">Kkes asenṭeḍ</string>
@@ -206,8 +205,6 @@
     <string name="title_followers">Imeḍfaṛen</string>
     <string name="hint_search_people_list">Nadi ɣef medden ar at ḍfereḍ</string>
     <string name="description_visibility_private">Imeḍfaṛen</string>
-    <string name="action_links">Iseɣwan</string>
-    <string name="action_mentions">Tibdarin</string>
     <string name="title_mentions_dialog">Tibdarin</string>
     <string name="title_links_dialog">Iseɣwan</string>
     <string name="confirmation_reported">Yettwaceyyeɛ!</string>
@@ -220,7 +217,6 @@
     <string name="abbreviated_minutes_ago">%1$dtsd</string>
     <string name="abbreviated_seconds_ago">%1$dtsn</string>
     <string name="compose_save_draft">Sekles amzun d arewway?</string>
-    <string name="later">Ticki</string>
     <string name="profile_badge_bot_text">Aṛubut</string>
     <string name="description_post_bookmarked">Yettwarna ɣer ticṛad</string>
     <string name="abbreviated_in_hours">deg %1$dsr</string>
@@ -247,7 +243,6 @@
     <string name="action_show_reblogs">Sken-d izuzar</string>
     <string name="action_unmute">Ur sgugum ara</string>
     <string name="action_accept">Ddeg</string>
-    <string name="action_hashtags">Ihacṭagen</string>
     <string name="action_open_reblogged_by">Sken-d izuzar</string>
     <string name="title_hashtags_dialog">Ihacṭagen</string>
     <string name="confirmation_unmuted">Aseqdac nni ur yettwasgugem ara tura</string>

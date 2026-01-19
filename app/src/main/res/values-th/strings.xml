@@ -102,10 +102,6 @@
     <string name="caption_twemoji">ชุดเอโมจิจาก Mastodon</string>
     <string name="caption_blobmoji">ที่รู้จักจาก Android 4.4 ถึง 7.1 ชุดเอโมจิ Blob</string>
     <string name="caption_systememoji">ชุดเริ่มต้นในอุปกรณ์คุณ</string>
-    <string name="restart">เริ่มใหม่</string>
-    <string name="later">ภายหลัง</string>
-    <string name="restart_emoji">จำเป็นต้องเริ่ม Tusky ใหม่ เพื่อใช้การเปลี่ยนแปลงเหล่านี้</string>
-    <string name="restart_required">จำเป็นต้องเริ่มแอปใหม่</string>
     <string name="action_open_post">เปิด Toot</string>
     <string name="expand_collapse_all_posts">ขยาย/ย่อทั้งหมด</string>
     <string name="performing_lookup_title">กำลังค้นหา…</string>
@@ -284,9 +280,6 @@
     <string name="action_open_faved_by">ดูชื่นชอบ</string>
     <string name="action_open_reblogged_by">ดูบสต์</string>
     <string name="action_open_reblogger">ดูต้นตอบูสต์</string>
-    <string name="action_hashtags">แฮชแท็ก</string>
-    <string name="action_mentions">โต้ตอบ</string>
-    <string name="action_links">ลิงก์</string>
     <string name="action_add_tab">เพิ่มแท็บ</string>
     <string name="action_schedule_post">Toot แบบตั้งเวลา</string>
     <string name="action_emoji_keyboard">คีย์บอร์ดเอโมจิ</string>
@@ -350,7 +343,6 @@
     <string name="notification_follow_format">%1$s ได้ติดตามคุณ</string>
     <string name="notification_favourite_format">%1$s ได้ชื่นชอบโพสต์ของคุณ</string>
     <string name="notification_reblog_format">%1$s ได้ดันโพสต์ของคุณ</string>
-    <string name="footer_empty">ไม่มีอะไรที่นี่ ลากลงเพื่อรีเฟรช!</string>
     <string name="message_empty">ไม่มีอะไรที่นี่</string>
     <string name="post_content_show_less">ย่อ</string>
     <string name="post_content_show_more">ขยาย</string>

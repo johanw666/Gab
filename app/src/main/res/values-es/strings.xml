@@ -46,7 +46,6 @@
     <string name="post_content_show_more">Expandir</string>
     <string name="post_content_show_less">Ocultar</string>
     <string name="message_empty">Nada por aquí.</string>
-    <string name="footer_empty">Nada por aquí. ¡Arrastra hacia abajo para recargar!</string>
     <string name="notification_reblog_format">%1$s impulsó tu publicación</string>
     <string name="notification_favourite_format">%1$s marcó como favorita tu publicación</string>
     <string name="notification_follow_format">%1$s te siguió</string>
@@ -250,10 +249,6 @@
     <string name="performing_lookup_title">Buscando…</string>
     <string name="expand_collapse_all_posts">Expandir/ocultar todos los estados</string>
     <string name="action_open_post">Abrir</string>
-    <string name="restart_required">Reinicio requerido</string>
-    <string name="restart_emoji">Tendrás que reiniciar la aplicación para aplicar estos cambios</string>
-    <string name="later">Más tarde</string>
-    <string name="restart">Reiniciar</string>
     <string name="caption_systememoji">Paquete de emojis predeterminado de su dispositivo</string>
     <string name="caption_blobmoji">Los emojis de Android 4.4 a 7.1</string>
     <string name="caption_twemoji">Paquete estándar de emojis de Mastodon</string>
@@ -289,7 +284,6 @@
     <string name="conversation_1_recipients">%1$s</string>
     <string name="conversation_2_recipients">%1$s y %2$s</string>
     <string name="conversation_more_recipients">%1$s, %2$s y %3$d más</string>
-    <string name="action_mentions">Menciones</string>
     <string name="action_open_faved_by">Mostrar favoritos</string>
     <string name="title_mentions_dialog">Menciones</string>
     <string name="download_media">Descargar multimedia</string>
@@ -337,8 +331,6 @@
     </plurals>
     <string name="poll_info_closed">cerrada</string>
     <string name="action_delete_and_redraft">Eliminar y editar</string>
-    <string name="action_links">Enlaces</string>
-    <string name="action_hashtags">Etiquetas</string>
     <string name="title_hashtags_dialog">Etiquetas</string>
     <string name="title_links_dialog">Enlaces</string>
     <string name="action_open_media_n">Abrir contenido #%1$d</string>

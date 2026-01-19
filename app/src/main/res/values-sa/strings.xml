@@ -20,7 +20,6 @@
     <string name="error_empty">नैतद्रिक्तं भवितुमर्हति ।</string>
     <string name="error_network">दोषो जातः । कृपया भवतोऽन्तर्जालीयसम्पर्कं परीक्ष्य पुनश्च यत्यताम् !</string>
     <string name="error_generic">दोषो जातः ।</string>
-    <string name="footer_empty">न किमप्यत्र । नवीकरणार्थमाकृष्यतामधः !</string>
     <string name="message_empty">न किमप्यत्र ।</string>
     <string name="post_content_show_less">संनिपत्यताम्</string>
     <string name="post_content_show_more">विस्तार्यताम्</string>
@@ -116,9 +115,6 @@
     <string name="action_open_faved_by">प्रियाणि दृश्यन्ताम्</string>
     <string name="action_open_reblogged_by">प्रकाशनानि दृश्यन्ताम्</string>
     <string name="action_open_reblogger">प्रकाशनलेखकः उद्घाट्यताम्</string>
-    <string name="action_hashtags">निश्रेणिचिह्नशीर्षकाः</string>
-    <string name="action_mentions">उल्लेखाः</string>
-    <string name="action_links">जालस्थलानि</string>
     <string name="action_add_tab">पीठिका युज्यताम्</string>
     <string name="action_reset_schedule">पुनरारम्भः</string>
     <string name="action_schedule_post">कालबद्धदौत्यं क्रियताम्</string>
@@ -316,10 +312,6 @@
     <string name="caption_twemoji">मास्टोडोनस्य पूर्वनिविष्टभावचिह्नसमूहः</string>
     <string name="caption_blobmoji">ब्लाबभावचिह्नानि एन्ड्रोइड४.४तः ७.१पर्यन्तं प्रसिद्धानि</string>
     <string name="caption_systememoji">तव यन्त्रस्य पूर्वस्थापितभावचिह्नसमूहः</string>
-    <string name="restart">पुनः प्रारभ्यताम्</string>
-    <string name="later">पश्चात्</string>
-    <string name="restart_emoji">पुनश्च टस्कीप्रारम्भोऽपेक्षितो वर्तते परिवर्तनानुसरेण चलितुम्</string>
-    <string name="restart_required">अनुप्रयोगप्रारम्भः आवश्यकः</string>
     <string name="action_open_post">दौत्यमुद्घाट्यताम्</string>
     <string name="expand_collapse_all_posts">विस्तार्यन्तां नश्यन्तां वा स्थतयः</string>
     <string name="performing_lookup_title">अन्वेषणं भवद्वर्तते…</string>

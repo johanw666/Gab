@@ -40,7 +40,6 @@
     <string name="post_sensitive_media_directions">Toque para ver</string>
     <string name="post_content_warning_show_more">Expandir</string>
     <string name="post_content_warning_show_less">Ocultar</string>
-    <string name="footer_empty">Nada aqui. Arraste para atualizar!</string>
     <string name="notification_reblog_format">%1$s deu boost no teu toot</string>
     <string name="notification_favourite_format">%1$s favoritou teu toot</string>
     <string name="notification_follow_format">%1$s te seguiu</string>
@@ -97,8 +96,6 @@
     <string name="action_content_warning">Aviso de Conteúdo</string>
     <string name="action_emoji_keyboard">Teclado de emojis</string>
     <string name="action_add_tab">Adicionar aba</string>
-    <string name="action_links">Links</string>
-    <string name="action_mentions">Menções</string>
     <string name="action_open_reblogged_by">Mostrar boosts</string>
     <string name="action_open_faved_by">Mostrar favoritos</string>
     <string name="title_mentions_dialog">Menções</string>
@@ -249,10 +246,6 @@
     <string name="performing_lookup_title">Carregando…</string>
     <string name="expand_collapse_all_posts">Expandir/Ocultar todos os toots</string>
     <string name="action_open_post">Abrir toot</string>
-    <string name="restart_required">É necessário reiniciar o aplicativo</string>
-    <string name="restart_emoji">É necessário reiniciar o aplicativo para aplicar as alterações</string>
-    <string name="later">Depois</string>
-    <string name="restart">Reiniciar</string>
     <string name="caption_systememoji">Pacote de emojis padrão do seu dispositivo</string>
     <string name="caption_blobmoji">Emojis padrão do Android da versão 4.4 até 7.1</string>
     <string name="caption_twemoji">Pacote de emojis padrão do Mastodon</string>
@@ -280,7 +273,6 @@
     <string name="message_empty">Nada aqui.</string>
     <string name="action_delete_and_redraft">Excluir e rascunhar</string>
     <string name="action_view_account_preferences">Preferências da conta</string>
-    <string name="action_hashtags">Hashtags</string>
     <string name="action_open_reblogger">Ver quem deu boost</string>
     <string name="title_hashtags_dialog">Hashtags</string>
     <string name="action_open_media_n">Abrir mídia #%1$d</string>

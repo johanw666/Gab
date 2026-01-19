@@ -46,7 +46,6 @@
     <string name="post_content_show_more">বিস্তৃত</string>
     <string name="post_content_show_less">বন্ধ</string>
     <string name="message_empty">এখানে কিছুই নেই।</string>
-    <string name="footer_empty">এখানে কিছু নেই. রিফ্রেশ করতে নিচে টানুন!</string>
     <string name="notification_reblog_format">%1$s সমর্থন দিয়েছে</string>
     <string name="notification_favourite_format">%1$s আপনার টুট পছন্দ করেছে</string>
     <string name="notification_follow_format">%1$s আপনাকে অনুসরণ করেছেন</string>
@@ -105,9 +104,6 @@
     <string name="action_content_warning">সতর্কবার্তা</string>
     <string name="action_emoji_keyboard">ইমোজি কীবোর্ড</string>
     <string name="action_add_tab">ট্যাব যুক্ত করুন</string>
-    <string name="action_links">লিংকসমূহ</string>
-    <string name="action_mentions">উল্লেখসমূহ</string>
-    <string name="action_hashtags">হ্যাশট্যাগ</string>
     <string name="action_open_reblogger">সমর্থক লেখক খুলুন</string>
     <string name="action_open_reblogged_by">সমর্থন দেখান</string>
     <string name="action_open_faved_by">প্রিয়গুলি দেখান</string>
@@ -287,10 +283,6 @@
     <string name="performing_lookup_title">অনুসন্ধান করা হচ্ছে …</string>
     <string name="expand_collapse_all_posts">সমস্ত স্টেটাস প্রসারিত/সংকুচিত করুন</string>
     <string name="action_open_post">টুট খুলুন</string>
-    <string name="restart_required">অ্যাপ্লিকেশন পুনরায় আরম্ভ করা প্রয়োজন</string>
-    <string name="restart_emoji">এই পরিবর্তনগুলি প্রয়োগ করার জন্য আপনাকে টাস্কি পুনরায় চালু করতে হবে</string>
-    <string name="later">পরবর্তীতে</string>
-    <string name="restart">পুনরারম্ভ</string>
     <string name="caption_systememoji">আপনার ডিভাইসের ডিফল্ট ইমোজি সেট</string>
     <string name="caption_blobmoji">অ্যান্ড্রয়েড ৪.৪-৭.১ থেকে পরিচিত ব্লোব ইমোজিস</string>
     <string name="caption_twemoji">ম্যাস্টোডোন এর মান ইমোজি সেট</string>

@@ -40,7 +40,6 @@
     <string name="post_content_warning_show_less">Erakutsi gutxiago</string>
     <string name="post_content_show_more">Zabaldu</string>
     <string name="post_content_show_less">Itxi</string>
-    <string name="footer_empty">Edukirik ez. Arrastatu behera birkargatzeko!</string>
     <string name="notification_reblog_format">%1$s-(e)k zure tuta bultzatu du</string>
     <string name="notification_favourite_format">%1$s-(e)k zure tuta gogoko du</string>
     <string name="notification_follow_format">%1$s-(e)k jarraitu dizu</string>
@@ -235,10 +234,6 @@
     <string name="performing_lookup_title">Bilatzen…</string>
     <string name="expand_collapse_all_posts">Zabaldu/Itxi tut guztiak</string>
     <string name="action_open_post">Ireki tuta</string>
-    <string name="restart_required">Berrabiaraztea beharrezkoa da</string>
-    <string name="restart_emoji">Aplikazioa berrabiarazi beharko duzu aldaketa ezartzeko</string>
-    <string name="later">Beranduago</string>
-    <string name="restart">Berrabiarazi</string>
     <string name="caption_systememoji">Zure gailuko emoji lehenetsiak</string>
     <string name="caption_blobmoji">Android 4.4etik 7.1erako Blob emoji-ak</string>
     <string name="caption_twemoji">Mastodoneko emoji pakete estandarra</string>
@@ -276,8 +271,6 @@
     <string name="action_schedule_post">Programatu tuta</string>
     <string name="action_reset_schedule">Berrezarri</string>
     <string name="action_add_tab">Gehitu fitxa</string>
-    <string name="action_links">Estekak</string>
-    <string name="action_mentions">Aipamenak</string>
     <string name="action_open_reblogged_by">Erakutsi bultzadak</string>
     <string name="action_open_faved_by">Erakutsi gogokoak</string>
     <string name="title_mentions_dialog">Aipamenak</string>
@@ -299,7 +292,6 @@
     <string name="notification_poll_name">Galdeketak</string>
     <string name="notification_poll_description">Bukatutako galdeketen jakinarazpenak</string>
     <string name="about_tusky_version">Tusky %1$s</string>
-    <string name="action_hashtags">Traolak</string>
     <string name="title_hashtags_dialog">Traolak</string>
     <string name="about_powered_by_tusky">Tusky-k sustatuta</string>
     <string name="abbreviated_hours_ago">%1$dh</string>

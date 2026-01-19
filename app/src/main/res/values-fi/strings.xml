@@ -118,9 +118,6 @@
     <string name="title_links_dialog">Linkit</string>
     <string name="title_mentions_dialog">Maininnat</string>
     <string name="title_hashtags_dialog">Aihetunnisteet</string>
-    <string name="action_hashtags">Aihetunnisteet</string>
-    <string name="action_mentions">Maininnat</string>
-    <string name="action_links">Linkit</string>
     <string name="action_reset_schedule">Nollaa</string>
     <string name="action_access_drafts">Luonnokset</string>
     <string name="action_search">Hae</string>
@@ -220,7 +217,6 @@
     <string name="notification_subscription_format">%1$s julkaisi juuri</string>
     <string name="action_quick_reply">Vastaa nopeasti</string>
     <string name="action_hide_reblogs">Piilota jaetut julkaisut</string>
-    <string name="footer_empty">Täällä ei ole mitään. Liu\'uta alaspäin päivittääksesi!</string>
     <string name="error_network">Verkkovirhe. Tarkista yhteytesi ja yritä uudelleen.</string>
     <string name="action_open_media_n">Avaa media No. %1$d</string>
     <string name="error_sender_account_gone">Julkaisun lähettäminen epäonnistui.</string>
@@ -292,10 +288,8 @@
     <string name="pref_title_public_filter_keywords">Julkiset aikajanat</string>
     <string name="pref_title_thread_filter_keywords">Keskustelut</string>
     <string name="filter_addition_title">Lisää suodatin</string>
-    <string name="later">Myöhemmin</string>
     <string name="description_post_cw">Sisältövaroitus: %1$s</string>
     <string name="pref_title_http_proxy_server">HTTP-välityspalvelin</string>
-    <string name="restart">Käynnistä uudelleen</string>
     <string name="error_failed_app_registration">Tunnistautuminen valitsemasi instanssin kanssa epäonnistui. Jos tämä jatkuu, valitse valikosta Kirjaudu selaimella.</string>
     <string name="dialog_block_warning">Estä @%1$s?</string>
     <string name="action_follow_hashtag">Seuraa uutta aihetunnistetta</string>

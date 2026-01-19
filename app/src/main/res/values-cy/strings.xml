@@ -40,7 +40,6 @@
     <string name="post_content_warning_show_less">Dangos llai</string>
     <string name="post_content_show_more">Chwyddo</string>
     <string name="post_content_show_less">Lleihau</string>
-    <string name="footer_empty">Dim byd yma. Tynnwch lawr i adnewyddu!</string>
     <string name="notification_reblog_format">Hybodd %1$s eich neges</string>
     <string name="notification_favourite_format">Hoffodd %1$s eich neges</string>
     <string name="notification_follow_format">Mae %1$s yn eich dilyn</string>
@@ -237,10 +236,6 @@
     <string name="performing_lookup_title">Wrthi\'n chwilio…</string>
     <string name="expand_collapse_all_posts">Chwyddo/lleihau pob neges</string>
     <string name="action_open_post">Agor y neges</string>
-    <string name="restart_required">Rhaid ailddechrau\'r ap</string>
-    <string name="restart_emoji">Bydd angen ailddechrau Tusky i roi\'r newidiadau ar waith</string>
-    <string name="later">Yn ddiweddarach</string>
-    <string name="restart">Ailddechrau</string>
     <string name="caption_systememoji">Set emoji ragosodedig eich dyfais</string>
     <string name="caption_blobmoji">Daw\'r emoji Blob o Android 4.4–7.1</string>
     <string name="caption_twemoji">Set emoji safonol Mastodon</string>
@@ -268,7 +263,6 @@
     <string name="action_view_domain_mutes">Parthau cudd</string>
     <string name="action_mute_domain">Tewi %1$s</string>
     <string name="action_add_tab">Ychwanegu tab</string>
-    <string name="action_links">Dolenni</string>
     <string name="title_links_dialog">Dolenni</string>
     <string name="action_open_reblogged_by">Dangos hybiau</string>
     <string name="notification_follow_request_name">Ceisiadau i\'ch dilyn</string>
@@ -302,7 +296,6 @@
     <string name="confirmation_domain_unmuted">%1$s wedi\'i amlygu</string>
     <string name="action_access_scheduled_posts">Negeseuon wedi\'u hamserlennu</string>
     <string name="action_schedule_post">Amserlennu Neges</string>
-    <string name="action_mentions">Crybwylliadau</string>
     <string name="dialog_mute_warning">Tewi @%1$s?</string>
     <string name="dialog_mute_hide_notifications">Cuddio hysbysiadau</string>
     <string name="pref_title_timeline_filters">Hidlyddion</string>
@@ -337,7 +330,6 @@
     <string name="error_image_edit_failed">Methu golygu\'r ddelwedd.</string>
     <string name="description_post_favourited">Hoffwyd</string>
     <string name="saving_draft">Yn cadw drafft…</string>
-    <string name="action_hashtags">Hashnodau</string>
     <string name="action_dismiss">Diystyru</string>
     <string name="action_details">Manylion</string>
     <string name="title_mentions_dialog">Crybwylliadau</string>
@@ -878,4 +870,26 @@
     <string name="unified_push_error_no_vapid_key">Wedi methu sefydlu Unified Push: Mae allwedd vapid annilys gyda %1$s.</string>
     <string name="scheduled_posts_not_supported">Na allwch chi ddefnyddio negeseuon wedi\'u hamserlennu ar eich gweinydd %1$s</string>
     <string name="action_reveal_media">Dangos cyfryngau.</string>
+    <plurals name="quotes">
+        <item quantity="zero">%1$s dyfyniadau</item>
+        <item quantity="one">%1$s dyfyniad</item>
+        <item quantity="two">%1$s ddyfyniad</item>
+        <item quantity="few">%1$s dyfyniad</item>
+        <item quantity="many">%1$s dyfyniad</item>
+        <item quantity="other">%1$s dyfyniad</item>
+    </plurals>
+    <string name="quote">Dyfyniad</string>
+    <string name="title_quotes">Dyfyniadau</string>
+    <string name="quote_pending">Neges yn aros</string>
+    <string name="quote_hidden_show_anyway">Dangos beth bynnag</string>
+    <string name="content_hidden_description">Cynnwys cudd</string>
+    <string name="quote_unavailable">Nid yw\'r neges ar gael</string>
+    <plurals name="replies">
+        <item quantity="zero">%1$s ymatebion</item>
+        <item quantity="one">%1$s ymateb</item>
+        <item quantity="two">%1$s ymateb</item>
+        <item quantity="few">%1$s ymateb</item>
+        <item quantity="many">%1$s ymateb</item>
+        <item quantity="other">%1$s ymateb</item>
+    </plurals>
 </resources>

@@ -35,7 +35,6 @@
     <string name="post_sensitive_media_directions">Fes clic per a visualitzar-lo</string>
     <string name="post_content_warning_show_more">Mostra\'n més</string>
     <string name="post_content_warning_show_less">Mostra\'n menys</string>
-    <string name="footer_empty">No hi res aquí. Llisca avall per a actualitzar!</string>
     <string name="notification_reblog_format">%1$s ha impulsat la teva publicació</string>
     <string name="notification_favourite_format">%1$s ha marcat com a preferida la teva publicació</string>
     <string name="notification_follow_format">%1$s et segueix</string>
@@ -196,9 +195,6 @@
     <string name="action_toggle_visibility">Visibilitat de la publicació</string>
     <string name="action_content_warning">Contingut sensible</string>
     <string name="action_add_tab">Afegir una pestanya</string>
-    <string name="action_links">Enllaços</string>
-    <string name="action_mentions">Mencions</string>
-    <string name="action_hashtags">Hashtags</string>
     <string name="action_open_faved_by">Mostra els favorits</string>
     <string name="title_hashtags_dialog">Hashtags</string>
     <string name="title_mentions_dialog">Mencions</string>
@@ -281,10 +277,6 @@
     <string name="performing_lookup_title">Cercant…</string>
     <string name="expand_collapse_all_posts">Expandir/ocultar tots els estats</string>
     <string name="action_open_post">Obre la publicació</string>
-    <string name="restart_required">Cal reiniciar l\'aplicació</string>
-    <string name="restart_emoji">Has de reiniciar l\'aplicació per tal d\'aplicar aquests canvis</string>
-    <string name="later">Més tard</string>
-    <string name="restart">Reiniciar</string>
     <string name="caption_systememoji">Conjunt d\'emojis predeterminats del teu dispositiu</string>
     <string name="caption_blobmoji">Els emojis d\'Android 4.4 a 7.1</string>
     <string name="caption_twemoji">Emojis estàndard de Mastodont</string>

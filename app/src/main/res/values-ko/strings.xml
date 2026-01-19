@@ -47,7 +47,6 @@
     <string name="post_content_show_more">더 보기</string>
     <string name="post_content_show_less">줄이기</string>
     <string name="message_empty">메시지가 없습니다.</string>
-    <string name="footer_empty">게시물이 없습니다. 아래로 당겨서 새로고침하세요!</string>
     <string name="notification_reblog_format">%1$s님이 부스트 했습니다</string>
     <string name="notification_favourite_format">%1$s님이 당신의 게시물을 좋아합니다</string>
     <string name="notification_follow_format">%1$s님이 나를 팔로우 했습니다</string>
@@ -108,9 +107,6 @@
     <string name="action_content_warning">열람 주의</string>
     <string name="action_emoji_keyboard">이모지 추가</string>
     <string name="action_add_tab">탭 추가</string>
-    <string name="action_links">링크</string>
-    <string name="action_mentions">멘션</string>
-    <string name="action_hashtags">해시태그</string>
     <string name="action_open_reblogger">부스트한 유저의 프로필로 이동</string>
     <string name="action_open_reblogged_by">부스트 보이기</string>
     <string name="action_open_faved_by">좋아요한 유저 보이기</string>
@@ -293,10 +289,6 @@
     <string name="performing_lookup_title">탐색하고 있습니다…</string>
     <string name="expand_collapse_all_posts">모두 보이기/줄이기</string>
     <string name="action_open_post">툿 열기</string>
-    <string name="restart_required">어플리케이션 재시작 필요</string>
-    <string name="restart_emoji">변경 사항을 적용하려면 Tusky를 재시작해야 합니다</string>
-    <string name="later">다음에</string>
-    <string name="restart">지금 재시작</string>
     <string name="caption_systememoji">이 디바이스의 기본 이모지</string>
     <string name="caption_blobmoji">Android 4.4~7.1에 내장된 기본 이모지</string>
     <string name="caption_twemoji">Mastodon 표준 이모지</string>

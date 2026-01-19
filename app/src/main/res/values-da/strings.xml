@@ -69,8 +69,6 @@
     <string name="action_accept">Acceptér</string>
     <string name="action_search">Søg</string>
     <string name="action_access_drafts">Kladder</string>
-    <string name="action_links">Links</string>
-    <string name="action_hashtags">Hashtags</string>
     <string name="title_hashtags_dialog">Hashtags</string>
     <string name="action_translate">Oversæt</string>
     <string name="hint_search">Søg…</string>
@@ -112,7 +110,6 @@
     <string name="post_sensitive_media_directions">Klik for at se</string>
     <string name="post_content_show_less">Fold sammen</string>
     <string name="message_empty">Intet her.</string>
-    <string name="footer_empty">Intet her. Træk ned for at opdatere!</string>
     <string name="notification_reblog_format">%1$s fremhævede dit indlæg</string>
     <string name="notification_favourite_format">%1$s favoritmarkede dit indlæg</string>
     <string name="notification_sign_up_format">%1$s tilmeldte sig</string>
@@ -199,7 +196,6 @@
     <string name="scheduled_post_deletion_error">Kunne ikke slette planlagt indlæg.</string>
     <string name="unified_push_error_no_vapid_key">Fejl ved opsætning af Unified Push: %1$s har en ugyldig vapid-nøgle.</string>
     <string name="action_compose">Skriv</string>
-    <string name="restart">Genstart</string>
     <string name="edit_image_rotate">Rotér</string>
     <string name="report_category_legal_title">Det er ulovligt</string>
     <string name="pref_default_reply_privacy_explanation">Den forudvalgte fortrolighed afhænger af det indlæg, du svarer på.</string>
@@ -344,9 +340,6 @@
     <string name="performing_lookup_title">Udfører opslag…</string>
     <string name="expand_collapse_all_posts">Udvid/sammenfold alle indlæg</string>
     <string name="action_open_post">Åbn indlæg</string>
-    <string name="restart_required">Appen skal genstartes</string>
-    <string name="restart_emoji">Du skal genstarte Tusky for at anvende disse ændringer</string>
-    <string name="later">Senere</string>
     <string name="caption_systememoji">Din enheds standard-emoji-sæt</string>
     <string name="caption_blobmoji">Blob-emojierne kendt fra Android 4.4–7.1</string>
     <string name="caption_twemoji">Mastodons standard emoji-sæt</string>
@@ -680,7 +673,6 @@
     <string name="action_schedule_post">Planlæg indlæg</string>
     <string name="action_reset_schedule">Nulstil</string>
     <string name="action_add_tab">Tilføj fane</string>
-    <string name="action_mentions">Omtaler</string>
     <string name="action_follow_hashtag">Følg et nyt hashtag</string>
     <string name="action_open_reblogger">Åbn fremhævelsesforfatter</string>
     <string name="action_open_reblogged_by">Vis fremhævelser</string>

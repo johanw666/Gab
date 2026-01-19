@@ -125,7 +125,6 @@
     <string name="action_open_media_n">Media #%1$d iepenje</string>
     <string name="title_links_dialog">Keppelingen</string>
     <string name="action_open_faved_by">Favoriten besjen</string>
-    <string name="action_links">Keppelingen</string>
     <string name="action_add_tab">Ljepblêd Tafoegje</string>
     <string name="action_schedule_post">Toot ynplanne</string>
     <string name="action_emoji_keyboard">Emoji toetseboerd</string>
@@ -192,7 +191,6 @@
     <string name="notification_follow_request_format">%1$s fersiket jo te folgjen</string>
     <string name="notification_follow_format">%1$s folget jo</string>
     <string name="notification_favourite_format">%1$s hat jo toot as favoryt oanmurken</string>
-    <string name="footer_empty">Hjir is neat. Lûk nei ûnderen om te ferfarskjen!</string>
     <string name="message_empty">Hjir is neat.</string>
     <string name="post_content_show_less">Yntearre</string>
     <string name="post_content_show_more">Ûttearre</string>
@@ -243,7 +241,6 @@
     <string name="title_hashtags_dialog">Hashtags</string>
     <string name="action_open_reblogged_by">Boosts sjen litte</string>
     <string name="action_open_reblogger">Auteur fan boost iepenje</string>
-    <string name="action_hashtags">Hashtags</string>
     <string name="action_reset_schedule">Nei standert ynstelling weromsette</string>
     <string name="action_show_reblogs">Boosts sjen litte</string>
     <string name="action_hide_reblogs">Boosts ferburgje</string>

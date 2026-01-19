@@ -12,7 +12,6 @@
     <string name="replying_to">A responder a @%1$s</string>
     <string name="lock_account_label_description">Necessita de aprovar manualmente os seguidores</string>
     <string name="compose_save_draft">Guardar rascunho?</string>
-    <string name="later">Depois</string>
     <string name="unpin_action">Desafixar</string>
     <string name="conversation_2_recipients">%1$s e %2$s</string>
     <string name="pref_title_wellbeing_mode">Bem-estar</string>
@@ -64,7 +63,6 @@
     <string name="post_username_format">\@%1$s</string>
     <string name="post_boosted_format">%1$s partilhou</string>
     <string name="message_empty">Nada aqui.</string>
-    <string name="footer_empty">Nada para ver aqui. Arraste para baixo para atualizar!</string>
     <string name="notification_reblog_format">%1$s partilhou a sua publicação</string>
     <string name="notification_favourite_format">%1$s gostou da sua publicação</string>
     <string name="notification_follow_format">%1$s está a seguir-te</string>
@@ -136,9 +134,6 @@
     <string name="action_schedule_post">Agendar Pubicação</string>
     <string name="action_reset_schedule">Redefinir</string>
     <string name="action_add_tab">Adicionar Separador</string>
-    <string name="action_links">Hiperligações</string>
-    <string name="action_mentions">Menções</string>
-    <string name="action_hashtags">Hashtags</string>
     <string name="action_open_reblogger">Ver autor do boost</string>
     <string name="action_open_reblogged_by">Mostrar boosts</string>
     <string name="action_open_faved_by">Mostrar favoritos</string>
@@ -326,9 +321,6 @@
     <string name="performing_lookup_title">A fazer pesquisa…</string>
     <string name="expand_collapse_all_posts">Expandir/Contrair todas as publicações</string>
     <string name="action_open_post">Abrir publicação</string>
-    <string name="restart_required">É necessário reiniciar a aplicação</string>
-    <string name="restart_emoji">É necessário reiniciar o Tusky para aplicar as alterações</string>
-    <string name="restart">Reiniciar</string>
     <string name="caption_systememoji">Pacote de emojis padrão do seu dispositivo</string>
     <string name="caption_blobmoji">Emojis padrão do Android 4.4 até ao 7.1</string>
     <string name="caption_twemoji">Pacote de emojis padrão do Mastodon</string>

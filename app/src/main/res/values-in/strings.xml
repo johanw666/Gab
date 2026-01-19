@@ -79,7 +79,6 @@
     <string name="action_search">Cari</string>
     <string name="action_access_drafts">Draf</string>
     <string name="action_reset_schedule">Setel Ulang</string>
-    <string name="action_links">Tautan</string>
     <string name="action_details">Detail</string>
     <string name="action_copy_link">Salin tautan</string>
     <string name="download_image">Mengunduh %1$s</string>
@@ -134,7 +133,6 @@
     <string name="lock_account_label">Kunci akun</string>
     <string name="system_default">Bawaan sistem</string>
     <string name="action_compose_shortcut">Tulis</string>
-    <string name="restart">Mulai ulang</string>
     <string name="account_note_saved">Disimpan!</string>
     <string name="error_generic">Terjadi kesalahan.</string>
     <string name="error_network">Terjadi kesalahan pada jaringan! Harap periksa koneksi Anda dan coba lagi!</string>
@@ -160,7 +158,6 @@
     <string name="post_media_images">Gambar</string>
     <string name="add_account_name">Tambah Akun</string>
     <string name="error_create_list">Tidak dapat membuat daftar</string>
-    <string name="later">Nanti</string>
     <string name="error_failed_app_registration">Gagal mengautentikasi dengan instance tersebut. Jika ini berlanjut, coba Masuk di Browser dari menu.</string>
     <string name="tusky_compose_post_quicksetting_label">Tulis Postingan</string>
     <string name="error_media_upload_image_or_video">Gambar dan video tidak dapat disematkan ke dalam post yang sama.</string>
@@ -168,7 +165,6 @@
     <string name="title_follow_requests">Permintaan mengikuti</string>
     <string name="post_boosted_format">%1$s ter-boost</string>
     <string name="post_content_show_more">Meluaskan</string>
-    <string name="footer_empty">Tidak ada apapun di sini. Tarik ke bawah untuk menyegarkan!</string>
     <string name="notification_reblog_format">%1$s telah meng-boost post mu</string>
     <string name="notification_favourite_format">%1$s memfavoritkan post mu</string>
     <string name="notification_sign_up_format">%1$s mendaftar</string>
@@ -205,7 +201,6 @@
     <string name="action_content_warning">Peringatan konten</string>
     <string name="action_emoji_keyboard">Papan ketik Emoji</string>
     <string name="action_add_tab">Tambah Tab</string>
-    <string name="action_hashtags">Hashtag</string>
     <string name="action_open_reblogger">Buka penulis boost</string>
     <string name="action_open_reblogged_by">Tampilkan boost</string>
     <string name="action_open_faved_by">Tampilkan favorit</string>

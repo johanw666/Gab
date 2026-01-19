@@ -96,9 +96,6 @@
     <string name="action_open_faved_by">Xem lượt thích</string>
     <string name="action_open_reblogged_by">Xem lượt đăng lại</string>
     <string name="action_open_reblogger">Xem lượt đăng lại</string>
-    <string name="action_hashtags">Hashtag</string>
-    <string name="action_mentions">Lượt nhắc tới</string>
-    <string name="action_links">Links</string>
     <string name="action_add_tab">Thêm Tab</string>
     <string name="action_schedule_post">Lên lịch</string>
     <string name="action_emoji_keyboard">Emoji</string>
@@ -156,7 +153,6 @@
     <string name="action_quick_reply">Trả lời nhanh</string>
     <string name="report_comment_hint">Ghi chú?</string>
     <string name="report_username_format">Báo cáo @%1$s</string>
-    <string name="footer_empty">Trượt xuống để tải nội dung!</string>
     <string name="message_empty">Trống.</string>
     <string name="post_content_show_less">Thu gọn</string>
     <string name="post_content_show_more">Tiếp tục đọc</string>
@@ -395,10 +391,6 @@
     <string name="caption_twemoji">Emoji chính thức của Mastodon</string>
     <string name="caption_blobmoji">Emoji của Android phiên bản từ 4.4 đến 7.1</string>
     <string name="caption_systememoji">Dùng emoji thiết bị</string>
-    <string name="restart">Khởi động lại</string>
-    <string name="later">Để sau</string>
-    <string name="restart_emoji">Bạn cần khởi động lại Tusky để áp dụng các thiết lập</string>
-    <string name="restart_required">Yêu cầu khởi động lại ứng dụng</string>
     <string name="action_open_post">Xem tút</string>
     <string name="expand_collapse_all_posts">Mở rộng/Thu gọn toàn bộ tút</string>
     <string name="performing_lookup_title">Đang tra cứu…</string>

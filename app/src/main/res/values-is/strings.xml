@@ -59,7 +59,6 @@
     <string name="post_content_show_more">Fletta út</string>
     <string name="post_content_show_less">Fella saman</string>
     <string name="message_empty">Ekkert hér.</string>
-    <string name="footer_empty">Ekkert hér. Togaðu niður til að endurhlaða!</string>
     <string name="notification_reblog_format">%1$s endurbirti færsluna þína</string>
     <string name="notification_favourite_format">%1$s setti færslu frá þér í eftirlæti</string>
     <string name="notification_follow_format">%1$s fylgist núna með þér</string>
@@ -121,9 +120,6 @@
     <string name="action_schedule_post">Tímasetja færslu</string>
     <string name="action_reset_schedule">Frumstilla</string>
     <string name="action_add_tab">Bæta við flipa</string>
-    <string name="action_links">Tenglar</string>
-    <string name="action_mentions">Tilvísanir</string>
-    <string name="action_hashtags">Myllumerki</string>
     <string name="action_open_reblogger">Opna höfund endurbirtingar</string>
     <string name="action_open_reblogged_by">Sýna endurbirtingar</string>
     <string name="action_open_faved_by">Birta eftirlæti</string>
@@ -299,10 +295,6 @@
     <string name="performing_lookup_title">Framkvæmi uppflettingu…</string>
     <string name="expand_collapse_all_posts">Þenja út / Fella saman allar stöðufærslur</string>
     <string name="action_open_post">Opna færslu</string>
-    <string name="restart_required">Endurræsing forrits er nauðsynleg</string>
-    <string name="restart_emoji">Það þarf að endurræsa Tusky til að breytingarnar taki gildi</string>
-    <string name="later">Seinna</string>
-    <string name="restart">Endurræsa</string>
     <string name="caption_systememoji">Sjálfgefið táknmyndasett á tækinu þínu</string>
     <string name="caption_blobmoji">Blob-táknmyndasettið sem þekkt var í Android 4.4–7.1</string>
     <string name="caption_twemoji">Staðlaða Mastodon táknmyndasettið</string>

@@ -46,7 +46,6 @@
     <string name="post_content_show_more">展开</string>
     <string name="post_content_show_less">折叠</string>
     <string name="message_empty">还没有内容</string>
-    <string name="footer_empty">还没有内容，向下拉动即可刷新</string>
     <string name="notification_reblog_format">%1$s 转嘟了你的嘟文</string>
     <string name="notification_favourite_format">%1$s 喜欢了你的嘟文</string>
     <string name="notification_follow_format">%1$s 关注了你</string>
@@ -105,9 +104,6 @@
     <string name="action_content_warning">设置内容提醒信息</string>
     <string name="action_emoji_keyboard">插入表情符号</string>
     <string name="action_add_tab">添加标签页</string>
-    <string name="action_links">链接</string>
-    <string name="action_mentions">提及</string>
-    <string name="action_hashtags">话题</string>
     <string name="action_open_reblogger">打开转嘟用户主页</string>
     <string name="action_open_reblogged_by">显示转嘟</string>
     <string name="action_open_faved_by">显示喜欢</string>
@@ -284,10 +280,6 @@
     <string name="performing_lookup_title">正在查询…</string>
     <string name="expand_collapse_all_posts">展开/折叠所有嘟文</string>
     <string name="action_open_post">打开嘟文</string>
-    <string name="restart_required">需要重启应用</string>
-    <string name="restart_emoji">你需要重启 Tusky 才能生效</string>
-    <string name="later">稍后</string>
-    <string name="restart">立即重启</string>
     <string name="caption_systememoji">系统内置的表情符号</string>
     <string name="caption_blobmoji">Android 4.4–7.1 的黄馒头表情符号</string>
     <string name="caption_twemoji">Mastodon 使用的表情符号</string>

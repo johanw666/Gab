@@ -46,7 +46,6 @@
     <string name="post_content_show_more">Pligrandigi</string>
     <string name="post_content_show_less">Malgrandigi</string>
     <string name="message_empty">Nenio tie ĉi.</string>
-    <string name="footer_empty">Nenio tie ĉi. Tiru malsupren por aktualigi!</string>
     <string name="notification_reblog_format">%1$s diskonigis vian mesaĝon</string>
     <string name="notification_favourite_format">%1$s stelumis vian mesaĝon</string>
     <string name="notification_follow_format">%1$s eksekvis vin</string>
@@ -104,9 +103,6 @@
     <string name="action_content_warning">Enhava averto</string>
     <string name="action_emoji_keyboard">Klavaro de emoĝioj</string>
     <string name="action_add_tab">Aldoni langeton</string>
-    <string name="action_links">Ligiloj</string>
-    <string name="action_mentions">Mencioj</string>
-    <string name="action_hashtags">Kradvortoj</string>
     <string name="action_open_reblogger">Montri la aŭtoron de la diskonigo</string>
     <string name="action_open_reblogged_by">Montri diskonigojn</string>
     <string name="action_open_faved_by">Montri stelumojn</string>
@@ -281,10 +277,6 @@
     <string name="performing_lookup_title">Serĉado…</string>
     <string name="expand_collapse_all_posts">Pligrandigi/malgrandigi ĉiujn mesaĝojn</string>
     <string name="action_open_post">Malfermi mesaĝon</string>
-    <string name="restart_required">Restartigo necesas</string>
-    <string name="restart_emoji">Vi devos restartigi Tusky por apliki ĉi tiujn ŝanĝojn</string>
-    <string name="later">Poste</string>
-    <string name="restart">Restartigi</string>
     <string name="caption_systememoji">Dekomenca emoĝiaro de via aparato</string>
     <string name="caption_blobmoji">La emoĝioj «Blob» konataj de Android 4.4−7.1</string>
     <string name="caption_twemoji">Norma emoĝiaro de Mastodon</string>
