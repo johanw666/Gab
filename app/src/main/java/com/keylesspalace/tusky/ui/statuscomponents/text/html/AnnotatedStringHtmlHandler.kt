@@ -95,7 +95,7 @@ internal class AnnotatedStringHtmlHandler(
 
     private fun pushPendingQuoteAnnotations() {
         repeat(pendingQuoteAnnotationCount) {
-            builder.pushStringAnnotation(QUOTE_ANNOTATION, blockLevel.toString())
+            builder.pushStringAnnotation(QUOTE_ANNOTATION, blockIndentLevel.toString())
         }
         pendingQuoteAnnotationCount = 0
     }

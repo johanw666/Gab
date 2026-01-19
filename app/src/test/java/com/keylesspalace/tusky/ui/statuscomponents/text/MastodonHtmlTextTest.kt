@@ -87,7 +87,7 @@ class MastodonHtmlTextTest {
             val (contentOut, trailingHashtags) = mastodonHtmlText("<blockquote>blockquote<blockquote>nested blockquote</blockquote></blockquote>")
             assertEqualAnnotatedString(
                 buildAnnotatedString {
-                    withAnnotation("QUOTE", "1") {
+                    withAnnotation("QUOTE", "8") {
                         withStyle(SpanStyle()) {
                             withStyle(
                                 ParagraphStyle(
@@ -108,7 +108,7 @@ class MastodonHtmlTextTest {
                                 )
                             ) {
                                 append("\n")
-                                withAnnotation("QUOTE", "2") {
+                                withAnnotation("QUOTE", "16") {
                                     withStyle(SpanStyle()) {
                                         append("nested blockquote")
                                     }
@@ -364,7 +364,7 @@ class MastodonHtmlTextTest {
                             )
                         )
                     ) {
-                        withAnnotation("QUOTE", "2") {
+                        withAnnotation("QUOTE", "8") {
                             withStyle(SpanStyle()) {
                                 append("a quote")
                             }
@@ -380,7 +380,7 @@ class MastodonHtmlTextTest {
                         )
                     ) {
                         append("\n")
-                        withAnnotation("QUOTE", "2") {
+                        withAnnotation("QUOTE", "8") {
                             withStyle(SpanStyle()) {
                                 append("another quote")
                             }

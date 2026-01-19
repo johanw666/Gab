@@ -30,7 +30,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush.Companion.verticalGradient
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.hideFromAccessibility
@@ -69,11 +68,10 @@ fun ColumnScope.StatusText(
 
     Box(modifier = modifier) {
         val quoteColor = tuskyColors.tertiaryTextColor
-        val density = LocalDensity.current
 
         val backgroundPainters = remember {
             TextBackgroundPainters(
-                QuotePainter(quoteColor, with(density) { 3.sp.toPx() }, with(density) { 8.sp.toPx() })
+                QuotePainter(quoteColor)
             )
         }
 

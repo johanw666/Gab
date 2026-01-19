@@ -19,9 +19,10 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextLayoutResult
+import androidx.compose.ui.unit.sp
 import com.keylesspalace.tusky.ui.statuscomponents.text.html.AnnotatedStringHtmlHandler.Companion.QUOTE_ANNOTATION
 
-class QuotePainter(val color: Color, val widthPx: Float, val indentPx: Float) : TextBackgroundPainter() {
+class QuotePainter(val color: Color) : TextBackgroundPainter() {
 
     override fun drawInstructions(layoutResult: TextLayoutResult): BackgroundDrawInstructions {
         val text = layoutResult.layoutInput.text
@@ -49,9 +50,12 @@ class QuotePainter(val color: Color, val widthPx: Float, val indentPx: Float) : 
                 val quoteStart = layoutResult.getLineTop(quoteStartLine)
                 val quoteEnd = layoutResult.getLineBottom(quoteEndLine)
 
-                val quoteIndent = (annotation.item.toInt() - 1) * indentPx
+                // the annotation item is the indent of the text, the indicator bar needs to be 8sp to the side
+                val quoteIndent = (annotation.item.toInt() - 8).sp.toPx()
 
-                drawRect(color, Offset(quoteIndent, quoteStart), Size(widthPx, quoteEnd - quoteStart))
+                val indicatorWidth = 3.sp.toPx()
+
+                drawRect(color, Offset(quoteIndent, quoteStart), Size(indicatorWidth, quoteEnd - quoteStart))
             }
         }
     }
