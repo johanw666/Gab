@@ -39,7 +39,6 @@
     <string name="post_content_warning_show_less">Mostrar mens</string>
     <string name="post_content_show_more">Desplegar</string>
     <string name="post_content_show_less">Replegar</string>
-    <string name="footer_empty">I a pas res aquí. Davalatz per actualizar !</string>
     <string name="notification_reblog_format">%1$s a partejat vòstra publicacion</string>
     <string name="notification_favourite_format">%1$s a aimat vòstra publicacion</string>
     <string name="notification_follow_format">%1$s vos sèc</string>
@@ -226,10 +225,6 @@
     <string name="performing_lookup_title">Recèrca…</string>
     <string name="expand_collapse_all_posts">Desplegar/Plegar totes los estatuts</string>
     <string name="action_open_post">Dobrir lo tut</string>
-    <string name="restart_required">Reaviada necessària</string>
-    <string name="restart_emoji">Vos caldrà reaviar Tusky per aplicar aquestes cambiaments</string>
-    <string name="later">Mai tard</string>
-    <string name="restart">Reaviar</string>
     <string name="caption_systememoji">Los emoji per defaut de vòstre aparelh</string>
     <string name="caption_blobmoji">Emoji basats en Blob emojis coneguts d\'Android 4.4–7.1</string>
     <string name="caption_twemoji">Emoji estandards de Mastodon</string>
@@ -259,9 +254,6 @@
     <string name="action_unfavourite">Suprimir lo favorit</string>
     <string name="action_view_account_preferences">Preferéncias del compte</string>
     <string name="action_add_tab">Ajustar un onglet</string>
-    <string name="action_links">Ligams</string>
-    <string name="action_mentions">Mencions</string>
-    <string name="action_hashtags">Etiquetas</string>
     <string name="action_open_reblogger">Dobrir l’autor del partatge</string>
     <string name="action_open_reblogged_by">Mostrar los retuts</string>
     <string name="action_open_faved_by">Mostrar los favorits</string>
@@ -301,7 +293,7 @@
     <string name="hint_search_people_list">Cercar lo monde que seguètz</string>
     <string name="action_add_to_list">Ajustar un compte a la lista</string>
     <string name="action_remove_from_list">Suprimir aqueste compte de la lista</string>
-    <string name="hint_describe_for_visually_impaired">quantity="one">Descriure lo contengut pels mal vesents</string>
+    <string name="hint_describe_for_visually_impaired">quantity="one"&gt;Descriure lo contengut pels mal vesents</string>
     <string name="license_cc_by_4">CC-BY 4.0</string>
     <string name="license_cc_by_sa_4">CC-BY-SA 4.0</string>
     <plurals name="favs">
