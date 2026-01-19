@@ -50,8 +50,6 @@
     <string name="title_links_dialog">Посилання</string>
     <string name="title_mentions_dialog">Згадки</string>
     <string name="action_open_faved_by">Показати, хто вподобав</string>
-    <string name="action_mentions">Згадки</string>
-    <string name="action_links">Посилання</string>
     <string name="action_content_warning">Попередження про вміст</string>
     <string name="action_access_scheduled_posts">Заплановані дописи</string>
     <string name="action_access_drafts">Чернетки</string>
@@ -95,7 +93,6 @@
     <string name="report_username_format">Поскаржитися на @%1$s</string>
     <string name="notification_follow_request_format">%1$s надсилає запит на підписку</string>
     <string name="notification_follow_format">%1$s підписується на вас</string>
-    <string name="footer_empty">Тут нічого немає. Потягніть вниз, щоб оновити!</string>
     <string name="message_empty">Нічого немає.</string>
     <string name="post_content_warning_show_less">Згорнути</string>
     <string name="post_content_warning_show_more">Показати більше</string>
@@ -246,10 +243,6 @@
     <string name="license_cc_by_sa_4">CC-BY-SA 4.0</string>
     <string name="license_cc_by_4">CC-BY 4.0</string>
     <string name="profile_badge_bot_text">Бот</string>
-    <string name="restart">Перезапустити</string>
-    <string name="later">Пізніше</string>
-    <string name="restart_emoji">Вам потрібно буде перезапустити Tusky, щоб застосувати ці зміни</string>
-    <string name="restart_required">Необхідно перезапустити застосунок</string>
     <string name="action_open_post">Відкрити допис</string>
     <string name="expand_collapse_all_posts">Розгорнути/згорнути всі дописи</string>
     <string name="send_post_notification_saved_content">Копію допису збережено до ваших чернеток</string>
@@ -413,7 +406,6 @@
     <string name="download_media">Завантажити медіа</string>
     <string name="action_open_media_n">Відкрити медіа #%1$d</string>
     <string name="hashtags">Гештеги</string>
-    <string name="action_hashtags">Гештеги</string>
     <string name="title_hashtags_dialog">Гештеги</string>
     <string name="action_open_reblogger">Відкрити автора поширення</string>
     <string name="action_add_tab">Додати вкладку</string>
