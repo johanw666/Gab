@@ -46,7 +46,6 @@
     <string name="post_content_show_more">Kibontás</string>
     <string name="post_content_show_less">Összecsukás</string>
     <string name="message_empty">Nincs itt semmi.</string>
-    <string name="footer_empty">Üres tartalom. Húzd le a frissítéshez!</string>
     <string name="notification_reblog_format">%1$s megtolta a bejegyzésedet</string>
     <string name="notification_favourite_format">%1$s kedvencnek jelölte a bejegyzésedet</string>
     <string name="notification_follow_format">%1$s bekövetett</string>
@@ -102,9 +101,6 @@
     <string name="action_content_warning">Tartalom figyelmeztetés</string>
     <string name="action_emoji_keyboard">Emodzsi billentyűzet</string>
     <string name="action_add_tab">Fül hozzáadása</string>
-    <string name="action_links">Hivatkozások</string>
-    <string name="action_mentions">Említések</string>
-    <string name="action_hashtags">Hashtagek</string>
     <string name="action_open_faved_by">Kedvencek megjelenítése</string>
     <string name="title_hashtags_dialog">Hashtagek</string>
     <string name="title_mentions_dialog">Említések</string>
@@ -235,10 +231,6 @@
     <string name="download_fonts">Először le kell töltened ezeket az emodzsikészleteket</string>
     <string name="performing_lookup_title">Keresés…</string>
     <string name="action_open_post">Bejegyzés megnyitása</string>
-    <string name="restart_required">Az app újraindítása szükséges</string>
-    <string name="restart_emoji">A beállítások érvényesítéséhez újra kell indítani a Tuskyt</string>
-    <string name="later">Később</string>
-    <string name="restart">Újraindítás</string>
     <string name="caption_systememoji">Az eszközöd alapértelmezett emodzsikészlete</string>
     <string name="caption_blobmoji">Az Android 4.4–7.1 Blob emodzsijai</string>
     <string name="caption_twemoji">A Mastodon alapértelmezett emodzsikészlete</string>
