@@ -46,7 +46,6 @@
     <string name="post_content_show_more">توسيع</string>
     <string name="post_content_show_less">طي</string>
     <string name="message_empty">لا شيء هنا.</string>
-    <string name="footer_empty">لا يوجد شيء هنا. اسحب للأسفل للتحديث!</string>
     <string name="notification_reblog_format">أعاد %1$s نشر منشورك</string>
     <string name="notification_favourite_format">أعجب %1$s بمنشورك</string>
     <string name="notification_follow_format">%1$s تابعك</string>
@@ -104,9 +103,6 @@
     <string name="action_content_warning">تحذير محتوى</string>
     <string name="action_emoji_keyboard">لوحة مفاتيح الرموز التعبيرية</string>
     <string name="action_add_tab">إضافة تبويب</string>
-    <string name="action_links">الروابط</string>
-    <string name="action_mentions">الإشارات</string>
-    <string name="action_hashtags">الوسوم</string>
     <string name="action_open_reblogged_by">إظهار إعادات النشر</string>
     <string name="action_open_faved_by">إظهار من فضلوا</string>
     <string name="title_hashtags_dialog">الوسوم</string>
@@ -281,10 +277,6 @@
     <string name="performing_lookup_title">جارٍ البحث…</string>
     <string name="expand_collapse_all_posts">توسيع/طي جميع المنشورات</string>
     <string name="action_open_post">فتح المنشور</string>
-    <string name="restart_required">يتطلب إعادة تشغيل التطبيق</string>
-    <string name="restart_emoji">يجب عليك إعادة تشغيل Tusky لتطبيق هذه التغييرات</string>
-    <string name="later">لاحقاً</string>
-    <string name="restart">إعادة تشغيل</string>
     <string name="caption_systememoji">مجموعة الرموز التعبيرية الافتراضية لجهازك</string>
     <string name="caption_blobmoji">رموز بلوب التعبيرية المعروفة من أندرويد 4.4–7.1</string>
     <string name="caption_twemoji">مجموعة الرموز التعبيرية القياسية لماستودون</string>
