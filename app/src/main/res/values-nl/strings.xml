@@ -46,7 +46,6 @@
     <string name="post_content_show_more">Uitklappen</string>
     <string name="post_content_show_less">Inklappen</string>
     <string name="message_empty">Hier is niets.</string>
-    <string name="footer_empty">Niets te zien. Swipe naar beneden om te verversen!</string>
     <string name="notification_reblog_format">%1$s boostte jouw bericht</string>
     <string name="notification_favourite_format">%1$s markeerde jouw bericht als favoriet</string>
     <string name="notification_follow_format">%1$s volgt jou</string>
@@ -104,9 +103,6 @@
     <string name="action_content_warning">Inhoudswaarschuwing</string>
     <string name="action_emoji_keyboard">Emojis</string>
     <string name="action_add_tab">Tab toevoegen</string>
-    <string name="action_links">Links</string>
-    <string name="action_mentions">Vermeldingen</string>
-    <string name="action_hashtags">Hashtags</string>
     <string name="action_open_reblogger">Auteur van deze boost openen</string>
     <string name="action_open_reblogged_by">Boosts tonen</string>
     <string name="action_open_faved_by">Favorieten tonen</string>
@@ -262,10 +258,6 @@
     <string name="performing_lookup_title">Aan het zoeken…</string>
     <string name="expand_collapse_all_posts">Alle berichten in- of uitklappen</string>
     <string name="action_open_post">Bericht openen</string>
-    <string name="restart_required">App opnieuw opstarten vereist</string>
-    <string name="restart_emoji">Je moet Tusky opnieuw opstarten om deze veranderingen te kunnen doorvoeren</string>
-    <string name="later">Later</string>
-    <string name="restart">Opnieuw opstarten</string>
     <string name="caption_systememoji">Standaard emojiset van jouw apparaat</string>
     <string name="caption_blobmoji">De Blob-emojis van Android 4.4–7.1</string>
     <string name="caption_twemoji">Standaard emojiset van Mastodon</string>
