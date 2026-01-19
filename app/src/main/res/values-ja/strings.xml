@@ -44,7 +44,6 @@
     <string name="post_content_show_more">続きを読む</string>
     <string name="post_content_show_less">閉じる</string>
     <string name="message_empty">何もありません。</string>
-    <string name="footer_empty">現在投稿はありません。更新するにはプルダウンしてください！</string>
     <string name="notification_reblog_format">%1$sさんが投稿をブーストしました</string>
     <string name="notification_favourite_format">%1$sさんが投稿をお気に入りに登録しました</string>
     <string name="notification_follow_format">%1$sさんにフォローされました</string>
@@ -101,8 +100,6 @@
     <string name="action_content_warning">注意書き</string>
     <string name="action_emoji_keyboard">絵文字キーボード</string>
     <string name="action_add_tab">タブの追加</string>
-    <string name="action_links">リンク</string>
-    <string name="action_hashtags">ハッシュタグ</string>
     <string name="title_hashtags_dialog">ハッシュタグ</string>
     <string name="title_links_dialog">リンク</string>
     <string name="download_image">%1$s をダウンロードしています</string>
@@ -259,10 +256,6 @@
     <string name="performing_lookup_title">検索中…</string>
     <string name="expand_collapse_all_posts">全て開く/閉じる</string>
     <string name="action_open_post">投稿を開く</string>
-    <string name="restart_required">アプリの再起動が必要です</string>
-    <string name="restart_emoji">これらの変更を適用するには、Tuskyの再起動が必要になります</string>
-    <string name="later">後で</string>
-    <string name="restart">再起動</string>
     <string name="caption_systememoji">あなたのデバイスのデフォルト絵文字セットです</string>
     <string name="caption_blobmoji">Android 4.4-7.1で知られる、Blob絵文字です</string>
     <string name="caption_twemoji">Mastodonの標準絵文字セットです</string>
@@ -330,7 +323,6 @@
     <string name="pref_title_thread_filter_keywords">会話</string>
     <string name="caption_notoemoji">Googleの現在の絵文字セットです</string>
     <string name="action_add_poll">投票</string>
-    <string name="action_mentions">返信</string>
     <string name="title_mentions_dialog">返信</string>
     <string name="dialog_redraft_post_warning">この投稿を削除し、下書きに戻しますか？</string>
     <string name="filter_dialog_remove_button">削除</string>
