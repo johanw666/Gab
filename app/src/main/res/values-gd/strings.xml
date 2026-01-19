@@ -212,10 +212,6 @@
     <string name="caption_twemoji">Seata stannardach nan Emoji aig Mastodon</string>
     <string name="caption_blobmoji">Emojis Blob aig Android 4.4–7.1</string>
     <string name="caption_systememoji">Seata bunaiteach nan Emojis air an uidheam agad</string>
-    <string name="restart">Ath-thòisich</string>
-    <string name="later">Uaireigin eile</string>
-    <string name="restart_emoji">Feumaidh tu Tusky ath-thòiseachadh gus na roghainnean seo a chur an sàs</string>
-    <string name="restart_required">Feumaidh tu an aplacaid ath-thòiseachadh</string>
     <string name="action_open_post">Fosgail am post</string>
     <string name="expand_collapse_all_posts">Leudaich/Co-theannaich gach post</string>
     <string name="performing_lookup_title">’Ga lorg…</string>
@@ -402,9 +398,6 @@
     <string name="title_hashtags_dialog">Tagaichean hais</string>
     <string name="action_open_faved_by">Seall na h-annsachdan</string>
     <string name="action_open_reblogger">Fosgail ùghdar a’ bhrosnachaidh</string>
-    <string name="action_hashtags">Tagaichean hais</string>
-    <string name="action_mentions">Iomraidhean</string>
-    <string name="action_links">Ceanglaichean</string>
     <string name="action_add_tab">Cuir taba ris</string>
     <string name="action_reject">Diùlt</string>
     <string name="action_accept">Gabh ris</string>
@@ -443,7 +436,6 @@
     <string name="report_username_format">Dèan gearan mu @%1$s</string>
     <string name="notification_follow_request_format">Dh’iarr %1$s leantainn ort</string>
     <string name="notification_follow_format">Lean %1$s ort</string>
-    <string name="footer_empty">Chan eil dad an-seo. Tarraing a-nuas airson ath-nuadhachadh!</string>
     <string name="message_empty">Chan eil dad an-seo.</string>
     <string name="post_content_show_less">Co-theannaich</string>
     <string name="post_content_show_more">Leudaich</string>
