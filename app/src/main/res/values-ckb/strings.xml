@@ -22,9 +22,6 @@
     <string name="action_open_faved_by">پیشاندانی دڵخوازەکان</string>
     <string name="action_open_reblogged_by">پیشاندانی بەهێزکردنەکان</string>
     <string name="action_open_reblogger">پۆستکەرەوەکە ببینە</string>
-    <string name="action_hashtags">هاشتاگ</string>
-    <string name="action_mentions">ئاماژەکان</string>
-    <string name="action_links">بەستەرەکان</string>
     <string name="action_add_tab">زیادکردنی سەرخشت</string>
     <string name="action_reset_schedule">ڕیسێت کردن</string>
     <string name="action_schedule_post">خشتەی توت</string>
@@ -97,7 +94,6 @@
     <string name="notification_follow_format">%1$s بەدواتا کەوت</string>
     <string name="notification_favourite_format">%1$s خۆشترین توتەکەت</string>
     <string name="notification_reblog_format">%1$s توتەکەتی بەرزکردەوە</string>
-    <string name="footer_empty">هیچ شتێک لێرە نیە ڕاکە خوارەوە بۆ نوێکردنەوە!</string>
     <string name="message_empty">هیچ شتێک لێرە نیە.</string>
     <string name="post_content_show_less">نوشتانەوە</string>
     <string name="post_content_show_more">فراوانکردن</string>
@@ -335,10 +331,6 @@
     <string name="caption_twemoji">سێتی ئیمۆجی پێوانەیی ماتۆدۆن</string>
     <string name="caption_blobmoji">ئیمۆجی Blob لە ئەندرۆید ەوە ناسراوە 4.4–7.1</string>
     <string name="caption_systememoji">سێتی ئیمۆجی بنەڕەتی ئامێرەکەت</string>
-    <string name="restart">دەستپێکردنەوە</string>
-    <string name="later">دواتر</string>
-    <string name="restart_emoji">تۆ پێویستە توسکی دەستپێبکەیتەوە بۆ ئەوەی ئەم گۆڕانکاریانە جێبەجێ بکەیت</string>
-    <string name="restart_required">دەسپێکردنەوەی کاربەرنامە پێویستە</string>
     <string name="action_open_post">کردنەوە توت</string>
     <string name="expand_collapse_all_posts">فراوانکردن/نوشتانەوەی هەموو بارەکان</string>
     <string name="performing_lookup_title">ئەنجامدانی گەڕان…</string>
