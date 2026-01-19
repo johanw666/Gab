@@ -47,9 +47,6 @@
     <string name="action_delete">Vymazať</string>
     <string name="action_delete_and_redraft">Vymazať a prepísať</string>
     <string name="action_reset_schedule">Obnoviť</string>
-    <string name="action_links">Odkazy</string>
-    <string name="action_mentions">Zmienky</string>
-    <string name="action_hashtags">Hashtagy</string>
     <string name="action_open_faved_by">Zobraziť obľúbené</string>
     <string name="title_hashtags_dialog">Hashtagy</string>
     <string name="title_mentions_dialog">Zmienky</string>
@@ -99,8 +96,6 @@
     <string name="send_post_notification_channel_name">Odosielanie tootov</string>
     <string name="send_post_notification_cancel_title">Odosielanie bolo zrušené</string>
     <string name="performing_lookup_title">Vyhľadávanie…</string>
-    <string name="later">Neskôr</string>
-    <string name="restart">Reštartovať</string>
     <string name="profile_badge_bot_text">Robot</string>
     <string name="license_cc_by_4">CC-BY 4.0</string>
     <string name="license_cc_by_sa_4">CC-BY-SA 4.0</string>
@@ -136,7 +131,6 @@
     <string name="post_replied_self">Pokračovanie vlákna</string>
     <string name="post_edited">Upravené %1$s</string>
     <string name="message_empty">Nič tu nie je.</string>
-    <string name="footer_empty">Nič tu nie je. Obnovte potiahnutím dole!</string>
     <string name="notification_follow_format">%1$s vás teraz sleduje</string>
     <string name="notification_follow_request_format">%1$s požiadal/a aby vás mohl/a sledovať</string>
     <string name="notification_sign_up_format">%1$s sa zaregistroval/a</string>
@@ -427,8 +421,6 @@
     <string name="system_default">Predvolené nastavenie systému</string>
     <string name="download_fonts">Najprv si budete musieť stiahnuť tieto sady emoji</string>
     <string name="emoji_style">Štýl emoji</string>
-    <string name="restart_required">Vyžaduje sa reštart aplikácie</string>
-    <string name="restart_emoji">Pre použitie týchto zmien reštartujte aplikáciu Tusky</string>
     <string name="caption_systememoji">Predvolená sada emoji vášho zariadenia</string>
     <string name="caption_blobmoji">Blob Emoji známa z Androidu 4.4–7.1</string>
     <string name="caption_twemoji">Štandardná sada emoji na Mastodone</string>
