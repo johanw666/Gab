@@ -69,7 +69,6 @@
     <string name="notification_follow_format">%1$s seguiute</string>
     <string name="notification_favourite_format">%1$s fixo favorita a publicación</string>
     <string name="notification_reblog_format">%1$s promoveu a túa publicación</string>
-    <string name="footer_empty">Nada por aquí. Arrastra cara abaixo para actualizar!</string>
     <string name="message_empty">Nada por aquí.</string>
     <string name="post_content_show_less">Contraer</string>
     <string name="post_content_show_more">Expandir</string>
@@ -227,10 +226,6 @@
     <string name="caption_twemoji">Conxunto de emojis estándar en Mastodon</string>
     <string name="caption_blobmoji">Os emojis Blob coñecidos de Android 4.4-7.1</string>
     <string name="caption_systememoji">O conxunto de emojis predeterminados do sistema</string>
-    <string name="restart">Reiniciar</string>
-    <string name="later">Máis tarde</string>
-    <string name="restart_emoji">Deberás reiniciar Tusky para aplicar os cambios</string>
-    <string name="restart_required">Require reiniciar app</string>
     <string name="action_open_post">Abrir publicación</string>
     <string name="expand_collapse_all_posts">Expandir/Contraer todas as publicacións</string>
     <string name="performing_lookup_title">Facendo a busca…</string>
@@ -459,9 +454,6 @@
     <string name="action_open_faved_by">Mostrar favoritos</string>
     <string name="action_open_reblogged_by">Mostrar promocións</string>
     <string name="action_open_reblogger">Abrir autor da promoción</string>
-    <string name="action_hashtags">Cancelos</string>
-    <string name="action_mentions">Mencións</string>
-    <string name="action_links">Ligazóns</string>
     <string name="action_add_tab">Engadir pestana</string>
     <string name="action_reset_schedule">Restablecer</string>
     <string name="action_schedule_post">Programar publicación</string>
