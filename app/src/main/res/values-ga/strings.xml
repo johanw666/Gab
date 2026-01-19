@@ -92,8 +92,6 @@
     <string name="action_open_faved_by">Taispeáin toghanna</string>
     <string name="action_open_reblogged_by">Taispeáin athchraolta</string>
     <string name="action_open_reblogger">Oscail údar an athchraolta</string>
-    <string name="action_mentions">Buaicphointí</string>
-    <string name="action_links">Naisc ghréasáin</string>
     <string name="action_add_tab">Cuir Tab leis</string>
     <string name="action_schedule_post">Sceidealaigh Postáil</string>
     <string name="action_emoji_keyboard">Méarchlár Emoji</string>
@@ -239,7 +237,6 @@
     <string name="notification_follow_request_format">D’iarr %1$s tú a leanúint</string>
     <string name="notification_follow_format">lean %1$s thú</string>
     <string name="notification_reblog_format">D\'athchraol %1$s do phostáil</string>
-    <string name="footer_empty">Níl aon rud anseo. Tarraingt anuas chun athnuachan a dhéanamh!</string>
     <string name="message_empty">Níl aon rud anseo.</string>
     <string name="post_content_show_less">Fill</string>
     <string name="filter_dialog_whole_word_description">Nuair atá an eochairfhocal nó an frása alfa-uimhriúil amháin, ní chuirfear i bhfeidhm é ach má oireann sé don fhocal iomlán</string>
@@ -247,7 +244,6 @@
     <string name="notification_favourite_format">Thogh %1$s do phostáil</string>
     <string name="action_unmute_desc">Unmute %1$s</string>
     <string name="action_mute_conversation">Comhrá tost</string>
-    <string name="action_hashtags">Clibeanna hash</string>
     <string name="title_hashtags_dialog">Hashtags</string>
     <string name="dialog_whats_an_instance">Is féidir an seoladh nó fearann a ghabhann le hásc ar bith a chur isteach anseo, mar shampla mastodon.social, icosahedron.website, social.tchncs.de, agus <a href="https://instances.social">níos mó!</a> \u0020 \n \u0020 \nMuna bhfuil cuntas agat fós, is féidir leat ainm an áisc ar mhaith leat a bheith páirteach ann a chur isteach, agus cuntas a chruthú ann. \u0020 \n \u0020 \nIs éard atá i gceist le hásc na láthair amháin ina ndéantar do chuntas a óstáil, ach is féidir leat cumarsáid a dhéanamh go héasca le daoine eile agus iad a leanúint ar áisc eile mar a bheadh sibh ar an suíomh céanna. \u0020 \n \u0020 \nIs féidir tuilleadh faisnéise a fháil ag <a href="https://joinmastodon.org"> joinmastodon.org </a>.</string>
     <string name="about_project_site">Suíomh Gréasáin an tionscadail: \n https://tusky.app</string>
@@ -270,7 +266,6 @@
     <string name="filter_dialog_remove_button">Bain</string>
     <string name="pref_title_public_filter_keywords">Amlínte poiblí</string>
     <string name="expand_collapse_all_posts">Leathnaigh/Fill na postálacha go léir</string>
-    <string name="restart_emoji">Beidh ort Tusky a atosú chun na hathruithe seo a chur i bhfeidhm</string>
     <string name="caption_notoemoji">Sraith emoji reatha Google</string>
     <string name="license_description">Tá cód agus sócmhainní ó na tionscadail foinse oscailte seo a leanas i Tusky:</string>
     <string name="label_remote_account">Féadfaidh an fhaisnéis thíos próifíl an úsáideora a léiriú go neamhiomlán. Brúigh chun próifíl iomlán a oscailt sa bhrabhsálaí.</string>
@@ -317,9 +312,6 @@
     <string name="download_fonts">Caithfear na tacair emoji seo a íoslódáil ar dtús</string>
     <string name="performing_lookup_title">Amharc taibhithe…</string>
     <string name="action_open_post">Oscail postáil</string>
-    <string name="restart_required">Atosú aip de dhíth</string>
-    <string name="later">Níos déanaí</string>
-    <string name="restart">Atosaigh</string>
     <string name="caption_systememoji">Tacar emoji réamhshocraithe do ghléas</string>
     <string name="caption_blobmoji">Na emojis Blob atá ar eolas ó Android 4.4-7.1</string>
     <string name="caption_twemoji">Tacar emoji caighdeánach Mastodon</string>
