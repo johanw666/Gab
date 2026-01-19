@@ -87,7 +87,6 @@
     <string name="dialog_mute_hide_notifications">Απόκρυψη ειδοποιήσεων</string>
     <string name="action_unbookmark">Αφαίρεση σελιδοδείκτη</string>
     <string name="action_content_warning">Προειδοποίηση περιεχομένου</string>
-    <string name="action_links">Σύνδεσμοι</string>
     <string name="login_connection">Σύνδεση…</string>
     <string name="action_access_scheduled_posts">Προγραμματισμένες δημοσιεύσεις</string>
     <string name="action_schedule_post">Προγραμματισμός δημοσίευσης</string>
@@ -151,7 +150,6 @@
     <string name="title_public_trending_statuses">Δημοφιλείς δημοσιεύσεις</string>
     <string name="title_public_trending_hashtags">Δημοφιλείς ετικέτες</string>
     <string name="notifications_clear">Διαγραφή</string>
-    <string name="action_mentions">Μνείες</string>
     <string name="title_media">Πολυμέσα</string>
     <string name="compose_delete_draft">Διαγραφή πρόχειρου;</string>
     <string name="title_lists">Λίστες</string>
