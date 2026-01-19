@@ -46,7 +46,6 @@
     <string name="post_content_show_more">Utvid</string>
     <string name="post_content_show_less">Skjul</string>
     <string name="message_empty">Ingenting her.</string>
-    <string name="footer_empty">Ingenting her. Dra ned for å oppdatere!</string>
     <string name="notification_reblog_format">%1$s delte innlegget ditt</string>
     <string name="notification_favourite_format">%1$s favoriserte innlegget ditt</string>
     <string name="notification_follow_format">%1$s følger deg</string>
@@ -104,9 +103,6 @@
     <string name="action_content_warning">Innholdsadvarsel</string>
     <string name="action_emoji_keyboard">Emoji-tastatur</string>
     <string name="action_add_tab">Legg til fane</string>
-    <string name="action_links">Lenker</string>
-    <string name="action_mentions">Nevnelser</string>
-    <string name="action_hashtags">Emneknagger</string>
     <string name="action_open_reblogger">Åpne deler</string>
     <string name="action_open_reblogged_by">Vis delinger</string>
     <string name="action_open_faved_by">Vis favoritter</string>
@@ -261,10 +257,6 @@
     <string name="performing_lookup_title">Søker…</string>
     <string name="expand_collapse_all_posts">Utvid/Gjem alle statuser</string>
     <string name="action_open_post">Åpne tut</string>
-    <string name="restart_required">Omstart av applikasjonen kreves</string>
-    <string name="restart_emoji">Du må starte Tusky på nytt for at endringene blir aktivert</string>
-    <string name="later">Senere</string>
-    <string name="restart">Start på nytt</string>
     <string name="caption_systememoji">Standard-emojis for din enhet</string>
     <string name="caption_blobmoji">Blob-emojis kjent fra Android 4.4–7.1</string>
     <string name="caption_twemoji">Mastadons standard emoji-samling</string>
