@@ -47,6 +47,7 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -250,8 +251,21 @@ class ViewThreadFragment :
             val avatarMargin = with(LocalDensity.current) { 14.dp.toPx() }
             val lineThickness = with(LocalDensity.current) { 4.dp.toPx() }
             val avatarSize = with(LocalDensity.current) { 48.dp.toPx() }
+            val initialScrollOffset = with(LocalDensity.current) { -100.dp.toPx() }.toInt()
 
-            val state = rememberLazyListState(initialFirstVisibleItemIndex = statuses.indexOfFirst { it.isDetailed }, initialFirstVisibleItemScrollOffset = -120)
+            val state = rememberLazyListState(initialFirstVisibleItemIndex = statuses.indexOfFirst { it.isDetailed }, initialFirstVisibleItemScrollOffset = initialScrollOffset)
+
+            // workaround so LazyColumn correctly keeps the position even in large threads https://issuetracker.google.com/issues/273025639
+            SideEffect {
+                val oldFirstItem = state.layoutInfo.visibleItemsInfo.firstOrNull()
+                if (oldFirstItem != null && statuses.getOrNull(oldFirstItem.index)?.id != oldFirstItem.key) {
+                    val newIndex = statuses.indexOfFirst { it.id == oldFirstItem.key }
+                    if (newIndex != -1) {
+                        state.requestScrollToItem(newIndex, state.firstVisibleItemScrollOffset)
+                    }
+                }
+            }
+
             LazyColumn(
                 state = state,
                 modifier = Modifier.fillMaxSize(),
