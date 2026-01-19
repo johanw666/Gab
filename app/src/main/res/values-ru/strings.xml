@@ -46,7 +46,6 @@
     <string name="post_content_show_more">Еще</string>
     <string name="post_content_show_less">Свернуть</string>
     <string name="message_empty">Тут ничего нет.</string>
-    <string name="footer_empty">Тут ничего нет. Потяните вниз, чтобы обновить!</string>
     <string name="notification_reblog_format">%1$s продвинул(а) ваш пост</string>
     <string name="notification_favourite_format">%1$s добавил(а) ваш пост в избранное</string>
     <string name="notification_follow_format">%1$s подписался(-лась) на вас</string>
@@ -105,9 +104,6 @@
     <string name="action_content_warning">Предупреждение о содержании</string>
     <string name="action_emoji_keyboard">Эмодзи-клавиатура</string>
     <string name="action_add_tab">Добавить вкладку</string>
-    <string name="action_links">Ссылки</string>
-    <string name="action_mentions">Упоминания</string>
-    <string name="action_hashtags">Хэштеги</string>
     <string name="action_open_reblogger">Перейти к продвинувшему пост</string>
     <string name="action_open_reblogged_by">Показать продвижения</string>
     <string name="action_open_faved_by">Показать избранное</string>
@@ -307,10 +303,6 @@
     <string name="performing_lookup_title">Выполняем поиск…</string>
     <string name="expand_collapse_all_posts">Развернуть/свернуть все посты</string>
     <string name="action_open_post">Открыть пост</string>
-    <string name="restart_required">Требуется перезапуск приложения</string>
-    <string name="restart_emoji">Перезапустите Tusky, чтобы изменения вступили в силу</string>
-    <string name="later">Позже</string>
-    <string name="restart">Перезапустить</string>
     <string name="caption_systememoji">Набор эмодзи по умолчанию на этом устройстве</string>
     <string name="caption_blobmoji" tools:ignore="TypographyDashes">Набор эмодзи Blob из Android 4.4-7.1</string>
     <string name="caption_twemoji">Стандартный набор эмодзи в Mastodon</string>
