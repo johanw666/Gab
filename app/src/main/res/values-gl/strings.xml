@@ -814,4 +814,6 @@
     <string name="quote_account_muted">Esta publicación está oculta porque silenciaches a %1$s.</string>
     <string name="quote_domain_blocked">Esta publicación está oculta porque bloqueaches %1$s.</string>
     <string name="quote_hidden_show_anyway">Mostrar igualmente</string>
+    <string name="notification_quote_name">Citas</string>
+    <string name="notification_quote_description">Notificacións cando se citen as túas publicacións</string>
 </resources>
