@@ -6,6 +6,20 @@
 
 ### Significant bug fixes
 
+## v32.0
+
+### New features and other improvements
+
+- Timelines (everything that displays posts) has been completely rewritten with Jetpack Compose https://codeberg.org/tusky/Tusky/issues/5272
+  - Support for displaying quote posts https://codeberg.org/tusky/Tusky/pulls/5337
+  - Support more than 4 media attachments
+  - Improved HTML rendering
+- New Account Preference: Select the default quote policy for your posts https://codeberg.org/tusky/Tusky/issues/5273
+- A compose button has been added to the hashtags view that will start a post with the selected hashtag. https://codeberg.org/tusky/Tusky/issues/5275
+
+### Significant bug fixes
+- The timeline position is now saved reliably in "oldest first" reading mode
+
 ## v31.1
 
 ### Significant bug fixes

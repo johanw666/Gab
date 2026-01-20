@@ -27,16 +27,16 @@ final def CUSTOM_INSTANCE = ""
 final def SUPPORT_ACCOUNT_URL = "https://mastodon.social/@Tusky"
 
 android {
-    compileSdk 36
-    namespace "com.keylesspalace.tusky"
+    compileSdk = 36
+    namespace = "com.keylesspalace.tusky"
     defaultConfig {
-        applicationId APP_ID
-        namespace "com.keylesspalace.tusky"
-        minSdk 24
-        targetSdk 36
-        versionCode 138
-        versionName "31.1"
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        applicationId = APP_ID
+        namespace = "com.keylesspalace.tusky"
+        minSdk = 24
+        targetSdk = 36
+        versionCode = 139
+        versionName = "32 beta 01"
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
 
         resValue "string", "app_name", APP_NAME
