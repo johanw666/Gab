@@ -795,4 +795,6 @@
     <string name="quote_hidden_show_anyway">Vẫn hiện</string>
     <string name="content_hidden_description">Nội dung bị ẩn</string>
     <string name="action_reveal_media">Tiết lộ media</string>
+    <string name="notification_quote_description">Thông báo khi tút của bạn được trích dẫn</string>
+    <string name="notification_quote_name">Trích dẫn</string>
 </resources>
