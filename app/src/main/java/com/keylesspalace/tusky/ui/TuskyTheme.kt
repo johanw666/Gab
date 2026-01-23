@@ -153,7 +153,7 @@ fun TuskyTheme(
         val colors = if (!useDarkTheme) {
             LightColorScheme
         } else {
-            if (LocalPreferences.current.theme == AppTheme.BLACK) {
+            if (LocalPreferences.current.theme == AppTheme.BLACK || LocalPreferences.current.theme == AppTheme.AUTO_SYSTEM_BLACK) {
                 BlackColorScheme
             } else {
                 DarkColorScheme
@@ -162,7 +162,7 @@ fun TuskyTheme(
         val tuskyColors = if (!useDarkTheme) {
             LightTuskyColorScheme
         } else {
-            if (LocalPreferences.current.theme == AppTheme.BLACK) {
+            if (LocalPreferences.current.theme == AppTheme.BLACK || LocalPreferences.current.theme == AppTheme.AUTO_SYSTEM_BLACK) {
                 BlackTuskyColorScheme
             } else {
                 DarkTuskyColorScheme
