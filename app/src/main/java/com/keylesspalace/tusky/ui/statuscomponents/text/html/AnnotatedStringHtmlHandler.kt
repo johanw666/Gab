@@ -476,7 +476,11 @@ internal class AnnotatedStringHtmlHandler(
     }
 
     private fun writeText(text: String) {
-        textWriter.write(text)
+        if (preformattedLevel == 0) {
+            textWriter.write(text)
+        } else {
+            textWriter.writePreformatted(text)
+        }
     }
 
     companion object {

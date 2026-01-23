@@ -427,6 +427,55 @@ class MastodonHtmlTextTest {
         }
     }
 
+    @Test
+    fun `should remove extra whitespace from between blocks but keep it in text`() {
+        val input = "<p>This<br/> is<br/>  a<br/>   test</p>\n<blockquote>\n <p>This is a blockquote.</p>\n</blockquote>\n<p>\nTest</p>\n<p>\n\n"
+        composeTestRule.setContent {
+            val (contentOut, trailingHashtags) = mastodonHtmlText(input)
+            assertEqualAnnotatedString(
+                buildAnnotatedString {
+                    withStyle(
+                        ParagraphStyle(
+                            textIndent = TextIndent(
+                                firstLine = 0.sp,
+                                restLine = 0.sp
+                            )
+                        )
+                    ) {
+                        append("This\n is\n  a\n   test")
+                    }
+                    withStyle(
+                        ParagraphStyle(
+                            textIndent = TextIndent(
+                                firstLine = 8.sp,
+                                restLine = 8.sp
+                            )
+                        )
+                    ) {
+                        append("\n")
+                        withAnnotation("QUOTE", "8") {
+                            withStyle(SpanStyle()) {
+                                append("This is a blockquote.")
+                            }
+                        }
+                    }
+                    withStyle(
+                        ParagraphStyle(
+                            textIndent = TextIndent(
+                                firstLine = 0.sp,
+                                restLine = 0.sp
+                            )
+                        )
+                    ) {
+                        append("\nTest")
+                    }
+                },
+                contentOut
+            )
+            assertEquals(emptyList<String>(), trailingHashtags)
+        }
+    }
+
     /** helper methods **/
 
     @Composable

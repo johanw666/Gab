@@ -32,6 +32,8 @@ internal class HtmlTextWriter(
         fun onWriteContentStart()
     }
 
+    private var isBlockStart = true
+
     // A negative value indicates new lines should be skipped for the next paragraph
     private var pendingNewLineCount = -1
 
@@ -42,12 +44,30 @@ internal class HtmlTextWriter(
                 pendingNewLineCount = maxOf(it, newLineCount)
             }
         }
+        isBlockStart = true
     }
 
     fun write(text: String) {
+        if (isBlockStart) {
+            val contentStartIndex = text.indexOfFirst(0) { !it.isWhitespace() }
+            if (contentStartIndex != -1) {
+                writePendingNewLines(0)
+                callbacks?.onWriteContentStart()
+                output.append(text, contentStartIndex, text.length)
+            }
+            isBlockStart = false
+        } else {
+            writePendingNewLines(0)
+            callbacks?.onWriteContentStart()
+            output.append(text)
+        }
+    }
+
+    fun writePreformatted(text: String) {
         writePendingNewLines(0)
         callbacks?.onWriteContentStart()
         output.append(text)
+        isBlockStart = false
     }
 
     fun writeLineBreak() {
