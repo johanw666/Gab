@@ -4,11 +4,11 @@
     <string name="error_network">Ein Netzwerkfehler ist aufgetreten. Bitte überprüfe deine Internetverbindung und versuche es erneut.</string>
     <string name="error_empty">Das darf nicht leer sein.</string>
     <string name="error_invalid_domain">Ungültige Domain angegeben</string>
-    <string name="error_failed_app_registration">Authentifizieren mit dieser Instanz fehlgeschlagen. Falls das Problem weiter besteht, versuche dich über den Browser anzumelden.</string>
-    <string name="error_no_web_browser_found">Kein Webbrowser gefunden.</string>
-    <string name="error_authorization_unknown">Ein unbekannter Fehler ist bei der Autorisierung aufgetreten. Falls das Problem weiter besteht, versuche dich über den Browser anzumelden.</string>
-    <string name="error_authorization_denied">Autorisierung wurde abgelehnt. Wenn du dir sicher bist, dass du die korrekten Anmeldedaten eingegeben hast, versuche dich über den Browser anzumelden.</string>
-    <string name="error_retrieving_oauth_token">Es konnte kein Anmelde-Token abgerufen werden. Falls das Problem weiter besteht, versuche dich über den Browser anzumelden.</string>
+    <string name="error_failed_app_registration">Die Authentifizierung mit dieser Instanz ist fehlgeschlagen. Wenn das Problem weiterhin besteht, versuche dich über das Menü im Browser anzumelden.</string>
+    <string name="error_no_web_browser_found">Kein geeigneter Webbrowser gefunden.</string>
+    <string name="error_authorization_unknown">Ein unbekannter Fehler ist bei der Autorisierung aufgetreten. Wenn dieser Fehler weiterhin besteht, versuche dich über die Option \"Mit Browser anmelden\" im Menü anzumelden.</string>
+    <string name="error_authorization_denied">Die Autorisierung wurde abgelehnt. Wenn du dir sicher bist, dass du die korrekten Anmeldedaten eingegeben hast, versuche dich über die Option \"Mit Browser anmelden\" im Menü anzumelden.</string>
+    <string name="error_retrieving_oauth_token">Es konnte kein Anmelde-Token abgerufen werden. Falls das Problem weiter besteht, versuche dich über die Option \"Mit Browser anmelden\" im Menü anzumelden.</string>
     <string name="error_compose_character_limit">Der Beitrag ist zu lang!</string>
     <string name="error_media_upload_type">Dieser Dateityp kann nicht hochgeladen werden.</string>
     <string name="error_media_upload_opening">Die Datei konnte nicht geöffnet werden.</string>
@@ -821,4 +821,6 @@
     <string name="quote_hidden_show_anyway">Trotzdem anzeigen</string>
     <string name="content_hidden_description">Inhalt versteckt</string>
     <string name="action_reveal_media">Anhang anzeigen</string>
+    <string name="notification_quote_description">Benachrichtigungen, wenn deine Beiträge zitiert werden</string>
+    <string name="notification_quote_name">Zitate</string>
 </resources>

@@ -739,7 +739,7 @@
     </plurals>
     <string name="notification_info_reply">Responder</string>
     <string name="notification_info_private_mention">Menção privada</string>
-    <string name="notification_info_mention">Mencionar</string>
+    <string name="notification_info_mention">Menção</string>
     <string name="notification_info_private_reply">Resposta privada</string>
     <string name="accept_follow_request_failure">Erro ao aceitar pedido de %1$s: %2$s para seguir</string>
     <string name="filter_action_blur">Desfoque</string>

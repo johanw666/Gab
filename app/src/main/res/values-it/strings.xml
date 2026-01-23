@@ -840,4 +840,6 @@
         <item quantity="other">%1$s citazioni</item>
     </plurals>
     <string name="action_reveal_media">Mostra media</string>
+    <string name="notification_quote_description">Notifiche quando i tuoi post vengono citati</string>
+    <string name="notification_quote_name">Citazioni</string>
 </resources>
