@@ -36,7 +36,7 @@ steps:
       - echo $KEYSTORE | base64 -d > app/Tusky.jks
       # update versioncode relative to build number
       - export VERSION_CODE=$(( ${CI_PIPELINE_NUMBER} + 12000 ))
-      - sed -i'.original' -e "s/^\([[:space:]]*versionCode[[:space:]]*\)[0-9]*/\\1$VERSION_CODE/" app/build.gradle
+      - sed -i'.original' -e "s/^\([[:space:]]*versionCode[[:space:]]=[[:space:]]*\)[0-9]*/\\1$VERSION_CODE/" app/build.gradle
       # build and upload
       - export GRADLE_USER_HOME=$PWD/.gradle
       - ./gradlew app:bundleGreenRelease app:publishGreenReleaseBundle
