@@ -804,4 +804,6 @@
     <string name="quote_domain_blocked">此嘟文被隐藏，因为你拦截了 %1$s。</string>
     <string name="quote_hidden_show_anyway">仍要显示</string>
     <string name="action_reveal_media">揭示媒体</string>
+    <string name="notification_quote_name">引用</string>
+    <string name="notification_quote_description">当嘟文被引用时进行通知</string>
 </resources>
