@@ -161,7 +161,8 @@ class NotificationRequestDetailsFragment :
             loadMoreListener = this,
             notificationActionListener = this,
             accountActionListener = this,
-            instanceName = activeAccount.domain
+            instanceName = activeAccount.domain,
+            accountManager = accountManager
         ).apply {
             addLoadStateListener { loadState ->
                 binding.progressBar.visible(

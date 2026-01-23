@@ -174,7 +174,8 @@ class NotificationsFragment :
             loadMoreListener = this,
             accountActionListener = this,
             statusDisplayOptions = statusDisplayOptions,
-            instanceName = activeAccount.domain
+            instanceName = activeAccount.domain,
+            accountManager = accountManager
         )
         this.notificationsAdapter = adapter
         binding.recyclerView.layoutManager = LinearLayoutManager(context)

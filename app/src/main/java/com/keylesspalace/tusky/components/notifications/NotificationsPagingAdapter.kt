@@ -17,7 +17,9 @@ package com.keylesspalace.tusky.components.notifications
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.ComposeView
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.findViewTreeViewModelStoreOwner
 import androidx.lifecycle.setViewTreeViewModelStoreOwner
 import androidx.paging.PagingDataAdapter
@@ -36,6 +38,7 @@ import com.keylesspalace.tusky.databinding.ItemReportNotificationBinding
 import com.keylesspalace.tusky.databinding.ItemSeveredRelationshipNotificationBinding
 import com.keylesspalace.tusky.databinding.ItemStatusFilteredBinding
 import com.keylesspalace.tusky.databinding.ItemUnknownNotificationBinding
+import com.keylesspalace.tusky.db.AccountManager
 import com.keylesspalace.tusky.entity.Notification
 import com.keylesspalace.tusky.interfaces.AccountActionListener
 import com.keylesspalace.tusky.interfaces.LoadMoreActionListener
@@ -65,7 +68,8 @@ class NotificationsPagingAdapter(
     private val loadMoreListener: LoadMoreActionListener<NotificationViewData.LoadMore>,
     private val notificationActionListener: NotificationActionListener,
     private val accountActionListener: AccountActionListener,
-    private val instanceName: String
+    private val instanceName: String,
+    private val accountManager: AccountManager
 ) : PagingDataAdapter<NotificationViewData, RecyclerView.ViewHolder>(NotificationsDifferCallback) {
 
     var mediaPreviewEnabled: Boolean
@@ -181,6 +185,7 @@ class NotificationsPagingAdapter(
                                 TuskyTheme {
                                     // unfortunately servers sometimes send null statuses for notification types where they should not
                                     if (notification.statusViewData != null) {
+                                        val accounts by accountManager.accountsFlow.collectAsStateWithLifecycle()
                                         Status(
                                             notification.statusViewData,
                                             statusListener,
@@ -191,7 +196,7 @@ class NotificationsPagingAdapter(
                                                 )
                                             },
                                             translationEnabled = false,
-                                            accounts = emptyList(),
+                                            accounts = accounts,
                                             showDivider = false
                                         )
                                     }
