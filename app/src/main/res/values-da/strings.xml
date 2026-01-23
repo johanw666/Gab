@@ -243,7 +243,7 @@
     <string name="notification_unknown_description">Ukendt notifikationstype</string>
     <string name="notification_channel_other">Andre</string>
     <string name="notification_channel_admin">Admin</string>
-    <string name="notification_channel_admin_description">Administratornotifikationer, f.eks. nye anmeldelser eller tilmeldinger</string>
+    <string name="notification_channel_admin_description">Admin-notifikationer, f.eks. nye anmeldelser eller tilmeldinger</string>
     <string name="notification_mention_format">%1$s omtalte dig</string>
     <string name="notification_summary_large">%1$s, %2$s, %3$s og %4$d andre</string>
     <string name="notification_summary_medium">%1$s, %2$s og %3$s</string>
@@ -814,4 +814,6 @@
     <string name="quote_pending">Indlæg afventer</string>
     <string name="content_hidden_description">Indhold skjult</string>
     <string name="quote_account_muted">Dette indlæg er skjult, fordi du har skjult %1$s.</string>
+    <string name="notification_quote_name">Citater</string>
+    <string name="notification_quote_description">Notifikationer, når dine indlæg citeres</string>
 </resources>
