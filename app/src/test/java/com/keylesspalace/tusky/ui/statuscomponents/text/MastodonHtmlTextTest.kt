@@ -123,6 +123,30 @@ class MastodonHtmlTextTest {
         }
     }
 
+    @Test
+    fun `should correctly handle empty blockquotes`() {
+        val input = "<blockquote></blockquote><p>Test</p>"
+        composeTestRule.setContent {
+            val (contentOut, trailingHashtags) = mastodonHtmlText(input)
+            assertEqualAnnotatedString(
+                buildAnnotatedString {
+                    withStyle(
+                        ParagraphStyle(
+                            textIndent = TextIndent(
+                                firstLine = 0.sp,
+                                restLine = 0.sp
+                            )
+                        )
+                    ) {
+                        append("Test")
+                    }
+                },
+                contentOut
+            )
+            assertEquals(emptyList<String>(), trailingHashtags)
+        }
+    }
+
     /** real fedi posts **/
 
     @Test

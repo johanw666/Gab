@@ -364,6 +364,8 @@ internal class AnnotatedStringHtmlHandler(
         handleSpanStyleEnd()
         if (pendingQuoteAnnotationCount == 0) {
             builder.pop()
+        } else {
+            pendingQuoteAnnotationCount--
         }
         handleBlockEnd(2, QUOTE_INDENT)
     }
