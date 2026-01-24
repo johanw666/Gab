@@ -59,32 +59,32 @@ class PreferencesProviderViewModel @Inject constructor(
             "smallest" -> StatusTextStyles(
                 small = textStyle(fontSize = 10.sp),
                 medium = textStyle(fontSize = 12.sp),
-                large = textStyle(14.sp)
+                large = textStyle(fontSize = 14.sp)
             )
             "small" -> StatusTextStyles(
                 small = textStyle(fontSize = 12.sp),
                 medium = textStyle(fontSize = 14.sp),
-                large = textStyle(16.sp)
+                large = textStyle(fontSize = 16.sp)
             )
             "medium" -> StatusTextStyles(
                 small = textStyle(fontSize = 14.sp),
                 medium = textStyle(fontSize = 16.sp),
-                large = textStyle(18.sp)
+                large = textStyle(fontSize = 18.sp)
             )
             "large" -> StatusTextStyles(
                 small = textStyle(fontSize = 16.sp),
                 medium = textStyle(fontSize = 18.sp),
-                large = textStyle(20.sp)
+                large = textStyle(fontSize = 20.sp)
             )
             "largest" -> StatusTextStyles(
                 small = textStyle(fontSize = 18.sp),
                 medium = textStyle(fontSize = 20.sp),
-                large = textStyle(22.sp)
+                large = textStyle(fontSize = 22.sp)
             )
             else -> StatusTextStyles(
                 small = textStyle(fontSize = 14.sp),
                 medium = textStyle(fontSize = 16.sp),
-                large = textStyle(18.sp)
+                large = textStyle(fontSize = 18.sp)
             )
         }
 

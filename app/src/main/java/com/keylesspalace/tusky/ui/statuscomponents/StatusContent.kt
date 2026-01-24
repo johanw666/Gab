@@ -16,6 +16,7 @@
 package com.keylesspalace.tusky.ui.statuscomponents
 
 import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material3.Text
@@ -147,7 +148,9 @@ fun ColumnScope.StatusContent(
             isCollapsed = !isCollapsed
             listener.onContentCollapsedChange(statusViewData, isCollapsed)
         },
-        modifier = Modifier.padding(top = 6.dp)
+        modifier = Modifier
+            .padding(top = 6.dp)
+            .fillMaxWidth()
     )
 
     MediaAttachments(

@@ -18,6 +18,7 @@ package com.keylesspalace.tusky.ui.preferences
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.Hyphens
+import androidx.compose.ui.text.style.TextDirection
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.sp
 import com.keylesspalace.tusky.components.preference.PreferencesFragment
@@ -55,4 +56,11 @@ data class WellbeingSettings(
 )
 
 // 1.3f = about the same as android:lineSpacingMultiplier="1.1"
-fun textStyle(fontSize: TextUnit) = TextStyle(fontSize = fontSize, lineHeight = fontSize * 1.3f, hyphens = Hyphens.Auto)
+fun textStyle(
+    fontSize: TextUnit
+) = TextStyle(
+    fontSize = fontSize,
+    lineHeight = fontSize * 1.3f,
+    hyphens = Hyphens.Auto,
+    textDirection = TextDirection.Content
+)
