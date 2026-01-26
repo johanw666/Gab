@@ -75,7 +75,6 @@ internal class AnnotatedStringHtmlHandler(
     private var preformattedLevel = 0
     private var boldLevel = 0
     private var skippedTagsLevel = 0
-    private var skippedQuoteTag: String? = null
     private var blockLevel = 0
     private var blockIndentLevel = 0
     private var paragraphStartIndex = -1
@@ -101,12 +100,6 @@ internal class AnnotatedStringHtmlHandler(
     }
 
     override fun onOpenTag(name: String, attributes: (String) -> String?) {
-        // Mastodon includes quotes in post text as fallback for clients that don't support native quotes.
-        // Since we support native quotes, we need to filter those out.
-        if (attributes("class") == "quote-inline") {
-            handleSkippedQuoteStart(name)
-            return
-        }
         when (name) {
             "br" -> handleLineBreakStart()
             "hr" -> handleHorizontalRuleStart()
@@ -272,10 +265,6 @@ internal class AnnotatedStringHtmlHandler(
     }
 
     private fun handleAnchorStart(url: String) {
-        if (skippedQuoteTag != null) {
-            // don't handle the quote link that is never shown
-            return
-        }
         currentLink = url
         builder.pushLink(
             LinkAnnotation.Url(
@@ -284,10 +273,6 @@ internal class AnnotatedStringHtmlHandler(
                 linkInteractionListener = linkInteractionListener
             )
         )
-    }
-
-    private fun handleSkippedQuoteStart(tag: String) {
-        skippedQuoteTag = tag
     }
 
     private fun handleHeadingStart(name: String) {
@@ -307,7 +292,6 @@ internal class AnnotatedStringHtmlHandler(
 
     override fun onCloseTag(name: String) {
         when (name) {
-            skippedQuoteTag -> handleSkippedQuoteEnd()
             "br",
             "hr" -> {}
             "p" -> handleBlockEnd(2, 0)
@@ -335,10 +319,6 @@ internal class AnnotatedStringHtmlHandler(
             "h1", "h2", "h3", "h4", "h5", "h6" -> handleHeadingEnd()
             "script", "head", "table", "form", "fieldset" -> handleSkippedTagEnd()
         }
-    }
-
-    private fun handleSkippedQuoteEnd() {
-        skippedQuoteTag = null
     }
 
     private fun handleBlockEnd(suffixNewLineCount: Int, indent: Int) {
@@ -412,9 +392,6 @@ internal class AnnotatedStringHtmlHandler(
     }
 
     private fun handleAnchorEnd() {
-        if (skippedQuoteTag != null) {
-            return
-        }
         if (currentLink.isNotEmpty() &&
             !currentLinkText.startsWith("#") &&
             !currentLinkText.startsWith("@") &&
@@ -448,7 +425,7 @@ internal class AnnotatedStringHtmlHandler(
 
     override fun onText(text: String) {
         // Skip text inside skipped tags
-        if (skippedTagsLevel > 0 || skippedQuoteTag != null) {
+        if (skippedTagsLevel > 0) {
             return
         }
         var lastWrittenIndex = 0

@@ -147,6 +147,16 @@ class MastodonHtmlTextTest {
         }
     }
 
+    @Test
+    fun `should correctly handle tags nested into a filtered tag`() {
+        val input = "<p class=\"quote-inline\"><a> <p> </p></a> </p>"
+        composeTestRule.setContent {
+            val (contentOut, trailingHashtags) = mastodonHtmlText(input)
+            assertEquals(AnnotatedString(""), contentOut)
+            assertEquals(emptyList<String>(), trailingHashtags)
+        }
+    }
+
     /** real fedi posts **/
 
     @Test

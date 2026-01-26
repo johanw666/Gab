@@ -31,6 +31,7 @@ import com.keylesspalace.tusky.entity.HashTag
 import com.keylesspalace.tusky.entity.Status
 import com.keylesspalace.tusky.ui.statuscomponents.text.background.QuotePainter
 import com.keylesspalace.tusky.ui.statuscomponents.text.html.AnnotatedStringHtmlHandler
+import com.keylesspalace.tusky.ui.statuscomponents.text.html.FilteringHtmlHandler
 import com.keylesspalace.tusky.ui.statuscomponents.text.html.KtXmlParser
 import com.keylesspalace.tusky.ui.tuskyColors
 import com.keylesspalace.tusky.util.HASHTAG_EXPRESSION
@@ -150,7 +151,9 @@ fun htmlToAnnotatedString(
 ): AnnotatedString {
     val builder = AnnotatedString.Builder()
     KtXmlParser(html.iterator()).parse(
-        AnnotatedStringHtmlHandler(builder, linkStyles, quoteColor, linkInteractionListener, emojis)
+        FilteringHtmlHandler(
+            AnnotatedStringHtmlHandler(builder, linkStyles, quoteColor, linkInteractionListener, emojis)
+        )
     )
 
     return builder.toAnnotatedString()
