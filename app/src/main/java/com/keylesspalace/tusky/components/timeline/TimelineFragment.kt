@@ -436,16 +436,18 @@ class TimelineFragment :
         if (isPullToRefreshEnabled) {
             var isUserRefresh by remember { mutableStateOf(false) }
 
-            if (isUserRefresh &&
-                statuses.loadState.refresh !is LoadState.Loading &&
-                statuses.loadState.source.refresh !is LoadState.Loading &&
-                statuses.loadState.mediator?.refresh !is LoadState.Loading
-            ) {
-                isUserRefresh = false
+            LaunchedEffect(statuses.loadState) {
+                if (isUserRefresh &&
+                    statuses.loadState.refresh !is LoadState.Loading &&
+                    statuses.loadState.source.refresh !is LoadState.Loading &&
+                    statuses.loadState.mediator?.refresh !is LoadState.Loading
+                ) {
+                    isUserRefresh = false
+                }
             }
 
             TuskyPullToRefreshBox(
-                isRefreshing = isUserRefresh && statuses.loadState.refresh is LoadState.Loading,
+                isRefreshing = isUserRefresh,
                 onRefresh = {
                     isUserRefresh = true
                     statuses.refresh()
