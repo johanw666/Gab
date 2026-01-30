@@ -676,4 +676,22 @@
     <string name="post_privacy_direct">Direkt</string>
     <string name="error_deleting_filter">Kunde inte radera filtret \'%1$s\'</string>
     <string name="error_saving_filter">Kunde inte spara filtret \'%1$s\'</string>
+    <string name="post_replied_self">Fortsatt tråd</string>
+    <string name="notification_quote_format">%1$s citerade ditt inlägg</string>
+    <string name="action_rehide_status">Dölj filtrerat status på nytt</string>
+    <string name="action_reblog_private">Knuffa endast för följare</string>
+    <string name="action_remove_account_confirm">Är du säker på att du vill ta bort kontot %1$s från Tusky? Detta kommer radera all lokal data från kontot, inklusive utkast och inställningar.</string>
+    <string name="follow_hashtag_success">Följde hashtag %1$s</string>
+    <string name="post_replied">Svarade</string>
+    <string name="post_replied_format">I svar till %1$s</string>
+    <string name="notification_quoted_update_format">%1$s redigerade ett inlägg du har citerat</string>
+    <string name="action_remove_account">Ta bort konto</string>
+    <string name="action_reblog_unlisted">Olistad knuff</string>
+    <string name="action_reblog_public">Publik knuff</string>
+    <string name="action_reveal_media">Visa media</string>
+    <string name="pref_default_quote_policy">Policy för citat (synas med server)</string>
+    <string name="quote_policy_public">Vem som helst</string>
+    <string name="quote_policy_followers">Endast följare</string>
+    <string name="quote_policy_nobody">Endast jag</string>
+    <string name="notification_quote_name">Citeringar</string>
 </resources>
