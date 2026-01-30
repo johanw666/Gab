@@ -50,6 +50,7 @@ import com.keylesspalace.tusky.entity.Filter
 import com.keylesspalace.tusky.entity.Status
 import com.keylesspalace.tusky.entity.Translation
 import com.keylesspalace.tusky.interfaces.StatusActionListener
+import com.keylesspalace.tusky.ui.TuskyTextButton
 import com.keylesspalace.tusky.ui.preferences.LocalAccount
 import com.keylesspalace.tusky.ui.preferences.LocalPreferences
 import com.keylesspalace.tusky.ui.statuscomponents.text.emojify
@@ -84,7 +85,12 @@ fun StatusMoreMenu(
         val activity = LocalActivity.current as? BaseActivity?
         AlertDialog(
             onDismissRequest = { showOpenAsDialog = false },
-            confirmButton = { Text(stringResource(android.R.string.cancel)) },
+            confirmButton = {
+                TuskyTextButton(
+                    text = stringResource(android.R.string.cancel),
+                    onClick = { showOpenAsDialog = false }
+                )
+            },
             text = {
                 Column(
                     verticalArrangement = Arrangement.spacedBy(8.dp)
