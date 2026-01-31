@@ -283,7 +283,7 @@
     <string name="state_follow_requested">Yêu cầu theo dõi</string>
     <string name="post_media_video">Video</string>
     <string name="post_media_images">Hình ảnh</string>
-    <string name="post_share_link">URL tút</string>
+    <string name="post_share_link">Liên kết tút</string>
     <string name="post_share_content">Nội dung tút</string>
     <string name="about_tusky_account">Trang Tusky</string>
     <string name="pref_title_confirm_reblogs">Hỏi trước khi đăng lại tút</string>
@@ -484,7 +484,7 @@
     <string name="description_post_language">Ngôn ngữ đăng</string>
     <string name="action_set_focus">Chọn tâm điểm</string>
     <string name="set_focus_description">Nhấn hoặc kéo vòng tròn để chọn tiêu điểm sẽ hiển thị trong hình thu nhỏ.</string>
-    <string name="pref_title_show_self_username">Hiện URL của tôi trên tab</string>
+    <string name="pref_title_show_self_username">Hiện tên người dùng trên tab</string>
     <string name="pref_show_self_username_always">Luôn luôn</string>
     <string name="pref_show_self_username_disambiguate">Khi đăng nhập nhiều tài khoản</string>
     <string name="pref_show_self_username_never">Không hiện</string>
@@ -531,7 +531,7 @@
     <string name="title_edits">Lịch sử sửa tút</string>
     <string name="a11y_label_loading_thread">Đang tải thảo luận</string>
     <string name="action_share_account_link">Liên kết trang hồ sơ</string>
-    <string name="send_account_link_to">Chia sẻ URL trạm…</string>
+    <string name="send_account_link_to">Chia sẻ liên kết trạm với…</string>
     <string name="action_share_account_username">Địa chỉ Mastodon</string>
     <string name="send_account_username_to">Chia sẻ tên người dùng…</string>
     <string name="account_username_copied">Đã sao chép tên người dùng</string>
