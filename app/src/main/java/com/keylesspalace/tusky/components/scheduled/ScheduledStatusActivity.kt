@@ -415,7 +415,6 @@ class ScheduledStatusActivity : BaseActivity() {
 
             MediaAttachments(
                 attachments = status.attachments,
-                translatedDescriptions = null,
                 onOpenAttachment = { index ->
                     val attachmentViewData = status.attachments.map { attachment ->
                         AttachmentViewData(

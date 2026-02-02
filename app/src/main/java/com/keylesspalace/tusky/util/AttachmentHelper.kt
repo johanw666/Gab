@@ -9,8 +9,7 @@ import kotlin.math.roundToInt
 import kotlin.time.Duration.Companion.seconds
 
 fun Attachment.getFormattedDescription(
-    context: Context,
-    translation: String?
+    context: Context
 ): String {
     val durationInSeconds = meta?.duration ?: meta?.original?.duration ?: 0f
     val duration = if (durationInSeconds > 0f) {
@@ -23,7 +22,7 @@ fun Attachment.getFormattedDescription(
     return duration + if (description.isNullOrEmpty()) {
         context.getString(R.string.description_post_media_no_description_placeholder)
     } else {
-        translation ?: description
+        description
     }
 }
 

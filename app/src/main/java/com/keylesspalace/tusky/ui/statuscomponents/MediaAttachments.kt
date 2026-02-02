@@ -64,7 +64,6 @@ import coil3.compose.AsyncImage
 import com.keylesspalace.tusky.R
 import com.keylesspalace.tusky.entity.Attachment
 import com.keylesspalace.tusky.entity.Filter
-import com.keylesspalace.tusky.entity.MediaTranslation
 import com.keylesspalace.tusky.ui.LongPressContextMenu
 import com.keylesspalace.tusky.ui.TuskyPreviewTheme
 import com.keylesspalace.tusky.ui.preferences.LocalPreferences
@@ -80,7 +79,6 @@ import kotlin.math.sqrt
 @Composable
 fun MediaAttachments(
     attachments: List<Attachment>,
-    translatedDescriptions: List<MediaTranslation>?,
     onOpenAttachment: (Int) -> Unit,
     onMediaHiddenChanged: () -> Unit,
     sensitive: Boolean,
@@ -97,7 +95,6 @@ fun MediaAttachments(
     if (downloadPreviews && attachments.hasPreviewableAttachment()) {
         AttachmentPreviewGrid(
             attachments = attachments,
-            translatedDescriptions = translatedDescriptions,
             onOpenAttachment = onOpenAttachment,
             onMediaHiddenChanged = onMediaHiddenChanged,
             sensitive = sensitive,
@@ -109,7 +106,6 @@ fun MediaAttachments(
     } else {
         AttachmentDescriptionList(
             attachments = attachments,
-            translatedDescriptions = translatedDescriptions,
             modifier = modifier,
             onOpenAttachment = onOpenAttachment
         )
@@ -119,7 +115,6 @@ fun MediaAttachments(
 @Composable
 private fun AttachmentPreviewGrid(
     attachments: List<Attachment>,
-    translatedDescriptions: List<MediaTranslation>?,
     onOpenAttachment: (Int) -> Unit,
     onMediaHiddenChanged: () -> Unit,
     sensitive: Boolean,
@@ -137,7 +132,6 @@ private fun AttachmentPreviewGrid(
 
             MediaItem(
                 attachment = attachment,
-                translation = translatedDescriptions?.getOrNull(0)?.description,
                 onOpenAttachment = { onOpenAttachment(0) },
                 showMedia = showMedia,
                 showBlurhash = showBlurhash,
@@ -154,7 +148,6 @@ private fun AttachmentPreviewGrid(
                 ) {
                     MediaItem(
                         attachment = attachments[0],
-                        translation = translatedDescriptions?.getOrNull(0)?.description,
                         onOpenAttachment = { onOpenAttachment(0) },
                         showMedia = showMedia,
                         showBlurhash = showBlurhash,
@@ -162,7 +155,6 @@ private fun AttachmentPreviewGrid(
                     )
                     MediaItem(
                         attachment = attachments[1],
-                        translation = translatedDescriptions?.getOrNull(1)?.description,
                         onOpenAttachment = { onOpenAttachment(1) },
                         showMedia = showMedia,
                         showBlurhash = showBlurhash,
@@ -181,7 +173,6 @@ private fun AttachmentPreviewGrid(
                 ) {
                     MediaItem(
                         attachment = attachments[0],
-                        translation = translatedDescriptions?.getOrNull(0)?.description,
                         onOpenAttachment = { onOpenAttachment(0) },
                         showMedia = showMedia,
                         showBlurhash = showBlurhash,
@@ -191,7 +182,6 @@ private fun AttachmentPreviewGrid(
                     )
                     MediaItem(
                         attachment = attachments[1],
-                        translation = translatedDescriptions?.getOrNull(1)?.description,
                         onOpenAttachment = { onOpenAttachment(1) },
                         showMedia = showMedia,
                         showBlurhash = showBlurhash,
@@ -214,7 +204,6 @@ private fun AttachmentPreviewGrid(
                 ) {
                     MediaItem(
                         attachment = attachments[0],
-                        translation = translatedDescriptions?.getOrNull(0)?.description,
                         onOpenAttachment = { onOpenAttachment(0) },
                         showMedia = showMedia,
                         showBlurhash = showBlurhash,
@@ -228,7 +217,6 @@ private fun AttachmentPreviewGrid(
                         val aspectRatio = aspect1.coerceIn(0.6f, 1.6f)
                         MediaItem(
                             attachment = attachments[1],
-                            translation = translatedDescriptions?.getOrNull(1)?.description,
                             onOpenAttachment = { onOpenAttachment(1) },
                             showMedia = showMedia,
                             showBlurhash = showBlurhash,
@@ -238,7 +226,6 @@ private fun AttachmentPreviewGrid(
                         )
                         MediaItem(
                             attachment = attachments[2],
-                            translation = translatedDescriptions?.getOrNull(2)?.description,
                             onOpenAttachment = { onOpenAttachment(2) },
                             showMedia = showMedia,
                             showBlurhash = showBlurhash,
@@ -259,7 +246,6 @@ private fun AttachmentPreviewGrid(
                 ) {
                     MediaItem(
                         attachment = attachments[0],
-                        translation = translatedDescriptions?.getOrNull(0)?.description,
                         onOpenAttachment = { onOpenAttachment(0) },
                         showMedia = showMedia,
                         showBlurhash = showBlurhash,
@@ -276,7 +262,6 @@ private fun AttachmentPreviewGrid(
                     ) {
                         MediaItem(
                             attachment = attachments[1],
-                            translation = translatedDescriptions?.getOrNull(1)?.description,
                             onOpenAttachment = { onOpenAttachment(1) },
                             showMedia = showMedia,
                             showBlurhash = showBlurhash,
@@ -284,7 +269,6 @@ private fun AttachmentPreviewGrid(
                         )
                         MediaItem(
                             attachment = attachments[2],
-                            translation = translatedDescriptions?.getOrNull(2)?.description,
                             onOpenAttachment = { onOpenAttachment(2) },
                             showMedia = showMedia,
                             showBlurhash = showBlurhash,
@@ -306,7 +290,6 @@ private fun AttachmentPreviewGrid(
                     val aspectRatio = attachments[0].limitedAspectRatio().coerceIn(0.75f, 1.6f)
                     MediaItem(
                         attachment = attachments[0],
-                        translation = translatedDescriptions?.getOrNull(0)?.description,
                         onOpenAttachment = { onOpenAttachment(0) },
                         showMedia = showMedia,
                         showBlurhash = showBlurhash,
@@ -316,7 +299,6 @@ private fun AttachmentPreviewGrid(
                     )
                     MediaItem(
                         attachment = attachments[1],
-                        translation = translatedDescriptions?.getOrNull(1)?.description,
                         onOpenAttachment = { onOpenAttachment(1) },
                         showMedia = showMedia,
                         showBlurhash = showBlurhash,
@@ -333,7 +315,6 @@ private fun AttachmentPreviewGrid(
                     val aspectRatio = attachments[2].limitedAspectRatio().coerceIn(0.75f, 1.6f)
                     MediaItem(
                         attachment = attachments[2],
-                        translation = translatedDescriptions?.getOrNull(2)?.description,
                         onOpenAttachment = { onOpenAttachment(2) },
                         showMedia = showMedia,
                         showBlurhash = showBlurhash,
@@ -343,7 +324,6 @@ private fun AttachmentPreviewGrid(
                     )
                     MediaItem(
                         attachment = attachments[3],
-                        translation = translatedDescriptions?.getOrNull(3)?.description,
                         onOpenAttachment = { onOpenAttachment(3) },
                         showMedia = showMedia,
                         showBlurhash = showBlurhash,
@@ -409,7 +389,6 @@ private fun AttachmentPreviewGrid(
 @Composable
 private fun MediaItem(
     attachment: Attachment,
-    translation: String?,
     onOpenAttachment: () -> Unit,
     showMedia: Boolean,
     showBlurhash: Boolean,
@@ -419,7 +398,7 @@ private fun MediaItem(
     val attachmentDescription = if (attachment.description.isNullOrBlank()) {
         stringResource(R.string.description_post_media_no_description_placeholder)
     } else {
-        translation ?: attachment.description
+        attachment.description
     }
 
     LongPressContextMenu(
@@ -536,14 +515,14 @@ private fun MediaItem(
                     }
                 }
             }
-        }
+        },
+        key = attachment
     )
 }
 
 @Composable
 private fun AttachmentDescriptionList(
     attachments: List<Attachment>,
-    translatedDescriptions: List<MediaTranslation>?,
     modifier: Modifier = Modifier,
     onOpenAttachment: (Int) -> Unit
 ) {
@@ -579,10 +558,7 @@ private fun AttachmentDescriptionList(
                 )
                 Spacer(modifier = Modifier.width(4.dp))
                 Text(
-                    text = attachment.getFormattedDescription(
-                        LocalContext.current,
-                        translatedDescriptions?.getOrNull(index)?.description
-                    ),
+                    text = attachment.getFormattedDescription(LocalContext.current),
                     color = tuskyColors.primaryTextColor,
                 )
             }
@@ -622,7 +598,6 @@ fun MediaAttachmentsPreview() {
         ) {
             MediaAttachments(
                 attachments = fourAttachments.take(1),
-                translatedDescriptions = null,
                 onOpenAttachment = { },
                 onMediaHiddenChanged = { },
                 sensitive = false,
@@ -634,7 +609,6 @@ fun MediaAttachmentsPreview() {
 
             MediaAttachments(
                 attachments = fourAttachments.take(2),
-                translatedDescriptions = null,
                 onOpenAttachment = { },
                 onMediaHiddenChanged = { },
                 sensitive = true,
@@ -646,7 +620,6 @@ fun MediaAttachmentsPreview() {
 
             MediaAttachments(
                 attachments = fourAttachments.take(3),
-                translatedDescriptions = null,
                 onOpenAttachment = { },
                 onMediaHiddenChanged = { },
                 sensitive = false,
@@ -658,7 +631,6 @@ fun MediaAttachmentsPreview() {
 
             MediaAttachments(
                 attachments = fourAttachments,
-                translatedDescriptions = null,
                 onOpenAttachment = { },
                 onMediaHiddenChanged = { },
                 sensitive = false,
@@ -670,7 +642,6 @@ fun MediaAttachmentsPreview() {
 
             MediaAttachments(
                 attachments = fourAttachments,
-                translatedDescriptions = null,
                 onOpenAttachment = { },
                 onMediaHiddenChanged = { },
                 sensitive = false,

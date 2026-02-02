@@ -155,7 +155,6 @@ fun ColumnScope.StatusContent(
 
     MediaAttachments(
         attachments = statusViewData.attachments,
-        translatedDescriptions = statusViewData.translation?.data?.mediaAttachments,
         onOpenAttachment = { index -> listener.onViewMedia(statusViewData, index) },
         onMediaHiddenChanged = { listener.onContentHiddenChange(statusViewData, !statusViewData.isShowingContent) },
         sensitive = status.sensitive,
