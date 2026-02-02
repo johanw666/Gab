@@ -135,7 +135,32 @@ class SearchActivity : BottomSheetActivity(), MenuProvider, SearchView.OnQueryTe
             (getSystemService(SEARCH_SERVICE) as? SearchManager)?.getSearchableInfo(componentName)
         )
 
-        searchView.maxWidth = resources.displayMetrics.widthPixels
+        // SearchView has a bug. If it's displayed 'app:showAsAction="always"' it's too wide,
+        // pushing other icons (including the options menu '...' icon) off the edge of the
+        // screen.
+        //
+        // E.g., see:
+        //
+        // - https://stackoverflow.com/questions/41662373/android-toolbar-searchview-too-wide-to-move-other-items
+        // - https://stackoverflow.com/questions/51525088/how-to-control-size-of-a-searchview-in-toolbar
+        // - https://stackoverflow.com/questions/36976163/push-icons-away-when-expandig-searchview-in-android-toolbar
+        // - https://issuetracker.google.com/issues/36976484
+        //
+        // The fix is to use 'app:showAsAction="ifRoom|collapseActionView"' and then immediately
+        // expand it after inflating. That sets the width correctly.
+        //
+        // But if you do that code in AppCompatDelegateImpl activates, and when the user presses
+        // the "Back" button the SearchView is first set to its collapsed state. The user has to
+        // press "Back" again to exit the activity. This is clearly unacceptable.
+        //
+        // It appears to be impossible to override this behaviour on API level < 33.
+        //
+        // SearchView does allow you to specify the maximum width. So take the screen width,
+        // subtract 48dp * 2 (for the menu icon and back icon on either side), convert to pixels,
+        // and use that.
+        val pxScreenWidth = resources.displayMetrics.widthPixels
+        val pxBuffer = ((48 * 2) * resources.displayMetrics.density).toInt()
+        searchView.maxWidth = pxScreenWidth - pxBuffer
 
         // Keep text that was entered also when switching to a different tab (before the search is executed)
         searchView.setOnQueryTextListener(this)

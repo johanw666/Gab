@@ -79,6 +79,7 @@ class SearchStatusesFragment :
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.startComposing.collect { composeOptions ->
                 val intent = ComposeActivity.newIntent(requireContext(), composeOptions)

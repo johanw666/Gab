@@ -2,6 +2,9 @@ package com.keylesspalace.tusky.components.search.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.compose.foundation.background
@@ -39,9 +42,12 @@ import androidx.compose.ui.platform.rememberNestedScrollInteropConnection
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
@@ -65,10 +71,13 @@ import com.keylesspalace.tusky.util.isRefreshing
 import com.keylesspalace.tusky.util.startActivityWithSlideInAnimation
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.launch
 
 abstract class SearchFragment<T : Any> :
     Fragment(),
-    LinkListener {
+    LinkListener,
+    MenuProvider {
 
     @Inject
     lateinit var instanceInfoRepository: InstanceInfoRepository
@@ -79,6 +88,8 @@ abstract class SearchFragment<T : Any> :
     protected val viewModel: SearchViewModel by activityViewModels()
 
     abstract val data: Flow<PagingData<T>>
+
+    private val refresh: MutableSharedFlow<Unit> = MutableSharedFlow()
 
     abstract fun LazyListScope.searchResult(
         result: LazyPagingItems<T>,
@@ -101,6 +112,12 @@ abstract class SearchFragment<T : Any> :
         Box {
             val currentQuery by viewModel.currentQuery.collectAsStateWithLifecycle()
             val results = data.collectAsLazyPagingItems()
+
+            LaunchedEffect(Unit) {
+                refresh.collect {
+                    results.refresh()
+                }
+            }
 
             if (results.itemCount == 0) {
                 Box(
@@ -215,6 +232,26 @@ abstract class SearchFragment<T : Any> :
                     }
                 }
             }
+        }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        requireActivity().addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
+    }
+
+    override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+        menuInflater.inflate(R.menu.fragment_search, menu)
+    }
+
+    override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+        return when (menuItem.itemId) {
+            R.id.action_refresh -> {
+                lifecycleScope.launch {
+                    refresh.emit(Unit)
+                }
+                true
+            }
+            else -> false
         }
     }
 

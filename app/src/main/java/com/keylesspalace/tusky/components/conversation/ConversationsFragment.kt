@@ -18,6 +18,9 @@ package com.keylesspalace.tusky.components.conversation
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.compose.foundation.background
@@ -58,8 +61,10 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
@@ -108,7 +113,8 @@ import kotlinx.coroutines.launch
 class ConversationsFragment :
     Fragment(),
     StatusActionListener,
-    ReselectableFragment {
+    ReselectableFragment,
+    MenuProvider {
 
     @Inject
     lateinit var eventHub: EventHub
@@ -119,6 +125,7 @@ class ConversationsFragment :
     private val viewModel: ConversationsViewModel by viewModels()
 
     private val jumpUp: MutableSharedFlow<Unit> = MutableSharedFlow()
+    private val refresh: MutableSharedFlow<Unit> = MutableSharedFlow()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val view = ComposeView(inflater.context)
@@ -140,6 +147,12 @@ class ConversationsFragment :
             LaunchedEffect(Unit) {
                 jumpUp.collect {
                     listState.scrollToItem(0)
+                }
+            }
+
+            LaunchedEffect(Unit) {
+                refresh.collect {
+                    conversations.refresh()
                 }
             }
 
@@ -297,11 +310,28 @@ class ConversationsFragment :
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        requireActivity().addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.startComposing.collect { composeOptions ->
                 val intent = ComposeActivity.newIntent(requireContext(), composeOptions)
                 requireContext().startActivityWithSlideInAnimation(intent)
             }
+        }
+    }
+
+    override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+        menuInflater.inflate(R.menu.fragment_conversations, menu)
+    }
+
+    override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+        return when (menuItem.itemId) {
+            R.id.action_refresh -> {
+                lifecycleScope.launch {
+                    refresh.emit(Unit)
+                }
+                true
+            }
+            else -> false
         }
     }
 
