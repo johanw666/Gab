@@ -23,8 +23,10 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.keylesspalace.tusky.components.timeline.fakeStatus
 import com.keylesspalace.tusky.components.timeline.fakeStatusViewData
 import com.keylesspalace.tusky.entity.Emoji
+import com.keylesspalace.tusky.entity.Quote
 import com.keylesspalace.tusky.ui.statuscomponents.text.html.AnnotatedStringHtmlHandler.Companion.LINK_ICON_ID
 import com.keylesspalace.tusky.ui.tuskyBlueDark
+import com.keylesspalace.tusky.viewdata.QuoteViewData
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
@@ -160,11 +162,11 @@ class MastodonHtmlTextTest {
     /** real fedi posts **/
 
     @Test
-    fun `should hide inline quote`() {
+    fun `should hide inline quote when quote is attached`() {
         val input = "<p class=\"quote-inline\">RE: <a href=\"https://mastodon.social/@ConnyDuck/115757662798419485\" rel=\"nofollow noopener\" translate=\"no\" target=\"_blank\">" +
             "<span class=\"invisible\">https://</span><span class=\"ellipsis\">mastodon.social/@ConnyDuck/115</span><span class=\"invisible\">757662798419485</span></a></p><p>Test</p>"
         composeTestRule.setContent {
-            val (contentOut, trailingHashtags) = mastodonHtmlText(input)
+            val (contentOut, trailingHashtags) = mastodonHtmlText(input, withQuote = true)
             assertEquals(
                 buildAnnotatedString {
                     withStyle(
@@ -176,6 +178,44 @@ class MastodonHtmlTextTest {
                         )
                     ) {
                         append("Test")
+                    }
+                },
+                contentOut
+            )
+            assertEquals(emptyList<String>(), trailingHashtags)
+        }
+    }
+
+    @Test
+    fun `should not hide inline quote when no quote is attached`() {
+        val input = "<p class=\"quote-inline\">RE: <a href=\"https://mastodon.social/@ConnyDuck/115757662798419485\" rel=\"nofollow noopener\" translate=\"no\" target=\"_blank\">" +
+            "<span class=\"invisible\">https://</span><span class=\"ellipsis\">mastodon.social/@ConnyDuck/115</span><span class=\"invisible\">757662798419485</span></a></p><p>Test</p>"
+        composeTestRule.setContent {
+            val (contentOut, trailingHashtags) = mastodonHtmlText(input, withQuote = false)
+            assertEqualAnnotatedString(
+                buildAnnotatedString {
+                    withStyle(
+                        ParagraphStyle(
+                            textIndent = TextIndent(
+                                firstLine = 0.sp,
+                                restLine = 0.sp
+                            )
+                        )
+                    ) {
+                        append("RE: ")
+                        withLink(LinkAnnotation.Clickable(tag = "", linkInteractionListener = null)) {
+                            append("https://mastodon.social/@ConnyDuck/115757662798419485")
+                        }
+                    }
+                    withStyle(
+                        ParagraphStyle(
+                            textIndent = TextIndent(
+                                firstLine = 0.sp,
+                                restLine = 0.sp
+                            )
+                        )
+                    ) {
+                        append("\nTest")
                     }
                 },
                 contentOut
@@ -516,13 +556,31 @@ class MastodonHtmlTextTest {
     private fun mastodonHtmlText(
         input: String,
         splitOffTrailingHashtags: Boolean = true,
+        withQuote: Boolean = true,
         customEmojis: List<Emoji> = emptyList()
     ): Pair<AnnotatedString, List<String>> {
         val status = fakeStatusViewData().copy(
             status = fakeStatus().copy(
                 content = input,
-                emojis = customEmojis
-            )
+                emojis = customEmojis,
+                quote = if (withQuote) {
+                    Quote(
+                        state = Quote.State.ACCEPTED,
+                        quotedStatus = fakeStatus()
+                    )
+                } else {
+                    null
+                }
+            ),
+            quote = if (withQuote) {
+                QuoteViewData(
+                    state = Quote.State.ACCEPTED,
+                    quotedStatusViewData = fakeStatusViewData(),
+                    quoteShown = true,
+                )
+            } else {
+                null
+            }
         )
         return mastodonHtmlText(status, {}, {}, {}, splitOffTrailingHashtags, linkStyles)
     }

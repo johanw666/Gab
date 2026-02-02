@@ -58,9 +58,10 @@ fun mastodonHtmlText(
     val actionable = status.actionable
     val quoteColor = tuskyColors.tertiaryTextColor
 
-    return remember(actionable.content, status.translation, linkStyles, quoteColor) {
+    return remember(actionable.content, status.translation, actionable.quote, linkStyles, quoteColor) {
         val html = htmlToAnnotatedString(
             html = status.translation?.data?.content ?: actionable.content,
+            removeInlineQuotes = status.quote != null,
             linkStyles = linkStyles,
             quoteColor = quoteColor,
             linkInteractionListener = { link ->
@@ -144,6 +145,7 @@ fun List<Status.Mention>.toAnnotatedString(
 
 fun htmlToAnnotatedString(
     html: String,
+    removeInlineQuotes: Boolean,
     linkStyles: TextLinkStyles,
     quoteColor: Color,
     linkInteractionListener: LinkInteractionListener? = null,
@@ -151,9 +153,13 @@ fun htmlToAnnotatedString(
 ): AnnotatedString {
     val builder = AnnotatedString.Builder()
     KtXmlParser(html.iterator()).parse(
-        FilteringHtmlHandler(
+        if (removeInlineQuotes) {
+            FilteringHtmlHandler(
+                AnnotatedStringHtmlHandler(builder, linkStyles, quoteColor, linkInteractionListener, emojis)
+            )
+        } else {
             AnnotatedStringHtmlHandler(builder, linkStyles, quoteColor, linkInteractionListener, emojis)
-        )
+        }
     )
 
     return builder.toAnnotatedString()

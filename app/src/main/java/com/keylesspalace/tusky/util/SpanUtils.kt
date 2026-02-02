@@ -149,7 +149,14 @@ fun addDrawables(text: CharSequence, color: Int, size: Int, context: Context): S
 }
 
 fun addIconAnnotations(text: String): AnnotatedString {
-    val textWithStyling = htmlToAnnotatedString(text, TextLinkStyles(), Color.Unspecified, null, emptyList())
+    val textWithStyling = htmlToAnnotatedString(
+        html = text,
+        removeInlineQuotes = false,
+        linkStyles = TextLinkStyles(),
+        quoteColor = Color.Unspecified,
+        linkInteractionListener = null,
+        emojis = emptyList()
+    )
     return buildAnnotatedString {
         append(textWithStyling)
 
