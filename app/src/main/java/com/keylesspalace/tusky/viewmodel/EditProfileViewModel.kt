@@ -16,12 +16,14 @@
 package com.keylesspalace.tusky.viewmodel
 
 import android.app.Application
+import android.content.Context
 import android.net.Uri
 import android.util.Log
-import androidx.core.net.toUri
+import androidx.core.content.FileProvider
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import at.connyduck.calladapter.networkresult.fold
+import com.keylesspalace.tusky.BuildConfig
 import com.keylesspalace.tusky.EditProfileActivity.PickType
 import com.keylesspalace.tusky.appstore.EventHub
 import com.keylesspalace.tusky.appstore.ProfileEditedEvent
@@ -112,12 +114,12 @@ class EditProfileViewModel @Inject constructor(
         }
     }
 
-    fun getAvatarUri() = getCacheFileForName(AVATAR_FILE_NAME).toUri()
+    fun getAvatarUri(context: Context) = getCacheFileForName(AVATAR_FILE_NAME).asContentUri(context)
 
-    fun getHeaderUri() = getCacheFileForName(HEADER_FILE_NAME).toUri()
+    fun getHeaderUri(context: Context) = getCacheFileForName(HEADER_FILE_NAME).asContentUri(context)
 
-    fun newImagePicked(uri: Uri) {
-        if (uri == getAvatarUri()) {
+    fun newImagePicked(context: Context, uri: Uri) {
+        if (uri == getAvatarUri(context)) {
             _avatarData.value = uri
         } else {
             _headerData.value = uri
@@ -252,6 +254,14 @@ class EditProfileViewModel @Inject constructor(
 
     private fun getCacheFileForName(filename: String): File {
         return File(application.cacheDir, filename)
+    }
+
+    private fun File.asContentUri(context: Context): Uri {
+        return FileProvider.getUriForFile(
+            context,
+            BuildConfig.APPLICATION_ID + ".fileprovider",
+            this
+        )
     }
 
     private data class DiffProfileData(

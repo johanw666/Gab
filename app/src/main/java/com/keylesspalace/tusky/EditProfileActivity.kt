@@ -91,7 +91,7 @@ class EditProfileActivity : BaseActivity() {
                         PickType.AVATAR -> {
                             EditImageOptions(
                                 input = uri,
-                                outputUri = viewModel.getAvatarUri(),
+                                outputUri = viewModel.getAvatarUri(this),
                                 requiredWidth = AVATAR_SIZE,
                                 requiredHeight = AVATAR_SIZE,
                                 outputCompressFormat = Bitmap.CompressFormat.PNG
@@ -100,7 +100,7 @@ class EditProfileActivity : BaseActivity() {
                         PickType.HEADER -> {
                             EditImageOptions(
                                 input = uri,
-                                outputUri = viewModel.getHeaderUri(),
+                                outputUri = viewModel.getHeaderUri(this),
                                 requiredWidth = HEADER_WIDTH,
                                 requiredHeight = HEADER_HEIGHT,
                                 outputCompressFormat = Bitmap.CompressFormat.PNG
@@ -115,7 +115,7 @@ class EditProfileActivity : BaseActivity() {
     private val cropImage = registerForActivityResult(EditImageContract()) { result ->
         when (result) {
             is EditImageResult.Success -> {
-                viewModel.newImagePicked(result.outputUri)
+                viewModel.newImagePicked(this, result.outputUri)
             }
             is EditImageResult.Error -> {
                 onPickFailure(result.exception)
