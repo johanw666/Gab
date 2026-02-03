@@ -33,13 +33,15 @@ fun Context.viewAccount(accountId: String) {
 
 fun Context.reply(viewData: StatusViewData.Concrete, activeAccount: AccountEntity) {
     val actionableStatus = viewData.actionable
-    val mentionedUsernames = actionableStatus.mentions
-        .map { it.username }
-        .toMutableSet()
-        .apply {
-            add(actionableStatus.account.username)
-            remove(activeAccount.username)
-        }
+
+    val mentionedUsernames = buildSet {
+        add(actionableStatus.account.username)
+        addAll(
+            actionableStatus.mentions
+                .map { it.username }
+        )
+        remove(activeAccount.username)
+    }
 
     val intent = ComposeActivity.newIntent(
         this,
