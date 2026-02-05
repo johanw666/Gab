@@ -52,8 +52,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.semantics.clearAndSetSemantics
-import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.hideFromAccessibility
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
@@ -133,6 +131,7 @@ private fun AttachmentPreviewGrid(
             MediaItem(
                 attachment = attachment,
                 onOpenAttachment = { onOpenAttachment(0) },
+                onMediaHiddenChanged = onMediaHiddenChanged,
                 showMedia = showMedia,
                 showBlurhash = showBlurhash,
                 modifier = Modifier
@@ -149,6 +148,7 @@ private fun AttachmentPreviewGrid(
                     MediaItem(
                         attachment = attachments[0],
                         onOpenAttachment = { onOpenAttachment(0) },
+                        onMediaHiddenChanged = onMediaHiddenChanged,
                         showMedia = showMedia,
                         showBlurhash = showBlurhash,
                         modifier = Modifier.aspectRatio(aspect1)
@@ -156,6 +156,7 @@ private fun AttachmentPreviewGrid(
                     MediaItem(
                         attachment = attachments[1],
                         onOpenAttachment = { onOpenAttachment(1) },
+                        onMediaHiddenChanged = onMediaHiddenChanged,
                         showMedia = showMedia,
                         showBlurhash = showBlurhash,
                         modifier = Modifier.aspectRatio(aspect2)
@@ -174,6 +175,7 @@ private fun AttachmentPreviewGrid(
                     MediaItem(
                         attachment = attachments[0],
                         onOpenAttachment = { onOpenAttachment(0) },
+                        onMediaHiddenChanged = onMediaHiddenChanged,
                         showMedia = showMedia,
                         showBlurhash = showBlurhash,
                         modifier = Modifier
@@ -183,6 +185,7 @@ private fun AttachmentPreviewGrid(
                     MediaItem(
                         attachment = attachments[1],
                         onOpenAttachment = { onOpenAttachment(1) },
+                        onMediaHiddenChanged = onMediaHiddenChanged,
                         showMedia = showMedia,
                         showBlurhash = showBlurhash,
                         modifier = Modifier
@@ -205,6 +208,7 @@ private fun AttachmentPreviewGrid(
                     MediaItem(
                         attachment = attachments[0],
                         onOpenAttachment = { onOpenAttachment(0) },
+                        onMediaHiddenChanged = onMediaHiddenChanged,
                         showMedia = showMedia,
                         showBlurhash = showBlurhash,
                         modifier = Modifier.aspectRatio(aspect0)
@@ -218,6 +222,7 @@ private fun AttachmentPreviewGrid(
                         MediaItem(
                             attachment = attachments[1],
                             onOpenAttachment = { onOpenAttachment(1) },
+                            onMediaHiddenChanged = onMediaHiddenChanged,
                             showMedia = showMedia,
                             showBlurhash = showBlurhash,
                             modifier = Modifier
@@ -227,6 +232,7 @@ private fun AttachmentPreviewGrid(
                         MediaItem(
                             attachment = attachments[2],
                             onOpenAttachment = { onOpenAttachment(2) },
+                            onMediaHiddenChanged = onMediaHiddenChanged,
                             showMedia = showMedia,
                             showBlurhash = showBlurhash,
                             modifier = Modifier
@@ -247,6 +253,7 @@ private fun AttachmentPreviewGrid(
                     MediaItem(
                         attachment = attachments[0],
                         onOpenAttachment = { onOpenAttachment(0) },
+                        onMediaHiddenChanged = onMediaHiddenChanged,
                         showMedia = showMedia,
                         showBlurhash = showBlurhash,
                         modifier = Modifier
@@ -263,6 +270,7 @@ private fun AttachmentPreviewGrid(
                         MediaItem(
                             attachment = attachments[1],
                             onOpenAttachment = { onOpenAttachment(1) },
+                            onMediaHiddenChanged = onMediaHiddenChanged,
                             showMedia = showMedia,
                             showBlurhash = showBlurhash,
                             modifier = Modifier.weight(1f)
@@ -270,6 +278,7 @@ private fun AttachmentPreviewGrid(
                         MediaItem(
                             attachment = attachments[2],
                             onOpenAttachment = { onOpenAttachment(2) },
+                            onMediaHiddenChanged = onMediaHiddenChanged,
                             showMedia = showMedia,
                             showBlurhash = showBlurhash,
                             modifier = Modifier.weight(1f)
@@ -291,6 +300,7 @@ private fun AttachmentPreviewGrid(
                     MediaItem(
                         attachment = attachments[0],
                         onOpenAttachment = { onOpenAttachment(0) },
+                        onMediaHiddenChanged = onMediaHiddenChanged,
                         showMedia = showMedia,
                         showBlurhash = showBlurhash,
                         modifier = Modifier
@@ -300,6 +310,7 @@ private fun AttachmentPreviewGrid(
                     MediaItem(
                         attachment = attachments[1],
                         onOpenAttachment = { onOpenAttachment(1) },
+                        onMediaHiddenChanged = onMediaHiddenChanged,
                         showMedia = showMedia,
                         showBlurhash = showBlurhash,
                         modifier = Modifier
@@ -316,6 +327,7 @@ private fun AttachmentPreviewGrid(
                     MediaItem(
                         attachment = attachments[2],
                         onOpenAttachment = { onOpenAttachment(2) },
+                        onMediaHiddenChanged = onMediaHiddenChanged,
                         showMedia = showMedia,
                         showBlurhash = showBlurhash,
                         modifier = Modifier
@@ -325,6 +337,7 @@ private fun AttachmentPreviewGrid(
                     MediaItem(
                         attachment = attachments[3],
                         onOpenAttachment = { onOpenAttachment(3) },
+                        onMediaHiddenChanged = onMediaHiddenChanged,
                         showMedia = showMedia,
                         showBlurhash = showBlurhash,
                         additionalCount = attachments.size - 4,
@@ -343,29 +356,18 @@ private fun AttachmentPreviewGrid(
             } else {
                 stringResource(R.string.post_media_hidden_title)
             }
-            Box(
+            Text(
+                text = text,
+                fontSize = 16.sp,
+                color = tuskyColors.secondaryTextColor,
                 modifier = Modifier
-                    .matchParentSize()
-                    .clearAndSetSemantics {
-                        contentDescription = text
-                    }
-                    .clickable {
-                        onMediaHiddenChanged()
-                    }
-            ) {
-                Text(
-                    text = text,
-                    fontSize = 16.sp,
-                    color = tuskyColors.secondaryTextColor,
-                    modifier = Modifier
-                        .align(Alignment.Center)
-                        .background(
-                            color = colorScheme.background.copy(alpha = 0.6f),
-                            shape = RoundedCornerShape(7.dp)
-                        )
-                        .padding(horizontal = 12.dp, vertical = 8.dp)
-                )
-            }
+                    .align(Alignment.Center)
+                    .background(
+                        color = colorScheme.background.copy(alpha = 0.6f),
+                        shape = RoundedCornerShape(7.dp)
+                    )
+                    .padding(horizontal = 12.dp, vertical = 8.dp)
+            )
         } else {
             Icon(
                 painterResource(R.drawable.ic_visibility_24dp),
@@ -390,6 +392,7 @@ private fun AttachmentPreviewGrid(
 private fun MediaItem(
     attachment: Attachment,
     onOpenAttachment: () -> Unit,
+    onMediaHiddenChanged: () -> Unit,
     showMedia: Boolean,
     showBlurhash: Boolean,
     modifier: Modifier = Modifier,
@@ -409,7 +412,13 @@ private fun MediaItem(
                 color = tuskyColors.secondaryTextColor
             )
         },
-        onClick = onOpenAttachment,
+        onClick = {
+            if (showMedia) {
+                onOpenAttachment()
+            } else {
+                onMediaHiddenChanged()
+            }
+        },
         modifier = modifier,
         content = {
             val backgroundAccent = tuskyColors.backgroundAccent
