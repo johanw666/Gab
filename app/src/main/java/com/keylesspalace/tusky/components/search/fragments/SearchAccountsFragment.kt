@@ -33,7 +33,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
-import androidx.paging.compose.itemKey
 import com.keylesspalace.tusky.components.instanceinfo.InstanceInfo
 import com.keylesspalace.tusky.db.entity.AccountEntity
 import com.keylesspalace.tusky.entity.TimelineAccount
@@ -62,7 +61,6 @@ class SearchAccountsFragment : SearchFragment<TimelineAccount>() {
     ) {
         items(
             count = result.itemCount,
-            key = result.itemKey { account -> account.id },
             itemContent = { index ->
                 result[index]?.let { account ->
                     Column {

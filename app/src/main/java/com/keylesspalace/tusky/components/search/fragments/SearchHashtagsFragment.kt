@@ -32,7 +32,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
-import androidx.paging.compose.itemKey
 import com.keylesspalace.tusky.R
 import com.keylesspalace.tusky.components.instanceinfo.InstanceInfo
 import com.keylesspalace.tusky.db.entity.AccountEntity
@@ -54,7 +53,6 @@ class SearchHashtagsFragment : SearchFragment<HashTag>() {
     ) {
         items(
             count = result.itemCount,
-            key = result.itemKey { tag -> tag.name },
             itemContent = { index ->
                 result[index]?.let { hashtag ->
                     Column {
