@@ -5,6 +5,8 @@
             <certificates src="system" />
             <certificates src="@raw/isrg_root_x1" />
             <certificates src="@raw/isrg_root_x2" />
+            <certificates src="@raw/sectigo_root_e46" />
+            <certificates src="@raw/sectigo_root_r46" />
         </trust-anchors>
     </base-config>
     <domain-config cleartextTrafficPermitted="true">
