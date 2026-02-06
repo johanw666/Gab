@@ -18,6 +18,7 @@ package com.keylesspalace.tusky.entity
 import android.text.SpannableStringBuilder
 import android.text.style.URLSpan
 import androidx.compose.runtime.Immutable
+import com.keylesspalace.tusky.json.Guarded
 import com.keylesspalace.tusky.util.parseAsMastodonHtml
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
@@ -62,7 +63,8 @@ data class Status(
     /** If the current token has an authorized user: The filter and keywords that matched this status.
      *  Iceshrimp and maybe other implementations explicitly send filtered=null so we can't default to empty list. */
     val filtered: List<FilterResult>? = null,
-    val quote: Quote?
+    /** Some implementations have a incompatible quote format, we ignore those quotes */
+    @Guarded val quote: Quote?
 ) {
 
     val actionableId: String
