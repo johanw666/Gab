@@ -123,40 +123,40 @@ fun Quote(
             }
 
             Quote.State.BLOCKED_ACCOUNT -> {
-                if (quote.quoteShown) {
+                if (quote.quoteShown || quote.quotedStatusViewData == null) {
                     QuoteContent(
                         quotedStatusViewData = quote.quotedStatusViewData,
                         listener = listener
                     )
                 } else {
                     QuoteHidden(
-                        text = stringResource(R.string.quote_account_blocked, "@" + quote.quotedStatusViewData!!.status.account.username),
+                        text = stringResource(R.string.quote_account_blocked, "@" + quote.quotedStatusViewData.status.account.username),
                     )
                 }
             }
 
             Quote.State.MUTED_ACCOUNT -> {
-                if (quote.quoteShown) {
+                if (quote.quoteShown || quote.quotedStatusViewData == null) {
                     QuoteContent(
                         quotedStatusViewData = quote.quotedStatusViewData,
                         listener = listener
                     )
                 } else {
                     QuoteHidden(
-                        text = stringResource(R.string.quote_account_muted, "@" + quote.quotedStatusViewData!!.status.account.username),
+                        text = stringResource(R.string.quote_account_muted, "@" + quote.quotedStatusViewData.status.account.username),
                     )
                 }
             }
 
             Quote.State.BLOCKED_DOMAIN -> {
-                if (quote.quoteShown) {
+                if (quote.quoteShown || quote.quotedStatusViewData == null) {
                     QuoteContent(
                         quotedStatusViewData = quote.quotedStatusViewData,
                         listener = listener
                     )
                 } else {
                     QuoteHidden(
-                        text = stringResource(R.string.quote_domain_blocked, getDomain(quote.quotedStatusViewData!!.status.account.url)),
+                        text = stringResource(R.string.quote_domain_blocked, getDomain(quote.quotedStatusViewData.status.account.url)),
                     )
                 }
             }
