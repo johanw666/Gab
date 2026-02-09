@@ -29,6 +29,7 @@ import com.keylesspalace.tusky.entity.Emoji
 import com.keylesspalace.tusky.entity.HashTag
 import com.keylesspalace.tusky.entity.Poll
 import com.keylesspalace.tusky.entity.PreviewCard
+import com.keylesspalace.tusky.entity.Quote
 import com.keylesspalace.tusky.entity.Status
 
 @Dao
@@ -86,6 +87,7 @@ AND s.tuskyAccountId = :tuskyAccountId"""
             reblogsCount = status.reblogsCount,
             favouritesCount = status.favouritesCount,
             repliesCount = status.repliesCount,
+            quotesCount = status.quotesCount,
             reblogged = status.reblogged,
             bookmarked = status.bookmarked,
             favourited = status.favourited,
@@ -99,7 +101,9 @@ AND s.tuskyAccountId = :tuskyAccountId"""
             muted = status.muted,
             pinned = status.pinned,
             card = status.card,
-            language = status.language
+            language = status.language,
+            quoteState = status.quote?.state,
+            quotedStatusId = status.quote?.quotedStatus?.id
         )
     }
 
@@ -111,6 +115,7 @@ AND s.tuskyAccountId = :tuskyAccountId"""
            reblogsCount = :reblogsCount,
            favouritesCount = :favouritesCount,
            repliesCount = :repliesCount,
+           quotesCount = :quotesCount,
            reblogged = :reblogged,
            bookmarked = :bookmarked,
            favourited = :favourited,
@@ -124,7 +129,9 @@ AND s.tuskyAccountId = :tuskyAccountId"""
            muted = :muted,
            pinned = :pinned,
            card = :card,
-           language = :language
+           language = :language,
+           quoteState = :quoteState,
+           quotedStatusId = :quotedStatusId
            WHERE tuskyAccountId = :tuskyAccountId AND serverId = :statusId"""
     )
     @TypeConverters(Converters::class)
@@ -137,6 +144,7 @@ AND s.tuskyAccountId = :tuskyAccountId"""
         reblogsCount: Int,
         favouritesCount: Int,
         repliesCount: Int,
+        quotesCount: Int,
         reblogged: Boolean,
         bookmarked: Boolean,
         favourited: Boolean,
@@ -150,7 +158,9 @@ AND s.tuskyAccountId = :tuskyAccountId"""
         muted: Boolean?,
         pinned: Boolean,
         card: PreviewCard?,
-        language: String?
+        language: String?,
+        quoteState: Quote.State?,
+        quotedStatusId: String?
     )
 
     @Query(

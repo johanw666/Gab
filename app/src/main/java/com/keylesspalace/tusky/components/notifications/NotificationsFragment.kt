@@ -464,6 +464,10 @@ class NotificationsFragment :
         viewModel.showQuote(viewData)
     }
 
+    override fun removeQuote(viewData: StatusViewData.Concrete) {
+        viewModel.removeQuote(viewData.status)
+    }
+
     override fun onLoadMore(loadMore: NotificationViewData.LoadMore) {
         val adapter = this.notificationsAdapter ?: return
         val items = adapter.snapshot()

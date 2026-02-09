@@ -1001,6 +1001,7 @@
 
     <string name="quote_pending">Post pending</string>
     <string name="quote_unavailable">Post unavailable</string>
+    <string name="quote_revoked">Post removed by author</string>
 
     <string name="quote_account_blocked">This post is hidden because you\'ve blocked %1$s.</string>
     <string name="quote_account_muted">This post is hidden because you\'ve muted %1$s.</string>
@@ -1009,4 +1010,9 @@
 
     <!-- Text for the screenreader when content is hidden by a warning -->
     <string name="content_hidden_description">Content hidden</string>
+
+    <string name="action_remove_quote">Remove quoted post</string>
+    <string name="remove_post_warning">Remove your post from %1$s\'s post? This action cannot be undone.</string>
+    <string name="remove_post">Remove post</string>
+    <string name="error_remove_quote">Failed to remove quote from post.</string>
 </resources>

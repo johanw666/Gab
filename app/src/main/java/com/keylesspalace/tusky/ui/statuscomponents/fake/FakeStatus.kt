@@ -218,4 +218,5 @@ val noopListener = object : StatusActionListener {
     override fun onReply(viewData: StatusViewData.Concrete) { }
     override fun onReport(viewData: StatusViewData.Concrete) { }
     override fun onShowQuote(viewData: StatusViewData.Concrete) { }
+    override fun removeQuote(viewData: StatusViewData.Concrete) { }
 }

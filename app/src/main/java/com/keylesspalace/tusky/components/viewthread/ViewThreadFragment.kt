@@ -624,6 +624,10 @@ class ViewThreadFragment :
         viewModel.showQuote(viewData)
     }
 
+    override fun removeQuote(viewData: StatusViewData.Concrete) {
+        viewModel.removeQuote(viewData.status)
+    }
+
     private fun onShowEdits(viewData: StatusViewData.Concrete) {
         val viewEditsFragment = ViewEditsFragment.newInstance(viewData.actionableId)
 

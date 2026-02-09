@@ -345,6 +345,10 @@ class NotificationRequestDetailsFragment :
         viewModel.showQuote(viewData)
     }
 
+    override fun removeQuote(viewData: StatusViewData.Concrete) {
+        viewModel.removeQuote(viewData.status)
+    }
+
     override fun onDestroyView() {
         adapter = null
         super.onDestroyView()

@@ -106,7 +106,17 @@ fun Quote(
                     modifier = Modifier.padding(horizontal = 4.dp)
                 )
             }
-            Quote.State.REJECTED, Quote.State.REVOKED, Quote.State.DELETED, Quote.State.UNAUTHORIZED -> {
+
+            Quote.State.REVOKED -> {
+                Text(
+                    text = stringResource(R.string.quote_revoked),
+                    color = tuskyColors.tertiaryTextColor,
+                    fontSize = 16.sp,
+                    modifier = Modifier.padding(horizontal = 4.dp)
+                )
+            }
+
+            Quote.State.REJECTED, Quote.State.DELETED, Quote.State.UNAUTHORIZED -> {
                 Text(
                     text = stringResource(R.string.quote_unavailable),
                     color = tuskyColors.tertiaryTextColor,

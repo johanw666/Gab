@@ -461,6 +461,10 @@ class ConversationsFragment :
         // no quotes in conversations
     }
 
+    override fun removeQuote(viewData: StatusViewData.Concrete) {
+        // no quotes in conversations
+    }
+
     private fun deleteConversation(conversation: ConversationViewData) {
         MaterialAlertDialogBuilder(requireContext())
             .setMessage(R.string.dialog_delete_conversation_warning)

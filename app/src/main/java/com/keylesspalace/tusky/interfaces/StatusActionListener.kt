@@ -91,4 +91,6 @@ interface StatusActionListener : LinkListener {
      * @param viewData The parent status containing the quote.
      */
     fun onShowQuote(viewData: StatusViewData.Concrete)
+
+    fun removeQuote(viewData: StatusViewData.Concrete)
 }

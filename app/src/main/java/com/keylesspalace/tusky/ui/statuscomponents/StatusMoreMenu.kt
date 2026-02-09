@@ -316,7 +316,22 @@ fun StatusMoreMenu(
                     }
                 )
             }
+
             if (!isOwnStatus) {
+                status.quote?.quotedStatus?.let { quotedStatus ->
+                    if (quotedStatus.account.id == activeAccount?.accountId) {
+                        DropdownMenuItem(
+                            text = { Text(stringResource(R.string.action_remove_quote)) },
+                            onClick = {
+                                onDismissRequest()
+                                confirmationDialogState.showRemovePostDialog("@${quotedStatus.account.username}") {
+                                    listener.removeQuote(viewData)
+                                }
+                            }
+                        )
+                    }
+                }
+
                 DropdownMenuItem(
                     text = { Text(stringResource(R.string.action_mute)) },
                     onClick = {

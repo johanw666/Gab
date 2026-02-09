@@ -741,4 +741,10 @@ interface MastodonApi {
     suspend fun getInstanceRules(
         @Header(DOMAIN_HEADER) domain: String? = null
     ): NetworkResult<List<Instance.Rule>>
+
+    @POST("api/v1/statuses/{id}/quotes/{quoting_status_id}/revoke")
+    suspend fun removeQuote(
+        @Path("id") id: String,
+        @Path("quoting_status_id") quotingStatusId: String
+    ): NetworkResult<Status>
 }

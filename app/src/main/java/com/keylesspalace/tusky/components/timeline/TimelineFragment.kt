@@ -724,6 +724,10 @@ class TimelineFragment :
         viewModel.showQuote(viewData)
     }
 
+    override fun removeQuote(viewData: StatusViewData.Concrete) {
+        viewModel.removeQuote(viewData.status)
+    }
+
     override fun onReselect() {
         lifecycleScope.launch {
             jumpUp.emit(Unit)

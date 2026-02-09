@@ -53,9 +53,9 @@ import com.keylesspalace.tusky.R
 import com.keylesspalace.tusky.ui.TuskyTextButton
 
 @Composable
-fun rememberDialogState(): DialogState = remember { DialogState() }
+internal fun rememberDialogState(): DialogState = remember { DialogState() }
 
-data class DialogState(
+internal data class DialogState(
     internal var dialogData: MutableState<(@Composable () -> Unit)?> = mutableStateOf(null)
 ) {
     fun show(
@@ -69,13 +69,13 @@ data class DialogState(
 }
 
 @Composable
-fun Dialog(
+internal fun Dialog(
     state: DialogState
 ) {
     state.dialogData.value?.invoke()
 }
 
-fun DialogState.showDeleteStatusDialog(
+internal fun DialogState.showDeleteStatusDialog(
     onDelete: () -> Unit
 ) {
     show {
@@ -86,7 +86,7 @@ fun DialogState.showDeleteStatusDialog(
     }
 }
 
-fun DialogState.showConfirmRedraftDialog(
+internal fun DialogState.showConfirmRedraftDialog(
     onRedraft: () -> Unit
 ) {
     show {
@@ -97,7 +97,7 @@ fun DialogState.showConfirmRedraftDialog(
     }
 }
 
-fun DialogState.showBlockAccountDialog(
+internal fun DialogState.showBlockAccountDialog(
     accountUsername: String,
     onBlock: () -> Unit
 ) {
@@ -110,12 +110,12 @@ fun DialogState.showBlockAccountDialog(
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
-fun DialogState.showConfirmMuteDialog(
+internal fun DialogState.showConfirmMuteDialog(
     accountUsername: String,
     onMute: (notifications: Boolean, duration: Int?) -> Unit
 ) {
     show {
-        var hideNotifications by mutableStateOf(false)
+        var hideNotifications by remember { mutableStateOf(false) }
         val durationLabels = stringArrayResource(R.array.mute_duration_names)
         val durationValues = integerArrayResource(R.array.mute_duration_values)
         var durationMenuExpanded by remember { mutableStateOf(false) }
@@ -213,9 +213,23 @@ fun DialogState.showConfirmMuteDialog(
     }
 }
 
+internal fun DialogState.showRemovePostDialog(
+    username: String,
+    onRemove: () -> Unit
+) {
+    show {
+        ConfirmationDialog(
+            message = stringResource(R.string.remove_post_warning, username),
+            confirmAction = stringResource(R.string.remove_post),
+            onConfirm = onRemove
+        )
+    }
+}
+
 @Composable
 private fun DialogState.ConfirmationDialog(
     message: String,
+    confirmAction: String = stringResource(android.R.string.ok),
     onConfirm: () -> Unit
 ) {
     AlertDialog(
@@ -225,7 +239,7 @@ private fun DialogState.ConfirmationDialog(
         },
         confirmButton = {
             TuskyTextButton(
-                text = stringResource(android.R.string.ok),
+                text = confirmAction,
                 onClick = {
                     onConfirm()
                     hide()

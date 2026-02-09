@@ -150,7 +150,7 @@ fun statusActions(
         )
     }
 
-    if (status.account.id == LocalAccount.current?.accountId) {
+    if (status.account.id == activeAccount?.accountId) {
         addAction(
             label = stringResource(R.string.action_edit),
             action = {
@@ -169,6 +169,17 @@ fun statusActions(
                 listener.onRedraft(statusViewData)
             }
         )
+    } else {
+        status.quote?.quotedStatus?.let { quotedStatus ->
+            if (quotedStatus.account.id == activeAccount?.accountId) {
+                addAction(
+                    label = stringResource(R.string.action_remove_quote),
+                    action = {
+                        listener.removeQuote(statusViewData)
+                    }
+                )
+            }
+        }
     }
 }
 

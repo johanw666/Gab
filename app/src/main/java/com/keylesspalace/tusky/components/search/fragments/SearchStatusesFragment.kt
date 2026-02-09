@@ -218,6 +218,10 @@ class SearchStatusesFragment :
         viewModel.showQuote(viewData)
     }
 
+    override fun removeQuote(viewData: StatusViewData.Concrete) {
+        viewModel.removeQuote(viewData.status)
+    }
+
     companion object {
         fun newInstance() = SearchStatusesFragment()
     }

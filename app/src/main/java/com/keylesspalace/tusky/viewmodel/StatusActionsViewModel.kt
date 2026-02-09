@@ -213,9 +213,7 @@ abstract class StatusActionsViewModel(
         }
     }
 
-    fun editStatus(
-        status: Status
-    ) {
+    fun editStatus(status: Status) {
         viewModelScope.launch {
             mastodonApi.statusSource(status.id)
                 .fold(
@@ -270,6 +268,22 @@ abstract class StatusActionsViewModel(
                     },
                     onFailure = { e ->
                         Log.w(TAG, "Failed to load status source in poll", e)
+                        errors.emit(SnackbarError.ResourceMessage(R.string.error_status_source_load))
+                    }
+                )
+        }
+    }
+
+    fun removeQuote(status: Status) {
+        val quotedStatusId = status.quote?.quotedStatus?.id ?: return
+        viewModelScope.launch {
+            mastodonApi.removeQuote(quotedStatusId, status.id)
+                .fold(
+                    onSuccess = { status ->
+                        eventHub.dispatch(StatusChangedEvent(status))
+                    },
+                    onFailure = { e ->
+                        Log.w(TAG, "Failed to remove quote from status", e)
                         errors.emit(SnackbarError.ResourceMessage(R.string.error_status_source_load))
                     }
                 )
