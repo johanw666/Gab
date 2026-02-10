@@ -525,7 +525,8 @@ private fun MediaItem(
                 }
             }
         },
-        key = attachment
+        key1 = attachment,
+        key2 = showMedia
     )
 }
 

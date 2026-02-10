@@ -50,7 +50,7 @@ import androidx.compose.ui.window.PopupProperties
  * @param menuContent The content of the menu.
  * @param content The content that makes up the clickable area that shows the menu
  * @param onClick called when the content is clicked
- * @param key Whenever this key changes, the menu will be recomposed
+ * @param keys Whenever the keys changes, the menu will be recomposed
  */
 @Composable
 fun LongPressContextMenu(
@@ -58,7 +58,8 @@ fun LongPressContextMenu(
     content: @Composable BoxScope.() -> Unit,
     modifier: Modifier = Modifier,
     onClick: () -> Unit = { },
-    key: Any
+    key1: Any,
+    key2: Any
 ) {
     var showPopup by remember { mutableStateOf(false) }
     var touchPoint: Offset by remember { mutableStateOf(Offset.Zero) }
@@ -68,7 +69,7 @@ fun LongPressContextMenu(
     Box(
         modifier = modifier
             .indication(interactionSource, ripple())
-            .pointerInput(key) {
+            .pointerInput(key1, key2) {
                 detectTapGestures(
                     onPress = { offset ->
                         val press = PressInteraction.Press(offset)
