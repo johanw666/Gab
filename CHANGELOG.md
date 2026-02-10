@@ -6,6 +6,24 @@
 
 ### Significant bug fixes
 
+## v32.1
+
+### New features and other improvements
+
+- It is now possible to remove one's own post from another post that quotes it https://codeberg.org/tusky/Tusky/pulls/5374
+
+### Significant bug fixes
+
+- Fixes a crash that can sometimes occur in search https://codeberg.org/tusky/Tusky/pulls/5431
+- Fixes a crash caused by nested quotes by a blocked account https://codeberg.org/tusky/Tusky/pulls/5428
+- Fixes a crash when changing avatar or header image. https://codeberg.org/tusky/Tusky/pulls/5407
+- Tusky now correctly hides filtered quotes. https://codeberg.org/tusky/Tusky/pulls/5438
+- Tusky now ignores quotes in non-Mastodon format. This makes it compatible with other implementations again https://codeberg.org/tusky/Tusky/pulls/5426
+- Tusky now trusts Sectigo root certificates. This makes some servers work on older Android versions. https://codeberg.org/tusky/Tusky/pulls/5427
+- The author of the original post is now the first mention again when replying. https://codeberg.org/tusky/Tusky/pulls/5411
+- The refresh menu option has been added back to all screens. https://codeberg.org/tusky/Tusky/pulls/5405
+- Hidden media can now be longpressed again to reveal the media description. https://codeberg.org/tusky/Tusky/pulls/5425
+
 ## v32.0
 
 ### New features and other improvements
