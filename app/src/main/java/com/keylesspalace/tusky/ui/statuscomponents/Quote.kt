@@ -87,7 +87,7 @@ fun Quote(
                     clickable {
                         listener.onShowQuote(statusViewData)
                     }
-                } else if (quote.quotedStatusViewData != null) {
+                } else if (quote.quotedStatusViewData != null && quote.quotedStatusViewData.filter?.action != Filter.Action.HIDE) {
                     clickable {
                         listener.onViewThread(quote.quotedStatusViewData)
                     }
@@ -186,6 +186,13 @@ private fun ColumnScope.QuoteContent(
             color = tuskyColors.secondaryTextColor,
             fontWeight = FontWeight.Bold,
             fontSize = 16.sp,
+            modifier = Modifier.padding(horizontal = 4.dp)
+        )
+    } else if (quotedStatusViewData.filter?.action == Filter.Action.HIDE) {
+        Text(
+            text = stringResource(R.string.quote_hidden_by_filter),
+            color = tuskyColors.tertiaryTextColor,
+            style = textStyle(16.sp),
             modifier = Modifier.padding(horizontal = 4.dp)
         )
     } else if (quotedStatusViewData.filterActive && quotedStatusViewData.filter?.action == Filter.Action.WARN) {

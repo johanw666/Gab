@@ -1015,4 +1015,6 @@
     <string name="remove_post_warning">Remove your post from %1$s\'s post? This action cannot be undone.</string>
     <string name="remove_post">Remove post</string>
     <string name="error_remove_quote">Failed to remove quote from post.</string>
+
+    <string name="quote_hidden_by_filter">Post hidden due to one of your filters</string>
 </resources>
