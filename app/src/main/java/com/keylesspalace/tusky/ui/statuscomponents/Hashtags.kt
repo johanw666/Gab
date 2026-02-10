@@ -58,8 +58,8 @@ fun Hashtags(
             ) {
                 append("#")
                 append(tag)
-                append(" ")
             }
+            append(" ")
         }
     }
 
