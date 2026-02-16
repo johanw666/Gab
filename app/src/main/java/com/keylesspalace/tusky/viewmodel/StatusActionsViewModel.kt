@@ -233,15 +233,14 @@ abstract class StatusActionsViewModel(
                         _startComposing.emit(composeOptions)
                     },
                     onFailure = { e ->
-                        Log.w(TAG, "Failed to vote in poll", e)
+                        Log.w(TAG, "Failed to load status source", e)
+                        errors.emit(SnackbarError.ResourceMessage(R.string.error_status_source_load))
                     }
                 )
         }
     }
 
-    fun redraftStatus(
-        status: Status
-    ) {
+    fun redraftStatus(status: Status) {
         viewModelScope.launch {
             mastodonApi.deleteStatus(status.id, deleteMedia = false)
                 .fold(
@@ -267,8 +266,8 @@ abstract class StatusActionsViewModel(
                         _startComposing.emit(composeOptions)
                     },
                     onFailure = { e ->
-                        Log.w(TAG, "Failed to load status source in poll", e)
-                        errors.emit(SnackbarError.ResourceMessage(R.string.error_status_source_load))
+                        Log.w(TAG, "Failed to load status source", e)
+                        errors.emit(SnackbarError.ResourceMessage(R.string.error_deleting_status))
                     }
                 )
         }

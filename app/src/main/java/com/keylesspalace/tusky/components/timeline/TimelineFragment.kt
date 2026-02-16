@@ -680,7 +680,7 @@ class TimelineFragment :
     }
 
     override fun onEdit(viewData: StatusViewData.Concrete) {
-        viewModel.editStatus(viewData.status)
+        viewModel.editStatus(viewData.actionable)
     }
 
     override fun onReply(viewData: StatusViewData.Concrete) {
