@@ -62,7 +62,7 @@ import kotlinx.coroutines.launch
 class ViewThreadViewModel @AssistedInject constructor(
     private val api: MastodonApi,
     private val db: AppDatabase,
-    eventHub: EventHub,
+    private val eventHub: EventHub,
     accountManager: AccountManager,
     @Assisted("threadId") val threadId: String
 ) : StatusActionsViewModel(api, eventHub) {
@@ -197,13 +197,16 @@ class ViewThreadViewModel @AssistedInject constructor(
             // If the detailedStatus was loaded from the database it might be out-of-date
             // compared to the remote one. Now the user has a working UI do a background fetch
             // for the status. Ignore errors, the user still has a functioning UI if the fetch
-            // failed. Update the database when the fetch was successful.
+            // failed
             if (cachedStatusData != null) {
                 api.status(threadId).onSuccess { result ->
-                    db.timelineStatusDao().update(tuskyAccountId = activeAccount.id, status = result)
                     detailedStatus = result.toViewData(isDetailed = true)
                 }
             }
+
+            // let other views know about possible changes to the loaded status
+            eventHub.dispatch(StatusChangedEvent(detailedStatus.status))
+
             val contextResult = contextCall.await()
 
             contextResult.fold({ statusContext ->
