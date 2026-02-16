@@ -20,6 +20,8 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.text.InlineTextContent
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme.colorScheme
@@ -40,7 +42,8 @@ import androidx.compose.ui.text.PlaceholderVerticalAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.keylesspalace.tusky.R
-import com.keylesspalace.tusky.ui.TuskyTextButton
+import com.keylesspalace.tusky.ui.TuskyButtonSize
+import com.keylesspalace.tusky.ui.TuskyOutlinedButton
 import com.keylesspalace.tusky.ui.preferences.LocalPreferences
 import com.keylesspalace.tusky.ui.statuscomponents.text.background.QuotePainter
 import com.keylesspalace.tusky.ui.statuscomponents.text.background.TextBackgroundPainters
@@ -125,7 +128,7 @@ fun ColumnScope.StatusText(
         }
     }
     if ((isExpanded || status.actionable.spoilerText.isEmpty()) && isCollapsible && !status.isDetailed) {
-        TuskyTextButton(
+        TuskyOutlinedButton(
             text = if (isCollapsed) {
                 stringResource(R.string.post_content_show_more)
             } else {
@@ -136,7 +139,10 @@ fun ColumnScope.StatusText(
             },
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
-                .semantics { hideFromAccessibility() }
+                .padding(top = 6.dp)
+                .widthIn(min = 112.dp)
+                .semantics { hideFromAccessibility() },
+            size = TuskyButtonSize.Small
         )
     }
 }
