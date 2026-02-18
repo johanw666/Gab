@@ -38,8 +38,10 @@ import com.keylesspalace.tusky.ui.TuskyOutlinedButton
 import com.keylesspalace.tusky.ui.TuskyTextButton
 import com.keylesspalace.tusky.ui.preferences.LocalAccount
 import com.keylesspalace.tusky.ui.preferences.LocalPreferences
+import com.keylesspalace.tusky.ui.statuscomponents.text.emojify
 import com.keylesspalace.tusky.ui.statuscomponents.text.mastodonHtmlText
 import com.keylesspalace.tusky.ui.statuscomponents.text.toAnnotatedString
+import com.keylesspalace.tusky.ui.statuscomponents.text.toInlineContent
 import com.keylesspalace.tusky.ui.tuskyColors
 import com.keylesspalace.tusky.util.localeNameForUntrustedISO639LangCode
 import com.keylesspalace.tusky.viewdata.StatusViewData
@@ -105,9 +107,10 @@ fun ColumnScope.StatusContent(
         val spoilerDescription = stringResource(R.string.description_post_cw, spoilerText)
         val contentHiddenDescription = stringResource(R.string.content_hidden_description)
         Text(
-            text = spoilerText,
+            text = spoilerText.emojify(status.emojis),
             color = tuskyColors.primaryTextColor,
             style = LocalPreferences.current.statusTextStyles.medium,
+            inlineContent = status.emojis.toInlineContent(),
             modifier = Modifier
                 .padding(top = 6.dp)
                 .semantics {
