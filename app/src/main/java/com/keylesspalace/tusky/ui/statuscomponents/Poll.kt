@@ -42,6 +42,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -71,6 +72,7 @@ import com.keylesspalace.tusky.ui.statuscomponents.fake.pollWithFourOptions
 import com.keylesspalace.tusky.ui.statuscomponents.text.emojify
 import com.keylesspalace.tusky.ui.statuscomponents.text.toInlineContent
 import com.keylesspalace.tusky.ui.tuskyColors
+import com.keylesspalace.tusky.ui.tuskyDefaultCornerShape
 import com.keylesspalace.tusky.ui.tuskyGrey50
 import com.keylesspalace.tusky.util.AbsoluteTimeFormatter
 import com.keylesspalace.tusky.util.formatPollDuration
@@ -241,17 +243,18 @@ private fun PollOption(
         modifier = Modifier
             .fillMaxWidth()
             .padding(top = 6.dp)
+            .clip(tuskyDefaultCornerShape)
             .clickable {
                 onSelect()
             }
             .run {
                 if (selected) {
-                    background(optionColor, RoundedCornerShape(8.dp))
+                    background(optionColor, tuskyDefaultCornerShape)
                 } else {
                     this
                 }
             }
-            .border(1.dp, optionColor, RoundedCornerShape(8.dp))
+            .border(1.dp, optionColor, tuskyDefaultCornerShape)
             .padding(horizontal = 12.dp, vertical = 6.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {

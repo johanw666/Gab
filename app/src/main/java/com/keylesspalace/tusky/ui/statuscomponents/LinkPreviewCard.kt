@@ -59,6 +59,8 @@ import com.keylesspalace.tusky.ui.TuskyTextButton
 import com.keylesspalace.tusky.ui.preferences.LocalAccount
 import com.keylesspalace.tusky.ui.preferences.LocalPreferences
 import com.keylesspalace.tusky.ui.tuskyColors
+import com.keylesspalace.tusky.ui.tuskyDefaultCornerShape
+import com.keylesspalace.tusky.ui.tuskyDefaultRadius
 import com.keylesspalace.tusky.util.BlurHashDecoder
 import com.keylesspalace.tusky.util.getRelativeTimeSpanString
 import com.keylesspalace.tusky.viewdata.StatusViewData
@@ -86,13 +88,13 @@ fun LinkPreviewCard(
     val cardModifier = Modifier
         .fillMaxWidth()
         .padding(top = 6.dp)
-        .clip(RoundedCornerShape(12.dp))
+        .clip(tuskyDefaultCornerShape)
         .background(colorScheme.surface)
         .clickable {
             listener.onViewUrl(card.url)
         }
         .padding(1.dp)
-        .clip(RoundedCornerShape(11.dp))
+        .clip(RoundedCornerShape(tuskyDefaultRadius - 1.dp))
 
     if (card.width <= card.height || card.image == null) {
         Row(
@@ -214,7 +216,7 @@ private fun LinkPreviewDescription(
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 8.dp)
+            .padding(horizontal = 12.dp, vertical = 8.dp)
     ) {
         val providerName = if (card.providerName.isNullOrEmpty()) {
             card.url.toUri().host

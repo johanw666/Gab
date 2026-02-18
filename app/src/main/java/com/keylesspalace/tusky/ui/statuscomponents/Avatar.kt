@@ -15,31 +15,28 @@
 
 package com.keylesspalace.tusky.ui.statuscomponents
 
-import androidx.annotation.FloatRange
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.geometry.Size
-import androidx.compose.ui.platform.InspectableValue
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.hideFromAccessibility
 import androidx.compose.ui.semantics.semantics
-import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import com.keylesspalace.tusky.R
 import com.keylesspalace.tusky.ui.preferences.LocalPreferences
 import com.keylesspalace.tusky.ui.tuskyColors
+import com.keylesspalace.tusky.ui.tuskyDefaultCornerShape
+import com.keylesspalace.tusky.ui.tuskyDefaultRadius
 
 @Composable
 fun Avatar(
@@ -76,7 +73,13 @@ fun Avatar(
                     }
                 }
                 .align(Alignment.TopStart)
-                .clip(RoundedCornerShape(PercentCornerSize(12.5f)))
+                .clip(
+                    if (boostedAvatarUrl == null) {
+                        tuskyDefaultCornerShape
+                    } else {
+                        RoundedCornerShape(tuskyDefaultRadius * 0.75f)
+                    }
+                )
                 .run {
                     if (onOpenProfile != null) {
                         clickable { onOpenProfile() }
@@ -99,7 +102,9 @@ fun Avatar(
                 modifier = Modifier
                     .fillMaxSize(0.5f)
                     .align(Alignment.BottomEnd)
-                    .clip(RoundedCornerShape(PercentCornerSize(25f)))
+                    .clip(
+                        RoundedCornerShape(tuskyDefaultRadius / 2)
+                    )
             )
         } else if (isBot && LocalPreferences.current.showBotBadge) {
             Icon(
@@ -109,28 +114,10 @@ fun Avatar(
                 modifier = Modifier
                     .fillMaxSize(0.5f)
                     .align(Alignment.BottomEnd)
-                    .clip(RoundedCornerShape(PercentCornerSize(25f)))
+                    .clip(RoundedCornerShape(tuskyDefaultRadius))
                     .background(tuskyColors.windowBackground.copy(alpha = 0.75f))
                     .padding(2.dp)
             )
         }
     }
-}
-
-// copied from androidx.compose.foundation.shape.CornerSize.kt because it is not public 🙄
-data class PercentCornerSize(
-    @FloatRange(from = 0.0, to = 100.0) private val percent: Float
-) : CornerSize, InspectableValue {
-    init {
-        if (percent !in 0.0..100.0) {
-            throw IllegalArgumentException("The percent should be in the range of [0, 100]")
-        }
-    }
-
-    override fun toPx(shapeSize: Size, density: Density) = shapeSize.minDimension * (percent / 100f)
-
-    override fun toString(): String = "CornerSize(size = $percent%)"
-
-    override val valueOverride: String
-        get() = "$percent%"
 }

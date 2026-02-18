@@ -105,6 +105,7 @@ import com.keylesspalace.tusky.ui.preferences.LocalPreferences
 import com.keylesspalace.tusky.ui.statuscomponents.MediaAttachments
 import com.keylesspalace.tusky.ui.statuscomponents.PollPreview
 import com.keylesspalace.tusky.ui.tuskyColors
+import com.keylesspalace.tusky.ui.tuskyDefaultCornerShape
 import com.keylesspalace.tusky.viewdata.AttachmentViewData
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
@@ -483,7 +484,7 @@ class ScheduledStatusActivity : BaseActivity() {
             modifier = Modifier
                 .border(
                     BorderStroke(1.dp, colorScheme.primary),
-                    RoundedCornerShape(6.dp)
+                    tuskyDefaultCornerShape
                 )
                 .padding(start = 8.dp, end = 8.dp, top = 4.dp, bottom = 4.dp)
                 .semantics(mergeDescendants = true) { }
@@ -491,7 +492,7 @@ class ScheduledStatusActivity : BaseActivity() {
             drawable?.let { drawableRes ->
                 Icon(
                     modifier = Modifier.size(16.dp),
-                    painter = painterResource(drawable),
+                    painter = painterResource(drawableRes),
                     contentDescription = null,
                     tint = colorScheme.primary
                 )

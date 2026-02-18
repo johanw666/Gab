@@ -19,7 +19,6 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -51,6 +50,8 @@ import com.keylesspalace.tusky.ui.preferences.textStyle
 import com.keylesspalace.tusky.ui.statuscomponents.text.emojify
 import com.keylesspalace.tusky.ui.statuscomponents.text.toInlineContent
 import com.keylesspalace.tusky.ui.tuskyColors
+import com.keylesspalace.tusky.ui.tuskyDefaultCornerShape
+import com.keylesspalace.tusky.ui.tuskyDefaultRadius
 import com.keylesspalace.tusky.util.getDomain
 import com.keylesspalace.tusky.viewdata.StatusViewData
 
@@ -67,227 +68,268 @@ fun Quote(
         return
     }
 
+    when (quote.state) {
+        Quote.State.PENDING -> {
+            QuotePlaceholder(
+                stringResource(R.string.quote_pending),
+                modifier = modifier
+            )
+        }
+
+        Quote.State.REVOKED -> {
+            QuotePlaceholder(
+                stringResource(R.string.quote_revoked),
+                modifier = modifier
+            )
+        }
+
+        Quote.State.REJECTED, Quote.State.DELETED, Quote.State.UNAUTHORIZED -> {
+            QuotePlaceholder(
+                stringResource(R.string.quote_unavailable),
+                modifier = modifier
+            )
+        }
+
+        Quote.State.ACCEPTED -> {
+            QuoteContent(
+                quotedStatusViewData = quote.quotedStatusViewData,
+                listener = listener,
+                modifier = modifier
+            )
+        }
+
+        Quote.State.BLOCKED_ACCOUNT -> {
+            if (quote.quoteShown || quote.quotedStatusViewData == null) {
+                QuoteContent(
+                    quotedStatusViewData = quote.quotedStatusViewData,
+                    listener = listener,
+                    modifier = modifier
+                )
+            } else {
+                QuoteHidden(
+                    text = stringResource(R.string.quote_account_blocked, "@" + quote.quotedStatusViewData.status.account.username),
+                    onShowQuote = { listener.onShowQuote(statusViewData) },
+                    modifier = modifier,
+                )
+            }
+        }
+
+        Quote.State.MUTED_ACCOUNT -> {
+            if (quote.quoteShown || quote.quotedStatusViewData == null) {
+                QuoteContent(
+                    quotedStatusViewData = quote.quotedStatusViewData,
+                    listener = listener
+                )
+            } else {
+                QuoteHidden(
+                    text = stringResource(R.string.quote_account_muted, "@" + quote.quotedStatusViewData.status.account.username),
+                    onShowQuote = { listener.onShowQuote(statusViewData) },
+                    modifier = modifier,
+                )
+            }
+        }
+
+        Quote.State.BLOCKED_DOMAIN -> {
+            if (quote.quoteShown || quote.quotedStatusViewData == null) {
+                QuoteContent(
+                    quotedStatusViewData = quote.quotedStatusViewData,
+                    listener = listener,
+                    modifier = modifier
+                )
+            } else {
+                QuoteHidden(
+                    text = stringResource(R.string.quote_domain_blocked, getDomain(quote.quotedStatusViewData.status.account.url)),
+                    onShowQuote = { listener.onShowQuote(statusViewData) },
+                    modifier = modifier,
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun QuoteContent(
+    quotedStatusViewData: StatusViewData.Concrete?,
+    listener: StatusActionListener,
+    modifier: Modifier = Modifier
+) {
+    if (quotedStatusViewData == null) {
+        ShallowQuote(modifier)
+    } else if (quotedStatusViewData.filter?.action == Filter.Action.HIDE) {
+        QuotePlaceholder(
+            stringResource(R.string.quote_hidden_by_filter),
+            modifier = modifier
+        )
+    } else if (quotedStatusViewData.filterActive && quotedStatusViewData.filter?.action == Filter.Action.WARN) {
+        QuoteHidden(
+            stringResource(R.string.status_filter_placeholder_label_format, quotedStatusViewData.filter.title),
+            onShowQuote = {
+                listener.changeFilter(quotedStatusViewData, filtered = false)
+            },
+            modifier = modifier,
+        )
+    } else {
+        val quotedStatus = quotedStatusViewData.status
+
+        Column(
+            modifier
+                .fillMaxWidth()
+                .border(
+                    width = 1.dp,
+                    color = tuskyColors.backgroundAccent,
+                    shape = RoundedCornerShape(tuskyDefaultRadius + 8.dp)
+                )
+                .clip(RoundedCornerShape(tuskyDefaultRadius + 8.dp))
+                .clickable {
+                    listener.onViewThread(quotedStatusViewData)
+                }
+                .padding(8.dp)
+        ) {
+            Row {
+                Avatar(
+                    url = quotedStatus.account.avatar,
+                    staticUrl = quotedStatus.account.staticAvatar,
+                    isBot = quotedStatus.account.bot,
+                    boostedAvatarUrl = null,
+                    staticBoostedAvatarUrl = null,
+                    onOpenProfile = {
+                        listener.onViewAccount(quotedStatus.account.id)
+                    },
+                    modifier = Modifier
+                        .size(40.dp)
+                        .clearAndSetSemantics {
+                            hideFromAccessibility()
+                        }
+                )
+
+                Spacer(modifier = Modifier.width(12.dp))
+
+                Box(
+                    modifier = Modifier.weight(1f)
+                ) {
+                    val username = stringResource(R.string.post_username_format, quotedStatus.account.username)
+
+                    Column(
+                        modifier = Modifier
+                            .clearAndSetSemantics {
+                                contentDescription = "${quotedStatus.account.name} $username"
+                            }
+                            .clickable {
+                                listener.onViewAccount(quotedStatus.account.id)
+                            }
+                    ) {
+                        Text(
+                            text = quotedStatus.account.name.emojify(quotedStatus.account.emojis),
+                            fontWeight = FontWeight.Bold,
+                            color = tuskyColors.primaryTextColor,
+                            style = LocalPreferences.current.statusTextStyles.medium,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
+                            inlineContent = quotedStatus.account.emojis.toInlineContent()
+                        )
+                        val username = stringResource(R.string.post_username_format, quotedStatus.account.username)
+                        Text(
+                            text = username,
+                            color = tuskyColors.secondaryTextColor,
+                            style = LocalPreferences.current.statusTextStyles.medium,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
+                        )
+                    }
+                }
+
+                Timestamp(
+                    date = quotedStatus.createdAt,
+                    isEdited = quotedStatus.editedAt != null,
+                    textColor = tuskyColors.secondaryTextColor,
+                    modifier = Modifier.padding(horizontal = 4.dp)
+                )
+            }
+
+            StatusContent(
+                statusViewData = quotedStatusViewData,
+                listener = listener
+            )
+        }
+    }
+}
+
+@Composable
+private fun QuotePlaceholder(
+    text: String,
+    modifier: Modifier = Modifier
+) {
+    Text(
+        text = text,
+        color = tuskyColors.secondaryTextColor,
+        fontSize = 16.sp,
+        modifier = modifier
+            .fillMaxWidth()
+            .border(
+                width = 1.dp,
+                color = tuskyColors.backgroundAccent,
+                shape = tuskyDefaultCornerShape
+            )
+            .padding(horizontal = 12.dp, vertical = 8.dp)
+    )
+}
+
+@Composable
+private fun ShallowQuote(modifier: Modifier = Modifier) {
+    Text(
+        text = stringResource(R.string.quote),
+        color = tuskyColors.secondaryTextColor,
+        fontWeight = FontWeight.Bold,
+        fontSize = 16.sp,
+        modifier = modifier
+            .fillMaxWidth()
+            .border(
+                width = 1.dp,
+                color = tuskyColors.backgroundAccent,
+                shape = tuskyDefaultCornerShape
+            )
+            .padding(horizontal = 12.dp, vertical = 8.dp)
+    )
+}
+
+@Composable
+private fun QuoteHidden(
+    text: String,
+    onShowQuote: () -> Unit,
+    modifier: Modifier = Modifier
+) {
     Column(
         modifier = modifier
             .fillMaxWidth()
             .border(
                 width = 1.dp,
                 color = tuskyColors.backgroundAccent,
-                shape = RoundedCornerShape(12.dp)
+                shape = RoundedCornerShape(tuskyDefaultRadius + 8.dp)
             )
-            .clip(RoundedCornerShape(12.dp))
-            .run {
-                if (quote.quotedStatusViewData?.filterActive == true && quote.quotedStatusViewData.filter?.action == Filter.Action.WARN) {
-                    clickable {
-                        listener.changeFilter(quote.quotedStatusViewData, filtered = false)
-                    }
-                } else if (!quote.quoteShown &&
-                    (quote.state == Quote.State.BLOCKED_ACCOUNT || quote.state == Quote.State.MUTED_ACCOUNT || quote.state == Quote.State.BLOCKED_DOMAIN)
-                ) {
-                    clickable {
-                        listener.onShowQuote(statusViewData)
-                    }
-                } else if (quote.quotedStatusViewData != null && quote.quotedStatusViewData.filter?.action != Filter.Action.HIDE) {
-                    clickable {
-                        listener.onViewThread(quote.quotedStatusViewData)
-                    }
-                } else {
-                    this
-                }
+            .clip(RoundedCornerShape(tuskyDefaultRadius + 8.dp))
+            .clickable {
+                onShowQuote()
             }
             .padding(8.dp)
     ) {
-        when (quote.state) {
-            Quote.State.PENDING -> {
-                Text(
-                    text = stringResource(R.string.quote_pending),
-                    color = tuskyColors.tertiaryTextColor,
-                    fontSize = 16.sp,
-                    modifier = Modifier.padding(horizontal = 4.dp)
-                )
-            }
-
-            Quote.State.REVOKED -> {
-                Text(
-                    text = stringResource(R.string.quote_revoked),
-                    color = tuskyColors.tertiaryTextColor,
-                    fontSize = 16.sp,
-                    modifier = Modifier.padding(horizontal = 4.dp)
-                )
-            }
-
-            Quote.State.REJECTED, Quote.State.DELETED, Quote.State.UNAUTHORIZED -> {
-                Text(
-                    text = stringResource(R.string.quote_unavailable),
-                    color = tuskyColors.tertiaryTextColor,
-                    fontSize = 16.sp,
-                    modifier = Modifier.padding(horizontal = 4.dp)
-                )
-            }
-
-            Quote.State.ACCEPTED -> {
-                QuoteContent(
-                    quotedStatusViewData = quote.quotedStatusViewData,
-                    listener = listener
-                )
-            }
-
-            Quote.State.BLOCKED_ACCOUNT -> {
-                if (quote.quoteShown || quote.quotedStatusViewData == null) {
-                    QuoteContent(
-                        quotedStatusViewData = quote.quotedStatusViewData,
-                        listener = listener
-                    )
-                } else {
-                    QuoteHidden(
-                        text = stringResource(R.string.quote_account_blocked, "@" + quote.quotedStatusViewData.status.account.username),
-                    )
-                }
-            }
-
-            Quote.State.MUTED_ACCOUNT -> {
-                if (quote.quoteShown || quote.quotedStatusViewData == null) {
-                    QuoteContent(
-                        quotedStatusViewData = quote.quotedStatusViewData,
-                        listener = listener
-                    )
-                } else {
-                    QuoteHidden(
-                        text = stringResource(R.string.quote_account_muted, "@" + quote.quotedStatusViewData.status.account.username),
-                    )
-                }
-            }
-
-            Quote.State.BLOCKED_DOMAIN -> {
-                if (quote.quoteShown || quote.quotedStatusViewData == null) {
-                    QuoteContent(
-                        quotedStatusViewData = quote.quotedStatusViewData,
-                        listener = listener
-                    )
-                } else {
-                    QuoteHidden(
-                        text = stringResource(R.string.quote_domain_blocked, getDomain(quote.quotedStatusViewData.status.account.url)),
-                    )
-                }
-            }
-        }
-    }
-}
-
-@Composable
-private fun ColumnScope.QuoteContent(
-    quotedStatusViewData: StatusViewData.Concrete?,
-    listener: StatusActionListener
-) {
-    if (quotedStatusViewData == null) {
-        // shallow quote
         Text(
-            text = stringResource(R.string.quote),
-            color = tuskyColors.secondaryTextColor,
-            fontWeight = FontWeight.Bold,
-            fontSize = 16.sp,
-            modifier = Modifier.padding(horizontal = 4.dp)
-        )
-    } else if (quotedStatusViewData.filter?.action == Filter.Action.HIDE) {
-        Text(
-            text = stringResource(R.string.quote_hidden_by_filter),
+            text = text,
             color = tuskyColors.tertiaryTextColor,
             style = textStyle(16.sp),
-            modifier = Modifier.padding(horizontal = 4.dp)
+            textAlign = TextAlign.Center,
+            modifier = Modifier
+                .align(Alignment.CenterHorizontally)
+                .padding(horizontal = 4.dp)
         )
-    } else if (quotedStatusViewData.filterActive && quotedStatusViewData.filter?.action == Filter.Action.WARN) {
-        QuoteHidden(stringResource(R.string.status_filter_placeholder_label_format, quotedStatusViewData.filter.title))
-    } else {
-        val quotedStatus = quotedStatusViewData.status
-        Row {
-            Avatar(
-                url = quotedStatus.account.avatar,
-                staticUrl = quotedStatus.account.staticAvatar,
-                isBot = quotedStatus.account.bot,
-                boostedAvatarUrl = null,
-                staticBoostedAvatarUrl = null,
-                onOpenProfile = {
-                    listener.onViewAccount(quotedStatus.account.id)
-                },
-                modifier = Modifier
-                    .size(36.dp)
-                    .clearAndSetSemantics {
-                        hideFromAccessibility()
-                    }
-            )
-
-            Spacer(modifier = Modifier.width(12.dp))
-
-            Box(
-                modifier = Modifier.weight(1f)
-            ) {
-                val username = stringResource(R.string.post_username_format, quotedStatus.account.username)
-
-                Column(
-                    modifier = Modifier
-                        .clearAndSetSemantics {
-                            contentDescription = "${quotedStatus.account.name} $username"
-                        }
-                        .clickable {
-                            listener.onViewAccount(quotedStatus.account.id)
-                        }
-                ) {
-                    Text(
-                        text = quotedStatus.account.name.emojify(quotedStatus.account.emojis),
-                        fontWeight = FontWeight.Bold,
-                        color = tuskyColors.primaryTextColor,
-                        style = LocalPreferences.current.statusTextStyles.medium,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis,
-                        inlineContent = quotedStatus.account.emojis.toInlineContent()
-                    )
-                    val username = stringResource(R.string.post_username_format, quotedStatus.account.username)
-                    Text(
-                        text = username,
-                        color = tuskyColors.secondaryTextColor,
-                        style = LocalPreferences.current.statusTextStyles.medium,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
-                    )
-                }
-            }
-
-            Timestamp(
-                date = quotedStatus.createdAt,
-                isEdited = quotedStatus.editedAt != null,
-                textColor = tuskyColors.secondaryTextColor,
-                modifier = Modifier.padding(start = 4.dp)
-            )
-        }
-
-        StatusContent(
-            statusViewData = quotedStatusViewData,
-            listener = listener
+        Text(
+            text = stringResource(R.string.quote_hidden_show_anyway),
+            fontSize = 16.sp,
+            color = colorScheme.primary,
+            fontWeight = FontWeight.Bold,
+            textAlign = TextAlign.Center,
+            modifier = Modifier
+                .align(Alignment.CenterHorizontally)
+                .padding(top = 6.dp)
         )
     }
-}
-
-@Composable
-private fun ColumnScope.QuoteHidden(
-    text: String
-) {
-    Text(
-        text = text,
-        color = tuskyColors.tertiaryTextColor,
-        style = textStyle(16.sp),
-        textAlign = TextAlign.Center,
-        modifier = Modifier
-            .align(Alignment.CenterHorizontally)
-            .padding(horizontal = 4.dp)
-    )
-    Text(
-        text = stringResource(R.string.quote_hidden_show_anyway),
-        fontSize = 16.sp,
-        color = colorScheme.primary,
-        fontWeight = FontWeight.Bold,
-        textAlign = TextAlign.Center,
-        modifier = Modifier
-            .align(Alignment.CenterHorizontally)
-            .padding(top = 6.dp)
-    )
 }

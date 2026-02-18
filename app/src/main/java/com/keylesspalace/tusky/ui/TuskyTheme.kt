@@ -16,6 +16,7 @@
 package com.keylesspalace.tusky.ui
 
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.LocalMinimumInteractiveComponentSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Typography
@@ -26,6 +27,7 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.keylesspalace.tusky.settings.AppTheme
 import com.keylesspalace.tusky.ui.preferences.LocalPreferences
@@ -58,6 +60,9 @@ val tuskyGrey70 = Color(0xFF9BAEC8)
 val tuskyGrey80 = Color(0xFFB9C8D8)
 val tuskyGrey90 = Color(0xFFD9E1E8)
 val tuskyGrey95 = Color(0xFFEBEFF4)
+
+val tuskyDefaultRadius: Dp = 8.dp
+val tuskyDefaultCornerShape = RoundedCornerShape(tuskyDefaultRadius)
 
 private val LightColorScheme = lightColorScheme(
     primary = tuskyBlueDark,

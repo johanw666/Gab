@@ -54,6 +54,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.hideFromAccessibility
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -67,6 +68,8 @@ import com.keylesspalace.tusky.ui.TuskyPreviewTheme
 import com.keylesspalace.tusky.ui.preferences.LocalPreferences
 import com.keylesspalace.tusky.ui.statuscomponents.fake.fourAttachments
 import com.keylesspalace.tusky.ui.tuskyColors
+import com.keylesspalace.tusky.ui.tuskyDefaultCornerShape
+import com.keylesspalace.tusky.ui.tuskyDefaultRadius
 import com.keylesspalace.tusky.util.BlurHashDecoder
 import com.keylesspalace.tusky.util.getFormattedDescription
 import com.keylesspalace.tusky.util.hasPreviewableAttachment
@@ -123,7 +126,7 @@ private fun AttachmentPreviewGrid(
 ) {
     Box(
         modifier = modifier
-            .clip(RoundedCornerShape(8.dp))
+            .clip(tuskyDefaultCornerShape)
     ) {
         if (attachments.size == 1) {
             val attachment = attachments[0]
@@ -364,9 +367,9 @@ private fun AttachmentPreviewGrid(
                     .align(Alignment.Center)
                     .background(
                         color = colorScheme.background.copy(alpha = 0.6f),
-                        shape = RoundedCornerShape(7.dp)
+                        shape = tuskyDefaultCornerShape
                     )
-                    .padding(horizontal = 12.dp, vertical = 8.dp)
+                    .padding(horizontal = 16.dp, vertical = 8.dp)
             )
         } else {
             Icon(
@@ -375,8 +378,8 @@ private fun AttachmentPreviewGrid(
                 tint = tuskyColors.secondaryTextColor,
                 modifier = Modifier
                     .align(Alignment.TopStart)
-                    .padding(3.dp)
-                    .clip(RoundedCornerShape(7.dp))
+                    .padding(4.dp)
+                    .clip(RoundedCornerShape(tuskyDefaultRadius - 4.dp))
                     .background(colorScheme.background.copy(alpha = 0.6f))
                     .clickable {
                         onMediaHiddenChanged()
@@ -493,13 +496,15 @@ private fun MediaItem(
                             text = stringResource(R.string.post_media_alt),
                             color = tuskyColors.secondaryTextColor,
                             fontSize = 14.sp,
+                            style = TextStyle(letterSpacing = 0.8.sp),
+                            fontWeight = FontWeight.Medium,
                             modifier = Modifier
-                                .padding(3.dp)
+                                .padding(4.dp)
                                 .background(
                                     color = colorScheme.background.copy(alpha = 0.6f),
-                                    shape = RoundedCornerShape(7.dp)
+                                    shape = RoundedCornerShape(tuskyDefaultRadius - 4.dp)
                                 )
-                                .padding(horizontal = 5.dp, vertical = 3.dp)
+                                .padding(horizontal = 6.dp, vertical = 3.dp)
                                 .align(Alignment.BottomEnd)
                         )
                     }
@@ -517,9 +522,9 @@ private fun MediaItem(
                                     shape = CircleShape
                                 )
                                 .padding(2.dp)
-                                .background(colorScheme.surface.copy(alpha = 0.8f), shape = CircleShape)
+                                .background(colorScheme.surface.copy(alpha = 0.6f), shape = CircleShape)
                                 .padding(6.dp)
-                                .size(40.dp)
+                                .size(36.dp)
                         )
                     }
                 }
@@ -541,17 +546,17 @@ private fun AttachmentDescriptionList(
         modifier = modifier
     ) {
         attachments.forEachIndexed { index, attachment ->
-
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier
                     .fillMaxWidth()
                     .background(
                         color = colorScheme.surface,
-                        shape = RoundedCornerShape(8.dp)
+                        shape = tuskyDefaultCornerShape
                     )
+                    .clip(tuskyDefaultCornerShape)
                     .clickable { onOpenAttachment(index) }
-                    .padding(horizontal = 8.dp, vertical = 4.dp)
+                    .padding(horizontal = 8.dp, vertical = 6.dp)
             ) {
                 val mediaIcon = when (attachment.type) {
                     Attachment.Type.IMAGE -> R.drawable.ic_image_24dp
@@ -566,7 +571,7 @@ private fun AttachmentDescriptionList(
                     tint = tuskyColors.primaryTextColor,
                     contentDescription = null
                 )
-                Spacer(modifier = Modifier.width(4.dp))
+                Spacer(modifier = Modifier.width(6.dp))
                 Text(
                     text = attachment.getFormattedDescription(LocalContext.current),
                     color = tuskyColors.primaryTextColor,
@@ -640,7 +645,7 @@ fun MediaAttachmentsPreview() {
             )
 
             MediaAttachments(
-                attachments = fourAttachments,
+                attachments = fourAttachments + fourAttachments,
                 onOpenAttachment = { },
                 onMediaHiddenChanged = { },
                 sensitive = false,

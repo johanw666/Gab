@@ -36,6 +36,7 @@ import com.keylesspalace.tusky.R
 import com.keylesspalace.tusky.entity.NewPoll
 import com.keylesspalace.tusky.ui.TuskyTheme
 import com.keylesspalace.tusky.ui.tuskyColors
+import com.keylesspalace.tusky.ui.tuskyDefaultCornerShape
 import com.keylesspalace.tusky.ui.util.formatDuration
 
 @Composable
@@ -44,6 +45,7 @@ fun PollPreview(
     modifier: Modifier
 ) {
     OutlinedCard(
+        shape = tuskyDefaultCornerShape,
         modifier = modifier
     ) {
         Column(

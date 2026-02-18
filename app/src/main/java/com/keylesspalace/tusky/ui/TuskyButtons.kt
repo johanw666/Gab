@@ -26,7 +26,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.OutlinedButton
@@ -36,11 +35,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-
-private val TuskyButtonShape = RoundedCornerShape(8.dp)
 
 sealed class TuskyButtonSize(
     val padding: PaddingValues,
@@ -68,12 +66,15 @@ fun TuskyButton(
 ) {
     Button(
         onClick = onClick,
-        shape = TuskyButtonShape,
+        shape = tuskyDefaultCornerShape,
         contentPadding = size.padding,
         modifier = modifier
             .heightIn(min = size.minHeight)
     ) {
-        Text(text)
+        Text(
+            text = text,
+            textAlign = TextAlign.Center
+        )
     }
 }
 
@@ -86,7 +87,7 @@ fun TuskyOutlinedButton(
 ) {
     OutlinedButton(
         onClick = onClick,
-        shape = TuskyButtonShape,
+        shape = tuskyDefaultCornerShape,
         border = BorderStroke(
             width = 1.dp,
             color = tuskyColors.backgroundAccent,
@@ -97,7 +98,8 @@ fun TuskyOutlinedButton(
     ) {
         Text(
             text = text,
-            color = colorScheme.primary
+            color = colorScheme.primary,
+            textAlign = TextAlign.Center
         )
     }
 }
@@ -111,12 +113,15 @@ fun TuskyTextButton(
 ) {
     TextButton(
         onClick = onClick,
-        shape = TuskyButtonShape,
+        shape = tuskyDefaultCornerShape,
         contentPadding = size.padding,
         modifier = modifier
             .heightIn(min = size.minHeight)
     ) {
-        Text(text)
+        Text(
+            text = text,
+            textAlign = TextAlign.Center
+        )
     }
 }
 
