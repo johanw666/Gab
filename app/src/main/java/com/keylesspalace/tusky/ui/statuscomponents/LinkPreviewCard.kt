@@ -24,6 +24,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.layout.width
@@ -99,7 +100,14 @@ fun LinkPreviewCard(
     if (card.width <= card.height || card.image == null) {
         Row(
             modifier = cardModifier
-                .height(IntrinsicSize.Min),
+                .height(IntrinsicSize.Min)
+                .run {
+                    if (card.image != null) {
+                        heightIn(dimensionResource(R.dimen.card_image_horizontal_width))
+                    } else {
+                        this
+                    }
+                },
             verticalAlignment = Alignment.CenterVertically
         ) {
             Box(
