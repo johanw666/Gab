@@ -597,7 +597,7 @@ private fun Attachment.aspectRatio(): Float {
 }
 
 private fun Attachment.limitedAspectRatio(): Float {
-    return aspectRatio().coerceIn(0.5f, 2.0f)
+    return aspectRatio().coerceIn(0.5f, 4.0f)
 }
 
 @Preview(name = "Light", heightDp = 1500)
