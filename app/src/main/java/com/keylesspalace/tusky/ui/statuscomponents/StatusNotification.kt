@@ -157,9 +157,10 @@ fun StatusNotification(
 
                 if (status.spoilerText.isNotEmpty()) {
                     Text(
-                        text = status.spoilerText,
+                        text = status.spoilerText.emojify(status.emojis),
                         color = tuskyColors.tertiaryTextColor,
                         style = LocalPreferences.current.statusTextStyles.medium,
+                        inlineContent = status.emojis.toInlineContent(),
                         modifier = Modifier.padding(top = 6.dp)
                     )
                     TuskyOutlinedButton(
@@ -221,7 +222,7 @@ fun StatusNotification(
                     modifier = Modifier.padding(top = 6.dp)
                 )
 
-                if (isExpanded) {
+                if (status.spoilerText.isEmpty() || isExpanded) {
                     if (status.attachments.isNotEmpty()) {
                         Row(
                             verticalAlignment = Alignment.CenterVertically,
