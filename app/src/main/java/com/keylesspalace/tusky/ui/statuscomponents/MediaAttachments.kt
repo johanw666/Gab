@@ -83,6 +83,7 @@ fun MediaAttachments(
     onOpenAttachment: (Int) -> Unit,
     onMediaHiddenChanged: () -> Unit,
     sensitive: Boolean,
+    isStatusExpanded: Boolean,
     showMedia: Boolean,
     downloadPreviews: Boolean,
     showBlurhash: Boolean,
@@ -107,6 +108,7 @@ fun MediaAttachments(
     } else {
         AttachmentDescriptionList(
             attachments = attachments,
+            isStatusExpanded = isStatusExpanded,
             modifier = modifier,
             onOpenAttachment = onOpenAttachment
         )
@@ -538,6 +540,7 @@ private fun MediaItem(
 @Composable
 private fun AttachmentDescriptionList(
     attachments: List<Attachment>,
+    isStatusExpanded: Boolean,
     modifier: Modifier = Modifier,
     onOpenAttachment: (Int) -> Unit
 ) {
@@ -573,7 +576,11 @@ private fun AttachmentDescriptionList(
                 )
                 Spacer(modifier = Modifier.width(6.dp))
                 Text(
-                    text = attachment.getFormattedDescription(LocalContext.current),
+                    text = if (isStatusExpanded) {
+                        attachment.getFormattedDescription(LocalContext.current)
+                    } else {
+                        stringResource(R.string.post_sensitive_media_title)
+                    },
                     color = tuskyColors.primaryTextColor,
                 )
             }
@@ -617,6 +624,7 @@ fun MediaAttachmentsPreview() {
                 onMediaHiddenChanged = { },
                 sensitive = false,
                 showMedia = true,
+                isStatusExpanded = true,
                 downloadPreviews = true,
                 showBlurhash = true,
                 filter = null
@@ -627,7 +635,8 @@ fun MediaAttachmentsPreview() {
                 onOpenAttachment = { },
                 onMediaHiddenChanged = { },
                 sensitive = true,
-                showMedia = false,
+                showMedia = true,
+                isStatusExpanded = true,
                 downloadPreviews = true,
                 showBlurhash = true,
                 filter = null
@@ -639,6 +648,7 @@ fun MediaAttachmentsPreview() {
                 onMediaHiddenChanged = { },
                 sensitive = false,
                 showMedia = true,
+                isStatusExpanded = true,
                 downloadPreviews = true,
                 showBlurhash = false,
                 filter = null
@@ -650,6 +660,7 @@ fun MediaAttachmentsPreview() {
                 onMediaHiddenChanged = { },
                 sensitive = false,
                 showMedia = true,
+                isStatusExpanded = true,
                 downloadPreviews = true,
                 showBlurhash = true,
                 filter = null
@@ -661,6 +672,7 @@ fun MediaAttachmentsPreview() {
                 onMediaHiddenChanged = { },
                 sensitive = false,
                 showMedia = true,
+                isStatusExpanded = true,
                 downloadPreviews = false,
                 showBlurhash = true,
                 filter = null

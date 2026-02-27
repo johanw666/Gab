@@ -434,6 +434,7 @@ class ScheduledStatusActivity : BaseActivity() {
                 },
                 sensitive = status.sensitive,
                 showMedia = status.mediaVisible,
+                isStatusExpanded = status.spoilerExpanded,
                 downloadPreviews = LocalAccount.current?.mediaPreviewEnabled ?: true,
                 showBlurhash = LocalPreferences.current.useBlurhash,
                 filter = null,

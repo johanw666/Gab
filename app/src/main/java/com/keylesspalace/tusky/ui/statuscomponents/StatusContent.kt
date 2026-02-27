@@ -161,6 +161,7 @@ fun ColumnScope.StatusContent(
         onOpenAttachment = { index -> listener.onViewMedia(statusViewData, index) },
         onMediaHiddenChanged = { listener.onContentHiddenChange(statusViewData, !statusViewData.isShowingContent) },
         sensitive = status.sensitive,
+        isStatusExpanded = status.spoilerText.isEmpty() || isExpanded,
         showMedia = statusViewData.isShowingContent,
         downloadPreviews = LocalAccount.current?.mediaPreviewEnabled ?: true,
         showBlurhash = LocalPreferences.current.useBlurhash,
