@@ -96,6 +96,7 @@ androidx-media3-datasource-okhttp = { module = "androidx.media3:media3-datasourc
 androidx-media3-ui = { module = "androidx.media3:media3-ui", version.ref = "androidx-media3" }
 androidx-paging-compose = { group = "androidx.paging", name = "paging-compose", version.ref = "androidx-paging" }
 androidx-paging-runtime-ktx = { group = "androidx.paging", name = "paging-runtime-ktx", version.ref = "androidx-paging" }
+androidx-paging-test = { group = "androidx.paging", name = "paging-testing", version.ref = "androidx-paging" }
 androidx-preference-ktx = { module = "androidx.preference:preference-ktx", version.ref = "androidx-preference" }
 androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "androidx-room" }
 androidx-room-paging = { module = "androidx.room:room-paging", version.ref = "androidx-room" }

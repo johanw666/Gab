@@ -23,6 +23,7 @@ import com.keylesspalace.tusky.entity.Status
 import com.keylesspalace.tusky.network.MastodonApi
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
+import retrofit2.HttpException
 
 class StatusesPagingSource(
     private val accountId: String,
@@ -82,13 +83,19 @@ class StatusesPagingSource(
         maxId: String? = null,
         limit: Int
     ): List<Status> {
-        return mastodonApi.accountStatuses(
+        val response = mastodonApi.accountStatuses(
             accountId = accountId,
             maxId = maxId,
             sinceId = null,
             minId = minId,
             limit = limit,
             excludeReblogs = true
-        ).getOrThrow()
+        )
+        val responseBody = response.body()
+        if (response.isSuccessful && responseBody != null) {
+            return responseBody
+        } else {
+            throw HttpException(response)
+        }
     }
 }

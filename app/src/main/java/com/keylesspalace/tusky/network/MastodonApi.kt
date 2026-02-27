@@ -111,6 +111,7 @@ interface MastodonApi {
     suspend fun publicTimeline(
         @Query("local") local: Boolean? = null,
         @Query("max_id") maxId: String? = null,
+        @Query("min_id") minId: String? = null,
         @Query("since_id") sinceId: String? = null,
         @Query("limit") limit: Int? = null
     ): Response<List<Status>>
@@ -121,6 +122,7 @@ interface MastodonApi {
         @Query("any[]") any: List<String>?,
         @Query("local") local: Boolean?,
         @Query("max_id") maxId: String?,
+        @Query("min_id") minId: String? = null,
         @Query("since_id") sinceId: String?,
         @Query("limit") limit: Int?
     ): Response<List<Status>>
@@ -129,6 +131,7 @@ interface MastodonApi {
     suspend fun listTimeline(
         @Path("listId") listId: String,
         @Query("max_id") maxId: String?,
+        @Query("min_id") minId: String? = null,
         @Query("since_id") sinceId: String?,
         @Query("limit") limit: Int?
     ): Response<List<Status>>
@@ -339,9 +342,11 @@ interface MastodonApi {
     suspend fun accountStatuses(
         @Path("id") accountId: String,
         @Query("max_id") maxId: String? = null,
+        @Query("min_id") minId: String? = null,
         @Query("since_id") sinceId: String? = null,
         @Query("limit") limit: Int? = null,
         @Query("exclude_replies") excludeReplies: Boolean? = null,
+        @Query("exclude_reblogs") excludeReblogs: Boolean? = null,
         @Query("only_media") onlyMedia: Boolean? = null,
         @Query("pinned") pinned: Boolean? = null
     ): Response<List<Status>>
@@ -422,6 +427,7 @@ interface MastodonApi {
     @GET("api/v1/favourites")
     suspend fun favourites(
         @Query("max_id") maxId: String?,
+        @Query("min_id") minId: String? = null,
         @Query("since_id") sinceId: String?,
         @Query("limit") limit: Int?
     ): Response<List<Status>>
@@ -429,6 +435,7 @@ interface MastodonApi {
     @GET("api/v1/bookmarks")
     suspend fun bookmarks(
         @Query("max_id") maxId: String?,
+        @Query("min_id") minId: String? = null,
         @Query("since_id") sinceId: String?,
         @Query("limit") limit: Int?
     ): Response<List<Status>>
@@ -607,16 +614,6 @@ interface MastodonApi {
         @Field("category") category: String?,
         @Field("rule_ids[]") ruleIds: Set<String>?,
     ): NetworkResult<Unit>
-
-    @GET("api/v1/accounts/{id}/statuses")
-    suspend fun accountStatuses(
-        @Path("id") accountId: String,
-        @Query("max_id") maxId: String?,
-        @Query("since_id") sinceId: String?,
-        @Query("min_id") minId: String?,
-        @Query("limit") limit: Int?,
-        @Query("exclude_reblogs") excludeReblogs: Boolean?
-    ): NetworkResult<List<Status>>
 
     @GET("api/v2/search")
     suspend fun search(

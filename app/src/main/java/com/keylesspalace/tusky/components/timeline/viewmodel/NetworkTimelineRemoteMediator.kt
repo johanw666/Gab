@@ -47,7 +47,7 @@ class NetworkTimelineRemoteMediator(
         try {
             val statusResponse = when (loadType) {
                 LoadType.REFRESH -> {
-                    viewModel.fetchStatusesForKind(null, null, limit = state.config.pageSize)
+                    viewModel.fetchStatusesForKind(limit = state.config.pageSize)
                 }
                 LoadType.PREPEND -> {
                     return MediatorResult.Success(endOfPaginationReached = true)
@@ -55,7 +55,7 @@ class NetworkTimelineRemoteMediator(
                 LoadType.APPEND -> {
                     val maxId = viewModel.nextKey
                     if (maxId != null) {
-                        viewModel.fetchStatusesForKind(maxId, null, limit = state.config.pageSize)
+                        viewModel.fetchStatusesForKind(maxId = maxId, limit = state.config.pageSize)
                     } else {
                         return MediatorResult.Success(endOfPaginationReached = true)
                     }

@@ -36,6 +36,8 @@ import com.keylesspalace.tusky.appstore.PollVoteEvent
 import com.keylesspalace.tusky.appstore.StatusChangedEvent
 import com.keylesspalace.tusky.appstore.StatusDeletedEvent
 import com.keylesspalace.tusky.appstore.UnfollowEvent
+import com.keylesspalace.tusky.components.preference.PreferencesFragment.ReadingOrder.NEWEST_FIRST
+import com.keylesspalace.tusky.components.preference.PreferencesFragment.ReadingOrder.OLDEST_FIRST
 import com.keylesspalace.tusky.components.timeline.util.ifExpected
 import com.keylesspalace.tusky.db.AccountManager
 import com.keylesspalace.tusky.entity.Poll
@@ -197,14 +199,15 @@ class NetworkTimelineViewModel @Inject constructor(
                     statusData.indexOfFirst { it is StatusViewData.LoadMore && it.id == placeholderId }
                 statusData[placeholderIndex] =
                     StatusViewData.LoadMore(placeholderId, isLoading = true)
+                currentSource?.invalidate()
 
                 val idAbovePlaceholder = statusData.getOrNull(placeholderIndex - 1)?.id
+                val idBelowPlaceholder = statusData.getOrNull(placeholderIndex + 1)?.id
 
-                val statusResponse = fetchStatusesForKind(
-                    fromId = idAbovePlaceholder,
-                    uptoId = null,
-                    limit = 20
-                )
+                val statusResponse = when (readingOrder) {
+                    OLDEST_FIRST -> fetchStatusesForKind(minId = idBelowPlaceholder)
+                    NEWEST_FIRST -> fetchStatusesForKind(maxId = idAbovePlaceholder)
+                }
 
                 val statuses = statusResponse.body()
                 if (!statusResponse.isSuccessful || statuses == null) {
@@ -239,7 +242,7 @@ class NetworkTimelineViewModel @Inject constructor(
                     }
                     val overlappedTo = statusData.indexOfFirst {
                         it.asStatusOrNull()?.id?.isLessThan(lastId) ?: false
-                    }
+                    } - 1
 
                     if (overlappedFrom < overlappedTo) {
                         data.mapIndexed { i, status ->
@@ -256,23 +259,22 @@ class NetworkTimelineViewModel @Inject constructor(
                                         isCollapsed = oldStatus.isCollapsed
                                     )
                             }
-
                         statusData.removeAll { status ->
-                            when (status) {
-                                is StatusViewData.LoadMore -> lastId.isLessThan(status.id) &&
-                                    status.id.isLessThanOrEqual(firstId)
-
-                                is StatusViewData.Concrete -> lastId.isLessThan(status.id) &&
-                                    status.id.isLessThanOrEqual(firstId)
+                            lastId.isLessThanOrEqual(status.id) && status.id.isLessThanOrEqual(firstId)
+                        }
+                        statusData.addAll(overlappedFrom, data)
+                    } else {
+                        when (readingOrder) {
+                            OLDEST_FIRST -> {
+                                data[0] = StatusViewData.LoadMore(statuses.first().id, isLoading = false)
+                            }
+                            NEWEST_FIRST -> {
+                                data[data.size - 1] = StatusViewData.LoadMore(statuses.last().id, isLoading = false)
                             }
                         }
-                    } else {
-                        data[data.size - 1] =
-                            StatusViewData.LoadMore(statuses.last().id, isLoading = false)
+                        statusData.addAll(placeholderIndex, data)
                     }
                 }
-
-                statusData.addAll(placeholderIndex, data)
 
                 currentSource?.invalidate()
             } catch (e: Exception) {
@@ -352,55 +354,107 @@ class NetworkTimelineViewModel @Inject constructor(
 
     @Throws(IOException::class, HttpException::class)
     suspend fun fetchStatusesForKind(
-        fromId: String?,
-        uptoId: String?,
-        limit: Int
+        maxId: String? = null,
+        minId: String? = null,
+        sinceId: String? = null,
+        limit: Int = LOAD_AT_ONCE
     ): Response<List<Status>> {
         return when (kind) {
-            Kind.HOME -> api.homeTimeline(maxId = fromId, sinceId = uptoId, limit = limit)
-            Kind.PUBLIC_FEDERATED -> api.publicTimeline(null, fromId, uptoId, limit)
-            Kind.PUBLIC_LOCAL -> api.publicTimeline(true, fromId, uptoId, limit)
+            Kind.HOME -> api.homeTimeline(
+                maxId = maxId,
+                minId = minId,
+                sinceId = sinceId,
+                limit = limit
+            )
+            Kind.PUBLIC_FEDERATED -> api.publicTimeline(
+                local = null,
+                maxId = maxId,
+                minId = minId,
+                sinceId = sinceId,
+                limit = limit
+            )
+            Kind.PUBLIC_LOCAL -> api.publicTimeline(
+                local = true,
+                maxId = maxId,
+                minId = minId,
+                sinceId = sinceId,
+                limit = limit
+            )
             Kind.TAG -> {
                 val firstHashtag = tags[0]
                 val additionalHashtags = tags.subList(1, tags.size)
-                api.hashtagTimeline(firstHashtag, additionalHashtags, null, fromId, uptoId, limit)
+                api.hashtagTimeline(
+                    hashtag = firstHashtag,
+                    any = additionalHashtags,
+                    local = null,
+                    maxId = maxId,
+                    minId = minId,
+                    sinceId = sinceId,
+                    limit = limit
+                )
             }
 
             Kind.USER -> api.accountStatuses(
-                id!!,
-                fromId,
-                uptoId,
-                limit,
+                accountId = id!!,
+                maxId = maxId,
+                minId = minId,
+                sinceId = sinceId,
+                limit = limit,
                 excludeReplies = true,
                 onlyMedia = null,
                 pinned = null
             )
 
             Kind.USER_PINNED -> api.accountStatuses(
-                id!!,
-                fromId,
-                uptoId,
-                limit,
+                accountId = id!!,
+                maxId = maxId,
+                minId = minId,
+                sinceId = sinceId,
+                limit = limit,
                 excludeReplies = null,
                 onlyMedia = null,
                 pinned = true
             )
 
             Kind.USER_WITH_REPLIES -> api.accountStatuses(
-                id!!,
-                fromId,
-                uptoId,
-                limit,
+                accountId = id!!,
+                maxId = maxId,
+                minId = minId,
+                sinceId = sinceId,
+                limit = limit,
                 excludeReplies = null,
                 onlyMedia = null,
                 pinned = null
             )
 
-            Kind.FAVOURITES -> api.favourites(fromId, uptoId, limit)
-            Kind.BOOKMARKS -> api.bookmarks(fromId, uptoId, limit)
-            Kind.LIST -> api.listTimeline(id!!, fromId, uptoId, limit)
-            Kind.PUBLIC_TRENDING_STATUSES -> api.trendingStatuses(limit = limit, offset = fromId)
-            Kind.QUOTES -> api.quotingStatuses(statusId = id!!, limit = limit, offset = fromId)
+            Kind.FAVOURITES -> api.favourites(
+                maxId = maxId,
+                minId = minId,
+                sinceId = sinceId,
+                limit = limit
+            )
+            Kind.BOOKMARKS -> api.bookmarks(
+                maxId = maxId,
+                minId = minId,
+                sinceId = sinceId,
+                limit = limit
+            )
+            Kind.LIST -> api.listTimeline(
+                listId = id!!,
+                maxId = maxId,
+                minId = minId,
+                sinceId = sinceId,
+                limit = limit
+            )
+            Kind.PUBLIC_TRENDING_STATUSES -> api.trendingStatuses(
+                limit = limit,
+                offset = maxId
+            )
+            Kind.QUOTES -> api.quotingStatuses(
+                statusId = id!!,
+                limit = limit,
+                offset = maxId
+            )
         }
     }
 

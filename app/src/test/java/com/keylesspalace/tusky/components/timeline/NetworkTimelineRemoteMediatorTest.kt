@@ -22,7 +22,6 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.kotlin.anyOrNull
 import org.mockito.kotlin.doReturn
 import org.mockito.kotlin.doThrow
 import org.mockito.kotlin.mock
@@ -53,7 +52,7 @@ class NetworkTimelineRemoteMediatorTest {
     fun `should return error when network call returns error code`() = runTest {
         val timelineViewModel: NetworkTimelineViewModel = mock {
             on { statusData } doReturn mutableListOf()
-            onBlocking { fetchStatusesForKind(anyOrNull(), anyOrNull(), anyOrNull()) } doReturn Response.error(500, "".toResponseBody())
+            onBlocking { fetchStatusesForKind() } doReturn Response.error(500, "".toResponseBody())
         }
 
         val remoteMediator = NetworkTimelineRemoteMediator(timelineViewModel)
@@ -72,7 +71,7 @@ class NetworkTimelineRemoteMediatorTest {
             on { accountManager } doReturn accountManager
             on { activeAccountFlow } doReturn MutableStateFlow(account)
             on { statusData } doReturn mutableListOf()
-            onBlocking { fetchStatusesForKind(anyOrNull(), anyOrNull(), anyOrNull()) } doThrow IOException()
+            onBlocking { fetchStatusesForKind() } doThrow IOException()
         }
 
         val remoteMediator = NetworkTimelineRemoteMediator(timelineViewModel)
@@ -96,7 +95,7 @@ class NetworkTimelineRemoteMediatorTest {
             on { nextKey } doReturn null
             on { kind } doReturn TimelineViewModel.Kind.PUBLIC_FEDERATED
 
-            onBlocking { fetchStatusesForKind(null, null, 20) } doReturn Response.success(
+            onBlocking { fetchStatusesForKind() } doReturn Response.success(
                 listOf(
                     fakeStatus("7"),
                     fakeStatus("6"),
@@ -151,7 +150,7 @@ class NetworkTimelineRemoteMediatorTest {
             on { nextKey } doReturn "0"
             on { kind } doReturn TimelineViewModel.Kind.PUBLIC_FEDERATED
 
-            onBlocking { fetchStatusesForKind(null, null, 20) } doReturn Response.success(
+            onBlocking { fetchStatusesForKind() } doReturn Response.success(
                 listOf(
                     fakeStatus("5"),
                     fakeStatus("4"),
@@ -207,7 +206,7 @@ class NetworkTimelineRemoteMediatorTest {
             on { nextKey } doReturn "0"
             on { kind } doReturn TimelineViewModel.Kind.PUBLIC_FEDERATED
 
-            onBlocking { fetchStatusesForKind(null, null, 20) } doReturn Response.success(
+            onBlocking { fetchStatusesForKind() } doReturn Response.success(
                 listOf(
                     fakeStatus("10"),
                     fakeStatus("9"),
@@ -264,7 +263,7 @@ class NetworkTimelineRemoteMediatorTest {
             on { nextKey } doReturn "3"
             on { kind } doReturn TimelineViewModel.Kind.PUBLIC_FEDERATED
 
-            onBlocking { fetchStatusesForKind("3", null, 20) } doReturn Response.success(
+            onBlocking { fetchStatusesForKind(maxId = "3") } doReturn Response.success(
                 listOf(
                     fakeStatus("3"),
                     fakeStatus("2"),
@@ -321,7 +320,7 @@ class NetworkTimelineRemoteMediatorTest {
             on { nextKey } doReturn "3"
             on { kind } doReturn TimelineViewModel.Kind.PUBLIC_FEDERATED
 
-            onBlocking { fetchStatusesForKind("3", null, 20) } doReturn Response.success(
+            onBlocking { fetchStatusesForKind(maxId = "3") } doReturn Response.success(
                 listOf(
                     fakeStatus("3"),
                     fakeStatus("2"),
@@ -426,7 +425,7 @@ class NetworkTimelineRemoteMediatorTest {
             on { statusData } doReturn statuses
             on { nextKey } doReturn "3"
             on { kind } doReturn TimelineViewModel.Kind.PUBLIC_TRENDING_STATUSES
-            onBlocking { fetchStatusesForKind("3", null, 20) } doReturn Response.success(
+            onBlocking { fetchStatusesForKind(maxId = "3") } doReturn Response.success(
                 listOf(
                     fakeStatus("3"),
                     fakeStatus("2"),
@@ -470,7 +469,7 @@ class NetworkTimelineRemoteMediatorTest {
         pages = pages,
         anchorPosition = null,
         config = PagingConfig(
-            pageSize = 20
+            pageSize = TimelineViewModel.LOAD_AT_ONCE
         ),
         leadingPlaceholderCount = 0
     )

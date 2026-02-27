@@ -52,10 +52,12 @@ class PreferencesFragment : BasePreferencesFragment() {
     lateinit var sharedPrefs: SharedPreferences
 
     enum class ReadingOrder {
-        /** User scrolls up, reading statuses oldest to newest */
+        /** User scrolls up, reading statuses oldest to newest.
+         *  "Load more" gaps fill with the oldest posts first. */
         OLDEST_FIRST,
 
-        /** User scrolls down, reading statuses newest to oldest. Default behaviour. */
+        /** User scrolls down, reading statuses newest to oldest. Default behaviour.
+         *  "Load more" gaps fill with the newest posts first. */
         NEWEST_FIRST;
 
         companion object {
