@@ -743,6 +743,6 @@
     </plurals>
     <string name="help_empty_conversations">Voici vos &lt;b&gt;messages privés&lt;/b&gt;; parfois appelé \"conversations\" ou \"direct messages\" (DM)\n\nLes messages privés sont crées en paramétrant la visibilité {{public}} d\'une publication sur {{mail}} <i>Direct</i> et en mentionnant un ou plusieurs utilisateurs dans le texte.\n\nPar exemple, vous pouvez commencer dans la vue profil d\'un compte, sélectionner le bouton de création {{edit}} et changer la visibilité.\n\nVeuillez noter que les messages sur Fediverse ne sont pas chiffrés de bout en bout. Ne partagez aucunes informations sensibles.</string>
     <string name="notification_unknown_description">Type de notification inconnu</string>
-    <string name="notification_channel_other_description">Autres notifications, telles que connections perdues et avertissements de modération</string>
+    <string name="notification_channel_other_description">Autres notifications, telles que connexions perdues et avertissements de modération</string>
     <string name="notification_channel_admin_description">Notifications admin, telles que nouveaux rapports ou inscriptions</string>
 </resources>
