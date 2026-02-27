@@ -71,7 +71,7 @@
     <string name="notification_reblog_format">%1$s promoveu a túa publicación</string>
     <string name="message_empty">Nada por aquí.</string>
     <string name="post_content_show_less">Contraer</string>
-    <string name="post_content_show_more">Expandir</string>
+    <string name="post_content_show_more">Despregar</string>
     <string name="post_content_warning_show_less">Ver menos</string>
     <string name="post_content_warning_show_more">Ver máis</string>
     <string name="post_sensitive_media_directions">Preme para ver</string>
@@ -227,7 +227,7 @@
     <string name="caption_blobmoji">Os emojis Blob coñecidos de Android 4.4-7.1</string>
     <string name="caption_systememoji">O conxunto de emojis predeterminados do sistema</string>
     <string name="action_open_post">Abrir publicación</string>
-    <string name="expand_collapse_all_posts">Expandir/Contraer todas as publicacións</string>
+    <string name="expand_collapse_all_posts">Despregar/Contraer todas as publicacións</string>
     <string name="performing_lookup_title">Facendo a busca…</string>
     <string name="download_fonts">Deberás descargar primeiro estes conxuntos de emojis</string>
     <string name="system_default">Predeterminado do sistema</string>
@@ -816,4 +816,11 @@
     <string name="quote_hidden_show_anyway">Mostrar igualmente</string>
     <string name="notification_quote_name">Citas</string>
     <string name="notification_quote_description">Notificacións cando se citen as túas publicacións</string>
+    <string name="action_remove_quote">Retirar publicación citada</string>
+    <string name="remove_post">Retirar publicación</string>
+    <string name="error_remove_quote">Non se puido retirar a cita da publicación.</string>
+    <string name="quote_hidden_by_filter">Publicación oculta debido a un dos teus filtros</string>
+    <string name="error_deleting_status">Fallo ao eliminar a publicación.</string>
+    <string name="remove_post_warning">Retirar a túa publicación citando a %1$s? Non poderás desfacer a acción.</string>
+    <string name="quote_revoked">Publicación eliminada pola autora</string>
 </resources>

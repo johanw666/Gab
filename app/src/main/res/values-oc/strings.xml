@@ -713,4 +713,30 @@
     <string name="post_replied_format">En responsa a %1$s</string>
     <string name="post_replied_self">Seguida del fil</string>
     <string name="poll_show_results">Mostrar los resultats</string>
+    <string name="action_remove_account">Levar lo compte</string>
+    <string name="quote_policy_public">Qual que siá</string>
+    <string name="quote_policy_followers">Seguidors solament</string>
+    <string name="quote_policy_nobody">Solament ieu</string>
+    <string name="notification_quote_description">Notificacions quand òm vos cita</string>
+    <string name="message_filters_empty">Avètz pas cap de filtre.</string>
+    <string name="filter_action_blur">Fosc</string>
+    <string name="unknown_notification_filter_unsolicited_private_mentions_title">Mencions privadas non sollicitadas</string>
+    <string name="error_deleting_status">Fracàs de la supression de la publicacion.</string>
+    <string name="notification_quote_name">Citacions</string>
+    <string name="filter_description_blur">Amagar lo mèdia amb un avertiment</string>
+    <string name="pref_default_quote_policy">Politica de citacion (sincro. amb lo servidor)</string>
+    <plurals name="replies">
+        <item quantity="one">%1$s responsa</item>
+        <item quantity="other">%1$s responsas</item>
+    </plurals>
+    <string name="action_remove_account_confirm">Volètz vertadièrament suprimir lo compte %1$s de Tusky ? Aquò escafarà totas las donadas localas, los borrolhons e las preferéncias.</string>
+    <string name="action_rehide_status">Rescondre de nòu l’estatut filtrat</string>
+    <string name="notification_policies_filter_dont_follow_description">Fins que los aprovetz</string>
+    <string name="notification_quote_format">%1$s a citat vòstra publicacion</string>
+    <string name="notification_quoted_update_format">%1$s a modificat una publicacion que citàvetz</string>
+    <string name="action_reveal_media">Mostrar lo mèdia</string>
+    <plurals name="quotes">
+        <item quantity="one">%1$s citacion</item>
+        <item quantity="other">%1$s citacions</item>
+    </plurals>
 </resources>

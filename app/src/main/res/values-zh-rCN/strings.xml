@@ -806,4 +806,11 @@
     <string name="action_reveal_media">揭示媒体</string>
     <string name="notification_quote_name">引用</string>
     <string name="notification_quote_description">当嘟文被引用时进行通知</string>
+    <string name="error_deleting_status">删除嘟文失败。</string>
+    <string name="remove_post_warning">从 %1$s 的嘟文中删除你的嘟文吗？此操作无法撤销。</string>
+    <string name="remove_post">删除嘟文</string>
+    <string name="error_remove_quote">从嘟文删除引用失败。</string>
+    <string name="quote_revoked">作者删除了嘟文</string>
+    <string name="action_remove_quote">删除引用的嘟文</string>
+    <string name="quote_hidden_by_filter">筛选器之一隐藏了嘟文</string>
 </resources>
