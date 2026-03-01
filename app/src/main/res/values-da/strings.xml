@@ -816,4 +816,11 @@
     <string name="quote_account_muted">Dette indlæg er skjult, fordi du har skjult %1$s.</string>
     <string name="notification_quote_name">Citater</string>
     <string name="notification_quote_description">Notifikationer, når dine indlæg citeres</string>
+    <string name="error_deleting_status">Det lykkedes ikke at slette indlægget.</string>
+    <string name="quote_revoked">Indlæg fjernet af forfatteren</string>
+    <string name="action_remove_quote">Fjern citeret indlæg</string>
+    <string name="remove_post_warning">Vil du fjerne dit indlæg fra %1$s\'s indlæg? Denne handling kan ikke fortrydes.</string>
+    <string name="remove_post">Fjern indlæg</string>
+    <string name="error_remove_quote">Det lykkedes ikke at fjerne citat fra indlæg.</string>
+    <string name="quote_hidden_by_filter">Indlæg skjult på grund af et af dine filtre</string>
 </resources>
