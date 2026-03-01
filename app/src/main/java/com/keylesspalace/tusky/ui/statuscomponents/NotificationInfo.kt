@@ -105,9 +105,9 @@ fun NotificationInfo(
                 icon = R.drawable.ic_edit_24dp_filled,
                 iconColor = colorScheme.primary,
                 text = R.string.notification_quoted_update_format,
-                account = notificationViewData.statusViewData!!.status.account,
+                account = notificationViewData.statusViewData!!.status.quote!!.quotedStatus!!.account,
                 onViewAccount = {
-                    listener.onViewAccount(notificationViewData.statusViewData.status.account.id)
+                    listener.onViewAccount(notificationViewData.statusViewData.status.quote.quotedStatus.account.id)
                 }
             )
         }
