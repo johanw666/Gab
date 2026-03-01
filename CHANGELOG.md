@@ -6,6 +6,22 @@
 
 ### Significant bug fixes
 
+## v32.2
+
+### New features and other improvements
+
+- Small improvements to timelines
+  - Media previews are now allowed to be wider so previews are less often cropped https://codeberg.org/tusky/Tusky/issues/5453
+  - Tusky now tries to use the same corner radius everywhere and makes them concentric when nested https://codeberg.org/tusky/Tusky/issues/5446
+
+### Significant bug fixes
+
+- Fixes a crash that can sometimes occur when clicking a post with a shallow quote https://codeberg.org/tusky/Tusky/issues/5448
+- Fixes a crash that can sometimes occur after clicking "Load more" in public timelines and makes the load more behavior respect the "Reading direction" setting https://codeberg.org/tusky/Tusky/pulls/5457
+- The "Expand" button on long posts is outlined again https://codeberg.org/tusky/Tusky/issues/5447
+- Custom Emojis in Content Warnings are rendered again https://codeberg.org/tusky/Tusky/issues/5451
+- When "load media previews" is off, content descriptions are now hidden on posts that have an active content warning. https://codeberg.org/tusky/Tusky/pulls/5461
+
 ## v32.1
 
 ### New features and other improvements
