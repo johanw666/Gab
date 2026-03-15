@@ -55,7 +55,7 @@
     <string name="action_favourite">お気に入り</string>
     <string name="action_more">その他</string>
     <string name="action_compose">投稿する</string>
-    <string name="action_login">Tusky でログイン</string>
+    <string name="action_login">Gab でログイン</string>
     <string name="action_logout">ログアウト</string>
     <string name="action_logout_confirm">アカウント %1$s からログアウトしてもよろしいですか？ログアウトすると、下書きや詳細設定を含めて、ローカルに保存されているアカウントの全てのデータが削除されます。</string>
     <string name="action_follow">フォローする</string>
@@ -193,8 +193,8 @@
     </plurals>
     <string name="description_account_locked">非公開アカウント</string>
     <string name="about_title_activity">このアプリについて</string>
-    <string name="about_tusky_version">Tusky %1$s</string>
-    <string name="about_tusky_license">Tuskyは無料のオープンソースソフトウェアです。<!--
+    <string name="about_tusky_version">Gab %1$s</string>
+    <string name="about_tusky_license">Gabは無料のオープンソースソフトウェアです。<!--
      -->GNU General Public License Version 3 の下で使用許諾されています。<!--
      -->ライセンスはここからご覧いただけます： https://www.gnu.org/licenses/gpl-3.0.ja.html</string>
     <!-- note to translators:
@@ -203,9 +203,9 @@
            to show we do not mean the software is gratis. Source: https://www.gnu.org/philosophy/free-sw.html
          * the url can be changed to link to the localized version of the license.
     -->
-    <string name="about_project_site">プロジェクトのウェブサイト (英語): https://tusky.app</string>
-    <string name="about_bug_feature_request_site">バグ報告と機能リクエスト (英語): https://github.com/tuskyapp/Tusky/issues</string>
-    <string name="about_tusky_account">Tusky公式アカウント</string>
+    <string name="about_project_site">プロジェクトのウェブサイト (英語): https://gab.com</string>
+    <string name="about_bug_feature_request_site">バグ報告と機能リクエスト (英語): https://github.com/Gabapp/Gab/issues</string>
+    <string name="about_tusky_account">Gab公式アカウント</string>
     <string name="post_share_content">投稿の内容を共有</string>
     <string name="post_share_link">投稿へのリンクを共有</string>
     <string name="post_media_images">画像</string>
@@ -264,7 +264,7 @@
     <string name="account_moved_description">%1$s は引っ越しました:</string>
     <string name="reblog_private">ブースト</string>
     <string name="unreblog_private">ブーストを解除</string>
-    <string name="license_description">Tuskyは、以下のオープンソース プロジェクトからのコードとアセットを含んでいます:</string>
+    <string name="license_description">Gabは、以下のオープンソース プロジェクトからのコードとアセットを含んでいます:</string>
     <string name="license_apache_2">Apache Licenseの下にライセンスされています（下記をコピー）</string>
     <string name="license_cc_by_4">CC-BY 4.0</string>
     <string name="license_cc_by_sa_4">CC-BY-SA 4.0</string>
@@ -423,7 +423,7 @@
     <string name="mute_domain_warning">本当に %1$s のすべてをブロックするのですか？ そのドメインからのコンテンツは、公開タイムラインや通知に表示されなくなります。また、そのドメインのフォロワーは削除されます。</string>
     <string name="post_media_audio">音声</string>
     <string name="mute_domain_warning_dialog_ok">ドメイン全体を非表示</string>
-    <string name="about_powered_by_tusky">Tuskyによって提供されています</string>
+    <string name="about_powered_by_tusky">Gabによって提供されています</string>
     <string name="delete_scheduled_post_warning">この予約投稿を削除しますか？</string>
     <string name="instance_rule_info">ログインにより %1$s のルールに同意することになります。</string>
     <string name="action_unbookmark">ブックマークを削除</string>
@@ -567,7 +567,7 @@
     <string name="pref_title_show_stat_inline">タイムラインに投稿の統計情報を表示する</string>
     <string name="pref_ui_text_size">UI のテキストサイズ</string>
     <string name="notification_listenable_worker_name">バックグラウンドアクティビティ</string>
-    <string name="notification_listenable_worker_description">Tusky がバックグラウンドで動作中の通知</string>
+    <string name="notification_listenable_worker_description">Gab がバックグラウンドで動作中の通知</string>
     <string name="notification_notification_worker">通知を取得中…</string>
     <string name="notification_prune_cache">キャッシュの整理中…</string>
     <string name="label_filter_context">フィルターコンテキスト</string>
